@@ -2,9 +2,9 @@
 
 namespace Typedin\LaravelCalenly;
 
-use App\Services\Calendly\Exceptions\CalendlyUserException;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
+use Typedin\LaravelCalenly\Exceptions\CalendlyUserException;
 
 class CalendlyUser
 {
@@ -101,7 +101,7 @@ class CalendlyUser
     public function __construct($response_args)
     {
         $this->keys()->each(function ($key) use ($response_args) {
-            if (! array_key_exists($key, $response_args)) {
+            if (!array_key_exists($key, $response_args)) {
                 CalendlyUserException::nestedKeyNotFound($key);
             }
         });
@@ -113,8 +113,8 @@ class CalendlyUser
             $this->$key = $value;
         });
 
-        $this->uuid = str_replace(CalendlyService::BASE_URL.'/users/', '', $response_args['uri']);
-        $this->current_organization = str_replace(CalendlyService::BASE_URL.'/organizations/', '', $response_args['current_organization']);
+        $this->uuid = str_replace(CalendlyService::BASE_URL . '/users/', '', $response_args['uri']);
+        $this->current_organization = str_replace(CalendlyService::BASE_URL . '/organizations/', '', $response_args['current_organization']);
     }
 
     /**

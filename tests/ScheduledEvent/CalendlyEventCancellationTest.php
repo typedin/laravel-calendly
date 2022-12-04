@@ -1,16 +1,16 @@
 <?php
 
-namespace Tests\Unit\Services\Calendly\ScheduledEvent;
+namespace Typedin\LaravelCalenly\Tests\ScheduledEvent;
 
-use App\Services\Calendly\Exceptions\CalendlyCancellationException;
-use App\Services\Calendly\ScheduledEvent\CalendlyEventCancellation;
-use Tests\Unit\CalendlyTestCase;
+use Typedin\LaravelCalenly\Exceptions\CalendlyCancellationException;
+use Typedin\LaravelCalenly\ScheduledEvent\CalendlyEventCancellation;
+use Typedin\LaravelCalenly\Tests\CalendlyTestCase;
 
 class CalendlyEventCancellationTest extends CalendlyTestCase
 {
     public string $fixture_file_name = 'cancellation';
 
-    public string $folder_path = __DIR__.'/__fixtures__/';
+    public string $folder_path = __DIR__ . '/__fixtures__/';
 
     public $nested_keys = 'resource';
 

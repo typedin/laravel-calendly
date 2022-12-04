@@ -3,6 +3,7 @@
 namespace Typedin\LaravelCalenly\ScheduledEvent;
 
 use Illuminate\Support\Collection;
+use Typedin\LaravelCalenly\Exceptions\CalendlyEventInviteesCounterException;
 
 class CalendlyEventInviteesCounter
 {

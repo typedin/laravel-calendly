@@ -4,6 +4,7 @@ namespace Typedin\LaravelCalenly\ScheduledEvent;
 
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
+use Typedin\LaravelCalenly\Exceptions\CalendlyEventGuestException;
 
 class CalendlyEventGuest
 {

@@ -1,16 +1,17 @@
 <?php
 
-namespace Tests\Unit\Services\Calendly\ScheduledEvent;
+namespace Typedin\LaravelCalenly\Tests\ScheduledEvent;
 
-use App\Services\Calendly\Exceptions\CalendlyInviteesCounterException;
-use App\Services\Calendly\ScheduledEvent\CalendlyInviteesCounter;
-use Tests\Unit\CalendlyTestCase;
+use Typedin\LaravelCalenly\Exceptions\CalendlyInviteesCounterException;
+use Typedin\LaravelCalenly\ScheduledEvent\CalendlyInviteesCounter;
+use Typedin\LaravelCalenly\Tests\CalendlyTestCase;
+
 
 class CalendlyInviteesCounterTest extends CalendlyTestCase
 {
     public string $fixture_file_name = 'scheduled-events';
 
-    public string $folder_path = __DIR__.'/__fixtures__/';
+    public string $folder_path = __DIR__ . '/__fixtures__/';
 
     public $nested_keys = 'collection.0.invitees_counter';
 

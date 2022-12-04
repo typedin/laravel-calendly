@@ -1,11 +1,11 @@
 <?php return array(
     'root' => array(
-        'pretty_version' => '1.0.0+no-version-set',
-        'version' => '1.0.0.0',
+        'pretty_version' => 'dev-main',
+        'version' => 'dev-main',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => NULL,
+        'reference' => '45d915a065d2eb8c13ff3cafa191e115252b6655',
         'name' => 'typedin/laravel-calenly',
         'dev' => true,
     ),
@@ -1176,12 +1176,12 @@
             'dev_requirement' => false,
         ),
         'typedin/laravel-calenly' => array(
-            'pretty_version' => '1.0.0+no-version-set',
-            'version' => '1.0.0.0',
+            'pretty_version' => 'dev-main',
+            'version' => 'dev-main',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => NULL,
+            'reference' => '45d915a065d2eb8c13ff3cafa191e115252b6655',
             'dev_requirement' => false,
         ),
         'vlucas/phpdotenv' => array(

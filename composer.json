@@ -18,7 +18,8 @@
     "require": {
         "php": "^8.0",
         "adbario/php-dot-notation": "^3.2",
-        "illuminate/support": "^8.0"
+        "illuminate/support": "^8.0",
+        "nesbot/carbon": "^2.64"
     },
     "require-dev": {
         "laravel/pint": "^1.2",
@@ -28,7 +29,10 @@
     "autoload": {
         "psr-4": {
             "Typedin\\LaravelCalenly\\": "src"
-        }
+        },
+        "files": [
+            "src/helpers.php"
+        ]
     },
     "autoload-dev": {
         "psr-4": {

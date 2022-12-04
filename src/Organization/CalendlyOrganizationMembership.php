@@ -5,6 +5,7 @@ namespace Typedin\LaravelCalenly\Organization;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Typedin\LaravelCalenly\CalendlyUser;
+use Typedin\LaravelCalenly\Exceptions\CalendlyOrganizationMembershipException;
 
 class CalendlyOrganizationMembership
 {
@@ -58,7 +59,7 @@ class CalendlyOrganizationMembership
     public function __construct($args)
     {
         $this->keys()->each(function ($key) use ($args) {
-            if (! array_key_exists($key, $args)) {
+            if (!array_key_exists($key, $args)) {
                 CalendlyOrganizationMembershipException::nestedKeyNotFound($key);
             }
         });

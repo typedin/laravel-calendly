@@ -2,16 +2,16 @@
 
 namespace Typedin\LaravelCalenly\Tests\Organization;
 
-use App\Services\Calendly\Exceptions\CalendlyOrganizationException;
-use App\Services\Calendly\Organization\CalendlyOrganization;
 use Carbon\Carbon;
+use Typedin\LaravelCalenly\Exceptions\CalendlyOrganizationException;
+use Typedin\LaravelCalenly\Organization\CalendlyOrganization;
 use Typedin\LaravelCalenly\Tests\CalendlyTestCase;
 
 class CalendlyOrganizationTest extends CalendlyTestCase
 {
     public string $fixture_file_name = 'organization';
 
-    public string $folder_path = __DIR__.'/__fixtures__/';
+    public string $folder_path = __DIR__ . '/__fixtures__/';
 
     public $nested_keys = 'resource';
 

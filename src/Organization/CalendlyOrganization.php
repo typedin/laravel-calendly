@@ -5,6 +5,7 @@ namespace Typedin\LaravelCalenly\Organization;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 use Typedin\LaravelCalenly\CalendlyService;
+use Typedin\LaravelCalenly\Exceptions\CalendlyOrganizationException;
 
 class CalendlyOrganization
 {
@@ -60,7 +61,7 @@ class CalendlyOrganization
     public function __construct($response_args)
     {
         $this->keys()->each(function ($key) use ($response_args) {
-            if (! array_key_exists($key, $response_args)) {
+            if (!array_key_exists($key, $response_args)) {
                 CalendlyOrganizationException::nestedKeyNotFound($key);
             }
         });
@@ -72,7 +73,7 @@ class CalendlyOrganization
             $this->$key = $value;
         });
 
-        $this->uuid = str_replace(CalendlyService::BASE_URL.'/organizations/', '', $response_args['uri']);
+        $this->uuid = str_replace(CalendlyService::BASE_URL . '/organizations/', '', $response_args['uri']);
     }
 
     /**

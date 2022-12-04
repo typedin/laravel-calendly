@@ -2,10 +2,10 @@
 
 namespace Typedin\LaravelCalenly;
 
-use App\Services\Calendly\Organization\CalendlyOrganization;
-use App\Services\Calendly\ScheduledEvent\CalendlyScheduledEvent;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Http;
+use Typedin\LaravelCalenly\Organization\CalendlyOrganization;
+use Typedin\LaravelCalenly\ScheduledEvent\CalendlyScheduledEvent;
 
 final class CalendlyService
 {
@@ -32,7 +32,7 @@ final class CalendlyService
     public function getUser(string $uuid): CalendlyUser
     {
         $user = Http::withToken($this->token)
-            ->get(self::BASE_URL.'/users/'.$uuid)
+            ->get(self::BASE_URL . '/users/' . $uuid)
             ->json('resource');
 
         return new CalendlyUser($user);
@@ -44,7 +44,7 @@ final class CalendlyService
     public function getOrganization(CalendlyUser $user): CalendlyOrganization
     {
         $organization = Http::withToken($this->token)
-            ->get(self::BASE_URL.'/organizations/'.$user->current_organization)
+            ->get(self::BASE_URL . '/organizations/' . $user->current_organization)
             ->json('resource');
 
         return new CalendlyOrganization($organization);
@@ -56,7 +56,7 @@ final class CalendlyService
     public function getUserEventsForOrganization(CalendlyUser $user, CalendlyOrganization $organization): Collection
     {
         $events = Http::withToken($this->token)
-            ->get(self::BASE_URL.'/scheduled_events', [
+            ->get(self::BASE_URL . '/scheduled_events', [
                 'organization' => $organization->uri,
                 'user' => $user->uri,
             ])

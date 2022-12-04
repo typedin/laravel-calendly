@@ -2,19 +2,24 @@
 
 namespace Typedin\LaravelCalenly\Tests;
 
-use App\Services\Calendly\Exceptions\CalendlyUserException;
 use Carbon\Carbon;
-use PHPUnit\Framework\TestCase;
 use Typedin\LaravelCalenly\CalendlyUser;
+use Typedin\LaravelCalenly\Exceptions\CalendlyUserException;
+use Typedin\LaravelCalenly\Tests\CalendlyTestCase;
 
-class CalendlyUserTest extends TestCase
+class CalendlyUserTest extends CalendlyTestCase
 {
+    public string $fixture_file_name = 'current-user';
+
+    public string $folder_path = __DIR__ . '/__fixtures__/';
+    public $nested_keys = "resource";
+
     /**
      * @test
      */
     public function it_can_be_instanciate(): void
     {
-        $sut = new CalendlyUser($this->fixture('current-user')['resource']);
+        $sut = new CalendlyUser($this->nestedKeys());
 
         $this->assertIsString($sut->avatar_url);
 
@@ -48,34 +53,5 @@ class CalendlyUserTest extends TestCase
         $this->expectExceptionMessage($message);
 
         new CalendlyUser($thing);
-    }
-
-    /**
-     * @return array<int,array>
-     */
-    private function providerNestedKey(): array
-    {
-        return collect($this->fixture('current-user')['resource'])
-            ->map(fn ($item, $key) => [
-                'Expect argument with '.$key.' key.',
-                $this->getClonedFixtureWithoutKey($key),
-            ])
-            ->all();
-    }
-
-    private function getClonedFixtureWithoutKey($key): array
-    {
-        $clone = clone_array($this->fixture('current-user')['resource']);
-        unset($clone[$key]);
-
-        return $clone;
-    }
-
-    private function fixture(string $filename): mixed
-    {
-        return json_decode(
-            file_get_contents(__DIR__.'/__fixtures__/'.$filename.'.json'),
-            true
-        );
     }
 }

@@ -1,16 +1,17 @@
 <?php
 
-namespace Tests\Unit\Services\Calendly\ScheduledEvent;
+namespace Typedin\LaravelCalenly\Tests\ScheduledEvent;
 
-use App\Services\Calendly\Exceptions\CalendlyEventLocationException;
-use App\Services\Calendly\ScheduledEvent\CalendlyEventLocation;
-use Tests\Unit\CalendlyTestCase;
+use Typedin\LaravelCalenly\Exceptions\CalendlyEventLocationException;
+use Typedin\LaravelCalenly\ScheduledEvent\CalendlyEventLocation;
+use Typedin\LaravelCalenly\Tests\CalendlyTestCase;
+
 
 class CalendlyEventLocationTest extends CalendlyTestCase
 {
     public string $fixture_file_name = 'location';
 
-    public string $folder_path = __DIR__.'/__fixtures__/';
+    public string $folder_path = __DIR__ . '/__fixtures__/';
 
     public $nested_keys = 'location';
 
