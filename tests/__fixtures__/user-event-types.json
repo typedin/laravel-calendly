@@ -1,0 +1,333 @@
+{
+    "collection": [
+        {
+            "active": true,
+            "admin_managed": false,
+            "booking_method": "instant",
+            "color": "#8247f5",
+            "created_at": "2022-02-22T13:22:58.756047Z",
+            "custom_questions": [
+                {
+                    "answer_choices": [],
+                    "enabled": true,
+                    "include_other": false,
+                    "name": "Avec votre numéro de téléphone, on pourra vous envoyer un SMS de rappel 60 min avant la visio, c'est tout ce que l'on fera avec votre numéro promis !",
+                    "position": 0,
+                    "required": false,
+                    "type": "phone_number"
+                },
+                {
+                    "answer_choices": [],
+                    "enabled": true,
+                    "include_other": false,
+                    "name": "Veuillez partager tout ce qui pourra être utile à la préparation de cette présentation",
+                    "position": 1,
+                    "required": false,
+                    "type": "text"
+                }
+            ],
+            "deleted_at": null,
+            "description_html": "<p>Cette session peut vous intéresser si :</p><ul>\n<li>Vous avez visionné<strong> la vidéo</strong> et/ou vous avez jeté un coup d’œil au <strong>site internet</strong> <strong>\"lecommercialjedetesteca.com\"</strong> ?</li>\n<li>Vous êtes <strong>indépendant, indépendante</strong> et vous êtes fâché.e avec le développement commercial ?</li>\n<li>Vous êtes <strong>tenté.e par la formation</strong> <strong>proposée</strong> mais vous avez encore des doutes et des questions sur l'organisation, le financement...</li>\n</ul><p><br></p><p>Inscrivez-vous à cette session d'échange pour <strong>faire connaissance</strong> et <strong>discuter</strong>.</p><p>À bientôt ;-)</p>",
+            "description_plain": "Cette session peut vous intéresser si :\n\n* Vous avez visionné la vidéo et/ou vous avez jeté un coup d’œil au site internet \"lecommercialjedetesteca.com\" ?\n* Vous êt…",
+            "duration": 45,
+            "internal_note": null,
+            "kind": "group",
+            "kind_description": "Group",
+            "name": "à propos de la formation \"le commercial, je déteste ça\"",
+            "pooling_type": null,
+            "profile": {
+                "name": "Frédéric CHAPUIS",
+                "owner": "https://api.calendly.com/users/9b28a3d8-cfda-4e99-9f67-b64f1ede1391",
+                "type": "User"
+            },
+            "scheduling_url": "https://calendly.com/fragile21/presentation-formation-le-commercial-je-deteste-ca",
+            "secret": false,
+            "slug": "presentation-formation-le-commercial-je-deteste-ca",
+            "type": "StandardEventType",
+            "updated_at": "2022-11-30T09:15:40.519129Z",
+            "uri": "https://api.calendly.com/event_types/a9ccdd7b-b6bd-4036-bb15-022e88a3edd9"
+        },
+        {
+            "active": true,
+            "admin_managed": false,
+            "booking_method": "instant",
+            "color": "#ffa600",
+            "created_at": "2022-09-29T09:53:15.831617Z",
+            "custom_questions": [
+                {
+                    "answer_choices": [],
+                    "enabled": true,
+                    "include_other": false,
+                    "name": "Veuillez partager tout ce qui pourra être utile à la préparation de notre réunion.",
+                    "position": 0,
+                    "required": false,
+                    "type": "text"
+                }
+            ],
+            "deleted_at": null,
+            "description_html": "<p><strong>L’ entreprise éthique : </strong></p><p><strong><em>simple slogan ou enjeu essentiel de notre époque ?</em></strong></p><p><br></p><p>L’histoire de la pensée économique se partage entre deux conceptions : d’une part l’économie naturelle, centrée sur la satisfaction des besoins, et, d’autre part, l’économie de marché, comprise comme production de richesse.</p><p>Alors que, dans une économie naturelle la notion d’éthique est indissociable de l’économique, l’essor de l’économie de marché semble avoir rendu problématique le maintien de l’éthique au cœur de l’activité économique : dans cette économie, la seule responsabilité sociale de l’entreprise pourrait être de maximiser les profits. </p><p><br></p><p><strong>Dès lors, une entreprise a-t-elle vocation à se soucier d’éthique ?</strong></p><p><br></p><p>Au cours de son intervention, M. <a href=\"https://fr.wikipedia.org/wiki/Georges-Elia_Sarfati\" target=\"_blank\">G-E Sarfati</a>, Philosophe, psychanalyste existentiel, traducteur et directeur de l’<a href=\"http://www.efrate.org/\" target=\"_blank\">Ecole française d’analyse et de thérapie existentielles</a>, nous proposera une réflexion visant à mieux cerner la signification de l’éthique, ses formes et ses possibilités.</p><p>Voici les questions sur lesquelles il essaiera d’aiguiser notre esprit critique : </p><p><em>Quelle relation y-a-t-il entre nécessités de l’entreprise et souci éthique ? </em></p><p><em>Y-a-t-il une éthique spécifique à l’entreprise ? </em></p><p><em>Plus généralement, comment comprendre les liens entre économie et éthique ? </em></p><p><em>Enfin, pourquoi ces deux thèmes sont ils autant d’actualité ? Sont-ils vraiment représentatifs de notre époque ? </em></p>",
+            "description_plain": "L’ entreprise éthique : \n\nsimple slogan ou enjeu essentiel de notre époque ?\n\n\nL’histoire de la pensée économique se partage entre deux conceptions : d’une part l’é…",
+            "duration": 75,
+            "internal_note": null,
+            "kind": "group",
+            "kind_description": "Group",
+            "name": "Café Philo du 25/10/2022",
+            "pooling_type": null,
+            "profile": {
+                "name": "Frédéric CHAPUIS",
+                "owner": "https://api.calendly.com/users/9b28a3d8-cfda-4e99-9f67-b64f1ede1391",
+                "type": "User"
+            },
+            "scheduling_url": "https://calendly.com/fragile21/cafe-philo-n-1-avec-g-e-sarfati",
+            "secret": true,
+            "slug": "cafe-philo-n-1-avec-g-e-sarfati",
+            "type": "StandardEventType",
+            "updated_at": "2022-11-30T09:15:40.519129Z",
+            "uri": "https://api.calendly.com/event_types/d62e8a70-3d52-4bc4-b7c2-bd2b3a4cb8b0"
+        },
+        {
+            "active": true,
+            "admin_managed": false,
+            "booking_method": "instant",
+            "color": "#17e885",
+            "created_at": "2022-01-19T08:12:55.454631Z",
+            "custom_questions": [
+                {
+                    "answer_choices": [],
+                    "enabled": true,
+                    "include_other": false,
+                    "name": "Veuillez partager tout ce qui pourra être utile à la préparation de notre réunion.",
+                    "position": 0,
+                    "required": false,
+                    "type": "text"
+                }
+            ],
+            "deleted_at": null,
+            "description_html": "<ul>\n<li>Une problématique à résoudre ?</li>\n<li>Une compétence à développer ?</li>\n<li>Besoin de mieux maîtriser une situation ?</li>\n</ul><p>Cet atelier de 90 min vise à vous permettre d'avancer plus vite et dans la bonne direction ;-)</p><p>Merci de sélectionner l'horaire qui vous accorde.</p><p>À bientôt,</p><p>Frédéric</p>",
+            "description_plain": "* Une problématique à résoudre ?\n* Une compétence à développer ?\n* Besoin de mieux maîtriser une situation ?\n\nCet atelier de 90 min vise à vous permettre d'avancer …",
+            "duration": 90,
+            "internal_note": null,
+            "kind": "solo",
+            "kind_description": "One-on-One",
+            "name": "Coaching et formations Individuels",
+            "pooling_type": null,
+            "profile": {
+                "name": "Frédéric CHAPUIS",
+                "owner": "https://api.calendly.com/users/9b28a3d8-cfda-4e99-9f67-b64f1ede1391",
+                "type": "User"
+            },
+            "scheduling_url": "https://calendly.com/fragile21/coaching",
+            "secret": false,
+            "slug": "coaching",
+            "type": "StandardEventType",
+            "updated_at": "2022-11-30T09:15:40.519129Z",
+            "uri": "https://api.calendly.com/event_types/0724fc41-96b7-4359-a1f2-0c0a660b7cb8"
+        },
+        {
+            "active": true,
+            "admin_managed": false,
+            "booking_method": "instant",
+            "color": "#ff4f00",
+            "created_at": "2022-02-11T08:50:09.312087Z",
+            "custom_questions": [
+                {
+                    "answer_choices": [],
+                    "enabled": true,
+                    "include_other": false,
+                    "name": "Un numéro de téléphone pour vous joindre ?\nPour un rappel du rdv et en cas de pbm de dernière minute",
+                    "position": 0,
+                    "required": false,
+                    "type": "phone_number"
+                },
+                {
+                    "answer_choices": [],
+                    "enabled": true,
+                    "include_other": false,
+                    "name": "Une question, une remarque avant notre discussion ? vous pouvez en faire part ici",
+                    "position": 1,
+                    "required": false,
+                    "type": "text"
+                }
+            ],
+            "deleted_at": null,
+            "description_html": "<p>Si tu/vous souhaitez échanger  sur nos actualités respectives, sur le temps qu'il fait ou, plus sérieusement, sur un éventuel partenariat, c'est ici et cela durera 45mn grand max ;-)</p>",
+            "description_plain": "Si tu/vous souhaitez échanger sur nos actualités respectives, sur le temps qu'il fait ou, plus sérieusement, sur un éventuel partenariat, c'est ici et cela durera 4…",
+            "duration": 45,
+            "internal_note": null,
+            "kind": "solo",
+            "kind_description": "One-on-One",
+            "name": "Discussion",
+            "pooling_type": null,
+            "profile": {
+                "name": "Frédéric CHAPUIS",
+                "owner": "https://api.calendly.com/users/9b28a3d8-cfda-4e99-9f67-b64f1ede1391",
+                "type": "User"
+            },
+            "scheduling_url": "https://calendly.com/fragile21/discussion",
+            "secret": false,
+            "slug": "discussion",
+            "type": "StandardEventType",
+            "updated_at": "2022-11-30T09:15:40.519129Z",
+            "uri": "https://api.calendly.com/event_types/2b8fd0af-4638-4dde-8432-b825ea7ccf4e"
+        },
+        {
+            "active": true,
+            "admin_managed": false,
+            "booking_method": "instant",
+            "color": "#ff4f00",
+            "created_at": "2022-01-19T08:12:55.382844Z",
+            "custom_questions": [
+                {
+                    "answer_choices": [],
+                    "enabled": true,
+                    "include_other": false,
+                    "name": "Veuillez partager tout ce qui pourra être utile à la préparation de notre réunion.",
+                    "position": 0,
+                    "required": false,
+                    "type": "text"
+                }
+            ],
+            "deleted_at": null,
+            "description_html": "<p>cet entretien préparatoire à la formation que vous avez choisi nous permettra de clarifier vos besoins et les compétences à acquérir au cours de cette formation</p>",
+            "description_plain": "cet entretien préparatoire à la formation que vous avez choisi nous permettra de clarifier vos besoins et les compétences à acquérir au cours de cette formation",
+            "duration": 30,
+            "internal_note": "Entretien de préparation de la formation, \"le commercial je déteste ça !\"",
+            "kind": "solo",
+            "kind_description": "One-on-One",
+            "name": "entretien préparatoire formation",
+            "pooling_type": null,
+            "profile": {
+                "name": "Frédéric CHAPUIS",
+                "owner": "https://api.calendly.com/users/9b28a3d8-cfda-4e99-9f67-b64f1ede1391",
+                "type": "User"
+            },
+            "scheduling_url": "https://calendly.com/fragile21/15min",
+            "secret": false,
+            "slug": "15min",
+            "type": "StandardEventType",
+            "updated_at": "2022-11-30T09:15:40.519129Z",
+            "uri": "https://api.calendly.com/event_types/06f0a8bf-e2d3-4d46-92e8-128aba8db453"
+        },
+        {
+            "active": true,
+            "admin_managed": false,
+            "booking_method": "instant",
+            "color": "#8247f5",
+            "created_at": "2022-02-21T12:49:40.263542Z",
+            "custom_questions": [
+                {
+                    "answer_choices": [],
+                    "enabled": true,
+                    "include_other": false,
+                    "name": "Veuillez partager tout ce qui pourra être utile à la préparation de notre réunion.",
+                    "position": 0,
+                    "required": false,
+                    "type": "text"
+                }
+            ],
+            "deleted_at": null,
+            "description_html": "<p>Vous êtes formateur, consultant, prospect, client ou simplement curieux et sympathisant de notre approche ?</p><p>Ce moment de présentation et d'échange d'une heure nous permettra de faire connaissance et peut-être d'aller plus loin si le cœur vous en dit</p>",
+            "description_plain": "Vous êtes formateur, consultant, prospect, client ou simplement curieux et sympathisant de notre approche ?\n\nCe moment de présentation et d'échange d'une heure nous…",
+            "duration": 60,
+            "internal_note": null,
+            "kind": "group",
+            "kind_description": "Group",
+            "name": "présentation de fragile21",
+            "pooling_type": null,
+            "profile": {
+                "name": "Frédéric CHAPUIS",
+                "owner": "https://api.calendly.com/users/9b28a3d8-cfda-4e99-9f67-b64f1ede1391",
+                "type": "User"
+            },
+            "scheduling_url": "https://calendly.com/fragile21/presentation-de-fragile21",
+            "secret": false,
+            "slug": "presentation-de-fragile21",
+            "type": "StandardEventType",
+            "updated_at": "2022-11-30T09:15:40.519129Z",
+            "uri": "https://api.calendly.com/event_types/79e5fd9a-4098-4679-8b80-04b648c3aea1"
+        },
+        {
+            "active": true,
+            "admin_managed": false,
+            "booking_method": "instant",
+            "color": "#17e885",
+            "created_at": "2022-01-19T08:44:38.352658Z",
+            "custom_questions": [
+                {
+                    "answer_choices": [],
+                    "enabled": true,
+                    "include_other": false,
+                    "name": "Veuillez partager tout ce qui pourra être utile à la préparation de notre réunion.",
+                    "position": 0,
+                    "required": false,
+                    "type": "text"
+                }
+            ],
+            "deleted_at": null,
+            "description_html": "<p>Cette session peut vous intéresser si :</p><ul>\n<li>Vous avez visionné<strong> la vidéo</strong> et/ou vous avez jeté un coup d’œil au <strong>site internet</strong> <strong>\"lecommercialjedetesteca.com\"</strong> ?</li>\n<li>Vous êtes <strong>indépendant, indépendante</strong> et vous êtes fâché.e avec le développement commercial ?</li>\n<li>Vous êtes <strong>tenté.e par la formation</strong> <strong>proposée</strong> mais vous avez encore des doutes et des questions sur l'organisation, le financement...</li>\n</ul><p><br></p><p>Inscrivez-vous à cette session d'échange pour <strong>faire connaissance</strong> et <strong>discuter</strong>.</p><p>À bientôt ;-)</p>",
+            "description_plain": "Cette session peut vous intéresser si :\n\n* Vous avez visionné la vidéo et/ou vous avez jeté un coup d’œil au site internet \"lecommercialjedetesteca.com\" ?\n* Vous êt…",
+            "duration": 45,
+            "internal_note": null,
+            "kind": "solo",
+            "kind_description": "One-on-One",
+            "name": "questions-réponses sur \"le commercial, je déteste ça\"",
+            "pooling_type": null,
+            "profile": {
+                "name": "Frédéric CHAPUIS",
+                "owner": "https://api.calendly.com/users/9b28a3d8-cfda-4e99-9f67-b64f1ede1391",
+                "type": "User"
+            },
+            "scheduling_url": "https://calendly.com/fragile21/lecommercialjedetesteca",
+            "secret": false,
+            "slug": "lecommercialjedetesteca",
+            "type": "StandardEventType",
+            "updated_at": "2022-11-30T09:15:40.519129Z",
+            "uri": "https://api.calendly.com/event_types/7f79ee3c-971a-4685-881e-48985cab1b11"
+        },
+        {
+            "active": true,
+            "admin_managed": false,
+            "booking_method": "instant",
+            "color": "#0ae8f0",
+            "created_at": "2022-02-21T13:27:33.049346Z",
+            "custom_questions": [
+                {
+                    "answer_choices": [],
+                    "enabled": true,
+                    "include_other": false,
+                    "name": "Veuillez partager tout ce qui pourra être utile à la préparation de notre réunion.",
+                    "position": 0,
+                    "required": false,
+                    "type": "text"
+                }
+            ],
+            "deleted_at": null,
+            "description_html": "<p>120 min de travail autour d'un thème fixé à l'avance</p>",
+            "description_plain": "120 min de travail autour d'un thème fixé à l'avance",
+            "duration": 120,
+            "internal_note": null,
+            "kind": "group",
+            "kind_description": "Group",
+            "name": "Réunion de travail",
+            "pooling_type": null,
+            "profile": {
+                "name": "Frédéric CHAPUIS",
+                "owner": "https://api.calendly.com/users/9b28a3d8-cfda-4e99-9f67-b64f1ede1391",
+                "type": "User"
+            },
+            "scheduling_url": "https://calendly.com/fragile21/reunion-de-travail",
+            "secret": false,
+            "slug": "reunion-de-travail",
+            "type": "StandardEventType",
+            "updated_at": "2022-11-30T09:15:40.519129Z",
+            "uri": "https://api.calendly.com/event_types/0d241b4f-a8ab-404c-b753-6c21c042d266"
+        }
+    ],
+    "pagination": {
+        "count": 8,
+        "next_page": null,
+        "next_page_token": null,
+        "previous_page": null,
+        "previous_page_token": null
+    }
+}

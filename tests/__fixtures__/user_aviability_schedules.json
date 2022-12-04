@@ -1,0 +1,465 @@
+{
+    "collection": [
+        {
+            "default": true,
+            "name": "planning frédéric chapuis",
+            "rules": [
+                {
+                    "type": "wday",
+                    "wday": "sunday",
+                    "intervals": []
+                },
+                {
+                    "type": "wday",
+                    "wday": "monday",
+                    "intervals": [
+                        {
+                            "from": "13:30",
+                            "to": "17:00"
+                        }
+                    ]
+                },
+                {
+                    "type": "wday",
+                    "wday": "tuesday",
+                    "intervals": [
+                        {
+                            "from": "08:30",
+                            "to": "10:30"
+                        },
+                        {
+                            "from": "10:30",
+                            "to": "12:30"
+                        },
+                        {
+                            "from": "14:00",
+                            "to": "15:30"
+                        },
+                        {
+                            "from": "15:30",
+                            "to": "17:00"
+                        }
+                    ]
+                },
+                {
+                    "type": "wday",
+                    "wday": "wednesday",
+                    "intervals": [
+                        {
+                            "from": "08:30",
+                            "to": "10:30"
+                        },
+                        {
+                            "from": "10:30",
+                            "to": "12:30"
+                        },
+                        {
+                            "from": "14:00",
+                            "to": "15:30"
+                        },
+                        {
+                            "from": "15:30",
+                            "to": "17:00"
+                        }
+                    ]
+                },
+                {
+                    "type": "wday",
+                    "wday": "thursday",
+                    "intervals": [
+                        {
+                            "from": "08:30",
+                            "to": "10:30"
+                        },
+                        {
+                            "from": "10:30",
+                            "to": "12:30"
+                        },
+                        {
+                            "from": "14:00",
+                            "to": "15:30"
+                        },
+                        {
+                            "from": "15:30",
+                            "to": "17:00"
+                        }
+                    ]
+                },
+                {
+                    "type": "wday",
+                    "wday": "friday",
+                    "intervals": [
+                        {
+                            "from": "13:30",
+                            "to": "17:00"
+                        }
+                    ]
+                },
+                {
+                    "type": "wday",
+                    "wday": "saturday",
+                    "intervals": []
+                },
+                {
+                    "type": "date",
+                    "date": "2022-12-06",
+                    "intervals": [
+                        {
+                            "from": "13:30",
+                            "to": "17:00"
+                        }
+                    ]
+                },
+                {
+                    "type": "date",
+                    "date": "2022-12-07",
+                    "intervals": []
+                },
+                {
+                    "type": "date",
+                    "date": "2022-12-08",
+                    "intervals": []
+                },
+                {
+                    "type": "date",
+                    "date": "2022-12-12",
+                    "intervals": []
+                },
+                {
+                    "type": "date",
+                    "date": "2022-12-13",
+                    "intervals": []
+                },
+                {
+                    "type": "date",
+                    "date": "2022-12-14",
+                    "intervals": []
+                },
+                {
+                    "type": "date",
+                    "date": "2022-12-23",
+                    "intervals": []
+                },
+                {
+                    "type": "date",
+                    "date": "2022-12-26",
+                    "intervals": []
+                },
+                {
+                    "type": "date",
+                    "date": "2022-12-27",
+                    "intervals": []
+                },
+                {
+                    "type": "date",
+                    "date": "2022-12-28",
+                    "intervals": []
+                },
+                {
+                    "type": "date",
+                    "date": "2022-12-29",
+                    "intervals": []
+                },
+                {
+                    "type": "date",
+                    "date": "2022-12-30",
+                    "intervals": []
+                },
+                {
+                    "type": "date",
+                    "date": "2023-01-02",
+                    "intervals": []
+                },
+                {
+                    "type": "date",
+                    "date": "2023-01-03",
+                    "intervals": []
+                },
+                {
+                    "type": "date",
+                    "date": "2023-01-04",
+                    "intervals": []
+                },
+                {
+                    "type": "date",
+                    "date": "2023-01-05",
+                    "intervals": []
+                },
+                {
+                    "type": "date",
+                    "date": "2023-01-06",
+                    "intervals": []
+                },
+                {
+                    "type": "date",
+                    "date": "2023-01-11",
+                    "intervals": [
+                        {
+                            "from": "14:00",
+                            "to": "15:30"
+                        },
+                        {
+                            "from": "15:30",
+                            "to": "17:00"
+                        }
+                    ]
+                },
+                {
+                    "type": "date",
+                    "date": "2023-01-16",
+                    "intervals": []
+                },
+                {
+                    "type": "date",
+                    "date": "2023-01-17",
+                    "intervals": []
+                },
+                {
+                    "type": "date",
+                    "date": "2023-01-18",
+                    "intervals": [
+                        {
+                            "from": "14:00",
+                            "to": "15:30"
+                        },
+                        {
+                            "from": "15:30",
+                            "to": "17:00"
+                        }
+                    ]
+                },
+                {
+                    "type": "date",
+                    "date": "2023-01-20",
+                    "intervals": []
+                },
+                {
+                    "type": "date",
+                    "date": "2023-01-25",
+                    "intervals": [
+                        {
+                            "from": "14:00",
+                            "to": "15:30"
+                        },
+                        {
+                            "from": "15:30",
+                            "to": "17:00"
+                        }
+                    ]
+                },
+                {
+                    "type": "date",
+                    "date": "2023-01-26",
+                    "intervals": [
+                        {
+                            "from": "08:30",
+                            "to": "10:30"
+                        },
+                        {
+                            "from": "10:30",
+                            "to": "12:30"
+                        }
+                    ]
+                },
+                {
+                    "type": "date",
+                    "date": "2023-01-27",
+                    "intervals": []
+                },
+                {
+                    "type": "date",
+                    "date": "2023-02-01",
+                    "intervals": [
+                        {
+                            "from": "14:00",
+                            "to": "15:30"
+                        },
+                        {
+                            "from": "15:30",
+                            "to": "17:00"
+                        }
+                    ]
+                },
+                {
+                    "type": "date",
+                    "date": "2023-02-06",
+                    "intervals": []
+                },
+                {
+                    "type": "date",
+                    "date": "2023-02-07",
+                    "intervals": []
+                },
+                {
+                    "type": "date",
+                    "date": "2023-02-08",
+                    "intervals": [
+                        {
+                            "from": "14:00",
+                            "to": "15:30"
+                        },
+                        {
+                            "from": "15:30",
+                            "to": "17:00"
+                        }
+                    ]
+                },
+                {
+                    "type": "date",
+                    "date": "2023-02-15",
+                    "intervals": [
+                        {
+                            "from": "14:00",
+                            "to": "15:30"
+                        },
+                        {
+                            "from": "15:30",
+                            "to": "17:00"
+                        }
+                    ]
+                },
+                {
+                    "type": "date",
+                    "date": "2023-02-16",
+                    "intervals": []
+                },
+                {
+                    "type": "date",
+                    "date": "2023-02-17",
+                    "intervals": []
+                },
+                {
+                    "type": "date",
+                    "date": "2023-03-13",
+                    "intervals": []
+                },
+                {
+                    "type": "date",
+                    "date": "2023-03-14",
+                    "intervals": []
+                },
+                {
+                    "type": "date",
+                    "date": "2023-04-06",
+                    "intervals": []
+                },
+                {
+                    "type": "date",
+                    "date": "2023-04-07",
+                    "intervals": []
+                },
+                {
+                    "type": "date",
+                    "date": "2023-05-04",
+                    "intervals": []
+                },
+                {
+                    "type": "date",
+                    "date": "2023-05-05",
+                    "intervals": []
+                },
+                {
+                    "type": "date",
+                    "date": "2023-05-10",
+                    "intervals": []
+                }
+            ],
+            "timezone": "Europe/Berlin",
+            "uri": "https://api.calendly.com/user_availability_schedules/11bf58e1-3a29-4de8-ba81-35680508e7d4",
+            "user": "https://api.calendly.com/users/9b28a3d8-cfda-4e99-9f67-b64f1ede1391"
+        },
+        {
+            "default": false,
+            "name": "Présentation fragile21",
+            "rules": [
+                {
+                    "type": "wday",
+                    "wday": "sunday",
+                    "intervals": []
+                },
+                {
+                    "type": "wday",
+                    "wday": "monday",
+                    "intervals": []
+                },
+                {
+                    "type": "wday",
+                    "wday": "tuesday",
+                    "intervals": [
+                        {
+                            "from": "11:00",
+                            "to": "12:00"
+                        }
+                    ]
+                },
+                {
+                    "type": "wday",
+                    "wday": "wednesday",
+                    "intervals": []
+                },
+                {
+                    "type": "wday",
+                    "wday": "thursday",
+                    "intervals": []
+                },
+                {
+                    "type": "wday",
+                    "wday": "friday",
+                    "intervals": []
+                },
+                {
+                    "type": "wday",
+                    "wday": "saturday",
+                    "intervals": []
+                }
+            ],
+            "timezone": "Europe/Berlin",
+            "uri": "https://api.calendly.com/user_availability_schedules/fd82830a-5b66-4bb8-bfd1-f1b17456ef0c",
+            "user": "https://api.calendly.com/users/9b28a3d8-cfda-4e99-9f67-b64f1ede1391"
+        },
+        {
+            "default": false,
+            "name": " presentation formation \"lecommercialjedetesteca\"",
+            "rules": [
+                {
+                    "type": "wday",
+                    "wday": "sunday",
+                    "intervals": []
+                },
+                {
+                    "type": "wday",
+                    "wday": "monday",
+                    "intervals": []
+                },
+                {
+                    "type": "wday",
+                    "wday": "tuesday",
+                    "intervals": []
+                },
+                {
+                    "type": "wday",
+                    "wday": "wednesday",
+                    "intervals": []
+                },
+                {
+                    "type": "wday",
+                    "wday": "thursday",
+                    "intervals": []
+                },
+                {
+                    "type": "wday",
+                    "wday": "friday",
+                    "intervals": []
+                },
+                {
+                    "type": "wday",
+                    "wday": "saturday",
+                    "intervals": []
+                }
+            ],
+            "timezone": "Europe/Berlin",
+            "uri": "https://api.calendly.com/user_availability_schedules/a6b9696f-48dc-47f4-bd0c-b0eaef21176e",
+            "user": "https://api.calendly.com/users/9b28a3d8-cfda-4e99-9f67-b64f1ede1391"
+        }
+    ]
+}

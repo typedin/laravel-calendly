@@ -1,0 +1,7 @@
+{
+    "resource": {
+        "canceled_by": "John Doe",
+        "reason": "No more money",
+        "canceler_type": "host"
+    }
+}
