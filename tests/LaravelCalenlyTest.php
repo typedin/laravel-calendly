@@ -2,15 +2,14 @@
 
 namespace Typedin\LaravelCalenly\Tests;
 
-use App\Services\Calendly\CalendlyService;
-use App\Services\Calendly\CalendlyUser;
-use App\Services\Calendly\Organization\CalendlyOrganization;
-use Illuminate\Config\Repository;
 use Illuminate\Support\Facades\Http;
-use PHPUnit\Framework\TestCase;
-use Typedin\LaravelCalenly\CalendlyService as TypedinCalendlyService;
+use Orchestra\Testbench\TestCase;
+use Typedin\LaravelCalenly\CalendlyService;
+use Typedin\LaravelCalenly\CalendlyUser;
+use Typedin\LaravelCalenly\LaravelCalenly;
+use Typedin\LaravelCalenly\Organization\CalendlyOrganization;
 
-class CalendlyServiceTest extends TestCase
+class LaravelCalenlyTest extends TestCase
 {
     /**
      * @var mixed|Repository
@@ -33,7 +32,7 @@ class CalendlyServiceTest extends TestCase
             'https://api.calendly.com/users/me' => Http::response($this->fixture('current-user'), 200),
         ]);
 
-        $me = (new TypedinCalendlyService($this->token))->getCurrentUser();
+        $me = (new LaravelCalenly($this->token))->getCurrentUser();
 
         $this->assertEquals($me->name, 'John Doe');
         $this->assertEquals($me->uuid, 'fake-user-uuid');
@@ -81,13 +80,13 @@ class CalendlyServiceTest extends TestCase
     public function it_lists_user_event_for_organization(): void
     {
         Http::fake([
-            'https://api.calendly.com/scheduled_events*' => Http::response($this->fixture('scheduled-events', '/../Calendly/ScheduledEvent/'), 200),
+            'https://api.calendly.com/scheduled_events*' => Http::response($this->fixture('scheduled-events', '/./ScheduledEvent/'), 200),
         ]);
 
         $events = (new CalendlyService($this->token))
             ->getUserEventsForOrganization(
                 new CalendlyUser($this->fixture('current-user')['resource']),
-                new CalendlyOrganization($this->fixture('organization', '/../Calendly/Organization/')['resource'])
+                new CalendlyOrganization($this->fixture('organization', '/./Organization/')['resource'])
             );
 
         $this->assertCount(1, $events);
@@ -96,7 +95,7 @@ class CalendlyServiceTest extends TestCase
     private function fixture(string $filename, string $path = ''): mixed
     {
         return json_decode(
-            file_get_contents(__DIR__.$path.'/__fixtures__/'.$filename.'.json'),
+            file_get_contents(__DIR__ . $path . '/__fixtures__/' . $filename . '.json'),
             true
         );
     }
