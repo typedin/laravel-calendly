@@ -1,7 +1,12 @@
 # Very short description of the package
 
+[![Latest Version](https://img.shields.io/github/release/typedin/laravel-calendly.svg?style=flat-square)](https://github.com/typedin/laravel-medialibrary/releases)
+
+![GitHub Workflow Status](https://img.shields.io/github/workflow/status/typedin/laravel-calendly/run-tests?label=tests)
+[![Total Downloads](https://img.shields.io/packagist/dt/typedin/laravel-calendly.svg?style=flat-square)](https://packagist.org/packages/typedin/laravel-medialibrary)
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/typedin/laravel-calenly.svg?style=flat-square)](https://packagist.org/packages/typedin/laravel-calenly)
 [![Total Downloads](https://img.shields.io/packagist/dt/typedin/laravel-calenly.svg?style=flat-square)](https://packagist.org/packages/typedin/laravel-calenly)
+
 ![GitHub Actions](https://github.com/typedin/laravel-calenly/actions/workflows/main.yml/badge.svg)
 
 This is where your description should go. Try and limit it to a paragraph or two, and maybe throw in a mention of what PSRs you support to avoid any confusion with users and contributors.
