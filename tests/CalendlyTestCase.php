@@ -1,6 +1,6 @@
 <?php
 
-namespace Typedin\LaravelCalenly\Tests;
+namespace Typedin\LaravelCalendly\Tests;
 
 use PHPUnit\Framework\TestCase;
 

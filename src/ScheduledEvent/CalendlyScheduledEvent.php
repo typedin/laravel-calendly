@@ -1,11 +1,11 @@
 <?php
 
-namespace Typedin\LaravelCalenly\ScheduledEvent;
+namespace Typedin\LaravelCalendly\ScheduledEvent;
 
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
-use Typedin\LaravelCalenly\CalendlyService;
-use Typedin\LaravelCalenly\Exceptions\CalendlyScheduledEventException;
+use Typedin\LaravelCalendly\CalendlyService;
+use Typedin\LaravelCalendly\Exceptions\CalendlyScheduledEventException;
 
 class CalendlyScheduledEvent
 {

@@ -1,11 +1,11 @@
 <?php
 
-namespace Typedin\LaravelCalenly\Tests\ScheduledEvent;
+namespace Typedin\LaravelCalendly\Tests\ScheduledEvent;
 
 use Carbon\Carbon;
-use Typedin\LaravelCalenly\Exceptions\CalendlyScheduledEventException;
-use Typedin\LaravelCalenly\ScheduledEvent\CalendlyScheduledEvent;
-use Typedin\LaravelCalenly\Tests\CalendlyTestCase;
+use Typedin\LaravelCalendly\Exceptions\CalendlyScheduledEventException;
+use Typedin\LaravelCalendly\ScheduledEvent\CalendlyScheduledEvent;
+use Typedin\LaravelCalendly\Tests\CalendlyTestCase;
 
 class CalendlyScheduledEventTest extends CalendlyTestCase
 {

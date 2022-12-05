@@ -1,11 +1,11 @@
 <?php
 
-namespace Typedin\LaravelCalenly\Organization;
+namespace Typedin\LaravelCalendly\Organization;
 
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
-use Typedin\LaravelCalenly\CalendlyUser;
-use Typedin\LaravelCalenly\Exceptions\CalendlyOrganizationMembershipException;
+use Typedin\LaravelCalendly\CalendlyUser;
+use Typedin\LaravelCalendly\Exceptions\CalendlyOrganizationMembershipException;
 
 class CalendlyOrganizationMembership
 {

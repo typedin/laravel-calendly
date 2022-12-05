@@ -1,9 +1,9 @@
 <?php
 
-namespace Typedin\LaravelCalenly\ScheduledEvent;
+namespace Typedin\LaravelCalendly\ScheduledEvent;
 
 use Illuminate\Support\Collection;
-use Typedin\LaravelCalenly\Exceptions\CalendlyCancellationException;
+use Typedin\LaravelCalendly\Exceptions\CalendlyCancellationException;
 
 /**
  * Provides data pertaining to the cancellation of the Event

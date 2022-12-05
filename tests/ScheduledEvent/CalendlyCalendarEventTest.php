@@ -1,10 +1,10 @@
 <?php
 
-namespace Typedin\LaravelCalenly\Tests\ScheduledEvent;
+namespace Typedin\LaravelCalendly\Tests\ScheduledEvent;
 
-use Typedin\LaravelCalenly\Exceptions\CalendlyUserException;
-use Typedin\LaravelCalenly\ScheduledEvent\CalendlyCalendarEvent;
-use Typedin\LaravelCalenly\Tests\CalendlyTestCase;
+use Typedin\LaravelCalendly\Exceptions\CalendlyUserException;
+use Typedin\LaravelCalendly\ScheduledEvent\CalendlyCalendarEvent;
+use Typedin\LaravelCalendly\Tests\CalendlyTestCase;
 
 class CalendlyCalendarEventTest extends CalendlyTestCase
 {

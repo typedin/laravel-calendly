@@ -1,10 +1,10 @@
 <?php
 
-namespace Typedin\LaravelCalenly\Tests\ScheduledEvent;
+namespace Typedin\LaravelCalendly\Tests\ScheduledEvent;
 
-use Typedin\LaravelCalenly\Exceptions\CalendlyEventLocationException;
-use Typedin\LaravelCalenly\ScheduledEvent\CalendlyEventLocation;
-use Typedin\LaravelCalenly\Tests\CalendlyTestCase;
+use Typedin\LaravelCalendly\Exceptions\CalendlyEventLocationException;
+use Typedin\LaravelCalendly\ScheduledEvent\CalendlyEventLocation;
+use Typedin\LaravelCalendly\Tests\CalendlyTestCase;
 
 class CalendlyEventLocationTest extends CalendlyTestCase
 {

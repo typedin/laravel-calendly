@@ -1,10 +1,10 @@
 <?php
 
-namespace Typedin\LaravelCalenly\Tests\ScheduledEvent;
+namespace Typedin\LaravelCalendly\Tests\ScheduledEvent;
 
-use Typedin\LaravelCalenly\Exceptions\CalendlyInviteesCounterException;
-use Typedin\LaravelCalenly\ScheduledEvent\CalendlyInviteesCounter;
-use Typedin\LaravelCalenly\Tests\CalendlyTestCase;
+use Typedin\LaravelCalendly\Exceptions\CalendlyInviteesCounterException;
+use Typedin\LaravelCalendly\ScheduledEvent\CalendlyInviteesCounter;
+use Typedin\LaravelCalendly\Tests\CalendlyTestCase;
 
 class CalendlyInviteesCounterTest extends CalendlyTestCase
 {

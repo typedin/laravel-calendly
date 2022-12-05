@@ -1,15 +1,15 @@
 <?php
 
-namespace Typedin\LaravelCalenly\Tests;
+namespace Typedin\LaravelCalendly\Tests;
 
 use Illuminate\Support\Facades\Http;
 use Orchestra\Testbench\TestCase;
-use Typedin\LaravelCalenly\CalendlyService;
-use Typedin\LaravelCalenly\CalendlyUser;
-use Typedin\LaravelCalenly\LaravelCalenly;
-use Typedin\LaravelCalenly\Organization\CalendlyOrganization;
+use Typedin\LaravelCalendly\CalendlyService;
+use Typedin\LaravelCalendly\CalendlyUser;
+use Typedin\LaravelCalendly\LaravelCalendly;
+use Typedin\LaravelCalendly\Organization\CalendlyOrganization;
 
-class LaravelCalenlyTest extends TestCase
+class LaravelCalendlyTest extends TestCase
 {
     /**
      * @var mixed|Repository
@@ -32,7 +32,7 @@ class LaravelCalenlyTest extends TestCase
             'https://api.calendly.com/users/me' => Http::response($this->fixture('current-user'), 200),
         ]);
 
-        $me = (new LaravelCalenly($this->token))->getCurrentUser();
+        $me = (new LaravelCalendly($this->token))->getCurrentUser();
 
         $this->assertEquals($me->name, 'John Doe');
         $this->assertEquals($me->uuid, 'fake-user-uuid');

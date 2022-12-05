@@ -1,11 +1,11 @@
 {
-  "name": "typedin/laravel-calenly",
+  "name": "typedin/laravel-calendly",
   "description": "A Laravel Package to interact with Calendly API",
   "keywords": [
     "typedin",
-    "laravel-calenly"
+    "laravel-calendly"
   ],
-  "homepage": "https://github.com/typedin/laravel-calenly",
+  "homepage": "https://github.com/typedin/laravel-calendly",
   "license": "MIT",
   "type": "library",
   "authors": [
@@ -31,7 +31,7 @@
   },
   "autoload": {
     "psr-4": {
-      "Typedin\\LaravelCalenly\\": "src"
+      "Typedin\\LaravelCalendly\\": "src"
     },
     "files": [
       "src/helpers.php"
@@ -39,7 +39,7 @@
   },
   "autoload-dev": {
     "psr-4": {
-      "Typedin\\LaravelCalenly\\Tests\\": "tests"
+      "Typedin\\LaravelCalendly\\Tests\\": "tests"
     }
   },
   "scripts": {
@@ -58,10 +58,10 @@
   "extra": {
     "laravel": {
       "providers": [
-        "Typedin\\LaravelCalenly\\LaravelCalenlyServiceProvider"
+        "Typedin\\LaravelCalendly\\LaravelCalendlyServiceProvider"
       ],
       "aliases": {
-        "LaravelCalenly": "Typedin\\LaravelCalenly\\LaravelCalenlyFacade"
+        "LaravelCalendly": "Typedin\\LaravelCalendly\\LaravelCalendlyFacade"
       }
     }
   }

@@ -1,12 +1,12 @@
 <?php
 
-namespace Typedin\LaravelCalenly\Tests\Organization;
+namespace Typedin\LaravelCalendly\Tests\Organization;
 
 use Carbon\Carbon;
-use Typedin\LaravelCalenly\CalendlyUser;
-use Typedin\LaravelCalenly\Exceptions\CalendlyOrganizationMembershipException;
-use Typedin\LaravelCalenly\Organization\CalendlyOrganizationMembership;
-use Typedin\LaravelCalenly\Tests\CalendlyTestCase;
+use Typedin\LaravelCalendly\CalendlyUser;
+use Typedin\LaravelCalendly\Exceptions\CalendlyOrganizationMembershipException;
+use Typedin\LaravelCalendly\Organization\CalendlyOrganizationMembership;
+use Typedin\LaravelCalendly\Tests\CalendlyTestCase;
 
 class CalendlyOrganizationMembershipTest extends CalendlyTestCase
 {

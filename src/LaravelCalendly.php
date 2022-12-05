@@ -1,13 +1,13 @@
 <?php
 
-namespace Typedin\LaravelCalenly;
+namespace Typedin\LaravelCalendly;
 
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Http;
-use Typedin\LaravelCalenly\Organization\CalendlyOrganization;
-use Typedin\LaravelCalenly\ScheduledEvent\CalendlyScheduledEvent;
+use Typedin\LaravelCalendly\Organization\CalendlyOrganization;
+use Typedin\LaravelCalendly\ScheduledEvent\CalendlyScheduledEvent;
 
-class LaravelCalenly
+class LaravelCalendly
 {
     private String $token;
 

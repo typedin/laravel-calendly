@@ -1,13 +1,13 @@
 <?php
 
-namespace Typedin\LaravelCalenly;
+namespace Typedin\LaravelCalendly;
 
 use Illuminate\Support\Facades\Facade;
 
 /**
- * @see \Typedin\LaravelCalenly\Skeleton\SkeletonClass
+ * @see \Typedin\LaravelCalendly\Skeleton\SkeletonClass
  */
-class LaravelCalenlyFacade extends Facade
+class LaravelCalendlyFacade extends Facade
 {
     /**
      * Get the registered name of the component.
@@ -16,6 +16,6 @@ class LaravelCalenlyFacade extends Facade
      */
     protected static function getFacadeAccessor()
     {
-        return 'laravel-calenly';
+        return 'laravel-calendly';
     }
 }

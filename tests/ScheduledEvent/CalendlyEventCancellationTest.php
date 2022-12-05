@@ -1,10 +1,10 @@
 <?php
 
-namespace Typedin\LaravelCalenly\Tests\ScheduledEvent;
+namespace Typedin\LaravelCalendly\Tests\ScheduledEvent;
 
-use Typedin\LaravelCalenly\Exceptions\CalendlyCancellationException;
-use Typedin\LaravelCalenly\ScheduledEvent\CalendlyEventCancellation;
-use Typedin\LaravelCalenly\Tests\CalendlyTestCase;
+use Typedin\LaravelCalendly\Exceptions\CalendlyCancellationException;
+use Typedin\LaravelCalendly\ScheduledEvent\CalendlyEventCancellation;
+use Typedin\LaravelCalendly\Tests\CalendlyTestCase;
 
 class CalendlyEventCancellationTest extends CalendlyTestCase
 {

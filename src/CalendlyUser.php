@@ -1,10 +1,10 @@
 <?php
 
-namespace Typedin\LaravelCalenly;
+namespace Typedin\LaravelCalendly;
 
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
-use Typedin\LaravelCalenly\Exceptions\CalendlyUserException;
+use Typedin\LaravelCalendly\Exceptions\CalendlyUserException;
 
 class CalendlyUser
 {

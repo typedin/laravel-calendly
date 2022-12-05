@@ -1,9 +1,9 @@
 <?php
 
-namespace Typedin\LaravelCalenly\ScheduledEvent;
+namespace Typedin\LaravelCalendly\ScheduledEvent;
 
 use Illuminate\Support\Collection;
-use Typedin\LaravelCalenly\Exceptions\CalendlyEventLocationException;
+use Typedin\LaravelCalendly\Exceptions\CalendlyEventLocationException;
 
 class CalendlyEventLocation
 {

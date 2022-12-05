@@ -1,6 +1,6 @@
 <?php
 
-namespace Typedin\LaravelCalenly\Exceptions;
+namespace Typedin\LaravelCalendly\Exceptions;
 
 use Exception;
 

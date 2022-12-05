@@ -1,10 +1,10 @@
 <?php
 
-namespace Typedin\LaravelCalenly\Tests;
+namespace Typedin\LaravelCalendly\Tests;
 
 use Carbon\Carbon;
-use Typedin\LaravelCalenly\CalendlyUser;
-use Typedin\LaravelCalenly\Exceptions\CalendlyUserException;
+use Typedin\LaravelCalendly\CalendlyUser;
+use Typedin\LaravelCalendly\Exceptions\CalendlyUserException;
 
 class CalendlyUserTest extends CalendlyTestCase
 {
