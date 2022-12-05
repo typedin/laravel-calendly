@@ -5,8 +5,9 @@
 [![Latest Version](https://img.shields.io/github/release/typedin/laravel-calendly.svg?style=flat-square)](https://github.com/typedin/laravel-medialibrary/releases)
 
 ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/typedin/laravel-calendly/run-tests?label=tests)
-[![Total Downloads](https://img.shields.io/packagist/dt/typedin/laravel-calendly.svg?style=flat-square)](https://packagist.org/packages/typedin/laravel-medialibrary)
+
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/typedin/laravel-calendly.svg?style=flat-square)](https://packagist.org/packages/typedin/laravel-calendly)
+
 [![Total Downloads](https://img.shields.io/packagist/dt/typedin/laravel-calendly.svg?style=flat-square)](https://packagist.org/packages/typedin/laravel-calendly)
 
 ## Documentation
