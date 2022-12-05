@@ -8,3 +8,5 @@ composer.lock
 .php-cs-fixer.cache
 phpstan.neon
 tests/Support/temp/
+.env.testing
+phpunit.xml
