@@ -6,6 +6,6 @@
 return [
     'api' => [
         'key' => env('CALENDLY_API_KEY'),
-        "endpoint" => env('CALENDLY_ENDPOINT', "https://api.calendly.com")
+        'endpoint' => env('CALENDLY_ENDPOINT', 'https://api.calendly.com'),
     ],
 ];

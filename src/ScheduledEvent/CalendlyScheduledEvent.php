@@ -5,7 +5,6 @@ namespace Typedin\LaravelCalendly\ScheduledEvent;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Typedin\LaravelCalendly\Exceptions\CalendlyScheduledEventException;
-use Typedin\LaravelCalendly\LaravelCalendly;
 
 class CalendlyScheduledEvent
 {
@@ -96,7 +95,7 @@ class CalendlyScheduledEvent
     public function __construct(array $args, string $base_url)
     {
         $this->keys()->each(function ($key) use ($args) {
-            if (!array_key_exists($key, $args)) {
+            if (! array_key_exists($key, $args)) {
                 CalendlyScheduledEventException::keyNotFound($key);
             }
         });
@@ -108,7 +107,7 @@ class CalendlyScheduledEvent
             $this->$key = $value;
         });
 
-        $this->uuid = str_replace($base_url . '/scheduled_events/', '', $args['uri']);
+        $this->uuid = str_replace($base_url.'/scheduled_events/', '', $args['uri']);
     }
 
     /**

@@ -59,7 +59,7 @@ class CalendlyOrganizationMembership
     public function __construct(array $args, string $base_url)
     {
         $this->keys()->each(function ($key) use ($args) {
-            if (!array_key_exists($key, $args)) {
+            if (! array_key_exists($key, $args)) {
                 CalendlyOrganizationMembershipException::nestedKeyNotFound($key);
             }
         });

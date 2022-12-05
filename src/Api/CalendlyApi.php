@@ -11,11 +11,13 @@ use Typedin\LaravelCalendly\ScheduledEvent\CalendlyScheduledEvent;
 class CalendlyApi extends Factory
 {
     private const BASE_URL = 'https://api.calendly.com';
-    private const USER_URL = "users";
+
+    private const USER_URL = 'users';
 
     private const SCHEDULED_EVENTS_URL = 'scheduled_events';
 
     private string $apiKey;
+
     private string $api_endpoint;
 
     public function __construct(string $apiKey, string $api_endpoint)
@@ -40,13 +42,12 @@ class CalendlyApi extends Factory
 
     /**
      * @return CalendlyUser
-
      */
     public function getUser($user = 'me'): CalendlyUser
     {
         $user = $this->newPendingRequest()
-            ->get(self::USER_URL . "/{$user}")
-            ->json("resource");
+            ->get(self::USER_URL."/{$user}")
+            ->json('resource');
 
         return new CalendlyUser($user);
     }
@@ -58,10 +59,10 @@ class CalendlyApi extends Factory
     {
         $events = $this->newPendingRequest()
             ->get(self::SCHEDULED_EVENTS_URL, [
-                "user" => $user->uri
+                'user' => $user->uri,
             ])
-            ->json("collection");
+            ->json('collection');
 
-        return collect($events)->map(fn ($event) =>  new CalendlyScheduledEvent($event));
+        return collect($events)->map(fn ($event) => new CalendlyScheduledEvent($event));
     }
 }

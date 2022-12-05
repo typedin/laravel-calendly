@@ -11,11 +11,10 @@ use Typedin\LaravelCalendly\CalendlyUser;
  */
 class CalendlyApiTest extends \Orchestra\Testbench\TestCase
 {
-
     protected function getPackageProviders($app): array
     {
         return [
-            "Typedin\LaravelCalendly\LaravelCalendlyServiceProvider"
+            "Typedin\LaravelCalendly\LaravelCalendlyServiceProvider",
         ];
     }
 
@@ -34,8 +33,8 @@ class CalendlyApiTest extends \Orchestra\Testbench\TestCase
      */
     public function it_can_fetch_the_current_user(): void
     {
-        $apiKey = config("laravel-calendly.api.key");
-        $apiUrl = config("laravel-calendly.api.endpoint");
+        $apiKey = config('laravel-calendly.api.key');
+        $apiUrl = config('laravel-calendly.api.endpoint');
 
         $user = (new CalendlyApi($apiKey, $apiUrl))->getUser();
 
@@ -47,8 +46,8 @@ class CalendlyApiTest extends \Orchestra\Testbench\TestCase
      */
     public function it_can_fetch_scheduled_events(): void
     {
-        $apiKey = config("laravel-calendly.api.key");
-        $apiUrl = config("laravel-calendly.api.endpoint");
+        $apiKey = config('laravel-calendly.api.key');
+        $apiUrl = config('laravel-calendly.api.endpoint');
 
         $user = (new CalendlyApi($apiKey, $apiUrl))->getUser();
 

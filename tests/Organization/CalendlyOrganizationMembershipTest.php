@@ -12,7 +12,7 @@ class CalendlyOrganizationMembershipTest extends CalendlyTestCase
 {
     public string $fixture_file_name = 'organization-membership';
 
-    public string $folder_path = __DIR__ . '/__fixtures__/';
+    public string $folder_path = __DIR__.'/__fixtures__/';
 
     /**
      * @test
