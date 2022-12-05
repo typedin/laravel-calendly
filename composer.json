@@ -26,6 +26,7 @@
   },
   "require-dev": {
     "laravel/pint": "^1.2",
+    "nunomaduro/larastan": "^2.2",
     "phpunit/phpunit": "^9.5"
   },
   "autoload": {
@@ -43,7 +44,13 @@
   },
   "scripts": {
     "test": "vendor/bin/phpunit",
-    "test-coverage": "vendor/bin/phpunit --coverage-html coverage"
+    "test-coverage": "vendor/bin/phpunit --coverage-html coverage",
+    "phpstan": [
+      "./vendor/bin/phpstan analyse"
+    ]
+  },
+  "scripts-descriptions": {
+    "phpstan": "Run PHPStan static analysis against your application."
   },
   "config": {
     "sort-packages": true
