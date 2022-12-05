@@ -1,4 +1,4 @@
-<p align="center"><img src="/art/socialcard.png" alt="Social Card of Laravel Media Library"></p>
+<p align="center"><img src="/art/logo.svg" alt="Social Card of Laravel Calendly"></p>
 
 # Interact with Calendly API with Laravel
 
