@@ -10,10 +10,10 @@ jobs:
             matrix:
                 os: [ubuntu-latest]
                 php: [8.1]
-                laravel: [9.*]
+                laravel: [9.x-dev]
                 stability: [dev]
                 include:
-                    - laravel: 9.*
+                    - laravel: 9.x-dev
                       testbench: 8.0.x-dev
 
         name: P${{ matrix.php }} - L${{ matrix.laravel }} - ${{ matrix.stability }} - ${{ matrix.os }}
