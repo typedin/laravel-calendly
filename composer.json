@@ -1,60 +1,61 @@
 {
-    "name": "typedin/laravel-calenly",
-    "description": "A Laravel Package to interact with Calendly",
-    "keywords": [
-        "typedin",
-        "laravel-calenly"
-    ],
-    "homepage": "https://github.com/typedin/laravel-calenly",
-    "license": "MIT",
-    "type": "library",
-    "authors": [
-        {
-            "name": "Antoine Cheynet",
-            "email": "antoine@typedin.dev",
-            "role": "Developer"
-        }
-    ],
-    "require": {
-        "php": "^8.0",
-        "adbario/php-dot-notation": "^3.2",
-        "illuminate/support": "^8.0",
-        "nesbot/carbon": "^2.64"
-    },
-    "require-dev": {
-        "laravel/pint": "^1.2",
-        "orchestra/testbench": "^6.0",
-        "phpunit/phpunit": "^9.5"
-    },
-    "autoload": {
-        "psr-4": {
-            "Typedin\\LaravelCalenly\\": "src"
-        },
-        "files": [
-            "src/helpers.php"
-        ]
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "Typedin\\LaravelCalenly\\Tests\\": "tests"
-        }
-    },
-    "scripts": {
-        "test": "vendor/bin/phpunit",
-        "test-coverage": "vendor/bin/phpunit --coverage-html coverage"
-
-    },
-    "config": {
-        "sort-packages": true
-    },
-    "extra": {
-        "laravel": {
-            "providers": [
-                "Typedin\\LaravelCalenly\\LaravelCalenlyServiceProvider"
-            ],
-            "aliases": {
-                "LaravelCalenly": "Typedin\\LaravelCalenly\\LaravelCalenlyFacade"
-            }
-        }
+  "name": "typedin/laravel-calenly",
+  "description": "A Laravel Package to interact with Calendly",
+  "keywords": [
+    "typedin",
+    "laravel-calenly"
+  ],
+  "homepage": "https://github.com/typedin/laravel-calenly",
+  "license": "MIT",
+  "type": "library",
+  "authors": [
+    {
+      "name": "Antoine Cheynet",
+      "email": "antoine@typedin.dev",
+      "role": "Developer"
     }
+  ],
+  "minimum-stability": "dev",
+  "require": {
+    "php": "^8.1",
+    "adbario/php-dot-notation": "^3.2",
+    "illuminate/collections": "10.x-dev",
+    "illuminate/http": "10.x-dev",
+    "nesbot/carbon": "^2.64"
+  },
+  "require-dev": {
+    "laravel/pint": "^1.2",
+    "orchestra/testbench": "8.0.x-dev",
+    "phpunit/phpunit": "^9.5"
+  },
+  "autoload": {
+    "psr-4": {
+      "Typedin\\LaravelCalenly\\": "src"
+    },
+    "files": [
+      "src/helpers.php"
+    ]
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Typedin\\LaravelCalenly\\Tests\\": "tests"
+    }
+  },
+  "scripts": {
+    "test": "vendor/bin/phpunit",
+    "test-coverage": "vendor/bin/phpunit --coverage-html coverage"
+  },
+  "config": {
+    "sort-packages": true
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Typedin\\LaravelCalenly\\LaravelCalenlyServiceProvider"
+      ],
+      "aliases": {
+        "LaravelCalenly": "Typedin\\LaravelCalenly\\LaravelCalenlyFacade"
+      }
+    }
+  }
 }
