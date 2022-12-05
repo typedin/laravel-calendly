@@ -12,7 +12,7 @@ jobs:
             - uses: php-actions/phpstan@v3
               with:
                 path: src/
-                memory_limit: 128M
+                memory_limit: 64M
             - name: PHPUnit (php-actions)
               uses: php-actions/phpunit@v3
               with:
