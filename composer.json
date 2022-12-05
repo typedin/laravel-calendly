@@ -1,6 +1,6 @@
 {
   "name": "typedin/laravel-calenly",
-  "description": "A Laravel Package to interact with Calendly",
+  "description": "A Laravel Package to interact with Calendly API",
   "keywords": [
     "typedin",
     "laravel-calenly"
