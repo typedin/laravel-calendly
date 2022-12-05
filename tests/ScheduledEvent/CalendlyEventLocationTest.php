@@ -10,7 +10,7 @@ class CalendlyEventLocationTest extends CalendlyTestCase
 {
     public string $fixture_file_name = 'location';
 
-    public string $folder_path = __DIR__ . '/__fixtures__/';
+    public string $folder_path = __DIR__.'/__fixtures__/';
 
     public $nested_keys = 'location';
 

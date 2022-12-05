@@ -113,8 +113,8 @@ class CalendlyUser
             $this->$key = $value;
         });
 
-        $this->uuid = str_replace(LaravelCalendly::BASE_URL . '/users/', '', $response_args['uri']);
-        $this->current_organization = str_replace(LaravelCalendly::BASE_URL . '/organizations/', '', $response_args['current_organization']);
+        $this->uuid = str_replace(LaravelCalendly::BASE_URL.'/users/', '', $response_args['uri']);
+        $this->current_organization = str_replace(LaravelCalendly::BASE_URL.'/organizations/', '', $response_args['current_organization']);
     }
 
     /**

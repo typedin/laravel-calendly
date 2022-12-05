@@ -95,7 +95,7 @@ class LaravelCalendlyTest extends TestCase
     private function fixture(string $filename, string $path = ''): mixed
     {
         return json_decode(
-            file_get_contents(__DIR__ . $path . '/__fixtures__/' . $filename . '.json'),
+            file_get_contents(__DIR__.$path.'/__fixtures__/'.$filename.'.json'),
             true
         );
     }
