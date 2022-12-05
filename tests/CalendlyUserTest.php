@@ -10,7 +10,7 @@ class CalendlyUserTest extends CalendlyTestCase
 {
     public string $fixture_file_name = 'current-user';
 
-    public string $folder_path = __DIR__.'/__fixtures__/';
+    public string $folder_path = __DIR__ . '/__fixtures__/';
 
     public $nested_keys = 'resource';
 
@@ -19,7 +19,7 @@ class CalendlyUserTest extends CalendlyTestCase
      */
     public function it_can_be_instanciate(): void
     {
-        $sut = new CalendlyUser($this->nestedKeys());
+        $sut = new CalendlyUser($this->nestedKeys(), $this->base_url);
 
         $this->assertIsString($sut->avatar_url);
 
@@ -52,6 +52,6 @@ class CalendlyUserTest extends CalendlyTestCase
         $this->expectException(CalendlyUserException::class);
         $this->expectExceptionMessage($message);
 
-        new CalendlyUser($thing);
+        new CalendlyUser($thing, $this->base_url);
     }
 }

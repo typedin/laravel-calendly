@@ -6,6 +6,8 @@ use PHPUnit\Framework\TestCase;
 
 abstract class CalendlyTestCase extends TestCase
 {
+    public string $base_url = "https://api.calendly.com";
+
     public string $fixture_file_name;
 
     public string $folder_path;

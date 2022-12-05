@@ -98,23 +98,23 @@ class CalendlyUser
 
     public const DATEABLE = ['created_at', 'updated_at'];
 
-    public function __construct($response_args)
+    public function __construct(array $args, string $base_url)
     {
-        $this->keys()->each(function ($key) use ($response_args) {
-            if (! array_key_exists($key, $response_args)) {
+        $this->keys()->each(function ($key) use ($args) {
+            if (!array_key_exists($key, $args)) {
                 CalendlyUserException::nestedKeyNotFound($key);
             }
         });
 
-        collect($response_args)->each(function ($value, $key) {
+        collect($args)->each(function ($value, $key) {
             if (in_array($key, self::DATEABLE)) {
                 $value = Carbon::parse($value);
             }
             $this->$key = $value;
         });
 
-        $this->uuid = str_replace(LaravelCalendly::BASE_URL.'/users/', '', $response_args['uri']);
-        $this->current_organization = str_replace(LaravelCalendly::BASE_URL.'/organizations/', '', $response_args['current_organization']);
+        $this->uuid = str_replace($base_url . '/users/', '', $args['uri']);
+        $this->current_organization = str_replace($base_url . '/organizations/', '', $args['current_organization']);
     }
 
     /**

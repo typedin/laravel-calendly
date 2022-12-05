@@ -12,14 +12,14 @@ class CalendlyOrganizationMembershipTest extends CalendlyTestCase
 {
     public string $fixture_file_name = 'organization-membership';
 
-    public string $folder_path = __DIR__.'/__fixtures__/';
+    public string $folder_path = __DIR__ . '/__fixtures__/';
 
     /**
      * @test
      */
     public function it_can_be_instanciate(): void
     {
-        $sut = new CalendlyOrganizationMembership($this->fixture());
+        $sut = new CalendlyOrganizationMembership($this->fixture(), $this->base_url);
 
         $this->assertIsString($sut->uri);
         $this->assertIsString($sut->role);
@@ -43,6 +43,6 @@ class CalendlyOrganizationMembershipTest extends CalendlyTestCase
         $this->expectException(CalendlyOrganizationMembershipException::class);
         $this->expectExceptionMessage($message);
 
-        new CalendlyOrganizationMembership($thing);
+        new CalendlyOrganizationMembership($thing, $this->base_url);
     }
 }

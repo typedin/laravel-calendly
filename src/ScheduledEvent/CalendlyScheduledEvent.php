@@ -93,22 +93,22 @@ class CalendlyScheduledEvent
 
     public const DATEABLE = ['created_at', 'updated_at', 'start_time', 'end_time'];
 
-    public function __construct($response_args)
+    public function __construct(array $args, string $base_url)
     {
-        $this->keys()->each(function ($key) use ($response_args) {
-            if (! array_key_exists($key, $response_args)) {
+        $this->keys()->each(function ($key) use ($args) {
+            if (!array_key_exists($key, $args)) {
                 CalendlyScheduledEventException::keyNotFound($key);
             }
         });
 
-        collect($response_args)->each(function ($value, $key) {
+        collect($args)->each(function ($value, $key) {
             if (in_array($key, self::DATEABLE)) {
                 $value = Carbon::parse($value);
             }
             $this->$key = $value;
         });
 
-        $this->uuid = str_replace(LaravelCalendly::BASE_URL.'/scheduled_events/', '', $response_args['uri']);
+        $this->uuid = str_replace($base_url . '/scheduled_events/', '', $args['uri']);
     }
 
     /**

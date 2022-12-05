@@ -11,7 +11,7 @@ class CalendlyScheduledEventTest extends CalendlyTestCase
 {
     public string $fixture_file_name = 'scheduled-events';
 
-    public string $folder_path = __DIR__.'/__fixtures__/';
+    public string $folder_path = __DIR__ . '/__fixtures__/';
 
     public $nested_keys = 'collection.0';
 
@@ -20,7 +20,7 @@ class CalendlyScheduledEventTest extends CalendlyTestCase
      */
     public function it_can_be_instanciate(): void
     {
-        $sut = new CalendlyScheduledEvent($this->nestedKeys());
+        $sut = new CalendlyScheduledEvent($this->nestedKeys(), $this->base_url);
 
         $this->assertIsString($sut->event_type);
         $this->assertIsString($sut->name);
@@ -49,6 +49,6 @@ class CalendlyScheduledEventTest extends CalendlyTestCase
         $this->expectException(CalendlyScheduledEventException::class);
         $this->expectExceptionMessage($message);
 
-        new CalendlyScheduledEvent($thing);
+        new CalendlyScheduledEvent($thing, $this->base_url);
     }
 }

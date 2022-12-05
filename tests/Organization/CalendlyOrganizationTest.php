@@ -20,7 +20,7 @@ class CalendlyOrganizationTest extends CalendlyTestCase
      */
     public function it_can_be_instanciate(): void
     {
-        $sut = new CalendlyOrganization($this->nestedKeys());
+        $sut = new CalendlyOrganization($this->nestedKeys(), $this->base_url);
 
         $this->assertIsString($sut->uri);
         $this->assertIsString($sut->plan);
@@ -45,6 +45,6 @@ class CalendlyOrganizationTest extends CalendlyTestCase
         $this->expectException(CalendlyOrganizationException::class);
         $this->expectExceptionMessage($message);
 
-        new CalendlyOrganization($thing);
+        new CalendlyOrganization($thing, $this->base_url);
     }
 }

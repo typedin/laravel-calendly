@@ -40,7 +40,6 @@ class CalendlyEventCancellation
         collect($args)->each(function ($value, $key) {
             $this->$key = $value;
         });
-        $this->args = $args;
     }
 
     /**
