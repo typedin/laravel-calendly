@@ -39,3 +39,6 @@ jobs:
                   composer update --${{ matrix.stability }} --prefer-dist --no-interaction
             - name: PHPUnit (php-actions)
               uses: php-actions/phpunit@v3
+              with:
+                        bootstrap: vendor/autoload.php
+                        configuration: phpunit.xml
