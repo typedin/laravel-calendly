@@ -56,20 +56,23 @@ class CalendlyEventMembership
 
     public const DATEABLE = ['created_at', 'updated_at'];
 
-    public function __construct($args)
+    public function __construct(array $args, string $base_url)
     {
         $this->keys()->each(function ($key) use ($args) {
-            if (! array_key_exists($key, $args)) {
+            if (!array_key_exists($key, $args)) {
                 CalendlyOrganizationMembershipException::nestedKeyNotFound($key);
             }
         });
 
-        collect($args)->each(function ($value, $key) use ($args) {
+        collect($args)->each(function ($value, $key) use ($args, $base_url) {
             if (in_array($key, self::DATEABLE)) {
                 $value = Carbon::parse($value);
             }
             if ($key == 'user') {
-                $value = new CalendlyUser(array_merge($value, ['current_organization' => $args['organization']]));
+                $value = new CalendlyUser(
+                    array_merge($value, ['current_organization' => $args['organization']]),
+                    $base_url
+                );
             }
             $this->$key = $value;
         });
