@@ -4,7 +4,7 @@ namespace Typedin\LaravelCalendly\ScheduledEvent;
 
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
-use Typedin\LaravelCalendly\CalendlyService;
+use Typedin\LaravelCalendly\LaravelCalendly;
 use Typedin\LaravelCalendly\Exceptions\CalendlyScheduledEventException;
 
 class CalendlyScheduledEvent
@@ -108,7 +108,7 @@ class CalendlyScheduledEvent
             $this->$key = $value;
         });
 
-        $this->uuid = str_replace(CalendlyService::BASE_URL . '/scheduled_events/', '', $response_args['uri']);
+        $this->uuid = str_replace(LaravelCalendly::BASE_URL . '/scheduled_events/', '', $response_args['uri']);
     }
 
     /**
