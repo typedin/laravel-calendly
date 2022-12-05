@@ -3,6 +3,7 @@
 namespace Typedin\LaravelCalendly\Tests\Api;
 
 use ArgumentCountError;
+use Illuminate\Foundation\Bootstrap\LoadEnvironmentVariables;
 use Typedin\LaravelCalendly\Api\CalendlyApi;
 use Typedin\LaravelCalendly\CalendlyUser;
 
@@ -11,6 +12,14 @@ use Typedin\LaravelCalendly\CalendlyUser;
  */
 class CalendlyApiTest extends \Orchestra\Testbench\TestCase
 {
+    protected function getEnvironmentSetUp($app): void
+    {
+        $app->useEnvironmentPath(__DIR__);
+
+        $app->bootstrapWith([LoadEnvironmentVariables::class]);
+        parent::getEnvironmentSetUp($app);
+    }
+
     protected function getPackageProviders($app): array
     {
         return [
@@ -35,7 +44,6 @@ class CalendlyApiTest extends \Orchestra\Testbench\TestCase
     {
         $apiKey = config('laravel-calendly.api.key');
         $apiUrl = config('laravel-calendly.api.endpoint');
-
         $user = (new CalendlyApi($apiKey, $apiUrl))->getUser();
 
         $this->assertInstanceOf(CalendlyUser::class, $user);
