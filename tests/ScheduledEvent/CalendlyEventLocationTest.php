@@ -6,7 +6,6 @@ use Typedin\LaravelCalenly\Exceptions\CalendlyEventLocationException;
 use Typedin\LaravelCalenly\ScheduledEvent\CalendlyEventLocation;
 use Typedin\LaravelCalenly\Tests\CalendlyTestCase;
 
-
 class CalendlyEventLocationTest extends CalendlyTestCase
 {
     public string $fixture_file_name = 'location';

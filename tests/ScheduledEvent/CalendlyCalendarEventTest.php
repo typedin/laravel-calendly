@@ -6,7 +6,6 @@ use Typedin\LaravelCalenly\Exceptions\CalendlyUserException;
 use Typedin\LaravelCalenly\ScheduledEvent\CalendlyCalendarEvent;
 use Typedin\LaravelCalenly\Tests\CalendlyTestCase;
 
-
 class CalendlyCalendarEventTest extends CalendlyTestCase
 {
     public string $fixture_file_name = 'calendar-event';

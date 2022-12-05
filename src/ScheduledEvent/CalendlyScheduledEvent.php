@@ -91,12 +91,12 @@ class CalendlyScheduledEvent
      */
     public Carbon $updated_at;
 
-    const DATEABLE = ['created_at', 'updated_at', 'start_time', 'end_time'];
+    public const DATEABLE = ['created_at', 'updated_at', 'start_time', 'end_time'];
 
     public function __construct($response_args)
     {
         $this->keys()->each(function ($key) use ($response_args) {
-            if (!array_key_exists($key, $response_args)) {
+            if (! array_key_exists($key, $response_args)) {
                 CalendlyScheduledEventException::keyNotFound($key);
             }
         });

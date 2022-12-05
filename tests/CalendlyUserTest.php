@@ -5,7 +5,6 @@ namespace Typedin\LaravelCalenly\Tests;
 use Carbon\Carbon;
 use Typedin\LaravelCalenly\CalendlyUser;
 use Typedin\LaravelCalenly\Exceptions\CalendlyUserException;
-use Typedin\LaravelCalenly\Tests\CalendlyTestCase;
 
 class CalendlyUserTest extends CalendlyTestCase
 {

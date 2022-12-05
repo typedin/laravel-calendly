@@ -54,7 +54,7 @@ class LaravelCalenlyServiceProvider extends ServiceProvider
 
         // Register the main class to use with the facade
         $this->app->singleton('laravel-calenly', function () {
-            return new LaravelCalenly;
+            return new LaravelCalenly();
         });
     }
 }

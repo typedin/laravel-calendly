@@ -6,7 +6,6 @@ use Typedin\LaravelCalenly\Exceptions\CalendlyInviteesCounterException;
 use Typedin\LaravelCalenly\ScheduledEvent\CalendlyInviteesCounter;
 use Typedin\LaravelCalenly\Tests\CalendlyTestCase;
 
-
 class CalendlyInviteesCounterTest extends CalendlyTestCase
 {
     public string $fixture_file_name = 'scheduled-events';
