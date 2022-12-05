@@ -1,57 +1,30 @@
-# Very short description of the package
+<p align="center"><img src="/art/socialcard.png" alt="Social Card of Laravel Media Library"></p>
+
+# Interact with Calendly API with Laravel
 
 [![Latest Version](https://img.shields.io/github/release/typedin/laravel-calendly.svg?style=flat-square)](https://github.com/typedin/laravel-medialibrary/releases)
 
 ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/typedin/laravel-calendly/run-tests?label=tests)
 [![Total Downloads](https://img.shields.io/packagist/dt/typedin/laravel-calendly.svg?style=flat-square)](https://packagist.org/packages/typedin/laravel-medialibrary)
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/typedin/laravel-calenly.svg?style=flat-square)](https://packagist.org/packages/typedin/laravel-calenly)
-[![Total Downloads](https://img.shields.io/packagist/dt/typedin/laravel-calenly.svg?style=flat-square)](https://packagist.org/packages/typedin/laravel-calenly)
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/typedin/laravel-calendly.svg?style=flat-square)](https://packagist.org/packages/typedin/laravel-calendly)
+[![Total Downloads](https://img.shields.io/packagist/dt/typedin/laravel-calendly.svg?style=flat-square)](https://packagist.org/packages/typedin/laravel-calendly)
 
-![GitHub Actions](https://github.com/typedin/laravel-calenly/actions/workflows/main.yml/badge.svg)
+## Documentation
 
-This is where your description should go. Try and limit it to a paragraph or two, and maybe throw in a mention of what PSRs you support to avoid any confusion with users and contributors.
+Find yourself stuck using the package? Found a bug? Do you have general questions or suggestions for improving the this package? Feel free to [create an issue on GitHub](https://github.com/typedin/laravel-calendly/issues), we'll try to address it as soon as possible.
 
-## Installation
+## Testing
 
-You can install the package via composer:
-
-```bash
-composer require typedin/laravel-calenly
-```
-
-## Usage
-
-```php
-// Usage description here
-```
-
-### Testing
+You can run the tests with:
 
 ```bash
-composer test
+./vendor/bin/phpunit
 ```
 
 ### Changelog
 
 Please see [CHANGELOG](CHANGELOG.md) for more information what has changed recently.
 
-## Contributing
-
-Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
-
-### Security
-
-If you discover any security related issues, please email antoine@typedin.dev instead of using the issue tracker.
-
-## Credits
-
--   [Antoine Cheynet](https://github.com/typedin)
--   [All Contributors](../../contributors)
-
 ## License
 
 The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
-
-## Laravel Package Boilerplate
-
-This package was generated using the [Laravel Package Boilerplate](https://laravelpackageboilerplate.com).
