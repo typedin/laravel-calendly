@@ -56,7 +56,7 @@ class CalendlyEventMembership
 
     public const DATEABLE = ['created_at', 'updated_at'];
 
-    public function __construct(array $args, string $base_url)
+    public function __construct(array $args)
     {
         $this->keys()->each(function ($key) use ($args) {
             if (! array_key_exists($key, $args)) {
@@ -64,14 +64,13 @@ class CalendlyEventMembership
             }
         });
 
-        collect($args)->each(function ($value, $key) use ($args, $base_url) {
+        collect($args)->each(function ($value, $key) use ($args) {
             if (in_array($key, self::DATEABLE)) {
                 $value = Carbon::parse($value);
             }
             if ($key == 'user') {
                 $value = new CalendlyUser(
                     array_merge($value, ['current_organization' => $args['organization']]),
-                    $base_url
                 );
             }
             $this->$key = $value;

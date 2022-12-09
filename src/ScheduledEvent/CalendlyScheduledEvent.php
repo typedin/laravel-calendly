@@ -5,9 +5,11 @@ namespace Typedin\LaravelCalendly\ScheduledEvent;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Typedin\LaravelCalendly\Exceptions\CalendlyScheduledEventException;
+use Typedin\LaravelCalendly\traits\UsesUUID;
 
 class CalendlyScheduledEvent
 {
+    use UsesUUID;
     /**
      * The event type associated with this event
      * Example:https://api.calendly.com/event_types/GBGBDCAADAEDCRZ2
@@ -92,10 +94,10 @@ class CalendlyScheduledEvent
 
     public const DATEABLE = ['created_at', 'updated_at', 'start_time', 'end_time'];
 
-    public function __construct(array $args, string $base_url)
+    public function __construct(array $args)
     {
         $this->keys()->each(function ($key) use ($args) {
-            if (! array_key_exists($key, $args)) {
+            if (!array_key_exists($key, $args)) {
                 CalendlyScheduledEventException::keyNotFound($key);
             }
         });
@@ -107,7 +109,7 @@ class CalendlyScheduledEvent
             $this->$key = $value;
         });
 
-        $this->uuid = str_replace($base_url.'/scheduled_events/', '', $args['uri']);
+        $this->uuid = $this->extractUUID("/scheduled_events/", $args["uri"]);
     }
 
     /**

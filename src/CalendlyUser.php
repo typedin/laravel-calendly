@@ -5,9 +5,12 @@ namespace Typedin\LaravelCalendly;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Typedin\LaravelCalendly\Exceptions\CalendlyUserException;
+use Typedin\LaravelCalendly\traits\UsesUUID;
 
 class CalendlyUser
 {
+    use UsesUUID;
+
     /**
      * The URL of the user's avatar (image)
      * Example:https://01234567890.cloudfront.net/uploads/user/avatar/0123456/a1b2c3d4.png
@@ -98,10 +101,10 @@ class CalendlyUser
 
     public const DATEABLE = ['created_at', 'updated_at'];
 
-    public function __construct(array $args, string $base_url)
+    public function __construct(array $args)
     {
         $this->keys()->each(function ($key) use ($args) {
-            if (! array_key_exists($key, $args)) {
+            if (!array_key_exists($key, $args)) {
                 CalendlyUserException::nestedKeyNotFound($key);
             }
         });
@@ -113,8 +116,8 @@ class CalendlyUser
             $this->$key = $value;
         });
 
-        $this->uuid = str_replace($base_url.'/users/', '', $args['uri']);
-        $this->current_organization = str_replace($base_url.'/organizations/', '', $args['current_organization']);
+        $this->uuid = $this->extractUUID("/users/", $args["uri"]);
+        $this->current_organization = $this->extractUUID("/organizations/", $args["current_organization"]);
     }
 
     /**
