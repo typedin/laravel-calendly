@@ -10,6 +10,7 @@ use Typedin\LaravelCalendly\traits\UsesUUID;
 class CalendlyOrganization
 {
     use UsesUUID;
+
     /**
      *   Canonical resource reference
      *   Example:https://api.calendly.com/organizations/012345678901234567890
@@ -62,7 +63,7 @@ class CalendlyOrganization
     public function __construct(array $args)
     {
         $this->keys()->each(function ($key) use ($args) {
-            if (!array_key_exists($key, $args)) {
+            if (! array_key_exists($key, $args)) {
                 CalendlyOrganizationException::nestedKeyNotFound($key);
             }
         });
@@ -74,7 +75,7 @@ class CalendlyOrganization
             $this->$key = $value;
         });
 
-        $this->uuid = $this->extractUUID("/organizations/", $args["uri"]);
+        $this->uuid = $this->extractUUID('/organizations/', $args['uri']);
     }
 
     /**

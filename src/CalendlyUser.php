@@ -104,7 +104,7 @@ class CalendlyUser
     public function __construct(array $args)
     {
         $this->keys()->each(function ($key) use ($args) {
-            if (!array_key_exists($key, $args)) {
+            if (! array_key_exists($key, $args)) {
                 CalendlyUserException::nestedKeyNotFound($key);
             }
         });
@@ -116,8 +116,8 @@ class CalendlyUser
             $this->$key = $value;
         });
 
-        $this->uuid = $this->extractUUID("/users/", $args["uri"]);
-        $this->current_organization = $this->extractUUID("/organizations/", $args["current_organization"]);
+        $this->uuid = $this->extractUUID('/users/', $args['uri']);
+        $this->current_organization = $this->extractUUID('/organizations/', $args['current_organization']);
     }
 
     /**

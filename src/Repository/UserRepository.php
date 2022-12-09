@@ -9,8 +9,8 @@ class UserRepository
 {
     public static function me(): CalendlyUser
     {
-        $response = BaseApiClient::get("users/me");
+        $response = BaseApiClient::get('users/me');
 
-        return new CalendlyUser($response->json("resource"), "users");
+        return new CalendlyUser($response->json('resource'), 'users');
     }
 }

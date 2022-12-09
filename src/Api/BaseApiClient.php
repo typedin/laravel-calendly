@@ -39,7 +39,7 @@ class BaseApiClient
     public function get(string $string): Response
     {
         $response = Http::withToken($this->apiKey)->get(
-            $this->baseUri() . '/' . $string,
+            $this->baseUri().'/'.$string,
         );
 
         return $response;

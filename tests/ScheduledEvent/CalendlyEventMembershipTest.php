@@ -7,10 +7,10 @@ use Typedin\LaravelCalendly\Tests\CalendlyTestCase;
 class CalendlyEventMembershipTest extends CalendlyTestCase
 {
     /**
-    * @test
-    */
+     * @test
+     */
     public function it_can_be_instanciate()
     {
-        $this->markTestSkipped() ;
+        $this->markTestSkipped();
     }
 }

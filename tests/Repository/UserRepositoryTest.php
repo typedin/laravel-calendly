@@ -14,11 +14,11 @@ class UserRepositoryTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        config()->set("calendly", [
-            "api" => [
-                "key" => "a-fake-api-key",
-                "endpoint" => "api.calendly.com"
-            ]
+        config()->set('calendly', [
+            'api' => [
+                'key' => 'a-fake-api-key',
+                'endpoint' => 'api.calendly.com',
+            ],
         ]);
     }
 
@@ -35,23 +35,23 @@ class UserRepositoryTest extends TestCase
     public function it_can_get_current_user(): void
     {
         Http::fake([
-            "api.calendly.com/users/me" => Http::response($this->fixture(__DIR__ . "/../__fixtures__/current-user"), 200, ["Headers"])
+            'api.calendly.com/users/me' => Http::response($this->fixture(__DIR__.'/../__fixtures__/current-user'), 200, ['Headers']),
         ]);
 
         $user = UserRepository::me();
 
         $this->assertInstanceOf(CalendlyUser::class, $user);
 
-        $this->assertEquals("John Doe", $user->name);
+        $this->assertEquals('John Doe', $user->name);
 
-        $this->assertEquals("fake-user-uuid", $user->uuid);
-        $this->assertEquals("fake-current-organization-uuid", $user->current_organization);
+        $this->assertEquals('fake-user-uuid', $user->uuid);
+        $this->assertEquals('fake-current-organization-uuid', $user->current_organization);
     }
 
     protected function fixture($path): mixed
     {
         return json_decode(
-            file_get_contents($path . '.json'),
+            file_get_contents($path.'.json'),
             true
         );
     }

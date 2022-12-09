@@ -8,7 +8,6 @@ use Illuminate\Http\Client\Request;
 use Illuminate\Support\Facades\Http;
 use Typedin\LaravelCalendly\Api\BaseApiClient;
 
-
 class BaseApiClientTest extends \Orchestra\Testbench\TestCase
 {
     protected function getEnvironmentSetUp($app): void
@@ -43,15 +42,15 @@ class BaseApiClientTest extends \Orchestra\Testbench\TestCase
     {
         Http::fake();
 
-        $apiKey = "fake-api-key";
-        $apiUri = "https://fake/api/url";
+        $apiKey = 'fake-api-key';
+        $apiUri = 'https://fake/api/url';
 
-        (new BaseApiClient($apiKey, $apiUri))->get("users/me");
+        (new BaseApiClient($apiKey, $apiUri))->get('users/me');
 
         Http::assertSent(function (Request $request) {
             return
-                $request->header("Authorization")[0] == "Bearer fake-api-key" &&
-                $request->url() == "https://fake/api/url/users/me";
+                $request->header('Authorization')[0] == 'Bearer fake-api-key' &&
+                $request->url() == 'https://fake/api/url/users/me';
         });
     }
 }
