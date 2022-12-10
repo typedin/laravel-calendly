@@ -13,4 +13,11 @@ class UserRepository
 
         return new CalendlyUser($response->json('resource'), 'users');
     }
+
+    public static function fetchByUUID(string $uuid): CalendlyUser
+    {
+        $response = BaseApiClient::get("users/{$uuid}");
+
+        return new CalendlyUser($response->json('resource'), 'users');
+    }
 }

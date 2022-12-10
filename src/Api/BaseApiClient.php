@@ -13,14 +13,14 @@ class BaseApiClient
     private string $apiKey;
 
     /**
-     * @var string Base API URI.
+     * @var string endpoint
      */
-    private string $baseUri;
+    private string $endpoint;
 
     public function __construct(string $apiKey, string $baseUri)
     {
         $this->apiKey = $apiKey;
-        $this->baseUri = $baseUri;
+        $this->endpoint = $baseUri;
     }
 
     /**
@@ -28,20 +28,20 @@ class BaseApiClient
      *
      * @return string
      */
-    public function baseUri(): string
+    public function endpoint(): string
     {
-        return $this->baseUri;
+        return $this->endpoint;
     }
 
     /**
      * @return Response
      */
-    public function get(string $string): Response
+    public function get(string $url_path, $args = null): Response
     {
-        $response = Http::withToken($this->apiKey)->get(
-            $this->baseUri().'/'.$string,
-        );
-
-        return $response;
+        return Http::withToken($this->apiKey)
+            ->get(
+                $this->endpoint().'/'.$url_path,
+                $args
+            );
     }
 }

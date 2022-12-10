@@ -48,6 +48,25 @@ class UserRepositoryTest extends TestCase
         $this->assertEquals('fake-current-organization-uuid', $user->current_organization);
     }
 
+    /**
+     * @test
+     */
+    public function it_can_get_a_user_by_uuid(): void
+    {
+        Http::fake([
+            'api.calendly.com/users/a-user-uuid' => Http::response($this->fixture(__DIR__.'/../Entities/__fixtures__/a-user'), 200, ['Headers']),
+        ]);
+
+        $user = UserRepository::fetchByUUID('a-user-uuid');
+
+        $this->assertInstanceOf(CalendlyUser::class, $user);
+
+        $this->assertEquals('John Doe', $user->name);
+
+        $this->assertEquals('a-user-uuid', $user->uuid);
+        $this->assertEquals('AAAAAAAAAAAAAAAA', $user->current_organization);
+    }
+
     protected function fixture($path): mixed
     {
         return json_decode(

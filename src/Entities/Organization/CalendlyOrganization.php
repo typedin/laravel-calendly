@@ -24,14 +24,14 @@ class CalendlyOrganization extends CalendlyBaseClass
      * Active subscription plan or trial plan
      * Example:professional
      *
-     * @var string<basic | essentials | professional | teams |enterprise >
+     * @var string<basic | essentials | professional | teams | enterprise >
      */
     public string $plan;
 
     /*
     * Current stage of organization
-    * Example:paid
-    * @var stage <trial | free paid>
+    * Example: paid
+    * @var stage <trial | free | paid>
     */
     public string $stage;
 
