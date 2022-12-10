@@ -31,8 +31,8 @@ class ScheduledEventsRepositoryTest extends TestCase
                 'endpoint' => 'api.calendly.com',
             ],
         ]);
-        $user = new UserFake;
-        $organization = new OrganizationFake;
+        $user = new UserFake();
+        $organization = new OrganizationFake();
 
         $this->fakeUser = $user();
         $this->fakeOrganization = $organization();
