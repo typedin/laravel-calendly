@@ -10,7 +10,8 @@ use Typedin\LaravelCalendly\traits\HasUuid;
 
 class CalendlyOrganization extends CalendlyBaseClass
 {
-    use HasUuid,  HasTimestamps;
+    use HasUuid;
+    use HasTimestamps;
 
     /**
      *   Canonical resource reference

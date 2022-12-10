@@ -10,7 +10,8 @@ use Typedin\LaravelCalendly\traits\HasUuid;
 
 class CalendlyUser extends CalendlyBaseClass
 {
-    use HasUuid, HasTimestamps;
+    use HasUuid;
+    use HasTimestamps;
 
     /**
      * The URL of the user's avatar (image)

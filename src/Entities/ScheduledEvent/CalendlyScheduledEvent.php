@@ -10,7 +10,8 @@ use Typedin\LaravelCalendly\traits\HasUuid;
 
 class CalendlyScheduledEvent extends CalendlyBaseClass
 {
-    use HasUuid, HasTimestamps;
+    use HasUuid;
+    use HasTimestamps;
 
     /**
      * The event type associated with this event
