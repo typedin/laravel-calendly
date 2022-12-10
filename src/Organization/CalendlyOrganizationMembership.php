@@ -3,15 +3,18 @@
 namespace Typedin\LaravelCalendly\Organization;
 
 use Carbon\Carbon;
-use Illuminate\Support\Collection;
 use Typedin\LaravelCalendly\CalendlyUser;
 use Typedin\LaravelCalendly\Exceptions\CalendlyOrganizationMembershipException;
+use Typedin\LaravelCalendly\traits\HasAssignableKeys;
+use Typedin\LaravelCalendly\traits\HasTimestamps;
 
 class CalendlyOrganizationMembership
 {
+    use  HasTimestamps, HasAssignableKeys;
+
     /**
      * Canonical reference (unique identifier) for the membership
-     * Example:https://api.calendly.com/organization_membership/AAAAAAAAAAAAAAAA
+     * Example: https://api.calendly.com/organization_membership/AAAAAAAAAAAAAAAA
      *
      * @var string<uri>
      */
@@ -26,35 +29,17 @@ class CalendlyOrganizationMembership
     public string $role;
 
     /**
+     * @var user<CalendlyUser>
+     */
+    public CalendlyUser $user;
+
+    /**
      * Canonical reference (unique identifier) for the membership
-     *Example: https://api.calendly.com/organization_memberships/AAAAAAAAAAAAAAAA
+     * Example: https://api.calendly.com/organization_memberships/AAAAAAAAAAAAAAAA
      *
      * @var string<uri>
      */
     public string $organization;
-
-    /**
-     * @var membership<CalendlyUser>
-     */
-    public CalendlyUser $membership;
-
-    /**
-     * The moment when the membership's record was created (e.g. "2020-01-02T03:04:05.678123Z")
-     * Example:2019-01-02T03:04:05.678123Z
-     *
-     * @var Carbon<created_at>
-     */
-    public Carbon $created_at;
-
-    /**
-     * The moment when the membership's record was last updated (e.g. "2020-01-02T03:04:05.678123Z")
-     * Example:2019-08-07T06:05:04.321123Z
-     *
-     * @var Carbon<updated_at>
-     */
-    public Carbon $updated_at;
-
-    public const DATEABLE = ['created_at', 'updated_at'];
 
     public function __construct(array $args)
     {
@@ -73,20 +58,5 @@ class CalendlyOrganizationMembership
             }
             $this->$key = $value;
         });
-    }
-
-    /**
-     * @return Collection<TKey,TValue>
-     */
-    private function keys(): Collection
-    {
-        return collect([
-            'uri',
-            'role',
-            'user',
-            'organization',
-            'created_at',
-            'updated_at',
-        ]);
     }
 }

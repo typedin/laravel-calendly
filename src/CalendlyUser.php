@@ -3,13 +3,14 @@
 namespace Typedin\LaravelCalendly;
 
 use Carbon\Carbon;
-use Illuminate\Support\Collection;
 use Typedin\LaravelCalendly\Exceptions\CalendlyUserException;
-use Typedin\LaravelCalendly\traits\UsesUUID;
+use Typedin\LaravelCalendly\traits\HasAssignableKeys;
+use Typedin\LaravelCalendly\traits\HasTimestamps;
+use Typedin\LaravelCalendly\traits\HasUuid;
 
 class CalendlyUser
 {
-    use UsesUUID;
+    use HasUuid, HasAssignableKeys, HasTimestamps;
 
     /**
      * The URL of the user's avatar (image)
@@ -75,36 +76,10 @@ class CalendlyUser
      */
     public string $uri;
 
-    /**
-     * The unique identifier in Calendly system
-     * Example: AAAA-AAAA-AAAA-AAAA
-     *
-     * @var string<uuid>
-     */
-    public string $uuid;
-
-    /**
-     * The moment when the user's record was created (e.g. "2020-01-02T03:04:05.678123Z")
-     * Example: 2019-01-02T03:04:05.678123Z
-     *
-     * @var Carbon<created_at>
-     */
-    public Carbon $created_at;
-
-    /**
-     * The moment when the user's record was last updated (e.g. "2020-01-02T03:04:05.678123Z")
-     * Example: 2019-08-07T06:05:04.321123Z
-     *
-     * @var Carbon<updated_at>
-     */
-    public Carbon $updated_at;
-
-    public const DATEABLE = ['created_at', 'updated_at'];
-
     public function __construct(array $args)
     {
         $this->keys()->each(function ($key) use ($args) {
-            if (!array_key_exists($key, $args)) {
+            if (! array_key_exists($key, $args)) {
                 CalendlyUserException::nestedKeyNotFound($key);
             }
         });
@@ -117,25 +92,7 @@ class CalendlyUser
         });
 
         $this->uuid = $this->extractUUID('/users/', $args['uri']);
-        $this->current_organization = $this->extractUUID('/organizations/', $args['current_organization']);
-    }
 
-    /**
-     * @return Collection<TKey,TValue>
-     */
-    private function keys(): Collection
-    {
-        return collect([
-            'avatar_url',
-            'created_at',
-            'current_organization',
-            'email',
-            'name',
-            'scheduling_url',
-            'slug',
-            'timezone',
-            'updated_at',
-            'uri',
-        ]);
+        $this->current_organization = $this->extractUUID('/organizations/', $args['current_organization']);
     }
 }

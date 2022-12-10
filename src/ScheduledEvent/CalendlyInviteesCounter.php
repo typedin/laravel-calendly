@@ -4,9 +4,12 @@ namespace Typedin\LaravelCalendly\ScheduledEvent;
 
 use Illuminate\Support\Collection;
 use Typedin\LaravelCalendly\Exceptions\CalendlyInviteesCounterException;
+use Typedin\LaravelCalendly\traits\HasAssignableKeys;
 
 class CalendlyInviteesCounter
 {
+    use   HasAssignableKeys;
+
     /**
      * Total invitees for an event, including invitees that have canceled
      *

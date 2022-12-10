@@ -2,14 +2,16 @@
 
 namespace Typedin\LaravelCalendly\ScheduledEvent;
 
-use Illuminate\Support\Collection;
 use Typedin\LaravelCalendly\Exceptions\CalendlyCancellationException;
+use Typedin\LaravelCalendly\traits\HasAssignableKeys;
 
 /**
  * Provides data pertaining to the cancellation of the Event
  */
 class CalendlyEventCancellation
 {
+    use   HasAssignableKeys;
+
     /**
      * Name of the person whom canceled
      *
@@ -40,17 +42,5 @@ class CalendlyEventCancellation
         collect($args)->each(function ($value, $key) {
             $this->$key = $value;
         });
-    }
-
-    /**
-     * @return Collection<TKey,TValue>
-     */
-    private function keys(): Collection
-    {
-        return collect([
-            'canceler_type',
-            'canceled_by',
-            'reason',
-        ]);
     }
 }
