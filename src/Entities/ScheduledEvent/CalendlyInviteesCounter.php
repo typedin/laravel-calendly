@@ -1,15 +1,12 @@
 <?php
 
-namespace Typedin\LaravelCalendly\ScheduledEvent;
+namespace Typedin\LaravelCalendly\Entities\ScheduledEvent;
 
-use Illuminate\Support\Collection;
+use Typedin\LaravelCalendly\Entities\CalendlyBaseClass;
 use Typedin\LaravelCalendly\Exceptions\CalendlyInviteesCounterException;
-use Typedin\LaravelCalendly\traits\HasAssignableKeys;
 
-class CalendlyInviteesCounter
+class CalendlyInviteesCounter extends CalendlyBaseClass
 {
-    use   HasAssignableKeys;
-
     /**
      * Total invitees for an event, including invitees that have canceled
      *
@@ -43,17 +40,5 @@ class CalendlyInviteesCounter
         collect($args)->each(function ($value, $key) {
             $this->$key = $value;
         });
-    }
-
-    /**
-     * @return Collection<TKey,TValue>
-     */
-    private function keys(): Collection
-    {
-        return collect([
-            'total',
-            'limit',
-            'active',
-        ]);
     }
 }

@@ -1,18 +1,18 @@
 <?php
 
-namespace Typedin\LaravelCalendly\Tests\Organization;
+namespace Typedin\LaravelCalendly\Tests\Entities\Organization;
 
 use Carbon\Carbon;
-use Typedin\LaravelCalendly\CalendlyUser;
+use Typedin\LaravelCalendly\Entities\Organization\CalendlyOrganizationMembership;
+use Typedin\LaravelCalendly\Entities\User\CalendlyUser;
 use Typedin\LaravelCalendly\Exceptions\CalendlyOrganizationMembershipException;
-use Typedin\LaravelCalendly\Organization\CalendlyOrganizationMembership;
 use Typedin\LaravelCalendly\Tests\CalendlyTestCase;
 
 class CalendlyOrganizationMembershipTest extends CalendlyTestCase
 {
     public string $fixture_file_name = 'organization-membership';
 
-    public string $folder_path = __DIR__.'/__fixtures__/';
+    public string $folder_path = __DIR__ . '/../__fixtures__/';
 
     /**
      * @test

@@ -1,17 +1,17 @@
 <?php
 
-namespace Typedin\LaravelCalendly\Tests\ScheduledEvent;
+namespace Typedin\LaravelCalendly\Tests\Entities\ScheduledEvent;
 
 use Carbon\Carbon;
+use Typedin\LaravelCalendly\Entities\ScheduledEvent\CalendlyScheduledEvent;
 use Typedin\LaravelCalendly\Exceptions\CalendlyScheduledEventException;
-use Typedin\LaravelCalendly\ScheduledEvent\CalendlyScheduledEvent;
 use Typedin\LaravelCalendly\Tests\CalendlyTestCase;
 
 class CalendlyScheduledEventTest extends CalendlyTestCase
 {
     public string $fixture_file_name = 'scheduled-events';
 
-    public string $folder_path = __DIR__.'/__fixtures__/';
+    public string $folder_path = __DIR__ . '/../__fixtures__/';
 
     public $nested_keys = 'collection.0';
 

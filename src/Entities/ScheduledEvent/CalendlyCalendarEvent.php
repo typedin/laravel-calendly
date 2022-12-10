@@ -1,11 +1,11 @@
 <?php
 
-namespace Typedin\LaravelCalendly\ScheduledEvent;
+namespace Typedin\LaravelCalendly\Entities\ScheduledEvent;
 
-use Illuminate\Support\Collection;
+use Typedin\LaravelCalendly\Entities\CalendlyBaseClass;
 use Typedin\LaravelCalendly\Exceptions\CalendlyCalendarEventException;
 
-class CalendlyCalendarEvent
+class CalendlyCalendarEvent extends CalendlyBaseClass
 {
     /**
      * Indicates the calendar provider the event belongs to.
@@ -26,7 +26,7 @@ class CalendlyCalendarEvent
     public function __construct(array $args)
     {
         $this->keys()->each(function ($key) use ($args) {
-            if (! array_key_exists($key, $args)) {
+            if (!array_key_exists($key, $args)) {
                 CalendlyCalendarEventException::nestedKeyNotFound($key);
             }
         });
@@ -34,16 +34,5 @@ class CalendlyCalendarEvent
         collect($args)->each(function ($value, $key) {
             $this->$key = $value;
         });
-    }
-
-    /**
-     * @return Collection<TKey,TValue>
-     */
-    private function keys(): Collection
-    {
-        return collect([
-            'kind',
-            'external_id',
-        ]);
     }
 }

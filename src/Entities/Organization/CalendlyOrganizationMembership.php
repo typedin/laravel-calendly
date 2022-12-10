@@ -1,20 +1,20 @@
 <?php
 
-namespace Typedin\LaravelCalendly\ScheduledEvent;
+namespace Typedin\LaravelCalendly\Entities\Organization;
 
 use Carbon\Carbon;
-use Typedin\LaravelCalendly\CalendlyUser;
+use Typedin\LaravelCalendly\Entities\CalendlyBaseClass;
+use Typedin\LaravelCalendly\Entities\User\CalendlyUser;
 use Typedin\LaravelCalendly\Exceptions\CalendlyOrganizationMembershipException;
-use Typedin\LaravelCalendly\traits\HasAssignableKeys;
 use Typedin\LaravelCalendly\traits\HasTimestamps;
 
-class CalendlyEventMembership
+class CalendlyOrganizationMembership extends CalendlyBaseClass
 {
-    use HasTimestamps, HasAssignableKeys;
+    use  HasTimestamps;
 
     /**
      * Canonical reference (unique identifier) for the membership
-     * Example:https://api.calendly.com/organization_membership/AAAAAAAAAAAAAAAA
+     * Example: https://api.calendly.com/organization_membership/AAAAAAAAAAAAAAAA
      *
      * @var string<uri>
      */
@@ -29,17 +29,17 @@ class CalendlyEventMembership
     public string $role;
 
     /**
-     * Canonical reference (unique identifier) for the membership
-     *Example: https://api.calendly.com/organization_memberships/AAAAAAAAAAAAAAAA
-     *
-     * @var string<organization>
+     * @var user<CalendlyUser>
      */
-    public string $organization;
+    public CalendlyUser $user;
 
     /**
-     * @var membership<CalendlyUser>
+     * Canonical reference (unique identifier) for the membership
+     * Example: https://api.calendly.com/organization_memberships/AAAAAAAAAAAAAAAA
+     *
+     * @var string<uri>
      */
-    public CalendlyUser $membership;
+    public string $organization;
 
     public function __construct(array $args)
     {
@@ -54,9 +54,7 @@ class CalendlyEventMembership
                 $value = Carbon::parse($value);
             }
             if ($key == 'user') {
-                $value = new CalendlyUser(
-                    array_merge($value, ['current_organization' => $args['organization']]),
-                );
+                $value = new CalendlyUser(array_merge($value, ['current_organization' => $args['organization']]));
             }
             $this->$key = $value;
         });

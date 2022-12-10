@@ -4,7 +4,7 @@ namespace Typedin\LaravelCalendly\Tests\Repository;
 
 use Illuminate\Support\Facades\Http;
 use Orchestra\Testbench\TestCase;
-use Typedin\LaravelCalendly\CalendlyUser;
+use Typedin\LaravelCalendly\Entities\User\CalendlyUser;
 use Typedin\LaravelCalendly\Repository\UserRepository;
 
 class UserRepositoryTest extends TestCase
@@ -35,7 +35,7 @@ class UserRepositoryTest extends TestCase
     public function it_can_get_current_user(): void
     {
         Http::fake([
-            'api.calendly.com/users/me' => Http::response($this->fixture(__DIR__.'/../__fixtures__/current-user'), 200, ['Headers']),
+            'api.calendly.com/users/me' => Http::response($this->fixture(__DIR__ . '/../Entities/__fixtures__/current-user'), 200, ['Headers']),
         ]);
 
         $user = UserRepository::me();
@@ -51,7 +51,7 @@ class UserRepositoryTest extends TestCase
     protected function fixture($path): mixed
     {
         return json_decode(
-            file_get_contents($path.'.json'),
+            file_get_contents($path . '.json'),
             true
         );
     }

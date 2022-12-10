@@ -1,17 +1,17 @@
 <?php
 
-namespace Typedin\LaravelCalendly\Tests\ScheduledEvent;
+namespace Typedin\LaravelCalendly\Tests\Entities\ScheduledEvent;
 
 use Carbon\Carbon;
+use Typedin\LaravelCalendly\Entities\ScheduledEvent\CalendlyEventGuest;
 use Typedin\LaravelCalendly\Exceptions\CalendlyEventGuestException;
-use Typedin\LaravelCalendly\ScheduledEvent\CalendlyEventGuest;
 use Typedin\LaravelCalendly\Tests\CalendlyTestCase;
 
 class CalendlyEventGuestTest extends CalendlyTestCase
 {
     public string $fixture_file_name = 'event-guest';
 
-    public string $folder_path = __DIR__.'/__fixtures__/';
+    public string $folder_path = __DIR__ . '/../__fixtures__/';
 
     /**
      * @test

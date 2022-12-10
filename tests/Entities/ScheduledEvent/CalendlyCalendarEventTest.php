@@ -1,16 +1,16 @@
 <?php
 
-namespace Typedin\LaravelCalendly\Tests\ScheduledEvent;
+namespace Typedin\LaravelCalendly\Tests\Entities\ScheduledEvent;
 
+use Typedin\LaravelCalendly\Entities\ScheduledEvent\CalendlyCalendarEvent;
 use Typedin\LaravelCalendly\Exceptions\CalendlyUserException;
-use Typedin\LaravelCalendly\ScheduledEvent\CalendlyCalendarEvent;
 use Typedin\LaravelCalendly\Tests\CalendlyTestCase;
 
 class CalendlyCalendarEventTest extends CalendlyTestCase
 {
     public string $fixture_file_name = 'calendar-event';
 
-    public string $folder_path = __DIR__.'/__fixtures__/';
+    public string $folder_path = __DIR__ . '/../__fixtures__/';
 
     /**
      * @test

@@ -1,16 +1,16 @@
 <?php
 
-namespace Typedin\LaravelCalendly\Organization;
+namespace Typedin\LaravelCalendly\Entities\Organization;
 
 use Illuminate\Support\Carbon;
+use Typedin\LaravelCalendly\Entities\CalendlyBaseClass;
 use Typedin\LaravelCalendly\Exceptions\CalendlyOrganizationException;
-use Typedin\LaravelCalendly\traits\HasAssignableKeys;
 use Typedin\LaravelCalendly\traits\HasTimestamps;
 use Typedin\LaravelCalendly\traits\HasUuid;
 
-class CalendlyOrganization
+class CalendlyOrganization extends CalendlyBaseClass
 {
-    use HasUuid, HasAssignableKeys, HasTimestamps;
+    use HasUuid,  HasTimestamps;
 
     /**
      *   Canonical resource reference

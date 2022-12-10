@@ -1,14 +1,12 @@
 <?php
 
-namespace Typedin\LaravelCalendly\ScheduledEvent;
+namespace Typedin\LaravelCalendly\Entities\ScheduledEvent;
 
+use Typedin\LaravelCalendly\Entities\CalendlyBaseClass;
 use Typedin\LaravelCalendly\Exceptions\CalendlyEventInviteesCounterException;
-use Typedin\LaravelCalendly\traits\HasAssignableKeys;
 
-class CalendlyEventInviteesCounter
+class CalendlyEventInviteesCounter extends CalendlyBaseClass
 {
-    use HasAssignableKeys;
-
     public int $total;
 
     public int $active;

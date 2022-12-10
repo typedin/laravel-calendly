@@ -1,17 +1,15 @@
 <?php
 
-namespace Typedin\LaravelCalendly\ScheduledEvent;
+namespace Typedin\LaravelCalendly\Entities\ScheduledEvent;
 
+use Typedin\LaravelCalendly\Entities\CalendlyBaseClass;
 use Typedin\LaravelCalendly\Exceptions\CalendlyCancellationException;
-use Typedin\LaravelCalendly\traits\HasAssignableKeys;
 
 /**
  * Provides data pertaining to the cancellation of the Event
  */
-class CalendlyEventCancellation
+class CalendlyEventCancellation extends CalendlyBaseClass
 {
-    use   HasAssignableKeys;
-
     /**
      * Name of the person whom canceled
      *

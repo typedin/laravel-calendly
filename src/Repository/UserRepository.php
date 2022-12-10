@@ -3,7 +3,7 @@
 namespace Typedin\LaravelCalendly\Repository;
 
 use Facades\Typedin\LaravelCalendly\Api\BaseApiClient;
-use Typedin\LaravelCalendly\CalendlyUser;
+use Typedin\LaravelCalendly\Entities\User\CalendlyUser;
 
 class UserRepository
 {

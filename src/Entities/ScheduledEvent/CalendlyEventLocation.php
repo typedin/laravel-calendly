@@ -1,11 +1,11 @@
 <?php
 
-namespace Typedin\LaravelCalendly\ScheduledEvent;
+namespace Typedin\LaravelCalendly\Entities\ScheduledEvent;
 
-use Illuminate\Support\Collection;
+use Typedin\LaravelCalendly\Entities\CalendlyBaseClass;
 use Typedin\LaravelCalendly\Exceptions\CalendlyEventLocationException;
 
-class CalendlyEventLocation
+class CalendlyEventLocation extends CalendlyBaseClass
 {
     /**
      * The physical location specified by the event host (publisher).
@@ -34,16 +34,5 @@ class CalendlyEventLocation
         collect($args)->each(function ($value, $key) {
             $this->$key = $value;
         });
-    }
-
-    /**
-     * @return Collection<TKey,TValue>
-     */
-    private function keys(): Collection
-    {
-        return collect([
-            'type',
-            'location',
-        ]);
     }
 }

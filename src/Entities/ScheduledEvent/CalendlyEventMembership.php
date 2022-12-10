@@ -1,20 +1,20 @@
 <?php
 
-namespace Typedin\LaravelCalendly\Organization;
+namespace Typedin\LaravelCalendly\Entities\ScheduledEvent;
 
 use Carbon\Carbon;
+use Typedin\LaravelCalendly\Entities\CalendlyBaseClass;
 use Typedin\LaravelCalendly\CalendlyUser;
 use Typedin\LaravelCalendly\Exceptions\CalendlyOrganizationMembershipException;
-use Typedin\LaravelCalendly\traits\HasAssignableKeys;
 use Typedin\LaravelCalendly\traits\HasTimestamps;
 
-class CalendlyOrganizationMembership
+class CalendlyEventMembership extends CalendlyBaseClass
 {
-    use  HasTimestamps, HasAssignableKeys;
+    use HasTimestamps;
 
     /**
      * Canonical reference (unique identifier) for the membership
-     * Example: https://api.calendly.com/organization_membership/AAAAAAAAAAAAAAAA
+     * Example:https://api.calendly.com/organization_membership/AAAAAAAAAAAAAAAA
      *
      * @var string<uri>
      */
@@ -29,17 +29,17 @@ class CalendlyOrganizationMembership
     public string $role;
 
     /**
-     * @var user<CalendlyUser>
-     */
-    public CalendlyUser $user;
-
-    /**
      * Canonical reference (unique identifier) for the membership
-     * Example: https://api.calendly.com/organization_memberships/AAAAAAAAAAAAAAAA
+     *Example: https://api.calendly.com/organization_memberships/AAAAAAAAAAAAAAAA
      *
-     * @var string<uri>
+     * @var string<organization>
      */
     public string $organization;
+
+    /**
+     * @var membership<CalendlyUser>
+     */
+    public CalendlyUser $membership;
 
     public function __construct(array $args)
     {
@@ -54,7 +54,9 @@ class CalendlyOrganizationMembership
                 $value = Carbon::parse($value);
             }
             if ($key == 'user') {
-                $value = new CalendlyUser(array_merge($value, ['current_organization' => $args['organization']]));
+                $value = new CalendlyUser(
+                    array_merge($value, ['current_organization' => $args['organization']]),
+                );
             }
             $this->$key = $value;
         });

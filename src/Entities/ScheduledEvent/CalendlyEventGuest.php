@@ -1,15 +1,15 @@
 <?php
 
-namespace Typedin\LaravelCalendly\ScheduledEvent;
+namespace Typedin\LaravelCalendly\Entities\ScheduledEvent;
 
 use Carbon\Carbon;
+use Typedin\LaravelCalendly\Entities\CalendlyBaseClass;
 use Typedin\LaravelCalendly\Exceptions\CalendlyEventGuestException;
-use Typedin\LaravelCalendly\traits\HasAssignableKeys;
 use Typedin\LaravelCalendly\traits\HasTimestamps;
 
-class CalendlyEventGuest
+class CalendlyEventGuest extends CalendlyBaseClass
 {
-    use  HasTimestamps, HasAssignableKeys;
+    use  HasTimestamps;
 
     /**
      * The event guest's email address

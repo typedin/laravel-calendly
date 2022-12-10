@@ -1,16 +1,16 @@
 <?php
 
-namespace Typedin\LaravelCalendly;
+namespace Typedin\LaravelCalendly\Entities\User;
 
 use Carbon\Carbon;
+use Typedin\LaravelCalendly\Entities\CalendlyBaseClass;
 use Typedin\LaravelCalendly\Exceptions\CalendlyUserException;
-use Typedin\LaravelCalendly\traits\HasAssignableKeys;
 use Typedin\LaravelCalendly\traits\HasTimestamps;
 use Typedin\LaravelCalendly\traits\HasUuid;
 
-class CalendlyUser
+class CalendlyUser extends CalendlyBaseClass
 {
-    use HasUuid, HasAssignableKeys, HasTimestamps;
+    use HasUuid, HasTimestamps;
 
     /**
      * The URL of the user's avatar (image)
@@ -79,7 +79,7 @@ class CalendlyUser
     public function __construct(array $args)
     {
         $this->keys()->each(function ($key) use ($args) {
-            if (! array_key_exists($key, $args)) {
+            if (!array_key_exists($key, $args)) {
                 CalendlyUserException::nestedKeyNotFound($key);
             }
         });

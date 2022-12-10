@@ -1,16 +1,16 @@
 <?php
 
-namespace Typedin\LaravelCalendly\ScheduledEvent;
+namespace Typedin\LaravelCalendly\Entities\ScheduledEvent;
 
 use Carbon\Carbon;
+use Typedin\LaravelCalendly\Entities\CalendlyBaseClass;
 use Typedin\LaravelCalendly\Exceptions\CalendlyScheduledEventException;
-use Typedin\LaravelCalendly\traits\HasAssignableKeys;
 use Typedin\LaravelCalendly\traits\HasTimestamps;
 use Typedin\LaravelCalendly\traits\HasUuid;
 
-class CalendlyScheduledEvent
+class CalendlyScheduledEvent extends CalendlyBaseClass
 {
-    use HasUuid, HasTimestamps, HasAssignableKeys;
+    use HasUuid, HasTimestamps;
 
     /**
      * The event type associated with this event

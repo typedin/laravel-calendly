@@ -1,6 +1,6 @@
 <?php
 
-namespace Typedin\LaravelCalendly\Tests\ScheduledEvent;
+namespace Typedin\LaravelCalendly\Tests\Entities\ScheduledEvent;
 
 use Typedin\LaravelCalendly\Tests\CalendlyTestCase;
 

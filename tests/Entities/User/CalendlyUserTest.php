@@ -1,16 +1,17 @@
 <?php
 
-namespace Typedin\LaravelCalendly\Tests;
+namespace Typedin\LaravelCalendly\Tests\Entities\User;
 
 use Carbon\Carbon;
-use Typedin\LaravelCalendly\CalendlyUser;
+use Typedin\LaravelCalendly\Entities\User\CalendlyUser;
 use Typedin\LaravelCalendly\Exceptions\CalendlyUserException;
+use Typedin\LaravelCalendly\Tests\CalendlyTestCase;
 
 class CalendlyUserTest extends CalendlyTestCase
 {
     public string $fixture_file_name = 'current-user';
 
-    public string $folder_path = __DIR__.'/__fixtures__/';
+    public string $folder_path = __DIR__ . '/../__fixtures__/';
 
     public $nested_keys = 'resource';
 
