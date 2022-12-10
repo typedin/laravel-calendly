@@ -13,7 +13,7 @@ class CalendlyUser
 
     /**
      * The URL of the user's avatar (image)
-     * Example:https://01234567890.cloudfront.net/uploads/user/avatar/0123456/a1b2c3d4.png
+     * Example: https://01234567890.cloudfront.net/uploads/user/avatar/0123456/a1b2c3d4.png
      *
      * @var string or null
      */
@@ -21,7 +21,7 @@ class CalendlyUser
 
     /**
      * A unique reference to the user's current organization
-     * Example:https://api.calendly.com/organizations/AAAAAAAAAAAAAAAA
+     * Example: https://api.calendly.com/organizations/AAAAAAAAAAAAAAAA
      *
      * @var
      */
@@ -29,7 +29,7 @@ class CalendlyUser
 
     /**
      * The user's email address
-     * Example:test@example.com
+     * Example: test@example.com
      *
      * @var string<email>
      */
@@ -37,7 +37,7 @@ class CalendlyUser
 
     /**
      * The user's name (human-readable format)
-     * Example:John Doe
+     * Example: John Doe
      *
      * @var string<name>
      */
@@ -45,7 +45,7 @@ class CalendlyUser
 
     /**
      * The URL of the user's Calendly landing page (that lists all the user's event types)
-     * Example:https://calendly.com/acmesales
+     * Example: https://calendly.com/acmesales
      *
      * @var string<scheduling_url>
      */
@@ -53,7 +53,7 @@ class CalendlyUser
 
     /**
      * The portion of URL for the user's scheduling page (where invitees book sessions), rendered in a human-readable format
-     * Example:acmesales
+     * Example: acmesales
      *
      * @var string<slug>
      */
@@ -61,7 +61,7 @@ class CalendlyUser
 
     /**
      * The time zone to use when presenting time to the user
-     * Example:America/New York
+     * Example: America/New York
      *
      * @var string<timezone>
      */
@@ -69,7 +69,7 @@ class CalendlyUser
 
     /**
      * Canonical reference (unique identifier) for the user
-     * Example:https://api.calendly.com/users/AAAAAAAAAAAAAAAA
+     * Example: https://api.calendly.com/users/AAAAAAAAAAAAAAAA
      *
      * @var string<uri>
      */
@@ -77,7 +77,7 @@ class CalendlyUser
 
     /**
      * The unique identifier in Calendly system
-     * Example:AAAA-AAAA-AAAA-AAAA
+     * Example: AAAA-AAAA-AAAA-AAAA
      *
      * @var string<uuid>
      */
@@ -85,7 +85,7 @@ class CalendlyUser
 
     /**
      * The moment when the user's record was created (e.g. "2020-01-02T03:04:05.678123Z")
-     * Example:2019-01-02T03:04:05.678123Z
+     * Example: 2019-01-02T03:04:05.678123Z
      *
      * @var Carbon<created_at>
      */
@@ -93,7 +93,7 @@ class CalendlyUser
 
     /**
      * The moment when the user's record was last updated (e.g. "2020-01-02T03:04:05.678123Z")
-     * Example:2019-08-07T06:05:04.321123Z
+     * Example: 2019-08-07T06:05:04.321123Z
      *
      * @var Carbon<updated_at>
      */
@@ -104,7 +104,7 @@ class CalendlyUser
     public function __construct(array $args)
     {
         $this->keys()->each(function ($key) use ($args) {
-            if (! array_key_exists($key, $args)) {
+            if (!array_key_exists($key, $args)) {
                 CalendlyUserException::nestedKeyNotFound($key);
             }
         });
