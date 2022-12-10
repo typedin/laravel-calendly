@@ -24,13 +24,13 @@ abstract class CalendlyTestCase extends TestCase
 
     private function fixtureFullPath(): string
     {
-        return $this->folder_path . $this->fixture_file_name;
+        return $this->folder_path.$this->fixture_file_name;
     }
 
     protected function fixture(): mixed
     {
         return json_decode(
-            file_get_contents($this->fixtureFullPath() . '.json'),
+            file_get_contents($this->fixtureFullPath().'.json'),
             true
         );
     }
@@ -42,7 +42,7 @@ abstract class CalendlyTestCase extends TestCase
     {
         return collect($this->nestedKeys())
             ->map(fn ($item, $key) => [
-                'Expect argument with ' . $key . ' key.',
+                'Expect argument with '.$key.' key.',
                 $this->getClonedFixtureWithoutKey($key),
             ])
             ->all();

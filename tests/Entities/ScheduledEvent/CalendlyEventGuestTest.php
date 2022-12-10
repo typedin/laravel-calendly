@@ -11,7 +11,7 @@ class CalendlyEventGuestTest extends CalendlyTestCase
 {
     public string $fixture_file_name = 'event-guest';
 
-    public string $folder_path = __DIR__ . '/../__fixtures__/';
+    public string $folder_path = __DIR__.'/../__fixtures__/';
 
     /**
      * @test

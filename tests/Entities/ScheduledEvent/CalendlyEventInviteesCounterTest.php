@@ -10,7 +10,7 @@ class CalendlyEventInviteesCounterTest extends CalendlyTestCase
 {
     public string $fixture_file_name = 'scheduled-events';
 
-    public string $folder_path = __DIR__ . '/../__fixtures__/';
+    public string $folder_path = __DIR__.'/../__fixtures__/';
 
     public $nested_keys = 'collection.0.invitees_counter';
 

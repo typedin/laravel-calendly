@@ -3,8 +3,8 @@
 namespace Typedin\LaravelCalendly\Entities\ScheduledEvent;
 
 use Carbon\Carbon;
-use Typedin\LaravelCalendly\Entities\CalendlyBaseClass;
 use Typedin\LaravelCalendly\CalendlyUser;
+use Typedin\LaravelCalendly\Entities\CalendlyBaseClass;
 use Typedin\LaravelCalendly\Exceptions\CalendlyOrganizationMembershipException;
 use Typedin\LaravelCalendly\traits\HasTimestamps;
 
