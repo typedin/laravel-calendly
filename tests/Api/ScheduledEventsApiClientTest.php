@@ -1,6 +1,6 @@
 <?php
 
-namespace Typedin\LaravelCalendly\Tests\Repository;
+namespace Typedin\LaravelCalendly\Tests\Api;
 
 use Carbon\Carbon;
 use Illuminate\Http\Client\Request;
@@ -12,7 +12,7 @@ use Typedin\LaravelCalendly\Repository\ScheduledEventsRepository;
 use Typedin\LaravelCalendly\Tests\fakes\OrganizationFake;
 use Typedin\LaravelCalendly\Tests\fakes\UserFake;
 
-class ScheduledEventsRepositoryTest extends TestCase
+class ScheduledEventsApiClientTest extends TestCase
 {
     protected $loadEnvironmentVariables = true;
 

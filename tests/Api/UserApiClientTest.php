@@ -1,13 +1,13 @@
 <?php
 
-namespace Typedin\LaravelCalendly\Tests\Repository;
+namespace Typedin\LaravelCalendly\Tests\Api;
 
 use Illuminate\Support\Facades\Http;
 use Orchestra\Testbench\TestCase;
 use Typedin\LaravelCalendly\Entities\User\CalendlyUser;
 use Typedin\LaravelCalendly\Repository\UserRepository;
 
-class UserRepositoryTest extends TestCase
+class UserApiClientTest extends TestCase
 {
     protected $loadEnvironmentVariables = true;
 
