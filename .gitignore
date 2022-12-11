@@ -11,3 +11,6 @@ tests/Support/temp/
 .env.testing
 phpunit.xml
 *~
+*.*~
+*.swp
+*.swo
