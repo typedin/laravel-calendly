@@ -2,8 +2,10 @@
 
 namespace Typedin\LaravelCalendly;
 
+use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Support\ServiceProvider;
 use Typedin\LaravelCalendly\Api\BaseApiClient;
+use Typedin\LaravelCalendly\Contracts\CalendlyApiInterface;
 
 class LaravelCalendlyServiceProvider extends ServiceProvider
 {
@@ -19,16 +21,17 @@ class LaravelCalendlyServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $this->app->singleton(BaseApiClient::class, function ($app) {
+        $this->mergeConfigFrom(
+            __DIR__.'/../config/laravel-calendly.php',
+            'laravel-calendly',
+        );
+
+        $this->app->bind(CalendlyApiInterface::class, BaseApiClient::class);
+        $this->app->bind(BaseApiClient::class, function (Application $app) {
             return new BaseApiClient(
                 config('calendly.api.key'),
                 config('calendly.api.endpoint')
             );
         });
-
-        $this->mergeConfigFrom(
-            __DIR__.'/../config/laravel-calendly.php',
-            'laravel-calendly',
-        );
     }
 }

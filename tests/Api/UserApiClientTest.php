@@ -43,7 +43,6 @@ class UserApiClientTest extends TestCase
         $this->assertInstanceOf(CalendlyUser::class, $user);
 
         $this->assertEquals('John Doe', $user->name);
-
         $this->assertEquals('fake-user-uuid', $user->uuid);
         $this->assertEquals('fake-current-organization-uuid', $user->current_organization);
     }
@@ -62,7 +61,6 @@ class UserApiClientTest extends TestCase
         $this->assertInstanceOf(CalendlyUser::class, $user);
 
         $this->assertEquals('John Doe', $user->name);
-
         $this->assertEquals('a-user-uuid', $user->uuid);
         $this->assertEquals('AAAAAAAAAAAAAAAA', $user->current_organization);
     }

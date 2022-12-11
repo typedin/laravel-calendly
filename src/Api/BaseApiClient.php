@@ -4,8 +4,9 @@ namespace Typedin\LaravelCalendly\Api;
 
 use Illuminate\Http\Client\Response;
 use Illuminate\Support\Facades\Http;
+use Typedin\LaravelCalendly\Contracts\CalendlyApiInterface;
 
-class BaseApiClient
+class BaseApiClient implements CalendlyApiInterface
 {
     /**
      * @var string API Key.
@@ -37,6 +38,24 @@ class BaseApiClient
      * @return Response
      */
     public function get(string $url_path, $args = null): Response
+    {
+        return Http::withToken($this->apiKey)
+            ->get(
+                $this->endpoint().'/'.$url_path,
+                $args
+            );
+    }
+
+    public function post(string $url_path, $args = null): Response
+    {
+        return Http::withToken($this->apiKey)
+            ->get(
+                $this->endpoint().'/'.$url_path,
+                $args
+            );
+    }
+
+    public function delete(string $url_path, $args = null): Response
     {
         return Http::withToken($this->apiKey)
             ->get(
