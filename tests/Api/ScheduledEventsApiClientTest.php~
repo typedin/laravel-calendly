@@ -6,9 +6,9 @@ use Carbon\Carbon;
 use Illuminate\Http\Client\Request;
 use Illuminate\Support\Facades\Http;
 use Orchestra\Testbench\TestCase;
+use Typedin\LaravelCalendly\Api\ScheduledEventsApiClient;
 use Typedin\LaravelCalendly\Entities\Organization\CalendlyOrganization;
 use Typedin\LaravelCalendly\Entities\User\CalendlyUser;
-use Typedin\LaravelCalendly\Repository\ScheduledEventsRepository;
 use Typedin\LaravelCalendly\Tests\fakes\OrganizationFake;
 use Typedin\LaravelCalendly\Tests\fakes\UserFake;
 
@@ -50,7 +50,7 @@ class ScheduledEventsApiClientTest extends TestCase
      */
     public function it_can_list_schedules_events_for_an_organization_with_no_params(): void
     {
-        ScheduledEventsRepository::list($this->fakeUser, $this->fakeOrganization);
+        TypedinScheduledEventsApiClient::list($this->fakeUser, $this->fakeOrganization);
 
         Http::assertSent(function (Request $request) {
             return
@@ -67,7 +67,7 @@ class ScheduledEventsApiClientTest extends TestCase
         $knownDate = Carbon::create(2022, 8, 25, 12);
         Carbon::setTestNow($knownDate);
 
-        ScheduledEventsRepository::list($this->fakeUser, $this->fakeOrganization, [
+        ScheduledEventsApiClient::list($this->fakeUser, $this->fakeOrganization, [
             'min_start_time' => $knownDate,
         ]);
 
@@ -84,7 +84,7 @@ class ScheduledEventsApiClientTest extends TestCase
         $knownDate = Carbon::create(2022, 8, 25, 12);
         Carbon::setTestNow($knownDate);
 
-        ScheduledEventsRepository::list($this->fakeUser, $this->fakeOrganization, [
+        ScheduledEventsApiClient::list($this->fakeUser, $this->fakeOrganization, [
             'max_start_time' => $knownDate,
         ]);
 
@@ -101,7 +101,7 @@ class ScheduledEventsApiClientTest extends TestCase
         $knownDate = Carbon::create(2022, 8, 25, 12);
         Carbon::setTestNow($knownDate);
 
-        ScheduledEventsRepository::list($this->fakeUser, $this->fakeOrganization, [
+        ScheduledEventsApiClient::list($this->fakeUser, $this->fakeOrganization, [
             'count' => 1,
             'invitee_email' => 'john@example.com',
             'min_start_time' => $knownDate,

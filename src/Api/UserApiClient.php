@@ -1,11 +1,11 @@
 <?php
 
-namespace Typedin\LaravelCalendly\Repository;
+namespace Typedin\LaravelCalendly\Api;
 
 use Facades\Typedin\LaravelCalendly\Api\BaseApiClient;
 use Typedin\LaravelCalendly\Entities\User\CalendlyUser;
 
-class UserRepository
+class UserApiClient
 {
     public static function me(): CalendlyUser
     {

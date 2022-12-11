@@ -4,7 +4,6 @@ namespace Typedin\LaravelCalendly\Tests\Api;
 
 use Illuminate\Support\Facades\Http;
 use Orchestra\Testbench\TestCase;
-use Typedin\LaravelCalendly\Api\UserApiClient;
 use Typedin\LaravelCalendly\Entities\User\CalendlyUser;
 
 class UserApiClientTest extends TestCase
@@ -35,8 +34,9 @@ class UserApiClientTest extends TestCase
     public function it_can_get_current_user(): void
     {
         Http::fake([
-            'api.calendly.com/users/me' => Http::response($this->fixture(__DIR__.'/../Entities/__fixtures__/current-user'), 200, ['Headers']),
+            'api.calendly.com/users/me' => Http::response($this->fixture(__DIR__ . '/../Entities/__fixtures__/current-user'), 200, ['Headers']),
         ]);
+
 
         $user = UserApiClient::me();
 
@@ -54,7 +54,7 @@ class UserApiClientTest extends TestCase
     public function it_can_get_a_user_by_uuid(): void
     {
         Http::fake([
-            'api.calendly.com/users/a-user-uuid' => Http::response($this->fixture(__DIR__.'/../Entities/__fixtures__/a-user'), 200, ['Headers']),
+            'api.calendly.com/users/a-user-uuid' => Http::response($this->fixture(__DIR__ . '/../Entities/__fixtures__/a-user'), 200, ['Headers']),
         ]);
 
         $user = UserApiClient::fetchByUUID('a-user-uuid');
@@ -70,7 +70,7 @@ class UserApiClientTest extends TestCase
     protected function fixture($path): mixed
     {
         return json_decode(
-            file_get_contents($path.'.json'),
+            file_get_contents($path . '.json'),
             true
         );
     }
