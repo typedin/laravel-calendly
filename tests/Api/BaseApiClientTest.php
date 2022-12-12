@@ -2,14 +2,22 @@
 
 namespace Typedin\LaravelCalendly\Tests\Api;
 
-use ArgumentCountError;
 use Illuminate\Foundation\Bootstrap\LoadEnvironmentVariables;
 use Illuminate\Http\Client\Request;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Http;
 use Typedin\LaravelCalendly\Api\BaseApiClient;
+use Typedin\LaravelCalendly\Exceptions\ApiClientException;
 
 class BaseApiClientTest extends \Orchestra\Testbench\TestCase
 {
+    protected function setUp(): void
+    {
+        parent::setUp();
+        Config::set('calendly.api.key', 'fake-api-key');
+        Config::set('calendly.api.endpoint', 'fake/api/endpoint');
+    }
+
     protected function getEnvironmentSetUp($app): void
     {
         $app->useEnvironmentPath(__DIR__);
@@ -28,9 +36,25 @@ class BaseApiClientTest extends \Orchestra\Testbench\TestCase
     /**
      * @test
      */
-    public function it_throws_without_api_url_or_without_api_key(): void
+    public function it_throws_without_api_key(): void
     {
-        $this->expectException(ArgumentCountError::class);
+        Config::set('calendly.api.key', null);
+
+        $this->expectException(ApiClientException::class);
+        $this->expectErrorMessage('Expect an API key. None found.');
+
+        new BaseApiClient();
+    }
+
+    /**
+     * @test
+     */
+    public function it_throws_without_api_endpoin(): void
+    {
+        Config::set('calendly.api.endpoint', null);
+
+        $this->expectException(ApiClientException::class);
+        $this->expectErrorMessage('Expect an API endpoint. None found.');
 
         new BaseApiClient();
     }
@@ -42,15 +66,13 @@ class BaseApiClientTest extends \Orchestra\Testbench\TestCase
     {
         Http::fake();
 
-        $apiKey = 'fake-api-key';
-        $apiUri = 'https://fake/api/url';
-
-        (new BaseApiClient($apiKey, $apiUri))->get('users/me');
+        (new BaseApiClient())->get('users/me');
 
         Http::assertSent(function (Request $request) {
             return
-                $request->header('Authorization')[0] == 'Bearer fake-api-key' &&
-                $request->url() == 'https://fake/api/url/users/me';
+                $request->header('Authorization')[0] == 'Bearer fake-api-key'
+                &&
+                $request->url() == 'https://fake/api/endpoint/users/me';
         });
     }
 }

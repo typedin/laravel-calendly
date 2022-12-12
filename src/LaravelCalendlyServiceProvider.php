@@ -27,11 +27,5 @@ class LaravelCalendlyServiceProvider extends ServiceProvider
         );
 
         $this->app->bind(CalendlyApiInterface::class, BaseApiClient::class);
-        $this->app->bind(BaseApiClient::class, function (Application $app) {
-            return new BaseApiClient(
-                config('calendly.api.key'),
-                config('calendly.api.endpoint')
-            );
-        });
     }
 }
