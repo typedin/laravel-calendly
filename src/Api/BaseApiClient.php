@@ -5,6 +5,7 @@ namespace Typedin\LaravelCalendly\Api;
 use Illuminate\Http\Client\Response;
 use Illuminate\Support\Facades\Http;
 use Typedin\LaravelCalendly\Contracts\CalendlyApiInterface;
+use Typedin\LaravelCalendly\Exceptions\ApiClientException;
 
 class BaseApiClient implements CalendlyApiInterface
 {
@@ -18,10 +19,17 @@ class BaseApiClient implements CalendlyApiInterface
      */
     private string $endpoint;
 
-    public function __construct(string $apiKey, string $baseUri)
+    public function __construct()
     {
-        $this->apiKey = $apiKey;
-        $this->endpoint = $baseUri;
+        if (!config("calendly.api.key")) {
+            throw ApiClientException::ApiKeyNotFound();
+        }
+        $this->apiKey = config('calendly.api.key');
+
+        if (!config("calendly.api.endpoint")) {
+            throw ApiClientException::ApiEndpointNotFound();
+        }
+        $this->endpoint = config('calendly.api.endpoint');
     }
 
     /**
@@ -41,7 +49,7 @@ class BaseApiClient implements CalendlyApiInterface
     {
         return Http::withToken($this->apiKey)
             ->get(
-                $this->endpoint().'/'.$url_path,
+                "https://" . $this->endpoint() . '/' . $url_path,
                 $args
             );
     }
@@ -50,7 +58,7 @@ class BaseApiClient implements CalendlyApiInterface
     {
         return Http::withToken($this->apiKey)
             ->get(
-                $this->endpoint().'/'.$url_path,
+                "https://" . $this->endpoint() . '/' . $url_path,
                 $args
             );
     }
@@ -59,7 +67,7 @@ class BaseApiClient implements CalendlyApiInterface
     {
         return Http::withToken($this->apiKey)
             ->get(
-                $this->endpoint().'/'.$url_path,
+                "https://" . $this->endpoint() . '/' . $url_path,
                 $args
             );
     }
