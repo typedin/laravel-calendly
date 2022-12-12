@@ -21,12 +21,12 @@ class BaseApiClient implements CalendlyApiInterface
 
     public function __construct()
     {
-        if (!config("calendly.api.key")) {
+        if (! config("calendly.api.key")) {
             throw ApiClientException::ApiKeyNotFound();
         }
         $this->apiKey = config('calendly.api.key');
 
-        if (!config("calendly.api.endpoint")) {
+        if (! config("calendly.api.endpoint")) {
             throw ApiClientException::ApiEndpointNotFound();
         }
         $this->endpoint = config('calendly.api.endpoint');
