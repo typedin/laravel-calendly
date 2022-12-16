@@ -3,48 +3,28 @@
 namespace Typedin\LaravelCalendly\Entities\ScheduledEvent;
 
 use Carbon\Carbon;
-use Typedin\LaravelCalendly\Entities\CalendlyBaseClass;
 use Typedin\LaravelCalendly\Entities\User\CalendlyUser;
 use Typedin\LaravelCalendly\Exceptions\CalendlyOrganizationMembershipException;
 use Typedin\LaravelCalendly\traits\HasTimestamps;
 
-class CalendlyEventMembership extends CalendlyBaseClass
+class CalendlyEventMembership extends CalendlyUser
 {
     use HasTimestamps;
 
     /**
-     * Canonical reference (unique identifier) for the membership
-     * Example:https://api.calendly.com/organization_membership/AAAAAAAAAAAAAAAA
      *
-     * @var string<uri>
-     */
-    public string $uri;
-
-    /**
-     * The membership's role in the organization
-     * Example: admin
+     * Canonical reference (unique identifier) for the user
+     * Example:https://api.calendly.com/users/GBGBDCAADAEDCRZ2
      *
-     * @var string<admin|membership|owner>
+     * @var string<user>
      */
-    public string $role;
+    public string $user;
 
-    /**
-     * Canonical reference (unique identifier) for the membership
-     *Example: https://api.calendly.com/organization_memberships/AAAAAAAAAAAAAAAA
-     *
-     * @var string<organization>
-     */
-    public string $organization;
-
-    /**
-     * @var membership<CalendlyUser>
-     */
-    public CalendlyUser $membership;
 
     public function __construct(array $args)
     {
         $this->keys()->each(function ($key) use ($args) {
-            if (! array_key_exists($key, $args)) {
+            if (!array_key_exists($key, $args)) {
                 CalendlyOrganizationMembershipException::nestedKeyNotFound($key);
             }
         });
