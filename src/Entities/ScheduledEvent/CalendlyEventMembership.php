@@ -12,14 +12,12 @@ class CalendlyEventMembership extends CalendlyUser
     use HasTimestamps;
 
     /**
-     *
      * Canonical reference (unique identifier) for the user
      * Example:https://api.calendly.com/users/GBGBDCAADAEDCRZ2
      *
      * @var string<user>
      */
     public string $user;
-
 
     public function __construct(array $args)
     {

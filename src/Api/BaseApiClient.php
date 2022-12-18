@@ -44,7 +44,7 @@ class BaseApiClient implements CalendlyApiInterface
     {
         return Http::withToken($this->apiKey)
             ->get(
-                "https://" . $this->endpoint() . '/' . $url_path,
+                'https://'.$this->endpoint().'/'.$url_path,
                 $args
             );
     }
@@ -62,7 +62,7 @@ class BaseApiClient implements CalendlyApiInterface
     {
         return Http::withToken($this->apiKey)
             ->get(
-                "https://" . $this->endpoint() . '/' . $url_path,
+                'https://'.$this->endpoint().'/'.$url_path,
                 $args
             );
     }
