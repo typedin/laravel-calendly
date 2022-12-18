@@ -18,8 +18,6 @@ class CalendlyCalendarEvent extends CalendlyBaseClass
     /**
      * the id provided from the calendar provider for this calendar event.
      * Example: 8suu9k3hj00mni03ss12ba0ce0
-     *
-     * @var string
      */
     public string $external_id;
 

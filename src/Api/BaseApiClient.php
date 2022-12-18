@@ -12,12 +12,12 @@ class BaseApiClient implements CalendlyApiInterface
     /**
      * @var string API Key.
      */
-    private string $apiKey;
+    private readonly string $apiKey;
 
     /**
      * @var string endpoint
      */
-    private string $endpoint;
+    private readonly string $endpoint;
 
     public function __construct()
     {
@@ -34,17 +34,12 @@ class BaseApiClient implements CalendlyApiInterface
 
     /**
      * Gets base API url.
-     *
-     * @return string
      */
     public function endpoint(): string
     {
         return $this->endpoint;
     }
 
-    /**
-     * @return Response
-     */
     public function get(string $url_path, $args = null): Response
     {
         return Http::withToken($this->apiKey)

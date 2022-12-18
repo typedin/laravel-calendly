@@ -9,7 +9,7 @@ class CalendlyOrganizationException extends Exception
     /**
      * @return self
      */
-    public static function nestedKeyNotFound($key): Exception
+    public static function nestedKeyNotFound($key): never
     {
         throw new CalendlyOrganizationException('Expect argument with '.$key.' key.');
     }

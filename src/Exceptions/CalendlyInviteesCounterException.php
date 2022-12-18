@@ -9,7 +9,7 @@ class CalendlyInviteesCounterException extends Exception
     /**
      * @return self
      */
-    public static function keyNotFound($key): Exception
+    public static function keyNotFound($key): never
     {
         throw new self('Expect argument with '.$key.' key.');
     }
