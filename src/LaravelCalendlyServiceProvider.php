@@ -2,7 +2,6 @@
 
 namespace Typedin\LaravelCalendly;
 
-use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Support\ServiceProvider;
 use Typedin\LaravelCalendly\Api\BaseApiClient;
 use Typedin\LaravelCalendly\Contracts\CalendlyApiInterface;
