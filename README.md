@@ -2,7 +2,7 @@
 
 # Interact with Calendly API with Laravel
 
-[![Latest Version](https://img.shields.io/github/release/typedin/laravel-calendly.svg?style=flat-square)](https://github.com/typedin/laravel-medialibrary/releases)
+[![Latest Version](https://img.shields.io/github/release/typedin/laravel-calendly.svg?style=flat-square)](https://github.com/typedin/laravel-calendly/releases)
 
 ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/typedin/laravel-calendly/run-tests?label=tests)
 
