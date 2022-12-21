@@ -11,7 +11,7 @@
 [![Total Downloads](https://img.shields.io/packagist/dt/typedin/laravel-calendly.svg?style=flat-square)](https://packagist.org/packages/typedin/laravel-calendly)
 
 ## Documentation
-
+Initial Calendly APi doc can be found [here](https://developer.calendly.com/api-docs).
 Find yourself stuck using the package? Found a bug? Do you have general questions or suggestions for improving the this package? Feel free to [create an issue on GitHub](https://github.com/typedin/laravel-calendly/issues), we'll try to address it as soon as possible.
 
 ## Testing
