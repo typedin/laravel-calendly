@@ -6,10 +6,11 @@ use Illuminate\Foundation\Bootstrap\LoadEnvironmentVariables;
 use Illuminate\Http\Client\Request;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Http;
+use Orchestra\Testbench\TestCase;
 use Typedin\LaravelCalendly\Api\BaseApiClient;
 use Typedin\LaravelCalendly\Exceptions\ApiClientException;
 
-class BaseApiClientTest extends \Orchestra\Testbench\TestCase
+class BaseApiClientTest extends TestCase
 {
     protected function setUp(): void
     {

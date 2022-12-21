@@ -1,13 +1,16 @@
+---
 openapi: 3.0.0
 servers:
   - url: 'https://api.calendly.com'
 info:
   description: |-
-    Calendly’s API is [REST](http://en.wikipedia.org/wiki/Representational_State_Transfer)-based and has predictable resource-oriented URLs. It uses **JSON** for request and response bodies and standard HTTP methods, authentication, and response codes.<br>
+    Calendly’s API is [REST](http://en.wikipedia.org/wiki/Representational_State_Transfer)-based and has predictable resource-oriented URLs. 
+    It uses **JSON** for request and response bodies and standard HTTP methods, authentication, and response codes.<br>
 
     ##### Authenticate with personal access tokens or OAuth 2.0
 
-    To access Calendly data through the API, you can authenticate with **personal access tokens** or **OAuth 2.0**. To learn more about these authentication methods and when and how to use them, see [Getting Started with the Calendly API](https://developer.calendly.com/getting-started).
+    To access Calendly data through the API, you can authenticate with **personal access tokens** or **OAuth 2.0**. 
+    To learn more about these authentication methods and when and how to use them, see [Getting Started with the Calendly API](https://developer.calendly.com/getting-started).
   version: 2.0.0
   title: Calendly API
   contact:
