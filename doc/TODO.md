@@ -1,5 +1,5 @@
 ## users 
-    - /users/me: Retrieve the authenticated user's profile information.
+   - /users/me: Retrieve the authenticated user's profile information.
     - /users/{uuid}: Retrieve the profile information for a specific user.
     - /users/{uuid}/event_types: Retrieve the event types for a specific user.
     - /users/{uuid}/invitees: Retrieve the invitees for a specific user.
