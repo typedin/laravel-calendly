@@ -2,13 +2,12 @@
 
 namespace Typedin\LaravelCalendly\Supports;
 
-use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Nette\PhpGenerator\Method;
 
 class MethodGenerator
 {
-    public static function handle($class, $modelName, string $methodName, string $restVerb, Collection $methodParameters): Method
+    public static function handle($class, $modelName, string $methodName, $value): Method
     {
         /* if (! isset($data['parameters'])) { */
         /*     dd($modelName, $restVerb); */

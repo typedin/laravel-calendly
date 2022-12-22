@@ -28,17 +28,11 @@ class Generator
      */
     public function build(): array
     {
-        collect($this->blueprint['methods'])
-                /* ->filter(fn ($data) => isset($data['parameters'])) */
-               ->each(function ($data, $restVerb) {
-                   /* if (! isset($data[$restVerb]['summary'])) { */
-                   /*     dd(array_keys($this->blueprint['methods'])); */
-                   /* } */
-                   $methodName = implode(explode(' ', trim($data['summary'])));
-                   /* dd(implode(explode(' ', trim($data['summary'])))); */
+        collect($this->blueprint)
+               ->each(function ($value) {
                    MethodGenerator::handle($this->class,
                        $this->buildModelName(),
-                       $methodName, $restVerb, collect($data['parameters']));
+                       $value);
                });
 
         $this->namespace
