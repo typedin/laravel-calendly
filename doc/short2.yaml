@@ -1,0 +1,169 @@
+---
+get:
+  summary: List Events
+  description: |-
+    Returns a list of  Events.
+
+    * Pass `organization` parameter to return events for that organization (requires admin/owner privilege)
+    * Pass `user` parameter to return events for a specific User
+
+    **NOTES:**
+    * If you are the admin/owner of the organization, you can use both `organization` and `user` to get a list of events for a specific user within your organization.
+
+    * `user` can only be used alone when requesting your own personal events. This will return your events within any organization that you are currently in or were a part of in the past.
+  tags:
+    - Scheduled Events
+  security:
+    - oauth2: []
+    - personal_access_token: []
+  parameters:
+    - name: user
+      in: query
+      schema:
+        type: string
+        format: uri
+        example: 'https://api.calendly.com/users/EBHAAFHDCAEQTSEZ'
+      description: Return events that are scheduled with the user associated with this URI
+    - schema:
+        type: string
+        format: uri
+        example: 'https://api.calendly.com/organizations/EBHAAFHDCAEQTSEZ'
+      in: query
+      name: organization
+      description: Return events that are scheduled with the organization associated with this URI
+    - name: invitee_email
+      in: query
+      schema:
+        type: string
+        format: email
+        example: alice@example.com
+      description: Return events that are scheduled with the invitee associated with this email address
+    - name: status
+      in: query
+      schema:
+        type: string
+        enum:
+          - active
+          - canceled
+      description: Whether the scheduled event is `active` or `canceled`
+    - name: sort
+      in: query
+      schema:
+        type: string
+      description: |-
+        Order results by the specified field and direction. Accepts comma-separated list of {field}:{direction} values.
+        Supported fields are: start_time.
+        Sort direction is specified as: asc, desc.
+      example: 'start_time:asc'
+    - name: min_start_time
+      in: query
+      schema:
+        type: string
+      description: 'Include events with start times after this time (sample time format: "2020-01-02T03:04:05.678123Z"). This time should use the UTC timezone.'
+      example: '2020-01-02T12:30:00.000000Z'
+    - name: max_start_time
+      in: query
+      schema:
+        type: string
+      description: 'Include events with start times prior to this time (sample time format: "2020-01-02T03:04:05.678123Z"). This time should use the UTC timezone.'
+      example: '2020-01-02T12:30:00.000000Z'
+    - $ref: '#/components/parameters/PageToken'
+    - $ref: '#/components/parameters/Count'
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            type: object
+            description: Service response
+            properties:
+              collection:
+                type: array
+                description: The set of scheduled events matching the criteria
+                items:
+                  $ref: '#/components/schemas/Event'
+              pagination:
+                $ref: '#/components/schemas/Pagination'
+            required:
+              - collection
+              - pagination
+          examples:
+            Example:
+              value:
+                collection:
+                  - uri: 'https://api.calendly.com/scheduled_events/GBGBDCAADAEDCRZ2'
+                    name: 15 Minute Meeting
+                    status: active
+                    start_time: '2019-08-24T14:15:22.123456Z'
+                    end_time: '2019-08-24T14:15:22.123456Z'
+                    event_type: 'https://api.calendly.com/event_types/GBGBDCAADAEDCRZ2'
+                    location:
+                      type: physical
+                      location: Calendly Office
+                    invitees_counter:
+                      total: 0
+                      active: 0
+                      limit: 0
+                    created_at: '2019-01-02T03:04:05.092125Z'
+                    updated_at: '2019-01-02T03:04:05.092125Z'
+                    event_memberships:
+                      - user: 'https://api.calendly.com/users/GBGBDCAADAEDCRZ2'
+                    event_guests:
+                      - email: user@example.com
+                        created_at: '2022-04-21T17:10:48.484945Z'
+                        updated_at: '2022-04-21T17:11:01.758636Z'
+                    calendar_event:
+                      kind: google
+                      external_id: 8suu9k3hj00mni03ss12ba0ce0
+                pagination:
+                  count: 1
+                  next_page: 'https://api.calendly.com/scheduled_events?count=1&page_token=sNjq4TvMDfUHEl7zHRR0k0E1PCEJWvdi'
+                  previous_page: 'https://api.calendly.com/scheduled_events?count=1&page_token=VJs2rfDYeY8ahZpq0QI1O114LJkNjd7H'
+                  next_page_token: sNjq4TvMDfUHEl7zHRR0k0E1PCEJWvdi
+                  previous_page_token: VJs2rfDYeY8ahZpq0QI1O114LJkNjd7H
+    '400':
+      $ref: '#/components/responses/INVALID_ARGUMENT'
+    '401':
+      $ref: '#/components/responses/UNAUTHENTICATED'
+    '403':
+      description: Permission Denied
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              title:
+                type: string
+                enum:
+                  - Permission Denied
+              message:
+                type: string
+                enum:
+                  - You do not have permission to access this resource.
+                  - Please also specify organization when requesting events for a user within your organization.
+                  - This user is not in your organization
+                  - You do not have permission
+          examples:
+            Caller is not part of organization:
+              value:
+                title: Permission Denied
+                message: You do not have permission to access this resource.
+            Caller requests alternate user within organization:
+              value:
+                title: Permission Denied
+                message: Please also specify organization when requesting events for a user within your organization.
+            Requested user is not in organization:
+              value:
+                title: Permission Denied
+                message: This user is not in your organization
+            Caller does not have access to user's events:
+              value:
+                title: Permission Denied
+                message: You do not have permission
+    '404':
+      $ref: '#/components/responses/NOT_FOUND'
+    '500':
+      $ref: '#/components/responses/UNKNOWN'
+  operationId: getScheduledEvents
+parameters: []
