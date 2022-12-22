@@ -28,18 +28,18 @@ class Generator
     public function build(): array
     {
         collect($this->blueprint['methods'])
-            ->filter(function ($data, $method_name) {
-                return isset($data['parameters']);
-            })
-            ->each(function ($data, $method_name) {
-                $this->buildMethodParams($method_name, collect($data['parameters']))
-                ->addBody('$response = BaseApiClient::get("");')
-                ->addBody('return new '.$this->buildModelName().'($response->json("resource"), "users"); ');
-            });
+   ->filter(function ($data, $method_name) {
+       return isset($data['parameters']);
+   })
+   ->each(function ($data, $method_name) {
+       $this->buildMethodParams($method_name, collect($data['parameters']))
+   ->addBody('$response = BaseApiClient::get("");')
+   ->addBody('return new '.$this->buildModelName().'($response->json("resource"), "users"); ');
+   });
 
         $this->namespace
-                ->addUse('Typedin\LaravelCalendly\Entities\ScheduledEvent\CalendlyScheduledEvent')
-->add($this->class);
+             ->addUse(sprintf('Typedin\LaravelCalendly\Entities\%s\Calendly%s', $this->buildModelName(), $this->buildModelName()))
+             ->add($this->class);
 
         $this->file->addNamespace($this->namespace);
 
@@ -65,17 +65,19 @@ class Generator
 
     private function buildMethodParams(string $method_name, Collection $parameters): Method
     {
-        $method = $this->class->addMethod($method_name)->setStatic()->setReturnType("\Typedin\LaravelCalendly\Entities\ScheduledEvent\CalendlyScheduledEvent");
+        $method = $this->class->addMethod($method_name)->setStatic()->setReturnType(sprintf("\Typedin\LaravelCalendly\Entities\%s\Calendly%s", $this->buildModelName(), $this->buildModelName()));
 
         $parameters
             ->filter(fn ($param) => isset($param['name']))
             ->each(function ($value) use ($method) {
+                $type = $value['schema']['type'] == 'integer' ? 'int' : $value['schema']['type'];
+                $name = $value['name'];
                 if (isset($value['required'])) {
-                    $method->addParameter($value['name'])->setType($value['schema']['type']);
+                    $method->addParameter($name)->setType($type);
                 } elseif (isset($value['schema']['default'])) {
-                    $method->addParameter($value['name'], $value['schema']['default'])->setType($value['schema']['type']);
+                    $method->addParameter($name, $value['schema']['default'])->setType($type);
                 } else {
-                    $method->addParameter($value['name'], null)->setType($value['schema']['type']);
+                    $method->addParameter($name, null)->setType($type);
                 }
             });
 

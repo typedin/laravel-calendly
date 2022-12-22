@@ -38,12 +38,14 @@ class GeneratorTest extends TestCase
     /** @test */
     public function it_does_all_the_things(): void
     {
-        $result = (new Generator(self::$data->first()))->build();
-        $content = $result['content'];
-        $file_path = sprintf('/../../src/Api/%s.php', $result['file_name']);
+        self::$data->each(function ($data) {
+            $result = (new Generator($data))->build();
+            $content = $result['content'];
+            $file_path = sprintf('/../../src/Api/%s.php', $result['file_name']);
 
-        file_put_contents(__DIR__.$file_path, $content);
+            file_put_contents(__DIR__.$file_path, $content);
+        });
 
-        dd($result['content']);
+        /* dd($result['content']); */
     }
 }
