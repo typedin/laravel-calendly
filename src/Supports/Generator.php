@@ -10,18 +10,17 @@ use Nette\PhpGenerator\PhpNamespace;
 
 class Generator
 {
-    private PhpNamespace $namespace;
+    private PhpFile $file;
 
     private ClassType $class;
 
-    private PhpFile $file;
+    private PhpNamespace $namespace;
 
     public function __construct(private Collection $blueprint)
     {
         $this->file = new PhpFile;
-        $this->namespace = new PhpNamespace('Typedin\LaravelCalendly\Api');
-
         $this->class = new ClassType($this->buildClassName());
+        $this->namespace = new PhpNamespace('Typedin\LaravelCalendly\Api');
     }
 
     /**
@@ -30,9 +29,16 @@ class Generator
     public function build(): array
     {
         collect($this->blueprint['methods'])
-                ->filter(fn ($data) => isset($data['parameters']))
-               ->each(function ($data, $method_name) {
-                   MethodGenerator::handle($this->class, $this->buildModelName(), $method_name, collect($data['parameters']));
+                /* ->filter(fn ($data) => isset($data['parameters'])) */
+               ->each(function ($data, $restVerb) {
+                   /* if (! isset($data[$restVerb]['summary'])) { */
+                   /*     dd(array_keys($this->blueprint['methods'])); */
+                   /* } */
+                   $methodName = implode(explode(' ', trim($data['summary'])));
+                   /* dd(implode(explode(' ', trim($data['summary'])))); */
+                   MethodGenerator::handle($this->class,
+                       $this->buildModelName(),
+                       $methodName, $restVerb, collect($data['parameters']));
                });
 
         $this->namespace

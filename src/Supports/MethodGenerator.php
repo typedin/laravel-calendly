@@ -8,16 +8,16 @@ use Nette\PhpGenerator\Method;
 
 class MethodGenerator
 {
-    public static function handle($class, $modelName, string $method_name, Collection $parameters): Method
+    public static function handle($class, $modelName, string $methodName, string $restVerb, Collection $methodParameters): Method
     {
-        if (! isset($data['parameters'])) {
-            dd($modelName, $method_name);
-        }
-        $method = $class->addMethod($method_name)
+        /* if (! isset($data['parameters'])) { */
+        /*     dd($modelName, $restVerb); */
+        /* } */
+        $method = $class->addMethod($methodName)
                             ->setStatic()
                             ->setReturnType(sprintf("\Typedin\LaravelCalendly\Entities\%s\Calendly%s", $modelName, $modelName));
 
-        $parameters
+        $methodParameters
             ->filter(fn ($param) => isset($param['name']))
             ->each(function ($value) use ($method) {
                 $type = $value['schema']['type'] == 'integer' ? 'int' : $value['schema']['type'];
@@ -31,7 +31,7 @@ class MethodGenerator
                 }
             });
 
-        $method->addBody(sprintf('$response = BaseApiClient::%s("");', $method_name))
+        $method->addBody(sprintf('$response = BaseApiClient::%s("");', $restVerb))
         ->addBody('return new '.self::buildModelName($modelName).'($response->json("resource"), "users"); ');
 
         return $method;

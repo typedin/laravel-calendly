@@ -12,8 +12,8 @@ class GeneratorTest extends TestCase
 
     public static function setUpBeforeClass(): void
     {
-        $paths = array_slice(Yaml::parse(file_get_contents(__DIR__.'/../../doc/openapi.yaml'))['paths'], 0);
-        $paths = Yaml::parse(file_get_contents(__DIR__.'/../../doc/openapi.yaml'))['paths'];
+        /* $paths = array_slice(Yaml::parse(file_get_contents(__DIR__.'/../../doc/openapi.yaml'))['paths'], 0); */
+        $paths = Yaml::parse(file_get_contents(__DIR__.'/../../doc/short.yaml'))['paths'];
 
         self::$data = collect();
         foreach ($paths as $key => $value) {
