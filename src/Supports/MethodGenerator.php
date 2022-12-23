@@ -14,7 +14,7 @@ class MethodGenerator
         $this->method = new Method($this->buildMethodName($data));
     }
 
-    public static function handle(string $uri, array $data): Method
+    public static function generate(string $uri, array $data): Method
     {
         $generator = new self($uri, $data);
         $generator->method
@@ -22,9 +22,9 @@ class MethodGenerator
                   ->setStatic(true)
                   ->setReturnType('Typedin\LaravelCalendly\Entities\ScheduledEvent\CalendlyScheduledEvent');
 
+        $generator->buildDoc();
         $generator->buildMethodParameters();
         $generator->buildBody();
-        $generator->buildDoc();
 
         return $generator->method;
     }
@@ -39,10 +39,27 @@ class MethodGenerator
         return collect($this->data['parameters'])->filter(fn ($value) => isset($value['name']));
     }
 
+    private function buildDoc(): void
+    {
+        $this->method
+                    ->addComment('\**')
+                    ->addComment('* '.$this->data['summary'])
+                    ->addComment('*');
+
+        $this->getParametersFromData()->each(function ($value) {
+            $this->method
+                ->addComment(
+                    sprintf('* @param %s $%s %s', $value['schema']['type'], $value['name'], $value['description'] ?? '')
+                );
+        });
+        $this->method->addComment('*/');
+    }
+
     private function buildMethodParameters(): void
     {
         $this->getParametersFromData()->each(function ($value) {
-            $this->method->addParameter($value['name'])
+            $this->method->addParameter($value['name'], isset($value['schema']['default']) ? $value['schema']['default'] : null)
+                // not tested by I know it will happen
                 ->setType($value['schema']['type'] == 'integer' ? 'int' : $value['schema']['type'])
                 ->setNullable(! isset($value['required']));
         });
@@ -59,21 +76,4 @@ class MethodGenerator
    {
        return str_replace_first('{uuid}', '{$uuid}', $this->uri);
    }
-
-    private function buildDoc(): void
-    {
-        $this->method
-                    ->addComment('\**')
-                    ->addComment('* '.$this->data['summary'])
-                    ->addComment('*');
-        foreach ($this->data['parameters'] as $key => $value) {
-            if (isset($value['name'])) {
-                $this->method
-                    ->addComment(
-                        sprintf('* @param %s $%s %s', $value['schema']['type'], $value['name'], $value['description'] ?? '')
-                    );
-            }
-        }
-        $this->method->addComment('*/');
-    }
 }

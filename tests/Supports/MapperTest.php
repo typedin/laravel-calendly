@@ -22,11 +22,11 @@ class MapperTest extends TestCase
     public function it_collects_maps_rest_methods_to_uri(): void
     {
         $result = $this->sut->handle()->all();
-
         $this->assertCount(5, $result);
-
         $this->assertEquals('/scheduled_events/{uuid}/invitees', $result['/scheduled_events/{uuid}/invitees']['uri']);
         $this->assertCount(1, $result['/scheduled_events/{uuid}/invitees']['methods']);
-        $this->assertTrue(in_array('get', array_keys($result['/scheduled_events/{uuid}/invitees']['methods'])));
+
+        $keys = array_keys($result['/scheduled_events/{uuid}/invitees']['methods']);
+        $this->assertTrue(array_key_exists('rest_verb', $result['/scheduled_events/{uuid}/invitees']['methods'][$keys[0]]));
     }
 }

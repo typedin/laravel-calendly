@@ -53,6 +53,11 @@ class Mapper
     {
         return collect($this->paths->get($uri))
                 ->filter(fn ($value, $key) => in_array($key, ['get', 'post', 'delete']))
+                ->map(function ($value, $key) {
+                    $value['rest_verb'] = $key;
+
+                    return $value;
+                })
                 ->all();
     }
 }

@@ -24,7 +24,7 @@ class MethodGeneratorTest extends TestCase
      */
     public function it_creates_method(): void
     {
-        $method = MethodGenerator::handle(...$this->data());
+        $method = MethodGenerator::generate(...$this->data());
 
         $this->assertEquals($method->getName(), 'ListEventInvitees');
         $this->assertEquals('public', $method->getVisibility());
@@ -37,7 +37,7 @@ class MethodGeneratorTest extends TestCase
      */
     public function it_creates_params(): void
     {
-        $method = MethodGenerator::handle(...$this->data());
+        $method = MethodGenerator::generate(...$this->data());
 
         tap($method->getParameters()['uuid'], function (Parameter $uuid) {
             $this->assertFalse($uuid->isNullable());
@@ -47,14 +47,15 @@ class MethodGeneratorTest extends TestCase
             $this->assertTrue($status->isNullable());
             $this->assertEquals('string', $status->getType());
         });
-        /* tap($method->getParameters()['uuid'], function (Parameter $uuid) { */
-        /*     $this->assertFalse($uuid->isNullable()); */
-        /*     $this->assertEquals('string', $uuid->getType()); */
-        /* }); */
-        /* tap($method->getParameters()['uuid'], function (Parameter $uuid) { */
-        /*     $this->assertFalse($uuid->isNullable()); */
-        /*     $this->assertEquals('string', $uuid->getType()); */
-        /* }); */
+        tap($method->getParameters()['sort'], function (Parameter $sort) {
+            $this->assertEquals('created_at:asc', $sort->getDefaultValue());
+            $this->assertTrue($sort->isNullable());
+            $this->assertEquals('string', $sort->getType());
+        });
+        tap($method->getParameters()['email'], function (Parameter $email) {
+            $this->assertTrue($email->isNullable());
+            $this->assertEquals('string', $email->getType());
+        });
     }
 
     /**
@@ -62,7 +63,7 @@ class MethodGeneratorTest extends TestCase
      */
     public function it_creates_body_method(): void
     {
-        $method = MethodGenerator::handle(...$this->data());
+        $method = MethodGenerator::generate(...$this->data());
 
         $this->assertStringContainsString('$response = BaseApiClient::get("/scheduled_events/{$uuid}/invitees");', $method->getBody());
         $this->assertStringContainsString('return', $method->getBody());
@@ -75,7 +76,7 @@ class MethodGeneratorTest extends TestCase
      */
     public function it_creates_doc(): void
     {
-        $method = MethodGenerator::handle(...$this->data());
+        $method = MethodGenerator::generate(...$this->data());
 
         $this->assertStringContainsString('List Event Invitees', $method->getComment());
         $this->assertStringContainsString('@param string $uuid', $method->getComment());

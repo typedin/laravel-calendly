@@ -30,7 +30,7 @@ class Generator
     {
         collect($this->blueprint)
                ->each(function ($value) {
-                   MethodGenerator::handle($this->class,
+                   MethodGenerator::generate($this->class,
                        $this->buildModelName(),
                        $value);
                });
