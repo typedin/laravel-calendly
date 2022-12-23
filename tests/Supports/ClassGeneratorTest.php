@@ -19,7 +19,9 @@ class ClassGeneratorTest extends TestCase
      */
     public function it_creates_class_with_a_name(): void
     {
-        $class = ClassGenerator::generate($this->data());
+        $tag = 'Scheduled Events';
+
+        $class = ClassGenerator::generate($tag, $this->data());
         $this->assertEquals('ScheduledEventsApiClient', $class->getName());
     }
 
@@ -28,7 +30,8 @@ class ClassGeneratorTest extends TestCase
      */
     public function it_creates_add_methods_to_class(): void
     {
-        $class = ClassGenerator::generate($this->data());
+        $tag = 'Scheduled Events';
+        $class = ClassGenerator::generate($tag, $this->data());
 
         $this->assertCount(5, $class->getMethods());
     }

@@ -7,13 +7,13 @@ use Illuminate\Support\Collection;
 class Mapper
 {
     public const LOOKUP = [
+        'Users' => 'users',
         'Data Compliance' => 'data_compliance',
         'Event Types' => 'event_types',
         'Organizations' => 'organizations',
         'Routing Forms' => 'routing_forms',
         'Scheduled Events' => 'scheduled_events',
         'Scheduling Links' => 'scheduled_links',
-        'Users' => 'users',
         'Webhooks' => 'webhook_subscriptions',
     ];
 

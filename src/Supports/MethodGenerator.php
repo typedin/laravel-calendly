@@ -31,7 +31,14 @@ class MethodGenerator
 
     private function buildMethodName(): string
     {
-        return implode(explode(' ', $this->data['summary']));
+        $local = explode(' ', $this->data['summary']);
+        foreach ($local as $key => $value) {
+            if (str_ends_with($value, "'s")) {
+                $local[$key] = str_replace("'s", '', $value);
+            }
+        }
+
+        return implode($local);
     }
 
     private function getParametersFromData(): Collection
