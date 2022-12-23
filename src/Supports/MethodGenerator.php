@@ -2,45 +2,78 @@
 
 namespace Typedin\LaravelCalendly\Supports;
 
-use Illuminate\Support\Str;
+use Illuminate\Support\Collection;
 use Nette\PhpGenerator\Method;
 
 class MethodGenerator
 {
-    public static function handle($class, $modelName, string $methodName, $value): Method
+    private Method $method;
+
+    private function __construct(private string $uri, private array $data)
     {
-        /* if (! isset($data['parameters'])) { */
-        /*     dd($modelName, $restVerb); */
-        /* } */
-        $method = $class->addMethod($methodName)
-                            ->setStatic()
-                            ->setReturnType(sprintf("\Typedin\LaravelCalendly\Entities\%s\Calendly%s", $modelName, $modelName));
-
-        $methodParameters
-            ->filter(fn ($param) => isset($param['name']))
-            ->each(function ($value) use ($method) {
-                $type = $value['schema']['type'] == 'integer' ? 'int' : $value['schema']['type'];
-                $name = $value['name'];
-                if (isset($value['required'])) {
-                    $method->addParameter($name)->setType($type);
-                } elseif (isset($value['schema']['default'])) {
-                    $method->addParameter($name, $value['schema']['default'])->setType($type);
-                } else {
-                    $method->addParameter($name, null)->setType($type);
-                }
-            });
-
-        $method->addBody(sprintf('$response = BaseApiClient::%s("");', $restVerb))
-        ->addBody('return new '.self::buildModelName($modelName).'($response->json("resource"), "users"); ');
-
-        return $method;
+        $this->method = new Method($this->buildMethodName($data));
     }
 
-    private static function buildModelName($modelName): string
+    public static function handle(string $uri, array $data): Method
     {
-        $all = collect(explode(' ', $modelName))
-                    ->map(fn ($value) => ucfirst($value));
+        $generator = new self($uri, $data);
+        $generator->method
+                  ->setVisibility('public')
+                  ->setStatic(true)
+                  ->setReturnType('Typedin\LaravelCalendly\Entities\ScheduledEvent\CalendlyScheduledEvent');
 
-        return 'Calendly'.Str::singular(implode($all->all()));
+        $generator->buildMethodParameters();
+        $generator->buildBody();
+        $generator->buildDoc();
+
+        return $generator->method;
+    }
+
+    private function buildMethodName(): string
+    {
+        return implode(explode(' ', $this->data['summary']));
+    }
+
+    private function getParametersFromData(): Collection
+    {
+        return collect($this->data['parameters'])->filter(fn ($value) => isset($value['name']));
+    }
+
+    private function buildMethodParameters(): void
+    {
+        $this->getParametersFromData()->each(function ($value) {
+            $this->method->addParameter($value['name'])
+                ->setType($value['schema']['type'] == 'integer' ? 'int' : $value['schema']['type'])
+                ->setNullable(! isset($value['required']));
+        });
+    }
+
+    private function buildBody(): void
+    {
+        $this->method
+             ->addBody(sprintf('$response = BaseApiClient::get("%s");', $this->buildUri()))
+             ->addBody('return new CalendlyScheduledEvent($response->json("resource"), "users")');
+    }
+
+   private function buildUri(): string
+   {
+       return str_replace_first('{uuid}', '{$uuid}', $this->uri);
+   }
+
+    private function buildDoc(): void
+    {
+        $this->method
+                    ->addComment('\**')
+                    ->addComment('* '.$this->data['summary'])
+                    ->addComment('*');
+        foreach ($this->data['parameters'] as $key => $value) {
+            if (isset($value['name'])) {
+                $this->method
+                    ->addComment(
+                        sprintf('* @param %s $%s %s', $value['schema']['type'], $value['name'], $value['description'] ?? '')
+                    );
+            }
+        }
+        $this->method->addComment('*/');
     }
 }
