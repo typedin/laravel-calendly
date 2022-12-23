@@ -24,8 +24,9 @@ class MapperTest extends TestCase
         $result = $this->sut->handle()->all();
 
         $this->assertCount(5, $result);
-        $this->assertEquals('/scheduled_events/{uuid}/invitees', $result[0]['uri']);
-        $this->assertCount(1, $result[0]['methods']);
-        $this->assertTrue(in_array('get', array_keys($result[0]['methods'])));
+
+        $this->assertEquals('/scheduled_events/{uuid}/invitees', $result['/scheduled_events/{uuid}/invitees']['uri']);
+        $this->assertCount(1, $result['/scheduled_events/{uuid}/invitees']['methods']);
+        $this->assertTrue(in_array('get', array_keys($result['/scheduled_events/{uuid}/invitees']['methods'])));
     }
 }

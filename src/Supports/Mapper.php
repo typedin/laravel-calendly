@@ -30,10 +30,10 @@ class Mapper
     public function handle(): Collection
     {
         return $this->endpoints()
-               ->map(fn ($value) => [
+               ->mapWithKeys(fn ($value) => [$value['uri'] => [
                    'uri' => $value['uri'],
                    'methods' => $this->getMethodsForEndpoint($value['uri']),
-               ]);
+               ]]);
     }
 
     private function endpoints(): Collection
