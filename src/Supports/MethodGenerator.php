@@ -68,7 +68,7 @@ class MethodGenerator
     private function buildBody(): void
     {
         $this->method
-             ->addBody(sprintf('$response = BaseApiClient::get("%s");', $this->buildUri()))
+             ->addBody(sprintf('$response = BaseApiClient::%s("%s");', $this->data['rest_verb'], $this->buildUri()))
              ->addBody('return new CalendlyScheduledEvent($response->json("resource"), "users")');
     }
 
