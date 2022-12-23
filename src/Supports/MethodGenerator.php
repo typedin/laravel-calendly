@@ -36,6 +36,10 @@ class MethodGenerator
 
     private function getParametersFromData(): Collection
     {
+        if (! isset($this->data['parameters'])) {
+            return collect();
+        }
+
         return collect($this->data['parameters'])->filter(fn ($value) => isset($value['name']));
     }
 
