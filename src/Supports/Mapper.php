@@ -6,7 +6,7 @@ use Illuminate\Support\Collection;
 
 class Mapper
 {
-    public const LOOKUP = [
+    final public const LOOKUP = [
         'Users' => 'users',
         'Data Compliance' => 'data_compliance',
         'Event Types' => 'event_types',
@@ -20,9 +20,9 @@ class Mapper
     /**
      * @var Collection<TKey,TValue>
      */
-    private Collection $paths;
+    private readonly Collection $paths;
 
-    public function __construct(private array $data, private string $tag)
+    public function __construct(private array $data, private readonly string $tag)
     {
         $this->paths = collect($this->data['paths']);
     }
@@ -46,7 +46,7 @@ class Mapper
 
     private function findEndpointForTag($key): bool
     {
-        return explode('/', $key)[1] == self::LOOKUP[$this->tag];
+        return explode('/', (string) $key)[1] == self::LOOKUP[$this->tag];
     }
 
     private function getMethodsForEndpoint($uri): array

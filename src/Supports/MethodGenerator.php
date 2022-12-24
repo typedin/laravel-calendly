@@ -7,11 +7,11 @@ use Nette\PhpGenerator\Method;
 
 class MethodGenerator
 {
-    private Method $method;
+    private readonly Method $method;
 
-    private function __construct(private string $uri, private array $data)
+    private function __construct(private readonly string $uri, private array $data)
     {
-        $this->method = new Method($this->buildMethodName($data));
+        $this->method = new Method($this->buildMethodName());
     }
 
     public static function generate(string $uri, array $data): Method
@@ -20,7 +20,7 @@ class MethodGenerator
         $generator->method
                   ->setVisibility('public')
                   ->setStatic(true)
-                  ->setReturnType('Typedin\LaravelCalendly\Entities\ScheduledEvent\CalendlyScheduledEvent');
+                  ->setReturnType(\Typedin\LaravelCalendly\Entities\ScheduledEvent\CalendlyScheduledEvent::class);
 
         $generator->buildDoc();
         $generator->buildMethodParameters();
@@ -31,7 +31,7 @@ class MethodGenerator
 
     private function buildMethodName(): string
     {
-        $local = explode(' ', $this->data['summary']);
+        $local = explode(' ', (string) $this->data['summary']);
         foreach ($local as $key => $value) {
             if (str_ends_with($value, "'s")) {
                 $local[$key] = str_replace("'s", '', $value);
@@ -65,7 +65,7 @@ class MethodGenerator
     private function buildMethodParameters(): void
     {
         $this->getParametersFromData()->each(function ($value) {
-            $this->method->addParameter($value['name'], isset($value['schema']['default']) ? $value['schema']['default'] : null)
+            $this->method->addParameter($value['name'], $value['schema']['default'] ?? null)
                 // not tested by I know it will happen
                 ->setType($value['schema']['type'] == 'integer' ? 'int' : $value['schema']['type'])
                 ->setNullable(! isset($value['required']));
