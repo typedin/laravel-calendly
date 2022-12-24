@@ -3,6 +3,8 @@
 namespace Typedin\LaravelCalendly\Tests\Supports;
 
 use PHPUnit\Framework\TestCase;
+use Typedin\LaravelCalendly\Entities\ScheduledEvent\CalendlyScheduledEvent;
+use Typedin\LaravelCalendly\Entities\ScheduledEvent\CalendlyScheduledEventsCollection;
 use Typedin\LaravelCalendly\Supports\ClassGenerator;
 
 class ClassGeneratorTest extends TestCase
@@ -37,12 +39,22 @@ class ClassGeneratorTest extends TestCase
     }
 
     /** @test */
+    public function it_generates_get_methods_with_entities_as_return_types()
+    {
+        $tag = 'Scheduled Events';
+        $method = ClassGenerator::generate($tag, $this->data())->getMethod('GetEvent');
+
+        $this->assertEquals(CalendlyScheduledEvent::class, $method->getReturnType());
+        $this->assertTrue(str_contains($method->getBody(), 'CalendlyScheduledEvent'));
+    }
+
+    /** @test */
     public function it_generates_list_methods_with_collections_as_return_types()
     {
         $tag = 'Scheduled Events';
         $method = ClassGenerator::generate($tag, $this->data())->getMethod('ListEventInvitees');
 
-        $this->assertEquals(\Typedin\LaravelCalendly\Entities\ScheduledEvent\CalendlyScheduledEventsCollection::class, $method->getReturnType());
+        $this->assertEquals(CalendlyScheduledEventsCollection::class, $method->getReturnType());
         $this->assertTrue(str_contains($method->getBody(), 'CalendlyScheduledEventCollection'));
     }
 
