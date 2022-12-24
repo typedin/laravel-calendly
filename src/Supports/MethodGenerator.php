@@ -52,18 +52,14 @@ class MethodGenerator
 
     private function buildDoc(): void
     {
-        $this->method
-                    ->addComment('\**')
-                    ->addComment('* '.$this->data['summary'])
-                    ->addComment('*');
+        $this->method->addComment($this->data['summary']);
 
         $this->getParametersFromData()->each(function ($value) {
             $this->method
                 ->addComment(
-                    sprintf('* @param %s $%s %s', $value['schema']['type'], $value['name'], $value['description'] ?? '')
+                    sprintf('@param %s $%s %s', $value['schema']['type'], $value['name'], $value['description'] ?? '')
                 );
         });
-        $this->method->addComment('*/');
     }
 
     private function buildMethodParameters(): void

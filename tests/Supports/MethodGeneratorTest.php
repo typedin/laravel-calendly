@@ -9,6 +9,9 @@ use Typedin\LaravelCalendly\Supports\MethodGenerator;
 
 class MethodGeneratorTest extends TestCase
 {
+    /**
+     * @return array<string,mixed>
+     */
     private function data(): array
     {
         $content = file_get_contents(__DIR__.'/__fixtures__/scheduled_events.json');
