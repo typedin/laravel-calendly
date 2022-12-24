@@ -15,7 +15,8 @@ return static function (RectorConfig $rectorConfig): void {
     ]);
 
     $rectorConfig->skip([
-        __DIR__.'/tests/Entities',
+        __DIR__.'/tests/fakes',
+        __DIR__.'/tests/CalendlyTestCase.php',
     ]);
     // register a single rule
     $rectorConfig->rule(InlineConstructorDefaultToPropertyRector::class);

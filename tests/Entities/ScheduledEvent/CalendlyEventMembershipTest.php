@@ -8,7 +8,7 @@ use Typedin\LaravelCalendly\Tests\CalendlyTestCase;
 
 class CalendlyEventMembershipTest extends CalendlyTestCase
 {
-    private $user = [
+    private array $user = [
         'uri' => 'https://api.calendly.com/users/a-user-uuid',
         'name' => 'John Doe',
         'slug' => 'acmesales',
