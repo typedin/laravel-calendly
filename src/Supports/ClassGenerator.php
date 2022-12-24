@@ -10,6 +10,7 @@ class ClassGenerator
     {
         $classname = implode(explode(' ', $tag)).'ApiClient';
         $class = new ClassType($classname);
+        // TODO clean this
         foreach ($array as $key => $value) {
             foreach ($value['methods'] as $key => $fuck) {
                 $class->addMember(MethodGenerator::generate($key, $fuck));
