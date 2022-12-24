@@ -19,11 +19,11 @@ class MethodGenerator
         $generator = new self($uri, $data);
         $generator->method
                   ->setVisibility('public')
-                  ->setStatic(true)
-                  ->setReturnType(\Typedin\LaravelCalendly\Entities\ScheduledEvent\CalendlyScheduledEvent::class);
+                  ->setStatic(true);
 
         $generator->buildDoc();
         $generator->buildMethodParameters();
+        $generator->buildMethodReturnTypes();
         $generator->buildBody();
 
         return $generator->method;
@@ -72,11 +72,30 @@ class MethodGenerator
         });
     }
 
+    private function isCollection(): bool
+    {
+        return array_has($this->data, 'responses.200.content.application/json.schema.properties.collection');
+    }
+
+    private function buildMethodReturnTypes()
+    {
+        if ($this->isCollection()) {
+            $this->method->setReturnType(\Typedin\LaravelCalendly\Entities\ScheduledEvent\CalendlyScheduledEventsCollection::class);
+        } else {
+            $this->method->setReturnType(\Typedin\LaravelCalendly\Entities\ScheduledEvent\CalendlyScheduledEvent::class);
+        }
+    }
+
     private function buildBody(): void
     {
-        $this->method
-             ->addBody(sprintf('$response = BaseApiClient::%s("%s");', $this->data['rest_verb'], $this->buildUri()))
-             ->addBody('return new CalendlyScheduledEvent($response->json("resource"), "users")');
+        $this->method->addBody(
+            sprintf('$response = BaseApiClient::%s("%s");', $this->data['rest_verb'], $this->buildUri())
+        );
+        if ($this->isCollection()) {
+            $this->method->addBody('return new CalendlyScheduledEventCollection($response->json("resource"), "users")');
+        } else {
+            $this->method->addBody('return new CalendlyScheduledEvent($response->json("resource"), "users")');
+        }
     }
 
    private function buildUri(): string

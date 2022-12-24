@@ -4,7 +4,6 @@ namespace Typedin\LaravelCalendly\Tests\Supports;
 
 use Nette\PhpGenerator\Parameter;
 use PHPUnit\Framework\TestCase;
-use Typedin\LaravelCalendly\Entities\ScheduledEvent\CalendlyScheduledEvent;
 use Typedin\LaravelCalendly\Supports\MethodGenerator;
 
 class MethodGeneratorTest extends TestCase
@@ -32,7 +31,6 @@ class MethodGeneratorTest extends TestCase
         $this->assertEquals($method->getName(), 'ListEventInvitees');
         $this->assertEquals('public', $method->getVisibility());
         $this->assertTrue($method->isStatic());
-        $this->assertEquals(CalendlyScheduledEvent::class, $method->getReturnType());
     }
 
     /**

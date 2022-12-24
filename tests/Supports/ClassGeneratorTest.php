@@ -35,4 +35,20 @@ class ClassGeneratorTest extends TestCase
 
         $this->assertCount(5, $class->getMethods());
     }
+
+    /** @test */
+    public function it_generates_list_methods_with_collections_as_return_types()
+    {
+        $tag = 'Scheduled Events';
+        $method = ClassGenerator::generate($tag, $this->data())->getMethod('ListEventInvitees');
+
+        $this->assertEquals(\Typedin\LaravelCalendly\Entities\ScheduledEvent\CalendlyScheduledEventsCollection::class, $method->getReturnType());
+        $this->assertTrue(str_contains($method->getBody(), 'CalendlyScheduledEventCollection'));
+    }
+
+    /** @test */
+    public function it_generates_delete_method_with_no_entities()
+    {
+        $this->markTestIncomplete();
+    }
 }
