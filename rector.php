@@ -14,6 +14,9 @@ return static function (RectorConfig $rectorConfig): void {
         __DIR__.'/tests',
     ]);
 
+    $rectorConfig->skip([
+        __DIR__.'/tests/Entities',
+    ]);
     // register a single rule
     $rectorConfig->rule(InlineConstructorDefaultToPropertyRector::class);
 
