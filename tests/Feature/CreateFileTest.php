@@ -1,6 +1,6 @@
 <?php
 
-namespace Typedin\LaravelCalendly\Tests\Supports;
+namespace Typedin\LaravelCalendly\Tests\Feature;
 
 use PHPUnit\Framework\TestCase;
 use Typedin\LaravelCalendly\Supports\CreateFile;
@@ -20,6 +20,8 @@ class CreateFileTest extends TestCase
     {
         $namespace = NamespaceGenerator::generate($this->data());
 
-        (new CreateFile($namespace))->write();
+        (new CreateFile($namespace))->write(__DIR__.'/../../tests/output/');
+
+        $this->assertCount(8, glob(__DIR__.'/../../tests/output/*.php'));
     }
 }

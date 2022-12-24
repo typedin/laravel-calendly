@@ -1,4 +1,10 @@
 {
+  "src/Actions/*.php": {
+    "alternate": "tests/Feature/{}Test.php"
+  },
+  "tests/Feature/*Test.php": {
+    "alternate": "src/Actions/{}.php"
+  },
   "src/*.php": {
     "alternate": "tests/{}Test.php"
   },
