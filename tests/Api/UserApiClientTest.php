@@ -25,7 +25,7 @@ class UserApiClientTest extends TestCase
     protected function getPackageProviders($app): array
     {
         return [
-            "Typedin\LaravelCalendly\LaravelCalendlyServiceProvider",
+            \Typedin\LaravelCalendly\LaravelCalendlyServiceProvider::class,
         ];
     }
 
@@ -69,7 +69,9 @@ class UserApiClientTest extends TestCase
     {
         return json_decode(
             file_get_contents($path.'.json'),
-            true
+            true,
+            512,
+            JSON_THROW_ON_ERROR
         );
     }
 }

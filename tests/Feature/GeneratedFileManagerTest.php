@@ -12,7 +12,7 @@ class GeneratedFileManagerTest extends TestCase
     {
         $content = file_get_contents(__DIR__.'/__fixtures__/api.json');
 
-        return collect(json_decode($content, true))->all();
+        return collect(json_decode($content, true, 512, JSON_THROW_ON_ERROR))->all();
     }
 
     /** @test */

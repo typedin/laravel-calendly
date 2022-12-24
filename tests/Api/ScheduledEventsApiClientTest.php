@@ -41,7 +41,7 @@ class ScheduledEventsApiClientTest extends TestCase
     protected function getPackageProviders($app): array
     {
         return [
-            "Typedin\LaravelCalendly\LaravelCalendlyServiceProvider",
+            \Typedin\LaravelCalendly\LaravelCalendlyServiceProvider::class,
         ];
     }
 
@@ -52,11 +52,8 @@ class ScheduledEventsApiClientTest extends TestCase
     {
         ScheduledEventsApiClient::list($this->fakeUser, $this->fakeOrganization);
 
-        Http::assertSent(function (Request $request) {
-            return
-                $request['user'] == $this->fakeUser->uri &&
-                $request['organization'] == $this->fakeOrganization->uri;
-        });
+        Http::assertSent(fn(Request $request) => $request['user'] == $this->fakeUser->uri &&
+        $request['organization'] == $this->fakeOrganization->uri);
     }
 
     /**
@@ -71,9 +68,7 @@ class ScheduledEventsApiClientTest extends TestCase
             'min_start_time' => $knownDate,
         ]);
 
-        Http::assertSent(function (Request $request) use ($knownDate) {
-            return $request['min_start_time'] == $knownDate->toISOString();
-        });
+        Http::assertSent(fn(Request $request) => $request['min_start_time'] == $knownDate->toISOString());
     }
 
     /**
@@ -88,9 +83,7 @@ class ScheduledEventsApiClientTest extends TestCase
             'max_start_time' => $knownDate,
         ]);
 
-        Http::assertSent(function (Request $request) use ($knownDate) {
-            return $request['max_start_time'] == $knownDate->toISOString();
-        });
+        Http::assertSent(fn(Request $request) => $request['max_start_time'] == $knownDate->toISOString());
     }
 
     /**
@@ -110,14 +103,12 @@ class ScheduledEventsApiClientTest extends TestCase
             'status' => 'active',
         ]);
 
-        Http::assertSent(function (Request $request) use ($knownDate) {
-            return $request['max_start_time'] == $knownDate->toISOString()
-                && $request['count'] == 1
-                && $request['invitee_email'] == 'john@example.com'
-                && $request['max_start_time'] == $knownDate->toISOString()
-                && $request['max_start_time'] == $knownDate->toISOString()
-                && $request['sort'] == 'start_time:asc'
-                && $request['status'] == 'active';
-        });
+        Http::assertSent(fn(Request $request) => $request['max_start_time'] == $knownDate->toISOString()
+            && $request['count'] == 1
+            && $request['invitee_email'] == 'john@example.com'
+            && $request['max_start_time'] == $knownDate->toISOString()
+            && $request['max_start_time'] == $knownDate->toISOString()
+            && $request['sort'] == 'start_time:asc'
+            && $request['status'] == 'active');
     }
 }

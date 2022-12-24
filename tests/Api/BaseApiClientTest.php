@@ -31,7 +31,7 @@ class BaseApiClientTest extends TestCase
     protected function getPackageProviders($app): array
     {
         return [
-            "Typedin\LaravelCalendly\LaravelCalendlyServiceProvider",
+            \Typedin\LaravelCalendly\LaravelCalendlyServiceProvider::class,
         ];
     }
 
@@ -70,11 +70,8 @@ class BaseApiClientTest extends TestCase
 
         (new BaseApiClient())->get('users/me');
 
-        Http::assertSent(function (Request $request) {
-            return
-                $request->header('Authorization')[0] == 'Bearer fake-api-key'
-                &&
-                $request->url() == 'https://fake/api/endpoint/users/me';
-        });
+        Http::assertSent(fn(Request $request) => $request->header('Authorization')[0] == 'Bearer fake-api-key'
+        &&
+        $request->url() == 'https://fake/api/endpoint/users/me');
     }
 }

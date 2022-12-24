@@ -6,9 +6,6 @@ use Nette\PhpGenerator\PhpNamespace;
 
 class GeneratedFileManager
 {
-    /**
-     * @return void
-     */
     public static function writeAll(PhpNamespace $namespace, string $destination): void
     {
         foreach ($namespace->getClasses() as $class) {

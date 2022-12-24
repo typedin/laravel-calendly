@@ -7,10 +7,7 @@ use Typedin\LaravelCalendly\Parsers\DocParser;
 
 class DocParserTest extends TestCase
 {
-    /**
-     * @var string|bool
-     */
-    private $input;
+    private string|bool $input;
 
     protected function setUp(): void
     {
