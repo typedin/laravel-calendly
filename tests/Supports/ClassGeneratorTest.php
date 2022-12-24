@@ -58,6 +58,23 @@ class ClassGeneratorTest extends TestCase
     }
 
     /** @test */
+    public function it_generates_fully_qualified_uses(): never
+    {
+        /**
+         * expect something like :
+         * use Typedin\LaravelCalendly\Entities\User\CalendlyUser;
+         *  use Facades\Typedin\LaravelCalendly\Api\BaseApiClient;
+         */
+        $this->markTestIncomplete();
+    }
+
+    /** @test */
+    public function it_generates_post_methods_with_correct_response(): never
+    {
+        $this->markTestIncomplete();
+    }
+
+    /** @test */
     public function it_generates_delete_method_with_no_entities(): never
     {
         $this->markTestIncomplete();
