@@ -52,7 +52,7 @@ class ScheduledEventsApiClientTest extends TestCase
     {
         ScheduledEventsApiClient::list($this->fakeUser, $this->fakeOrganization);
 
-        Http::assertSent(fn(Request $request) => $request['user'] == $this->fakeUser->uri &&
+        Http::assertSent(fn (Request $request) => $request['user'] == $this->fakeUser->uri &&
         $request['organization'] == $this->fakeOrganization->uri);
     }
 
@@ -68,7 +68,7 @@ class ScheduledEventsApiClientTest extends TestCase
             'min_start_time' => $knownDate,
         ]);
 
-        Http::assertSent(fn(Request $request) => $request['min_start_time'] == $knownDate->toISOString());
+        Http::assertSent(fn (Request $request) => $request['min_start_time'] == $knownDate->toISOString());
     }
 
     /**
@@ -83,7 +83,7 @@ class ScheduledEventsApiClientTest extends TestCase
             'max_start_time' => $knownDate,
         ]);
 
-        Http::assertSent(fn(Request $request) => $request['max_start_time'] == $knownDate->toISOString());
+        Http::assertSent(fn (Request $request) => $request['max_start_time'] == $knownDate->toISOString());
     }
 
     /**
@@ -103,7 +103,7 @@ class ScheduledEventsApiClientTest extends TestCase
             'status' => 'active',
         ]);
 
-        Http::assertSent(fn(Request $request) => $request['max_start_time'] == $knownDate->toISOString()
+        Http::assertSent(fn (Request $request) => $request['max_start_time'] == $knownDate->toISOString()
             && $request['count'] == 1
             && $request['invitee_email'] == 'john@example.com'
             && $request['max_start_time'] == $knownDate->toISOString()

@@ -18,6 +18,7 @@ class MethodGeneratorTest extends TestCase
         return [
             'uri' => '/scheduled_events/{uuid}/invitees',
             'data' => collect(json_decode($content, true, 512, JSON_THROW_ON_ERROR)['/scheduled_events/{uuid}/invitees']['methods'])->first(),
+            'entityName' => 'ScheduledEvent',
         ];
     }
 

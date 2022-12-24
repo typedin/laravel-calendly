@@ -3,20 +3,21 @@
 namespace Typedin\LaravelCalendly\Supports;
 
 use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
 use Nette\PhpGenerator\Method;
 
 class MethodGenerator
 {
     private readonly Method $method;
 
-    private function __construct(private readonly string $uri, private array $data)
+    private function __construct(private readonly string $uri, private array $data, private string $entityName)
     {
         $this->method = new Method($this->buildMethodName());
     }
 
-    public static function generate(string $uri, array $data): Method
+    public static function generate(string $uri, array $data, string $entityName): Method
     {
-        $generator = new self($uri, $data);
+        $generator = new self($uri, $data, $entityName);
         $generator->method
                   ->setVisibility('public')
                   ->setStatic(true);
@@ -77,12 +78,15 @@ class MethodGenerator
         return array_has($this->data, 'responses.200.content.application/json.schema.properties.collection');
     }
 
-    private function buildMethodReturnTypes()
+    /**
+     * @return void
+     */
+    private function buildMethodReturnTypes(): void
     {
         if ($this->isCollection()) {
-            $this->method->setReturnType(\Typedin\LaravelCalendly\Entities\ScheduledEvent\CalendlyScheduledEventsCollection::class);
+            $this->method->setReturnType(sprintf('Calendly%sCollection', $this->entityName));
         } else {
-            $this->method->setReturnType(\Typedin\LaravelCalendly\Entities\ScheduledEvent\CalendlyScheduledEvent::class);
+            $this->method->setReturnType(sprintf('Calendly%s', Str::singular($this->entityName)));
         }
     }
 
@@ -92,9 +96,9 @@ class MethodGenerator
             sprintf('$response = BaseApiClient::%s("%s");', $this->data['rest_verb'], $this->buildUri())
         );
         if ($this->isCollection()) {
-            $this->method->addBody('return new CalendlyScheduledEventCollection($response->json("resource"), "users")');
+            $this->method->addBody(sprintf('return new Calendly%sCollection($response->json("resource"), "users")', $this->entityName));
         } else {
-            $this->method->addBody('return new CalendlyScheduledEvent($response->json("resource"), "users")');
+            $this->method->addBody(sprintf('return new Calendly%s($response->json("resource"), "users")', $this->entityName));
         }
     }
 
