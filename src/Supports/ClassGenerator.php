@@ -8,7 +8,7 @@ class ClassGenerator
 {
     private ClassType $class;
 
-    private function __construct(private string $tag, private array $array)
+    private function __construct(private readonly string $tag)
     {
     }
 

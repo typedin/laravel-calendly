@@ -10,7 +10,7 @@ class MethodGenerator
 {
     private readonly Method $method;
 
-    private function __construct(private readonly string $uri, private array $data, private string $entityName)
+    private function __construct(private readonly string $uri, private array $data, private readonly string $entityName)
     {
         $this->method = new Method($this->buildMethodName());
     }
@@ -78,9 +78,6 @@ class MethodGenerator
         return array_has($this->data, 'responses.200.content.application/json.schema.properties.collection');
     }
 
-    /**
-     * @return void
-     */
     private function buildMethodReturnTypes(): void
     {
         if ($this->isCollection()) {

@@ -58,7 +58,7 @@ class ClassGeneratorTest extends TestCase
     }
 
     /** @test */
-    public function it_generates_delete_method_with_no_entities()
+    public function it_generates_delete_method_with_no_entities(): never
     {
         $this->markTestIncomplete();
     }
