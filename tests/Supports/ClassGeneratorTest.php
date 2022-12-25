@@ -3,10 +3,14 @@
 namespace Typedin\LaravelCalendly\Tests\Supports;
 
 use PHPUnit\Framework\TestCase;
+use TValue;
 use Typedin\LaravelCalendly\Supports\ClassGenerator;
 
 class ClassGeneratorTest extends TestCase
 {
+    /**
+     * @return array<TKey,TValue>
+     */
     private function data(): array
     {
         $content = file_get_contents(__DIR__.'/__fixtures__/scheduled_events.json');
@@ -38,7 +42,7 @@ class ClassGeneratorTest extends TestCase
     }
 
     /** @test */
-    public function it_generates_get_methods_with_entities_as_return_types()
+    public function it_generates_get_methods_with_entities_as_return_types(): void
     {
         $tag = 'Scheduled Events';
         $method = ClassGenerator::generate($tag, $this->data())->getMethod('GetEvent');
@@ -48,7 +52,7 @@ class ClassGeneratorTest extends TestCase
     }
 
     /** @test */
-    public function it_generates_list_methods_with_collections_as_return_types()
+    public function it_generates_list_methods_with_collections_as_return_types(): void
     {
         $tag = 'Scheduled Events';
         $method = ClassGenerator::generate($tag, $this->data())->getMethod('ListEventInvitees');
