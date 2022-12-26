@@ -17,8 +17,7 @@ class EndpointMapper
 
     public static function toControllerName(array $array): Collection
     {
-        return collect(array_keys($array))->flatMap(function ($applesauce) {
-            return [$applesauce => self::fullname($applesauce)];
-        });
+        return collect(array_keys($array))->flatMap(fn ($applesauce) => [$applesauce => self::fullname($applesauce)]
+        );
     }
 }
