@@ -32,16 +32,16 @@ class EndpointMapperTest extends TestCase
     public function endpointProvider(): array
     {
         return [
-            ['Users', '/users/{uuid}'],
-            ['ScheduledEvents', '/scheduled_events'],
+            ['DataComplianceInvitee', '/data_compliance/deletion/invitee'],
             ['EventTypes', '/event_types'],
             ['InviteeNoShows', '/invitee_no_shows/{uuid}'],
-            ['ScheduledEventsInvitees', '/scheduled_events/{uuid}/invitees'],
-            ['ScheduledEventsInvitees', '/scheduled_events/{event_uuid}/invitees/{invitee_uuid}'],
             ['OrganizationsInvitations', '/organizations/{org_uuid}/invitations/{uuid}'],
-            ['WebhookSubscriptions', '/webhook_subscriptions/{webhook_uuid}'],
+            ['ScheduledEvents', '/scheduled_events'],
+            ['ScheduledEventsInvitees', '/scheduled_events/{event_uuid}/invitees/{invitee_uuid}'],
+            ['ScheduledEventsInvitees', '/scheduled_events/{uuid}/invitees'],
             ['Users', '/users/me'],
-            ['DataComplianceInvitee', '/data_compliance/deletion/invitee'],
+            ['Users', '/users/{uuid}'],
+            ['WebhookSubscriptions', '/webhook_subscriptions/{webhook_uuid}'],
         ];
     }
 
