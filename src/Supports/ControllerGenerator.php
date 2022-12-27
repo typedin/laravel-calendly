@@ -50,10 +50,18 @@ class ControllerGenerator
     {
         collect($this->endpoints)
             ->each(function ($value, $key) {
-                $this->addIndexMethod($value, $key);
-                $this->addShowMethod($value, $key);
-                $this->addCreateMethod($value, $key);
-                $this->addDestroyMethod($value, $key);
+                if ($this->hasIndexRestVerb($value)) {
+                    $this->addIndexMethod($value, $key);
+                }
+                if ($this->hasGetRestVerb($value)) {
+                    $this->addShowMethod($value, $key);
+                }
+                if ($this->hasPostRestVerb($value)) {
+                    $this->addCreateMethod($value, $key);
+                }
+                if ($this->hasDeleteRestVerb($value)) {
+                    $this->addDestroyMethod($value, $key);
+                }
             });
 
         return $this;
@@ -67,7 +75,7 @@ class ControllerGenerator
     /**
      * @return bool
      */
-    private function isIndexRestVerb($value): bool
+    private function hasIndexRestVerb($value): bool
     {
         return  array_key_first($value) == 'get' && array_key_exists('collection', $this->getResponseType($value));
     }
@@ -75,7 +83,7 @@ class ControllerGenerator
     /**
      * @return bool
      */
-    private function isGetRestVerb(array $value): bool
+    private function hasGetRestVerb(array $value): bool
     {
         return  array_key_exists('get', $value) && array_key_exists('resource', $this->getResponseType($value));
     }
@@ -83,7 +91,7 @@ class ControllerGenerator
     /**
      * @return bool
      */
-    private function isPostRestVerb(array $value): bool
+    private function hasPostRestVerb(array $value): bool
     {
         return  array_key_exists('post', $value);
     }
@@ -91,7 +99,7 @@ class ControllerGenerator
     /**
      * @return bool
      */
-    private function isDeleteRestVerb($value): bool
+    private function hasDeleteRestVerb($value): bool
     {
         return  array_key_exists('delete', $value);
     }
@@ -101,9 +109,6 @@ class ControllerGenerator
      */
     private function addIndexMethod($value, $key): void
     {
-        if (! $this->isIndexRestVerb($value)) {
-            return;
-        }
         // remove empty string
         // reindex the array starting at 0
         $uri = implode(array_values(array_filter(explode('/', $key))));
@@ -123,10 +128,6 @@ class ControllerGenerator
      */
     private function addShowMethod($value, $key): void
     {
-        if (! $this->isGetRestVerb($value)) {
-            return;
-        }
-
         // remove empty string
         // reindex the array starting at 0
         $uri = explode('/', $key)[1];
@@ -143,9 +144,6 @@ class ControllerGenerator
 
     private function addCreateMethod($value, $key): void
     {
-        if (! $this->isPostRestVerb($value)) {
-            return;
-        }
         // remove empty string
         // reindex the array starting at 0
         $uri = explode('/', $key)[1];
@@ -165,9 +163,6 @@ class ControllerGenerator
      */
     private function addDestroyMethod($value, $key): void
     {
-        if (! $this->isDeleteRestVerb($value)) {
-            return;
-        }
         $uri = explode('/', $key)[1];
         try {
             $this->controller
