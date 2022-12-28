@@ -62,7 +62,7 @@ class ControllerGeneratorTest extends TestCase
         $this->assertEquals('\Typedin\LaravelCalendly\Http\GetUserRequest', $method->getParameters()['request']->getType());
 
         $this->assertEquals('\Typedin\LaravelCalendly\Http\GetUserRequest', $method->getParameters()['request']->getType());
-        $this->assertStringContainsString('$response = $this->api->get("/users/{$uuid}");', $method->getBody());
+        $this->assertStringContainsString('$response = $this->api->get("/users/{$uuid}/");', $method->getBody());
         $this->assertStringContainsString('return response()->json([', $method->getBody());
         $this->assertStringContainsString('"user" => new \Typedin\LaravelCalendly\Entities\User($response),', $method->getBody());
         $this->assertStringContainsString(']);', $method->getBody());
