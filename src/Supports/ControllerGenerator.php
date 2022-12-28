@@ -37,13 +37,7 @@ class ControllerGenerator
     }
 
     /**
-     * Index
-     * Show
-     * Create
-     * Store
-     * Edit
-     * Update
-     * Destroy
+     * Index Show Create Store Edit Update Destroy
      */
     private function generateMethods(): ControllerGenerator
     {

@@ -93,9 +93,9 @@ class MethodGenerator
             sprintf('$response = BaseApiClient::%s("%s");', $this->data['rest_verb'], $this->buildUri())
         );
         if ($this->isCollection()) {
-            $this->method->addBody(sprintf('return new Calendly%sCollection($response->json("resource"), "users")', $this->entityName));
+            $this->method->addBody(sprintf('return new Calendly%sCollection($response->json("resource"), "users");', $this->entityName));
         } else {
-            $this->method->addBody(sprintf('return new Calendly%s($response->json("resource"), "users")', $this->entityName));
+            $this->method->addBody(sprintf('return new Calendly%s($response->json("resource"), "users");', $this->entityName));
         }
     }
 
