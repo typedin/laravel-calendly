@@ -9,15 +9,25 @@ class EndpointMapper
 {
     public static function fullname(string $input): string
     {
-        return collect(array_values(array_filter(explode('/', $input))))
+        $local = collect(array_values(array_filter(explode('/', $input))))
                     ->filter(fn ($part) => ! Str::contains($part, ['me', 'deletion', 'uuid']))
-                    ->map(fn ($part) => ucfirst(Str::camel($part)))
-                    ->implode('');
+                    ->values()
+                    ->map(function ($part) {
+                        return ucfirst(Str::camel($part));
+                    });
+
+        return $local->map(function ($part, $key) use ($local) {
+            if ($key < count($local) - 1) {
+                return  Str::singular($part);
+            }
+
+            return Str::plural($part);
+        })->implode('');
     }
 
     public static function toControllerName(array $array): Collection
     {
-        return collect(array_keys($array))->flatMap(fn ($applesauce) => [$applesauce => self::fullname($applesauce)]
-        );
+        return collect(array_keys($array))
+                    ->flatMap(fn ($applesauce) => [$applesauce => self::fullname($applesauce)]);
     }
 }

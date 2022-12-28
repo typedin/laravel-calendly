@@ -32,13 +32,13 @@ class EndpointMapperTest extends TestCase
     public function endpointProvider(): array
     {
         return [
-            ['DataComplianceInvitee', '/data_compliance/deletion/invitee'],
+            ['DataComplianceInvitees', '/data_compliance/deletion/invitee'],
             ['EventTypes', '/event_types'],
             ['InviteeNoShows', '/invitee_no_shows/{uuid}'],
-            ['OrganizationsInvitations', '/organizations/{org_uuid}/invitations/{uuid}'],
+            ['OrganizationInvitations', '/organizations/{org_uuid}/invitations/{uuid}'],
             ['ScheduledEvents', '/scheduled_events'],
-            ['ScheduledEventsInvitees', '/scheduled_events/{event_uuid}/invitees/{invitee_uuid}'],
-            ['ScheduledEventsInvitees', '/scheduled_events/{uuid}/invitees'],
+            ['ScheduledEventInvitees', '/scheduled_events/{event_uuid}/invitees/{invitee_uuid}'],
+            ['ScheduledEventInvitees', '/scheduled_events/{uuid}/invitees'],
             ['Users', '/users/me'],
             ['Users', '/users/{uuid}'],
             ['WebhookSubscriptions', '/webhook_subscriptions/{webhook_uuid}'],
@@ -52,13 +52,13 @@ class EndpointMapperTest extends TestCase
     {
         $this->assertCount(5, EndpointMapper::toControllerName($this->data()));
 
-        $this->assertEquals(EndpointMapper::toControllerName($this->data())['/scheduled_events/{uuid}/invitees'], 'ScheduledEventsInvitees');
+        $this->assertEquals(EndpointMapper::toControllerName($this->data())['/scheduled_events/{uuid}/invitees'], 'ScheduledEventInvitees');
         $this->assertEquals(EndpointMapper::toControllerName($this->data())['/scheduled_events'], 'ScheduledEvents');
         $this->assertEquals(EndpointMapper::toControllerName($this->data())['/scheduled_events'], 'ScheduledEvents');
         /**
          * the api post to cancellation
          * so it "creates" a cancellation
          */
-        $this->assertEquals(EndpointMapper::toControllerName($this->data())['/scheduled_events/{uuid}/cancellation'], 'ScheduledEventsCancellation');
+        $this->assertEquals(EndpointMapper::toControllerName($this->data())['/scheduled_events/{uuid}/cancellation'], 'ScheduledEventCancellations');
     }
 }
