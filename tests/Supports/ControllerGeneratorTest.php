@@ -17,9 +17,7 @@ class ControllerGeneratorTest extends TestCase
 
         $local = collect(json_decode($content, true, 512, JSON_THROW_ON_ERROR)['paths']);
 
-        return $local->filter(function ($value, $key) use ($filter) {
-            return  $filter == EndpointMapper::fullname($key);
-        })->all();
+        return $local->filter(fn ($_value, $key) => $filter == EndpointMapper::fullname($key))->all();
     }
 
     /**
@@ -62,7 +60,12 @@ class ControllerGeneratorTest extends TestCase
         $method = ( new ControllerGenerator('Users', $this->endpoints('Users')) )->controller->getMethod('show');
 
         $this->assertEquals('\Typedin\LaravelCalendly\Http\GetUserRequest', $method->getParameters()['request']->getType());
-        $this->assertStringContainsString('$this->api->get("/users/{$uuid}");', $method->getBody());
+
+        $this->assertEquals('\Typedin\LaravelCalendly\Http\GetUserRequest', $method->getParameters()['request']->getType());
+        $this->assertStringContainsString('$response = $this->api->get("/users/{$uuid}");', $method->getBody());
+        $this->assertStringContainsString('return response()->json([', $method->getBody());
+        $this->assertStringContainsString('"user" => new \Typedin\LaravelCalendly\Entities\User($response),', $method->getBody());
+        $this->assertStringContainsString(']);', $method->getBody());
     }
 
     /**
@@ -79,12 +82,34 @@ class ControllerGeneratorTest extends TestCase
     /**
      * @test
      */
+    public function it_generates_post_method_with_uuid(): void
+    {
+        $method = ( new ControllerGenerator('OrganizationInvitations', $this->endpoints('OrganizationInvitations')) )->controller->getMethod('post');
+
+        $this->assertEquals('\Typedin\LaravelCalendly\Http\PostOrganizationInvitationRequest', $method->getParameters()['request']->getType());
+        $this->assertStringContainsString('$this->api->post("/organizations/{$uuid}/invitations/");', $method->getBody());
+    }
+
+    /**
+     * @test
+     */
     public function it_generates_destroy_method(): void
     {
         $method = ( new ControllerGenerator('InviteeNoShows', $this->endpoints('InviteeNoShows')) )->controller->getMethods()['destroy'];
 
         $this->assertEquals('\Typedin\LaravelCalendly\Http\DeleteInviteeNoShowRequest', $method->getParameters()['request']->getType());
-        $this->assertStringContainsString('$this->api->delete("/invitee_no_shows/");', $method->getBody());
+        $this->assertStringContainsString('$this->api->delete("/invitee_no_shows/{$uuid}/");', $method->getBody());
+    }
+
+    /**
+     * @test
+     */
+    public function it_generates_destroy_method_with_many_uuids(): void
+    {
+        $method = ( new ControllerGenerator('OrganizationInvitations', $this->endpoints('OrganizationInvitations')) )->controller->getMethods()['destroy'];
+
+        $this->assertEquals('\Typedin\LaravelCalendly\Http\DeleteOrganizationInvitationRequest', $method->getParameters()['request']->getType());
+        $this->assertStringContainsString('$this->api->delete("/organizations/{$org_uuid}/invitations/{$uuid}/");', $method->getBody());
     }
 
     /**
