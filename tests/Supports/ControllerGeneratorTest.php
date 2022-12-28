@@ -49,7 +49,16 @@ class ControllerGeneratorTest extends TestCase
         $method = ( new ControllerGenerator('EventTypes', $this->endpoints('EventTypes')) )->controller->getMethod('index');
 
         $this->assertEquals('\Typedin\LaravelCalendly\Http\IndexEventTypeRequest', $method->getParameters()['request']->getType());
-        $this->assertStringContainsString('$this->api->get("/event_types/{$uuid}");', $method->getBody());
+        $this->assertStringContainsString('$response = $this->api->get("/event_types/");', $method->getBody());
+        $this->assertStringContainsString('$all = collect($response["collection"])', $method->getBody());
+        $this->assertStringContainsString('->mapInto(EventType::class)->all();', $method->getBody());
+
+        $this->assertStringContainsString('return response()->json([', $method->getBody());
+        $this->assertStringContainsString('"event_types" => $all,', $method->getBody());
+        $this->assertStringContainsString(']);', $method->getBody());
+
+        // collection: EnventType
+        // pagination
     }
 
     /**

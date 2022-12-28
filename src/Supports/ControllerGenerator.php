@@ -20,6 +20,8 @@ class ControllerGenerator
         $this->controller->setExtends(\App\Http\Controllers\Controller::class);
 
         $this->generateConstructor()->generateMethods();
+
+        $this->controller->validate();
     }
 
     /**
@@ -65,18 +67,18 @@ class ControllerGenerator
      */
     private function addIndexMethod($value, $key): void
     {
-        // remove empty string
-        // reindex the array starting at 0
-        $uri = implode(array_values(array_filter(explode('/', $key))));
-        try {
-            $this->controller
-                    ->addMethod('index')
-                    ->addBody(sprintf('$this->api->get("/%s/{%s}");', $uri, '$uuid'))
-                    ->addParameter('request')
-                    ->setType(sprintf('\Typedin\LaravelCalendly\Http\Index%sRequest', Str::singular($this->name)));
-        } catch (\Throwable $th) {
-            // method show exists
-        }
+        /* dd($key); */
+        /* dd($value['get']['responses']['200']['content']['application/json']['schema']['properties']); */
+        $this->controller
+                ->addMethod('index')
+                ->addBody(sprintf('$response = $this->api->get("/%s/");', $this->buildUri($key)))
+                ->addBody(sprintf('$all = collect($response["collection"])'))
+                ->addBody(sprintf('->mapInto(%s::class)->all();', Str::singular($this->name)))
+                ->addBody('return response()->json([')
+                ->addBody(sprintf('"%s" => $all,', Str::snake($this->name)))
+                ->addBody(']);')
+                ->addParameter('request')
+                ->setType(sprintf('\Typedin\LaravelCalendly\Http\Index%sRequest', Str::singular($this->name)));
     }
 
     /**
@@ -84,6 +86,7 @@ class ControllerGenerator
      */
     private function addShowMethod($value, $key): void
     {
+        // show method for /users/me would add twice the same method
         try {
             $this->controller
                     ->addMethod('show')
@@ -94,21 +97,17 @@ class ControllerGenerator
                     ->addParameter('request')
                     ->setType(sprintf('\Typedin\LaravelCalendly\Http\Get%sRequest', Str::singular($this->name)));
         } catch (\Throwable $th) {
-            // method show exists
+            //throw $th;
         }
     }
 
     private function addCreateMethod($value, $key): void
     {
-        try {
-            $this->controller
-                    ->addMethod('post')
-                    ->addBody(sprintf('$this->api->post("/%s/");', $this->buildUri($key)))
-                    ->addParameter('request')
-                    ->setType(sprintf('\Typedin\LaravelCalendly\Http\Post%sRequest', Str::singular($this->name)));
-        } catch (\Throwable $th) {
-            // method show exists
-        }
+        $this->controller
+                ->addMethod('post')
+                ->addBody(sprintf('$this->api->post("/%s/");', $this->buildUri($key)))
+                ->addParameter('request')
+                ->setType(sprintf('\Typedin\LaravelCalendly\Http\Post%sRequest', Str::singular($this->name)));
     }
 
     /**
@@ -116,15 +115,11 @@ class ControllerGenerator
      */
     private function addDestroyMethod($value, $key): void
     {
-        try {
-            $this->controller
-                    ->addMethod('destroy')
-                    ->addBody(sprintf('$this->api->delete("/%s/");', $this->buildUri($key)))
-                    ->addParameter('request')
-                    ->setType(sprintf('\Typedin\LaravelCalendly\Http\Delete%sRequest', Str::singular($this->name)));
-        } catch (\Throwable $th) {
-            // method show exists
-        }
+        $this->controller
+                ->addMethod('destroy')
+                ->addBody(sprintf('$this->api->delete("/%s/");', $this->buildUri($key)))
+                ->addParameter('request')
+                ->setType(sprintf('\Typedin\LaravelCalendly\Http\Delete%sRequest', Str::singular($this->name)));
     }
 
     /**
