@@ -7,7 +7,6 @@ use PHPUnit\Framework\TestCase;
 use Symfony\Component\Yaml\Yaml;
 use Typedin\LaravelCalendly\Actions\GeneratedFileManager;
 use Typedin\LaravelCalendly\Supports\EntityGenerator;
-use Typedin\LaravelCalendly\Supports\NamespaceGenerator;
 
 /**
  * @group integration
@@ -27,48 +26,44 @@ class GeneratedFileManagerTest extends TestCase
         }
     }
 
-    /**
-     * @return array<TKey,TValue>
-     */
-    private function data(): array
+    private function data($key = null)
     {
-        $content = file_get_contents(__DIR__.'/__fixtures__/api.json');
+        $content = collect(Yaml::parseFile(__DIR__.'/../../doc/openapi.yaml'));
+        $schemas = $content['components']['schemas'];
+        $keys = collect($content['components']['schemas'])->keys();
 
-        return collect(json_decode($content, true, 512, JSON_THROW_ON_ERROR))->all();
-    }
+        $local = [
+            'keys' => $keys,
+            'schemas' => $schemas,
+        ];
+        if ($key) {
+            return $local[$key];
+        }
 
-    /** @test */
-    public function it_creates_files(): void
-    {
-        $namespace = NamespaceGenerator::generate($this->data());
-
-        GeneratedFileManager::writeAll($namespace, $this->destination);
-
-        $this->assertCount(8, glob($this->destination.'*.php'));
+        return $local;
     }
 
     /** @test */
     public function it_catches_exceptions(): void
     {
         $unexisting_destination = __DIR__.'/this/path/does/not/exist/';
-        $this->expectExceptionMessage('Could not write file (UsersApiClient.php) in folder: '.$unexisting_destination);
 
-        $namespace = NamespaceGenerator::generate($this->data());
+        $this->expectExceptionMessage('Could not write file (CalendlyUser.php) in folder: '.$unexisting_destination);
 
-        GeneratedFileManager::writeAll($namespace, $unexisting_destination);
+        $entity = ( new EntityGenerator('User', $this->data()['schemas']['User']) )->entity;
+        $namespace = new PhpNamespace(name: "Typedin\LaravelCalendly\Entities\CalendlyUser");
+        GeneratedFileManager::write(path: $unexisting_destination, class: $entity, namespace: $namespace);
     }
 
     /** @test */
-    public function it_works_for_every_key_for_entities(): void
+    public function it_writes_a_file_to_a_specific_path(): void
     {
         /**
          * url https://stoplight.io/api/v1/projects/calendly/api-docs/nodes/reference/calendly-api/openapi.yaml
          */
-        $content = collect(Yaml::parseFile(__DIR__.'/../../doc/openapi.yaml'));
-        $schemas = $content['components']['schemas'];
-        $keys = collect($content['components']['schemas'])->keys();
+        $schemas = $this->data('schemas');
 
-        $keys->each(function ($key) use ($schemas) {
+        $this->data('keys')->each(function ($key) use ($schemas) {
             $entity = ( new EntityGenerator($key, $schemas[$key]) )->entity;
             $namespace = new PhpNamespace(name: "Typedin\LaravelCalendly\Entities\\".$entity->getName());
             GeneratedFileManager::write(path: $this->destination, class: $entity, namespace: $namespace);
