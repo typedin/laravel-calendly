@@ -38,6 +38,7 @@ class EntityGeneratorTest extends TestCase
         $this->assertCount(10, $constructor->getParameters());
         $uri = $constructor->getParameters()['uri'];
         $this->assertEquals('string', $uri->getType());
+        $this->assertStringContainsString('$this->uri = $uri;', $constructor->getBody());
     }
 
     /**
@@ -70,6 +71,43 @@ class EntityGeneratorTest extends TestCase
         $avatar_url_property = $entity->getProperties()['avatar_url'];
         $this->assertStringContainsString('@var string|null $avatar_url', $avatar_url_property->getComment());
         $this->assertEquals('string', $avatar_url_property->getType());
+    }
+
+    /**
+     * @test
+     */
+    public function it_handles_booleans(): void
+    {
+        // boolean is an alias for bool
+        // https://stackoverflow.com/questions/44009037/php-bool-vs-boolean-type-hinting
+        // type hinting and type casting are _not_ the same
+
+        $entity = ( new EntityGenerator('AvailabilitySchedule', $this->schema('AvailabilitySchedule')) )->entity;
+        // test constructor parameter
+        $avatar_url_parameter = $entity->getMethod('__construct')->getParameters()['default'];
+        $this->assertEquals('bool', $avatar_url_parameter->getType());
+
+        // test class property
+        $avatar_url_property = $entity->getProperties()['default'];
+        $this->assertStringContainsString('@var boolean $default', $avatar_url_property->getComment());
+        $this->assertEquals('bool', $avatar_url_property->getType());
+    }
+
+    /**
+     * @test
+     */
+    public function it_handles_numbers(): void
+    {
+        // EventType
+        // EventTypeAvailableTime
+        // EventTypeCustomQuestion
+        // InviteeQuestionAndAnswer
+        // Pagination
+        // int ?
+        // float ?
+        // good luck...
+        $entity = ( new EntityGenerator('EventType', $this->schema('EventType')) )->entity;
+        $this->markTestIncomplete();
     }
 
     /**
