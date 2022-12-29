@@ -10,7 +10,7 @@ class ControllerGenerator
 {
     public ClassType $controller;
 
-    public function __construct(private string $name, private array $endpoints)
+    public function __construct(private readonly string $name, private readonly array $endpoints)
     {
         $this->controller = new ClassType(
             sprintf('Calendly%sController', $this->name),
@@ -24,14 +24,11 @@ class ControllerGenerator
         $this->controller->validate();
     }
 
-    /**
-     * @return ControllerGenerator
-     */
     private function generateConstructor(): ControllerGenerator
     {
         $this->controller
                 ->addMethod('__construct')
-                ->addBody(sprintf('$this->api = $api;'))
+                ->addBody('$this->api = $api;')
                 ->addParameter('api')
                 ->setType(\Typedin\LaravelCalendly\Contracts\CalendlyApiInterface::class);
 
@@ -46,33 +43,30 @@ class ControllerGenerator
         collect($this->endpoints)
             ->each(function ($value, $key) {
                 if ($this->hasIndexRestVerb($value)) {
-                    $this->addIndexMethod($value, $key);
+                    $this->addIndexMethod($key);
                 }
                 if ($this->hasGetRestVerb($value)) {
-                    $this->addShowMethod($value, $key);
+                    $this->addShowMethod($key);
                 }
                 if ($this->hasPostRestVerb($value)) {
-                    $this->addCreateMethod($value, $key);
+                    $this->addCreateMethod($key);
                 }
                 if ($this->hasDeleteRestVerb($value)) {
-                    $this->addDestroyMethod($value, $key);
+                    $this->addDestroyMethod($key);
                 }
             });
 
         return $this;
     }
 
-    /**
-     * @return void
-     */
-    private function addIndexMethod($value, $key): void
+    private function addIndexMethod($key): void
     {
         /* dd($key); */
         /* dd($value['get']['responses']['200']['content']['application/json']['schema']['properties']); */
         $this->controller
                 ->addMethod('index')
                 ->addBody(sprintf('$response = $this->api->get("/%s/");', $this->buildUri($key)))
-                ->addBody(sprintf('$all = collect($response["collection"])'))
+                ->addBody('$all = collect($response["collection"])')
                 ->addBody(sprintf('->mapInto(%s::class)->all();', Str::singular($this->name)))
                 ->addBody('return response()->json([')
                 ->addBody(sprintf('"%s" => $all,', Str::snake($this->name)))
@@ -81,10 +75,7 @@ class ControllerGenerator
                 ->setType(sprintf('\Typedin\LaravelCalendly\Http\Index%sRequest', Str::singular($this->name)));
     }
 
-    /**
-     * @return void
-     */
-    private function addShowMethod($value, $key): void
+    private function addShowMethod($key): void
     {
         // show method for /users/me would add twice the same method
         try {
@@ -96,12 +87,12 @@ class ControllerGenerator
                     ->addBody(']);')
                     ->addParameter('request')
                     ->setType(sprintf('\Typedin\LaravelCalendly\Http\Get%sRequest', Str::singular($this->name)));
-        } catch (\Throwable $th) {
+        } catch (\Throwable) {
             //throw $th;
         }
     }
 
-    private function addCreateMethod($value, $key): void
+    private function addCreateMethod($key): void
     {
         $this->controller
                 ->addMethod('post')
@@ -110,10 +101,7 @@ class ControllerGenerator
                 ->setType(sprintf('\Typedin\LaravelCalendly\Http\Post%sRequest', Str::singular($this->name)));
     }
 
-    /**
-     * @return void
-     */
-    private function addDestroyMethod($value, $key): void
+    private function addDestroyMethod($key): void
     {
         $this->controller
                 ->addMethod('destroy')
@@ -122,41 +110,26 @@ class ControllerGenerator
                 ->setType(sprintf('\Typedin\LaravelCalendly\Http\Delete%sRequest', Str::singular($this->name)));
     }
 
-    /**
-     * @return array
-     */
     private function getResponseType(array $value): array
     {
         return $value['get']['responses']['200']['content']['application/json']['schema']['properties'];
     }
 
-    /**
-     * @return bool
-     */
     private function hasIndexRestVerb($value): bool
     {
         return  array_key_first($value) == 'get' && array_key_exists('collection', $this->getResponseType($value));
     }
 
-    /**
-     * @return bool
-     */
     private function hasGetRestVerb(array $value): bool
     {
         return  array_key_exists('get', $value) && array_key_exists('resource', $this->getResponseType($value));
     }
 
-    /**
-     * @return bool
-     */
     private function hasPostRestVerb(array $value): bool
     {
         return  array_key_exists('post', $value);
     }
 
-    /**
-     * @return bool
-     */
     private function hasDeleteRestVerb($value): bool
     {
         return  array_key_exists('delete', $value);
@@ -164,10 +137,8 @@ class ControllerGenerator
 
     private function buildUri($key): string
     {
-        return collect(explode('/', $key))->filter(function ($value) {
-            // remove empty string
-            return (bool) $value;
-        })->map(function ($value) {
+        return collect(explode('/', (string) $key))->filter(fn($value) => // remove empty string
+(bool) $value)->map(function ($value) {
             if (strstr($value, 'uuid')) {
                 $value = str_replace_first('{', '', $value);
                 $value = str_replace_first('}', '', $value);

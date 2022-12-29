@@ -9,7 +9,7 @@ class EntityGenerator
 {
     public ClassType $entity;
 
-    public function __construct(private string $name, private array $schema)
+    public function __construct(private readonly string $name, private array $schema)
     {
         $this->entity = new ClassType(
             sprintf('Calendly%s', $this->name),
@@ -43,9 +43,6 @@ class EntityGenerator
         return $this;
     }
 
-    /**
-     * @return EntityGenerator
-     */
     private function generateProperties(): EntityGenerator
     {
         if (! isset($this->schema['required'])) {
@@ -72,16 +69,16 @@ class EntityGenerator
         if (! isset($this->schema['properties'][$required_parameter]['type'])) {
             return '';
         }
-        if (str_contains($this->schema['properties'][$required_parameter]['type'], 'bool')) {
+        if (str_contains((string) $this->schema['properties'][$required_parameter]['type'], 'bool')) {
             return 'bool';
         }
 
-        return isset($this->schema['properties'][$required_parameter]['type']) ? $this->schema['properties'][$required_parameter]['type'] : '';
+        return $this->schema['properties'][$required_parameter]['type'] ?? '';
     }
 
     private function generatePropertieDescription($required_parameter): string
     {
-        return isset($this->schema['properties'][$required_parameter]['description']) ? $this->schema['properties'][$required_parameter]['description'] : '';
+        return $this->schema['properties'][$required_parameter]['description'] ?? '';
     }
 
     private function generateVarComment($required_parameter): string

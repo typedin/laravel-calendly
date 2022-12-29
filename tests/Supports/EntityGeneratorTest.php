@@ -96,7 +96,7 @@ class EntityGeneratorTest extends TestCase
     /**
      * @test
      */
-    public function it_handles_numbers(): void
+    public function it_handles_numbers(): never
     {
         // EventType
         // EventTypeAvailableTime
@@ -106,7 +106,7 @@ class EntityGeneratorTest extends TestCase
         // int ?
         // float ?
         // good luck...
-        $entity = ( new EntityGenerator('EventType', $this->schema('EventType')) )->entity;
+        new EntityGenerator('EventType', $this->schema('EventType'));
         $this->markTestIncomplete();
     }
 
