@@ -61,8 +61,6 @@ class ControllerGenerator
 
     private function addIndexMethod($key): void
     {
-        /* dd($key); */
-        /* dd($value['get']['responses']['200']['content']['application/json']['schema']['properties']); */
         $this->controller
                 ->addMethod('index')
                 ->addBody(sprintf('$response = $this->api->get("/%s/");', $this->buildUri($key)))
@@ -137,8 +135,9 @@ class ControllerGenerator
 
     private function buildUri($key): string
     {
-        return collect(explode('/', (string) $key))->filter(fn($value) => // remove empty string
-(bool) $value)->map(function ($value) {
+        return collect(explode('/', (string) $key))
+        // remove empty string
+        ->filter(fn ($value) => (bool) $value)->map(function ($value) {
             if (strstr($value, 'uuid')) {
                 $value = str_replace_first('{', '', $value);
                 $value = str_replace_first('}', '', $value);
