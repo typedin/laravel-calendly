@@ -4,7 +4,6 @@ namespace Typedin\LaravelCalendly\Tests\Feature;
 
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Yaml\Yaml;
-use TValue;
 use Typedin\LaravelCalendly\Actions\GeneratedFileManager;
 use Typedin\LaravelCalendly\Supports\EntityGenerator;
 use Typedin\LaravelCalendly\Supports\NamespaceGenerator;
@@ -16,7 +15,7 @@ class GeneratedFileManagerTest extends TestCase
     protected function tearDown(): void
     {
         parent::tearDown();
-        $files = glob($this->destination); // get all file names
+        $files = glob($this->destination.'/*'); // get all file names
         foreach ($files as $file) { // iterate files
             if (is_file($file)) {
                 unlink($file); // delete file
@@ -39,9 +38,9 @@ class GeneratedFileManagerTest extends TestCase
     {
         $namespace = NamespaceGenerator::generate($this->data());
 
-        GeneratedFileManager::writeAll($namespace, $destination);
+        GeneratedFileManager::writeAll($namespace, $this->destination);
 
-        $this->assertCount(8, glob($destination.'*.php'));
+        $this->assertCount(8, glob($this->destination.'*.php'));
     }
 
     /** @test */
@@ -66,9 +65,9 @@ class GeneratedFileManagerTest extends TestCase
         $keys = collect($content['components']['schemas'])->keys();
 
         $keys->each(function ($key) use ($schemas) {
-            $path = __DIR__.'/../../tests/output/';
             $entity = ( new EntityGenerator($key, $schemas[$key]) )->entity;
-            GeneratedFileManager::write(path: $path, class: $entity);
+            GeneratedFileManager::write(path: $this->destination, class: $entity);
         });
+        $this->assertCount(45, glob($this->destination.'*.php'));
     }
 }
