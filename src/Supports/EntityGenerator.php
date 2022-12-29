@@ -27,7 +27,9 @@ class EntityGenerator
     private function generateConstructor(): EntityGenerator
     {
         $this->entity->addMethod('__construct');
-
+        if (! isset($this->schema['required'])) {
+            return $this;
+        }
         collect($this->schema['required'])->each(function ($required_parameter) {
             $this->entity
                     ->getMethod('__construct')
@@ -44,6 +46,9 @@ class EntityGenerator
      */
     private function generateProperties(): EntityGenerator
     {
+        if (! isset($this->schema['required'])) {
+            return $this;
+        }
         collect($this->schema['required'])->each(function ($required_parameter) {
             $this->entity
                     ->addProperty($required_parameter)

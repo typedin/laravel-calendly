@@ -92,7 +92,6 @@ class EntityGeneratorTest extends TestCase
     {
         $content = file_get_contents(__DIR__.'/__fixtures__/api.json');
         $keys = collect(json_decode($content, true, 512, JSON_THROW_ON_ERROR)['components']['schemas'])->keys();
-
         $keys->each(function ($key) {
             $entity = ( new EntityGenerator($key, $this->schema($key)) )->entity;
             $this->assertInstanceOf(\Nette\PhpGenerator\ClassType::class, $entity);
