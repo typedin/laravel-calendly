@@ -9,6 +9,9 @@ use Typedin\LaravelCalendly\Actions\GeneratedFileManager;
 use Typedin\LaravelCalendly\Supports\EntityGenerator;
 use Typedin\LaravelCalendly\Supports\NamespaceGenerator;
 
+/**
+ * @group integration
+ */
 class GeneratedFileManagerTest extends TestCase
 {
     private $destination = __DIR__.'/../../tests/output/';
