@@ -2,6 +2,7 @@
 
 namespace Typedin\LaravelCalendly\Tests\Feature;
 
+use Nette\PhpGenerator\PhpNamespace;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Yaml\Yaml;
 use Typedin\LaravelCalendly\Actions\GeneratedFileManager;
@@ -44,7 +45,7 @@ class GeneratedFileManagerTest extends TestCase
     }
 
     /** @test */
-    public function it_catches_excpetions(): void
+    public function it_catches_exceptions(): void
     {
         $unexisting_destination = __DIR__.'/this/path/does/not/exist/';
         $this->expectExceptionMessage('Could not write file (UsersApiClient.php) in folder: '.$unexisting_destination);
@@ -66,7 +67,8 @@ class GeneratedFileManagerTest extends TestCase
 
         $keys->each(function ($key) use ($schemas) {
             $entity = ( new EntityGenerator($key, $schemas[$key]) )->entity;
-            GeneratedFileManager::write(path: $this->destination, class: $entity);
+            $namespace = new PhpNamespace(name: "Typedin\LaravelCalendly\Entities\\".$entity->getName());
+            GeneratedFileManager::write(path: $this->destination, class: $entity, namespace: $namespace);
         });
         $this->assertCount(45, glob($this->destination.'*.php'));
     }

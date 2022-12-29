@@ -20,9 +20,10 @@ class GeneratedFileManager
         }
     }
 
-    public static function write(string $path, ClassType $class): void
+    public static function write(string $path, ClassType $class, PhpNamespace $namespace): void
     {
         $content = '<?php'.PHP_EOL."\n";
+        $content = $content.$namespace;
         $content = $content.$class->__toString();
         // the @ suppresses the warning
         $return_value = @file_put_contents($path.$class->getName().'.php', $content);
