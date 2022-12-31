@@ -1,5 +1,9 @@
 <p align="center"><img src="/art/logo.svg" alt="Social Card of Laravel Calendly"></p>
 
+# WORK IN PROGRESS
+
+This code is not ment to be used. PLEASE don't use it in production.
+
 # Interact with Calendly API with Laravel
 
 [![Latest Version](https://img.shields.io/github/release/typedin/laravel-calendly.svg?style=flat-square)](https://github.com/typedin/laravel-calendly/releases)
