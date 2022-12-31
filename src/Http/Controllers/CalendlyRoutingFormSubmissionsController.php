@@ -4,6 +4,7 @@ namespace Typedin\LaravelCalendly\Http\Controllers\CalendlyRoutingFormSubmission
 
 class CalendlyRoutingFormSubmissionsController extends Illuminate\Routing\Controller
 {
+    public $api;
     public function __construct(Typedin\LaravelCalendly\Contracts\CalendlyApiInterface $api)
     {
         $this->api = $api;
@@ -23,6 +24,7 @@ class CalendlyRoutingFormSubmissionsController extends Illuminate\Routing\Contro
 
     public function show(\Typedin\LaravelCalendly\Http\GetRoutingFormSubmissionRequest $request)
     {
+        $uuid = null;
         $response = $this->api->get("/routing_form_submissions/{$uuid}/", $request);
 
         return response()->json([

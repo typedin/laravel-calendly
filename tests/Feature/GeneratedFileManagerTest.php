@@ -7,7 +7,7 @@ use Typedin\LaravelCalendly\Actions\GeneratedFileManager;
 use Typedin\LaravelCalendly\Supports\EndpointMapper;
 
 /**
- * @group integrationS
+ * @group integration
  */
 class GeneratedFileManagerTest extends TestCase
 {
@@ -17,11 +17,11 @@ class GeneratedFileManagerTest extends TestCase
     {
         parent::tearDown();
         $files = glob($this->destination.'/*'); // get all file names
-        /* foreach ($files as $file) { // iterate files */
-        /*     if (is_file($file)) { */
-        /*         unlink($file); // delete file */
-        /*     } */
-        /* } */
+        foreach ($files as $file) { // iterate files
+            if (is_file($file)) {
+                unlink($file); // delete file
+            }
+        }
     }
 
     /** @test */

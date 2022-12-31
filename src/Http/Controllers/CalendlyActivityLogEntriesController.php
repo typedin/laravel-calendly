@@ -4,6 +4,7 @@ namespace Typedin\LaravelCalendly\Http\Controllers\CalendlyActivityLogEntriesCon
 
 class CalendlyActivityLogEntriesController extends Illuminate\Routing\Controller
 {
+    public $api;
     public function __construct(Typedin\LaravelCalendly\Contracts\CalendlyApiInterface $api)
     {
         $this->api = $api;

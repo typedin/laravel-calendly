@@ -4,6 +4,7 @@ namespace Typedin\LaravelCalendly\Http\Controllers\CalendlyUserAvailabilitySched
 
 class CalendlyUserAvailabilitySchedulesController extends Illuminate\Routing\Controller
 {
+    public $api;
     public function __construct(Typedin\LaravelCalendly\Contracts\CalendlyApiInterface $api)
     {
         $this->api = $api;
@@ -23,6 +24,7 @@ class CalendlyUserAvailabilitySchedulesController extends Illuminate\Routing\Con
 
     public function show(\Typedin\LaravelCalendly\Http\GetUserAvailabilityScheduleRequest $request)
     {
+        $uuid = null;
         $response = $this->api->get("/user_availability_schedules/{$uuid}/", $request);
 
         return response()->json([

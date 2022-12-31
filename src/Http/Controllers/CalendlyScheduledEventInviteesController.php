@@ -4,6 +4,7 @@ namespace Typedin\LaravelCalendly\Http\Controllers\CalendlyScheduledEventInvitee
 
 class CalendlyScheduledEventInviteesController extends Illuminate\Routing\Controller
 {
+    public $api;
     public function __construct(Typedin\LaravelCalendly\Contracts\CalendlyApiInterface $api)
     {
         $this->api = $api;
@@ -11,6 +12,7 @@ class CalendlyScheduledEventInviteesController extends Illuminate\Routing\Contro
 
     public function index(\Typedin\LaravelCalendly\Http\IndexScheduledEventInviteeRequest $request)
     {
+        $uuid = null;
         $response = $this->api->get("/scheduled_events/{$uuid}/invitees/", $request);
 
         $all = collect($response['collection'])
@@ -23,6 +25,8 @@ class CalendlyScheduledEventInviteesController extends Illuminate\Routing\Contro
 
     public function show(\Typedin\LaravelCalendly\Http\GetScheduledEventInviteeRequest $request)
     {
+        $event_uuid = null;
+        $invitee_uuid = null;
         $response = $this->api->get("/scheduled_events/{$event_uuid}/invitees/{$invitee_uuid}/", $request);
 
         return response()->json([

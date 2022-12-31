@@ -4,6 +4,7 @@ namespace Typedin\LaravelCalendly\Http\Controllers\CalendlyWebhookSubscriptionsC
 
 class CalendlyWebhookSubscriptionsController extends Illuminate\Routing\Controller
 {
+    public $api;
     public function __construct(Typedin\LaravelCalendly\Contracts\CalendlyApiInterface $api)
     {
         $this->api = $api;
@@ -16,6 +17,7 @@ class CalendlyWebhookSubscriptionsController extends Illuminate\Routing\Controll
 
     public function show(\Typedin\LaravelCalendly\Http\GetWebhookSubscriptionRequest $request)
     {
+        $webhook_uuid = null;
         $response = $this->api->get("/webhook_subscriptions/{$webhook_uuid}/", $request);
 
         return response()->json([
@@ -25,6 +27,7 @@ class CalendlyWebhookSubscriptionsController extends Illuminate\Routing\Controll
 
     public function destroy(\Typedin\LaravelCalendly\Http\DeleteWebhookSubscriptionRequest $request)
     {
+        $webhook_uuid = null;
         $this->api->delete("/webhook_subscriptions/{$webhook_uuid}/");
     }
 }

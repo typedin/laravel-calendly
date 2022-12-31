@@ -4,6 +4,7 @@ namespace Typedin\LaravelCalendly\Http\Controllers\CalendlyEventTypesController;
 
 class CalendlyEventTypesController extends Illuminate\Routing\Controller
 {
+    public $api;
     public function __construct(Typedin\LaravelCalendly\Contracts\CalendlyApiInterface $api)
     {
         $this->api = $api;
@@ -23,6 +24,7 @@ class CalendlyEventTypesController extends Illuminate\Routing\Controller
 
     public function show(\Typedin\LaravelCalendly\Http\GetEventTypeRequest $request)
     {
+        $uuid = null;
         $response = $this->api->get("/event_types/{$uuid}/", $request);
 
         return response()->json([

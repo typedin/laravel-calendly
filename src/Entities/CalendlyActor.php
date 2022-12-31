@@ -4,15 +4,12 @@ namespace Typedin\LaravelCalendly\Entities\CalendlyActor;
 
 class CalendlyActor
 {
-    /**
-     * The type of actor
-     *
-     * @var string
-     */
-    public string $type;
-
-    public function __construct(string $type)
+    public function __construct(
+        /**
+         * The type of actor
+         */
+        public string $type
+    )
     {
-        $this->type = $type;
     }
 }

@@ -10,7 +10,7 @@ use Typedin\LaravelCalendly\Supports\EntityGenerator;
 
 class GeneratedFileManager
 {
-    public function __construct(private EndpointMapper $mapper, private string $path)
+    public function __construct(private readonly EndpointMapper $mapper, private readonly string $path)
     {
     }
 

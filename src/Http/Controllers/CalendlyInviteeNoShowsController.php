@@ -4,6 +4,7 @@ namespace Typedin\LaravelCalendly\Http\Controllers\CalendlyInviteeNoShowsControl
 
 class CalendlyInviteeNoShowsController extends Illuminate\Routing\Controller
 {
+    public $api;
     public function __construct(Typedin\LaravelCalendly\Contracts\CalendlyApiInterface $api)
     {
         $this->api = $api;
@@ -11,6 +12,7 @@ class CalendlyInviteeNoShowsController extends Illuminate\Routing\Controller
 
     public function show(\Typedin\LaravelCalendly\Http\GetInviteeNoShowRequest $request)
     {
+        $uuid = null;
         $response = $this->api->get("/invitee_no_shows/{$uuid}/", $request);
 
         return response()->json([
@@ -20,6 +22,7 @@ class CalendlyInviteeNoShowsController extends Illuminate\Routing\Controller
 
     public function destroy(\Typedin\LaravelCalendly\Http\DeleteInviteeNoShowRequest $request)
     {
+        $uuid = null;
         $this->api->delete("/invitee_no_shows/{$uuid}/");
     }
 
