@@ -4,7 +4,8 @@ namespace Typedin\LaravelCalendly\Http\Controllers\CalendlyUserAvailabilitySched
 
 class CalendlyUserAvailabilitySchedulesController extends Illuminate\Routing\Controller
 {
-    public $api;
+    private readonly Typedin\LaravelCalendly\Contracts\CalendlyApiInterface $api;
+
     public function __construct(Typedin\LaravelCalendly\Contracts\CalendlyApiInterface $api)
     {
         $this->api = $api;

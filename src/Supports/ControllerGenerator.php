@@ -30,6 +30,9 @@ class ControllerGenerator
                 ->addBody('$this->api = $api;')
                 ->addParameter('api')
                 ->setType(\Typedin\LaravelCalendly\Contracts\CalendlyApiInterface::class);
+        $this->controller->addProperty('api')
+                ->setPrivate()
+                ->setType(\Typedin\LaravelCalendly\Contracts\CalendlyApiInterface::class);
 
         return $this;
     }

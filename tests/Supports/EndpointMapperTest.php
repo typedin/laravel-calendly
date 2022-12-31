@@ -7,10 +7,7 @@ use Typedin\LaravelCalendly\Supports\EndpointMapper;
 
 class EndpointMapperTest extends TestCase
 {
-    /**
-     * @return string|bool
-     */
-    private function yaml()
+    private function yaml(): string|bool
     {
         return file_get_contents(__DIR__.'/../../doc/openapi.yaml');
     }
