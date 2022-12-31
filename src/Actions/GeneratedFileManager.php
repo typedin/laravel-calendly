@@ -4,6 +4,7 @@ namespace Typedin\LaravelCalendly\Actions;
 
 use Nette\PhpGenerator\ClassType;
 use Nette\PhpGenerator\PhpNamespace;
+use Typedin\LaravelCalendly\Supports\ControllerGenerator;
 use Typedin\LaravelCalendly\Supports\EndpointMapper;
 use Typedin\LaravelCalendly\Supports\EntityGenerator;
 
@@ -34,6 +35,15 @@ class GeneratedFileManager
             $entity = ( new EntityGenerator($key, $this->mapper->schemas()->get($key)) )->entity;
             $namespace = new PhpNamespace(name: "Typedin\LaravelCalendly\Entities\\".$entity->getName());
             self::write($this->path.'Entities/', $entity, $namespace);
+        });
+    }
+
+    public function writeControllers()
+    {
+        $this->mapper->controllerNames()->each(function ($key) {
+            $controller = ( new ControllerGenerator($key, $this->mapper->mapControllerNamesToEndpoints()->get($key)->all()) )->controller;
+            $namespace = new PhpNamespace(name: "Typedin\LaravelCalendly\Http\Controllers\\".$controller->getName());
+            self::write($this->path.'/Http/Controllers/', $controller, $namespace);
         });
     }
 }

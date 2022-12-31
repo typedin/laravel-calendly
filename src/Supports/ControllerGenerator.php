@@ -2,9 +2,9 @@
 
 namespace Typedin\LaravelCalendly\Supports;
 
+use Illuminate\Routing\Controller;
 use Illuminate\Support\Str;
 use Nette\PhpGenerator\ClassType;
-use Nette\PhpGenerator\PhpNamespace;
 
 class ControllerGenerator
 {
@@ -14,10 +14,9 @@ class ControllerGenerator
     {
         $this->controller = new ClassType(
             sprintf('Calendly%sController', $this->name),
-            new PhpNamespace(sprintf('Typedin\LaravelCalendly\Http\Controllers\Calendly%sController', $this->name))
         );
 
-        $this->controller->setExtends(\App\Http\Controllers\Controller::class);
+        $this->controller->setExtends(Controller::class);
 
         $this->generateConstructor()->generateMethods();
 
@@ -61,16 +60,21 @@ class ControllerGenerator
 
     private function addIndexMethod($key): void
     {
-        $this->controller
-                ->addMethod('index')
-                ->addBody(sprintf('$response = $this->api->get("/%s/");', $this->buildUri($key)))
-                ->addBody('$all = collect($response["collection"])')
-                ->addBody(sprintf('->mapInto(%s::class)->all();', Str::singular($this->name)))
-                ->addBody('return response()->json([')
-                ->addBody(sprintf('"%s" => $all,', Str::snake($this->name)))
-                ->addBody(']);')
-                ->addParameter('request')
-                ->setType(sprintf('\Typedin\LaravelCalendly\Http\Index%sRequest', Str::singular($this->name)));
+        try {
+            $this->controller
+                    ->addMethod('index')
+                    ->addBody(sprintf('$response = $this->api->get("/%s/", $request);', $this->buildUri($key)))
+                    ->addBody('')
+                    ->addBody('$all = collect($response["collection"])')
+                    ->addBody(sprintf('->mapInto(%s::class)->all();', Str::singular($this->name)))
+                    ->addBody('return response()->json([')
+                    ->addBody(sprintf('"%s" => $all,', Str::snake($this->name)))
+                    ->addBody(']);')
+                    ->addParameter('request')
+                    ->setType(sprintf('\Typedin\LaravelCalendly\Http\Index%sRequest', Str::singular($this->name)));
+        } catch (\Throwable) {
+            //throw $th;
+        }
     }
 
     private function addShowMethod($key): void
@@ -79,7 +83,7 @@ class ControllerGenerator
         try {
             $this->controller
                     ->addMethod('show')
-                    ->addBody(sprintf('$response = $this->api->get("/%s/");', $this->buildUri($key)))
+                    ->addBody(sprintf('$response = $this->api->get("/%s/", $request);', $this->buildUri($key)))
                     ->addBody('return response()->json([')
                     ->addBody(sprintf('"%s" => new \Typedin\LaravelCalendly\Entities\%s($response),', Str::lower(Str::singular($this->name)), Str::singular($this->name)))
                     ->addBody(']);')
@@ -94,7 +98,7 @@ class ControllerGenerator
     {
         $this->controller
                 ->addMethod('post')
-                ->addBody(sprintf('$this->api->post("/%s/");', $this->buildUri($key)))
+                ->addBody(sprintf('$this->api->post("/%s/", $request);', $this->buildUri($key)))
                 ->addParameter('request')
                 ->setType(sprintf('\Typedin\LaravelCalendly\Http\Post%sRequest', Str::singular($this->name)));
     }

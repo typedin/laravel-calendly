@@ -23,12 +23,11 @@ class ControllerGeneratorTest extends TestCase
     /**
      * @test
      */
-    public function it_generates_controller_name_and_namespace(): void
+    public function it_generates_controller_name(): void
     {
         $generated_class = ( new ControllerGenerator('Users', $this->endpoints('Users')) )->controller;
 
         $this->assertEquals('CalendlyUsersController', $generated_class->getName());
-        $this->assertEquals('Typedin\LaravelCalendly\Http\Controllers\CalendlyUsersController', $generated_class->getNamespace()->getName());
     }
 
     /**
@@ -49,7 +48,7 @@ class ControllerGeneratorTest extends TestCase
         $method = ( new ControllerGenerator('EventTypes', $this->endpoints('EventTypes')) )->controller->getMethod('index');
 
         $this->assertEquals('\Typedin\LaravelCalendly\Http\IndexEventTypeRequest', $method->getParameters()['request']->getType());
-        $this->assertStringContainsString('$response = $this->api->get("/event_types/");', $method->getBody());
+        $this->assertStringContainsString('$response = $this->api->get("/event_types/", $request);', $method->getBody());
         $this->assertStringContainsString('$all = collect($response["collection"])', $method->getBody());
         $this->assertStringContainsString('->mapInto(EventType::class)->all();', $method->getBody());
 
@@ -71,7 +70,7 @@ class ControllerGeneratorTest extends TestCase
         $this->assertEquals('\Typedin\LaravelCalendly\Http\GetUserRequest', $method->getParameters()['request']->getType());
 
         $this->assertEquals('\Typedin\LaravelCalendly\Http\GetUserRequest', $method->getParameters()['request']->getType());
-        $this->assertStringContainsString('$response = $this->api->get("/users/{$uuid}/");', $method->getBody());
+        $this->assertStringContainsString('$response = $this->api->get("/users/{$uuid}/", $request);', $method->getBody());
         $this->assertStringContainsString('return response()->json([', $method->getBody());
         $this->assertStringContainsString('"user" => new \Typedin\LaravelCalendly\Entities\User($response),', $method->getBody());
         $this->assertStringContainsString(']);', $method->getBody());
@@ -85,7 +84,7 @@ class ControllerGeneratorTest extends TestCase
         $method = ( new ControllerGenerator('SchedulingLinks', $this->endpoints('SchedulingLinks')) )->controller->getMethod('post');
 
         $this->assertEquals('\Typedin\LaravelCalendly\Http\PostSchedulingLinkRequest', $method->getParameters()['request']->getType());
-        $this->assertStringContainsString('$this->api->post("/scheduling_links/");', $method->getBody());
+        $this->assertStringContainsString('$this->api->post("/scheduling_links/", $request);', $method->getBody());
     }
 
     /**
@@ -96,7 +95,7 @@ class ControllerGeneratorTest extends TestCase
         $method = ( new ControllerGenerator('OrganizationInvitations', $this->endpoints('OrganizationInvitations')) )->controller->getMethod('post');
 
         $this->assertEquals('\Typedin\LaravelCalendly\Http\PostOrganizationInvitationRequest', $method->getParameters()['request']->getType());
-        $this->assertStringContainsString('$this->api->post("/organizations/{$uuid}/invitations/");', $method->getBody());
+        $this->assertStringContainsString('$this->api->post("/organizations/{$uuid}/invitations/", $request);', $method->getBody());
     }
 
     /**
