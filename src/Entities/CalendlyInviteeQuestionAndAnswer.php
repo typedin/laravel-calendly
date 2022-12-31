@@ -15,7 +15,9 @@ class CalendlyInviteeQuestionAndAnswer
  public string $question, /**
   * The invitee's answer to the question
   */
- public string $answer, \number $position)
+ public string $answer,
+        \number $position
+    )
     {
         $this->position = $position;
     }

@@ -36,6 +36,6 @@ class CalendlyRoutingForm
       * The moment when the routing form was last updated.
       */
      public string $updated_at
- ) {
+    ) {
     }
 }

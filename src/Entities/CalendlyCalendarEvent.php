@@ -16,6 +16,6 @@ class CalendlyCalendarEvent
       * the id provided from the calendar provider for this calendar event.
       */
      public string $external_id
- ) {
+    ) {
     }
 }

@@ -17,6 +17,6 @@ class CalendlyInviteeNoShow
       * The moment when the no show was created
       */
      public string $created_at
- ) {
+    ) {
     }
 }

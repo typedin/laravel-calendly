@@ -25,6 +25,6 @@ class CalendlyZoomConference
       * The conference metadata supplied by Zoom
       */
      public ?object $data
- ) {
+    ) {
     }
 }

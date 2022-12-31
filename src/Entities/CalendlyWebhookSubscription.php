@@ -53,6 +53,6 @@ class CalendlyWebhookSubscription
       * The URI of the user who created the webhook subscription
       */
      public ?string $creator
- ) {
+    ) {
     }
 }

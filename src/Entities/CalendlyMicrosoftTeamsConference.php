@@ -25,6 +25,6 @@ class CalendlyMicrosoftTeamsConference
       * The conference metadata supplied by Microsoft Teams
       */
      public ?object $data
- ) {
+    ) {
     }
 }

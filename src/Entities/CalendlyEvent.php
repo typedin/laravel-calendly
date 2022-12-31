@@ -32,8 +32,8 @@ class CalendlyEvent
       * The event type associated with this event
       */
      public string $event_type,
-     public $location,
-     public object $invitees_counter,
+        public $location,
+        public object $invitees_counter,
      /**
       * The moment when the event was created (e.g. "2020-01-02T03:04:05.678123Z")
       */
@@ -50,7 +50,7 @@ class CalendlyEvent
       * Additional people added to an event by an invitee
       */
      public array $event_guests,
-     public $calendar_event
- ) {
+        public $calendar_event
+    ) {
     }
 }

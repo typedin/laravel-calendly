@@ -20,6 +20,6 @@ class CalendlyProfile
       * The unique reference to the user associated with the profile
       */
      public string $owner
- ) {
+    ) {
     }
 }

@@ -32,6 +32,6 @@ class CalendlyOrganizationMembership
       * The moment when the membership record was created (e.g. "2020-01-02T03:04:05.678123Z")
       */
      public string $created_at
- ) {
+    ) {
     }
 }

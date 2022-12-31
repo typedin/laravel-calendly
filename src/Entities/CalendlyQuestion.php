@@ -28,6 +28,6 @@ class CalendlyQuestion
       * The respondent’s option(s) for "select" or "radios" types of questions.
       */
      public ?array $answer_choices
- ) {
+    ) {
     }
 }

@@ -29,6 +29,6 @@ class CalendlyOrganization
       * Timestamp of when the organization was created or updated.
       */
      public string $updated_at
- ) {
+    ) {
     }
 }

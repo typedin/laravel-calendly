@@ -29,6 +29,6 @@ class CalendlyAvailabilitySchedule
       * The rules of this Availability Schedule.
       */
      public array $rules
- ) {
+    ) {
     }
 }

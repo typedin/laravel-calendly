@@ -20,7 +20,7 @@ class CalendlyRoutingFormSubmission
       * All Routing Form Submission questions with answers.
       */
      public array $questions_and_answers,
-     public $tracking,
+        public $tracking,
      /**
       * The reference to the Invitee resource when routing form submission results in a scheduled meeting.
       */
@@ -37,6 +37,6 @@ class CalendlyRoutingFormSubmission
       * The moment when the routing form submission was last updated.
       */
      public string $updated_at
- ) {
+    ) {
     }
 }

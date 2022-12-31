@@ -36,6 +36,6 @@ class CalendlyOrganizationInvitation
       * The moment the invitation was last sent (e.g. "2020-01-02T03:04:05.678123Z")
       */
      public ?string $last_sent_at
- ) {
+    ) {
     }
 }

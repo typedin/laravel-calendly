@@ -16,6 +16,6 @@ class CalendlyCustomLocation
       * The location description provided by the event host (publisher)
       */
      public ?string $location
- ) {
+    ) {
     }
 }

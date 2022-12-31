@@ -29,6 +29,6 @@ class CalendlySubmissionTracking
       * The Salesforce record unique identifier.
       */
      public ?string $salesforce_uuid
- ) {
+    ) {
     }
 }

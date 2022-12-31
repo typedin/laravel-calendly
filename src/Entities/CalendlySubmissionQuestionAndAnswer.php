@@ -13,6 +13,6 @@ class CalendlySubmissionQuestionAndAnswer
       * Question name (in human-readable format).
       */
      public string $question
- ) {
+    ) {
     }
 }

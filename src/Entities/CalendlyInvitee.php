@@ -52,7 +52,7 @@ class CalendlyInvitee
       * The moment when the event was last updated (e.g. "2020-01-02T03:04:05.678123Z")
       */
      public string $updated_at,
-     public $tracking,
+        public $tracking,
      /**
       * The phone number to use when sending text (SMS) reminders
       */
@@ -93,6 +93,6 @@ class CalendlyInvitee
       * Assuming reconfirmation is enabled for the event type, when reconfirmation is requested this object is present with a `created_at` that reflects when the reconfirmation notification was sent. Once the invitee has reconfirmed the `confirmed_at` attribute will change from `null` to a timestamp that reflects when they took action.
       */
      public ?object $reconfirmation
- ) {
+    ) {
     }
 }

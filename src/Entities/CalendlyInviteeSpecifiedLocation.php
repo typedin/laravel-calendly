@@ -16,6 +16,6 @@ class CalendlyInviteeSpecifiedLocation
       * The event location description provided by the invitee
       */
      public string $location
- ) {
+    ) {
     }
 }

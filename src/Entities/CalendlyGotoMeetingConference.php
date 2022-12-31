@@ -25,6 +25,6 @@ class CalendlyGotoMeetingConference
       * The conference metadata supplied by GoToMeeting
       */
      public ?object $data
- ) {
+    ) {
     }
 }

@@ -20,6 +20,6 @@ class CalendlyUserBusyTime
       * The end time of the scheduled event in UTC time
       */
      public string $end_time
- ) {
+    ) {
     }
 }

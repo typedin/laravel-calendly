@@ -16,6 +16,6 @@ class CalendlySubmissionExternalUrlResult
       * The external URL the respondent were redirected to.
       */
      public string $value
- ) {
+    ) {
     }
 }

@@ -16,6 +16,6 @@ class CalendlyOutboundCall
       * The phone number the event host (publisher) will use to call the invitee
       */
      public ?string $location
- ) {
+    ) {
     }
 }

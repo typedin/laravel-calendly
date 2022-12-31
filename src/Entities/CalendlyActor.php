@@ -9,6 +9,6 @@ class CalendlyActor
       * The type of actor
       */
      public string $type
- ) {
+    ) {
     }
 }

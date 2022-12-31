@@ -25,6 +25,6 @@ class CalendlyWebhookPayload
       * For example, an `invitee.*` event produces an `Invitee` object in the payload.
       */
      public $payload
- ) {
+    ) {
     }
 }

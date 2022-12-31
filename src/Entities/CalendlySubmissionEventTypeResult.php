@@ -16,6 +16,6 @@ class CalendlySubmissionEventTypeResult
       * A reference to the event type resource.
       */
      public string $value
- ) {
+    ) {
     }
 }

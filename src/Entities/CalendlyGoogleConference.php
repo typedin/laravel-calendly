@@ -21,6 +21,6 @@ class CalendlyGoogleConference
       * Google conference meeting url
       */
      public ?string $join_url
- ) {
+    ) {
     }
 }

@@ -45,6 +45,6 @@ class CalendlyUser
       * A unique reference to the user's current organization
       */
      public string $current_organization
- ) {
+    ) {
     }
 }

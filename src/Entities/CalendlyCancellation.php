@@ -16,7 +16,7 @@ class CalendlyCancellation
       * Reason that the cancellation occurred
       */
      public ?string $reason,
-     public string $canceler_type
- ) {
+        public string $canceler_type
+    ) {
     }
 }

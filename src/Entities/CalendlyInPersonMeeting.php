@@ -16,6 +16,6 @@ class CalendlyInPersonMeeting
       * The physical location specified by the event host (publisher)
       */
      public string $location
- ) {
+    ) {
     }
 }
