@@ -4,24 +4,20 @@ namespace Typedin\LaravelCalendly\Actions;
 
 use Nette\PhpGenerator\ClassType;
 use Nette\PhpGenerator\PhpNamespace;
+use Typedin\LaravelCalendly\Supports\EndpointMapper;
+use Typedin\LaravelCalendly\Supports\EntityGenerator;
 
 class GeneratedFileManager
 {
-    public static function writeAll(PhpNamespace $namespace, string $destination): void
+    public function __construct(private EndpointMapper $mapper, private string $path)
     {
-        foreach ($namespace->getClasses() as $class) {
-            $content = '<?php'.PHP_EOL."\n";
-            $content .= $class->__toString();
-            // the @ suppresses the warning
-            $return_value = @file_put_contents($destination.$class->getName().'.php', $content);
-            if (! $return_value) {
-                throw new \Exception(sprintf('Could not write file (%s) in folder: %s', $class->getName().'.php', $destination));
-            }
-        }
     }
 
-    public static function write(string $path, ClassType $class, PhpNamespace $namespace): void
+    private static function write(string $path, ClassType $class, PhpNamespace $namespace): void
     {
+        if (! is_dir($path)) {
+            mkdir($path, 0777, true);
+        }
         $content = '<?php'.PHP_EOL."\n";
         $content .= $namespace;
         $content .= $class->__toString();
@@ -30,5 +26,14 @@ class GeneratedFileManager
         if (! $return_value) {
             throw new \Exception(sprintf('Could not write file (%s) in folder: %s', $class->getName().'.php', $path));
         }
+    }
+
+    public function writeEntities()
+    {
+        $this->mapper->entityNames()->each(function ($key) {
+            $entity = ( new EntityGenerator($key, $this->mapper->schemas()->get($key)) )->entity;
+            $namespace = new PhpNamespace(name: "Typedin\LaravelCalendly\Entities\\".$entity->getName());
+            self::write($this->path.'Entities/', $entity, $namespace);
+        });
     }
 }
