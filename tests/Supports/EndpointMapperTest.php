@@ -8,13 +8,11 @@ use Typedin\LaravelCalendly\Supports\EndpointMapper;
 class EndpointMapperTest extends TestCase
 {
     /**
-     * @return array<TKey,TValue>
+     * @return string|bool
      */
-    private function data(): array
+    private function yaml()
     {
-        $content = file_get_contents(__DIR__.'/__fixtures__/scheduled_events.json');
-
-        return collect(json_decode($content, true, 512, JSON_THROW_ON_ERROR))->all();
+        return file_get_contents(__DIR__.'/../../doc/openapi.yaml');
     }
 
     /**
@@ -48,17 +46,35 @@ class EndpointMapperTest extends TestCase
     /**
      * @test
      */
-    public function it_maps_endpoints_to_controller_name(): void
+    public function it_creates_entity_names_(): void
     {
-        $this->assertCount(5, EndpointMapper::toControllerName($this->data()));
+        $this->assertCount(45, (new EndpointMapper($this->yaml()))->entityNames());
+    }
 
-        $this->assertEquals(EndpointMapper::toControllerName($this->data())['/scheduled_events/{uuid}/invitees'], 'ScheduledEventInvitees');
-        $this->assertEquals(EndpointMapper::toControllerName($this->data())['/scheduled_events'], 'ScheduledEvents');
-        $this->assertEquals(EndpointMapper::toControllerName($this->data())['/scheduled_events'], 'ScheduledEvents');
-        /**
-         * the api post to cancellation
-         * so it "creates" a cancellation
-         */
-        $this->assertEquals(EndpointMapper::toControllerName($this->data())['/scheduled_events/{uuid}/cancellation'], 'ScheduledEventCancellations');
+    /**
+     * @test
+     */
+    public function it_creates_controller_names_(): void
+    {
+        $things = [
+            'ScheduledEvents',
+            'ScheduledEventInvitees',
+            'ScheduledEventCancellations',
+        ];
+
+        $this->assertContains($things[0], (new EndpointMapper($this->yaml()))->controllerNames());
+        $this->assertContains($things[1], (new EndpointMapper($this->yaml()))->controllerNames());
+        $this->assertContains($things[2], (new EndpointMapper($this->yaml()))->controllerNames());
+    }
+
+    /**
+     * @test
+     */
+    public function it_maps_controller_names_to_endpoints(): void
+    {
+        $output = (new EndpointMapper($this->yaml()))->mapControllerNamesToEndpoints();
+
+        $this->assertArrayHasKey('/scheduled_events', $output->get('ScheduledEvents'));
+        $this->assertArrayHasKey('get', $output->get('ScheduledEvents')['/scheduled_events']);
     }
 }

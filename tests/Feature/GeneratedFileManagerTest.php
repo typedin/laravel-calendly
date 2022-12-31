@@ -6,10 +6,11 @@ use Nette\PhpGenerator\PhpNamespace;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Yaml\Yaml;
 use Typedin\LaravelCalendly\Actions\GeneratedFileManager;
+use Typedin\LaravelCalendly\Supports\EndpointMapper;
 use Typedin\LaravelCalendly\Supports\EntityGenerator;
 
 /**
- * @group integration
+ * @group integrationS
  */
 class GeneratedFileManagerTest extends TestCase
 {
@@ -34,13 +35,25 @@ class GeneratedFileManagerTest extends TestCase
 
         $local = [
             'keys' => $keys,
+            'paths' => collect($content->get('paths')),
             'schemas' => $schemas,
+            'content' => $content,
         ];
         if ($key) {
             return $local[$key];
         }
 
         return $local;
+    }
+
+    /**
+     * @return array<TKey,TValue>
+     */
+    private function endpoints($filter): array
+    {
+        $local = $this->data('content');
+
+        return $local->filter(fn ($_value, $key) => $filter == EndpointMapper::fullname($key))->all();
     }
 
     /** @test */
@@ -56,18 +69,30 @@ class GeneratedFileManagerTest extends TestCase
     }
 
     /** @test */
-    public function it_writes_a_file_to_a_specific_path(): void
+    public function it_writes_an_entity_to_a_specific_path(): void
     {
         /**
          * url https://stoplight.io/api/v1/projects/calendly/api-docs/nodes/reference/calendly-api/openapi.yaml
          */
-        $schemas = $this->data('schemas');
-
-        $this->data('keys')->each(function ($key) use ($schemas) {
-            $entity = ( new EntityGenerator($key, $schemas[$key]) )->entity;
-            $namespace = new PhpNamespace(name: "Typedin\LaravelCalendly\Entities\\".$entity->getName());
-            GeneratedFileManager::write(path: $this->destination, class: $entity, namespace: $namespace);
-        });
+        $yaml = file_get_contents(__DIR__.'/../../doc/openapi.yaml');
+        $mapper = (new EndpointMapper($yaml));
+        $schemas = $mapper->schemas();
+        $mapper->entityNames()
+            ->each(function ($key) use ($schemas) {
+                $entity = ( new EntityGenerator($key, $schemas[$key]) )->entity;
+                $namespace = new PhpNamespace(name: "Typedin\LaravelCalendly\Entities\\".$entity->getName());
+                GeneratedFileManager::write(path: $this->destination, class: $entity, namespace: $namespace);
+            });
         $this->assertCount(45, glob($this->destination.'*.php'));
+    }
+
+    /** @test */
+    public function it_writes_a_controller_to_a_specific_path(): void
+    {
+        /**
+         * url https://stoplight.io/api/v1/projects/calendly/api-docs/nodes/reference/calendly-api/openapi.yaml
+         */
+        $yaml = file_get_contents(__DIR__.'/../../doc/openapi.yaml');
+        /* dd((new EndpointMapper($yaml))->paths()); */
     }
 }

@@ -4,9 +4,67 @@ namespace Typedin\LaravelCalendly\Supports;
 
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
+use Symfony\Component\Yaml\Yaml;
 
 class EndpointMapper
 {
+    /**
+     * @var mixed
+     */
+    private $parsed;
+
+    public function __construct(string $yaml)
+    {
+        $this->parsed = Yaml::parse($yaml);
+    }
+
+    /**
+     * @return Collection<TKey,TValue>
+     */
+    public function schemas(): Collection
+    {
+        return collect($this->parsed['components']['schemas']);
+    }
+
+    /**
+     * @return Collection<TKey,TValue>
+     */
+    public function paths(): Collection
+    {
+        return collect($this->parsed['paths']);
+    }
+
+    /**
+     * @return Collection<TKey,TValue>
+     */
+    public function entityNames(): Collection
+    {
+        return collect($this->schemas())->keys();
+    }
+
+    /**
+     * @return Collection<TKey,TValue>
+     */
+    public function controllerNames(): Collection
+    {
+        return $this->paths()
+                    ->keys()
+                    ->map(fn ($applesauce) => self::fullname($applesauce));
+    }
+
+    /**
+     * @return Collection<TKey,TValue>
+     */
+    public function mapControllerNamesToEndpoints(): Collection
+    {
+        return $this->controllerNames()
+                    ->flatMap(function ($controller_name) {
+                        return [
+                            $controller_name => $this->paths()->filter(fn ($value, $key) => self::fullname($key) == $controller_name),
+                        ];
+                    });
+    }
+
     public static function fullname(string $input): string
     {
         $local = collect(array_values(array_filter(explode('/', $input))))
@@ -21,11 +79,5 @@ class EndpointMapper
 
             return Str::plural($part);
         })->implode('');
-    }
-
-    public static function toControllerName(array $array): Collection
-    {
-        return collect(array_keys($array))
-                    ->flatMap(fn ($applesauce) => [$applesauce => self::fullname($applesauce)]);
     }
 }
