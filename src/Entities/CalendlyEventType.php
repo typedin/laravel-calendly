@@ -8,125 +8,146 @@ class CalendlyEventType
 {
     /**
      * Canonical reference (unique identifier) for the event type
-     * @var string $uri
+     *
+     * @var string
      */
     public string $uri;
 
     /**
      * The event type name (in human-readable format)
-     * @var string|null $name
+     *
+     * @var string|null
      */
     public string $name;
 
     /**
      * Indicates if the event is active or not.
-     * @var boolean $active
+     *
+     * @var bool
      */
     public bool $active;
 
     /**
      * The portion of the event type's URL that identifies a specific web page (in a human-readable format)
-     * @var string|null $slug
+     *
+     * @var string|null
      */
     public string $slug;
 
     /**
      * The URL of the user’s scheduling site where invitees book this event type
-     * @var string $scheduling_url
+     *
+     * @var string
      */
     public string $scheduling_url;
 
     /**
      * The length of sessions booked with this event type
-     * @var number $duration
+     *
+     * @var number
      */
     public number $duration;
 
     /**
      * Indicates if the event type is "solo" (belongs to an individual user) or "group"
-     * @var string<solo|group> $kind
+     *
+     * @var string<solo|group>
      */
     public string $kind;
 
     /**
      * Indicates if the event type is "round robin" (alternates between hosts) or "collective" (invitees pick a time when all participants are available) or "null" (the event type doesn’t consider the availability of a group participants)
-     * @var string<round_robin|collective> $pooling_type
+     *
+     * @var string<round_robin|collective>
      */
     public string $pooling_type;
 
     /**
      * Indicates if the event type is "AdhocEventType" (ad hoc event) or "StandardEventType" (standard event type)
-     * @var string<StandardEventType|AdhocEventType> $type
+     *
+     * @var string<StandardEventType|AdhocEventType>
      */
     public string $type;
 
     /**
      * The hexadecimal color value of the event type's scheduling page
-     * @var string $color
+     *
+     * @var string
      */
     public string $color;
 
     /**
      * The moment the event type was created (e.g. "2020-01-02T03:04:05.678123Z")
-     * @var string $created_at
+     *
+     * @var string
      */
     public string $created_at;
 
     /**
      * The moment the event type was last updated (e.g. "2020-01-02T03:04:05.678123Z")
-     * @var string $updated_at
+     *
+     * @var string
      */
     public string $updated_at;
 
     /**
      * Contents of a note that may be associated with the event type
-     * @var string|null $internal_note
+     *
+     * @var string|null
      */
     public string $internal_note;
 
     /**
      * The event type's description (in non formatted text)
-     * @var string|null $description_plain
+     *
+     * @var string|null
      */
     public string $description_plain;
 
     /**
      * The event type's description (formatted with HTML)
-     * @var string|null $description_html
+     *
+     * @var string|null
      */
     public string $description_html;
+
     public $profile;
 
     /**
      * Indicates if the event type is hidden on the owner's main scheduling page
-     * @var boolean $secret
+     *
+     * @var bool
      */
     public bool $secret;
 
     /**
      * Indicates if the event type is for a poll or an instant booking
-     * @var string<instant|poll> $booking_method
+     *
+     * @var string<instant|poll>
      */
     public string $booking_method;
 
-    /** @var array $custom_questions */
+    /** @var array */
     public array $custom_questions;
 
     /**
      * The moment the event type was deleted (e.g. "2020-01-02T03:04:05.678123Z"). Since event types can be deleted but their scheduled events remain it's useful to fetch a deleted event type when you still require event type data for a scheduled event.
-     * @var string|null $deleted_at
+     *
+     * @var string|null
      */
     public string $deleted_at;
 
     /**
      * A formatted description of the kind of event type.
-     * @var string<Collective|Group|One-on-One|Round Robin> $kind_description
+     *
+     * @var string<Collective|Group|One-on-One|Round Robin>
      */
     public string $kind_description;
 
     /**
      * Indicates if this event type is managed by an organization admin
-     * @var boolean $admin_managed
+     *
+     * @var bool
      */
     public bool $admin_managed;
 

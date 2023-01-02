@@ -25,8 +25,9 @@ class CalendlyOrganizationInvitationsController extends Controller
     public function show(GetOrganizationInvitationRequest $request)
     {
         $response = $this->api->get("/organizations/{$org_uuid}/invitations/{$uuid}/", $request);
+
         return response()->json([
-        "organizationinvitation" => new \Typedin\LaravelCalendly\Entities\OrganizationInvitation($response),
+            'organizationinvitation' => new \Typedin\LaravelCalendly\Entities\OrganizationInvitation($response),
         ]);
     }
 

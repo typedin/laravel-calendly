@@ -6,7 +6,8 @@ class CalendlyActor
 {
     /**
      * The type of actor
-     * @var string $type
+     *
+     * @var string
      */
     public string $type;
 

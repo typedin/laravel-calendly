@@ -21,8 +21,9 @@ class CalendlyOrganizationMembershipsController extends Controller
     public function show(GetOrganizationMembershipRequest $request)
     {
         $response = $this->api->get("/organization_memberships/{$uuid}/", $request);
+
         return response()->json([
-        "organizationmembership" => new \Typedin\LaravelCalendly\Entities\OrganizationMembership($response),
+            'organizationmembership' => new \Typedin\LaravelCalendly\Entities\OrganizationMembership($response),
         ]);
     }
 
@@ -33,12 +34,13 @@ class CalendlyOrganizationMembershipsController extends Controller
 
     public function index(IndexOrganizationMembershipRequest $request): JsonResponse
     {
-        $response = $this->api->get("/organization_memberships/", $request);
+        $response = $this->api->get('/organization_memberships/', $request);
 
-        $all = collect($response["collection"])
+        $all = collect($response['collection'])
         ->mapInto(OrganizationMembership::class)->all();
+
         return response()->json([
-        "organization_memberships" => $all,
+            'organization_memberships' => $all,
         ]);
     }
 }

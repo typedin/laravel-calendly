@@ -19,20 +19,22 @@ class CalendlyScheduledEventsController extends Controller
 
     public function index(IndexScheduledEventRequest $request): JsonResponse
     {
-        $response = $this->api->get("/scheduled_events/", $request);
+        $response = $this->api->get('/scheduled_events/', $request);
 
-        $all = collect($response["collection"])
+        $all = collect($response['collection'])
         ->mapInto(ScheduledEvent::class)->all();
+
         return response()->json([
-        "scheduled_events" => $all,
+            'scheduled_events' => $all,
         ]);
     }
 
     public function show(GetScheduledEventRequest $request)
     {
         $response = $this->api->get("/scheduled_events/{$uuid}/", $request);
+
         return response()->json([
-        "scheduledevent" => new \Typedin\LaravelCalendly\Entities\ScheduledEvent($response),
+            'scheduledevent' => new \Typedin\LaravelCalendly\Entities\ScheduledEvent($response),
         ]);
     }
 }

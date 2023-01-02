@@ -17,6 +17,6 @@ class CalendlySchedulingLinksController extends Controller
 
     public function post(PostSchedulingLinkRequest $request)
     {
-        $this->api->post("/scheduling_links/", $request);
+        $this->api->post('/scheduling_links/', $request);
     }
 }

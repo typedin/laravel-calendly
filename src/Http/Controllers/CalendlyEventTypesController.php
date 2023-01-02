@@ -19,20 +19,22 @@ class CalendlyEventTypesController extends Controller
 
     public function index(IndexEventTypeRequest $request): JsonResponse
     {
-        $response = $this->api->get("/event_types/", $request);
+        $response = $this->api->get('/event_types/', $request);
 
-        $all = collect($response["collection"])
+        $all = collect($response['collection'])
         ->mapInto(EventType::class)->all();
+
         return response()->json([
-        "event_types" => $all,
+            'event_types' => $all,
         ]);
     }
 
     public function show(GetEventTypeRequest $request)
     {
         $response = $this->api->get("/event_types/{$uuid}/", $request);
+
         return response()->json([
-        "eventtype" => new \Typedin\LaravelCalendly\Entities\EventType($response),
+            'eventtype' => new \Typedin\LaravelCalendly\Entities\EventType($response),
         ]);
     }
 }

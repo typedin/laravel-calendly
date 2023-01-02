@@ -19,20 +19,22 @@ class CalendlyUserAvailabilitySchedulesController extends Controller
 
     public function index(IndexUserAvailabilityScheduleRequest $request): JsonResponse
     {
-        $response = $this->api->get("/user_availability_schedules/", $request);
+        $response = $this->api->get('/user_availability_schedules/', $request);
 
-        $all = collect($response["collection"])
+        $all = collect($response['collection'])
         ->mapInto(UserAvailabilitySchedule::class)->all();
+
         return response()->json([
-        "user_availability_schedules" => $all,
+            'user_availability_schedules' => $all,
         ]);
     }
 
     public function show(GetUserAvailabilityScheduleRequest $request)
     {
         $response = $this->api->get("/user_availability_schedules/{$uuid}/", $request);
+
         return response()->json([
-        "useravailabilityschedule" => new \Typedin\LaravelCalendly\Entities\UserAvailabilitySchedule($response),
+            'useravailabilityschedule' => new \Typedin\LaravelCalendly\Entities\UserAvailabilitySchedule($response),
         ]);
     }
 }

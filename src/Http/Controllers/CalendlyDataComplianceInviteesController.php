@@ -17,6 +17,6 @@ class CalendlyDataComplianceInviteesController extends Controller
 
     public function post(PostDataComplianceInviteeRequest $request)
     {
-        $this->api->post("/data_compliance/deletion/invitees/", $request);
+        $this->api->post('/data_compliance/deletion/invitees/', $request);
     }
 }

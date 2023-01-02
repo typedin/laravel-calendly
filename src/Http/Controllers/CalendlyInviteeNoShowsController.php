@@ -20,8 +20,9 @@ class CalendlyInviteeNoShowsController extends Controller
     public function show(GetInviteeNoShowRequest $request)
     {
         $response = $this->api->get("/invitee_no_shows/{$uuid}/", $request);
+
         return response()->json([
-        "inviteenoshow" => new \Typedin\LaravelCalendly\Entities\InviteeNoShow($response),
+            'inviteenoshow' => new \Typedin\LaravelCalendly\Entities\InviteeNoShow($response),
         ]);
     }
 
@@ -32,6 +33,6 @@ class CalendlyInviteeNoShowsController extends Controller
 
     public function post(PostInviteeNoShowRequest $request)
     {
-        $this->api->post("/invitee_no_shows/", $request);
+        $this->api->post('/invitee_no_shows/', $request);
     }
 }

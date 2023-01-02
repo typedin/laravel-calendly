@@ -19,14 +19,15 @@ class CalendlyWebhookSubscriptionsController extends Controller
 
     public function post(PostWebhookSubscriptionRequest $request)
     {
-        $this->api->post("/webhook_subscriptions/", $request);
+        $this->api->post('/webhook_subscriptions/', $request);
     }
 
     public function show(GetWebhookSubscriptionRequest $request)
     {
         $response = $this->api->get("/webhook_subscriptions/{$webhook_uuid}/", $request);
+
         return response()->json([
-        "webhooksubscription" => new \Typedin\LaravelCalendly\Entities\WebhookSubscription($response),
+            'webhooksubscription' => new \Typedin\LaravelCalendly\Entities\WebhookSubscription($response),
         ]);
     }
 

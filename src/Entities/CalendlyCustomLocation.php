@@ -6,13 +6,15 @@ class CalendlyCustomLocation
 {
     /**
      * The event location doesn't fall into a standard category defined by the event host (publisher)
-     * @var string<custom> $type
+     *
+     * @var string<custom>
      */
     public string $type;
 
     /**
      * The location description provided by the event host (publisher)
-     * @var string|null $location
+     *
+     * @var string|null
      */
     public string $location;
 
