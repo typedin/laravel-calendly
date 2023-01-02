@@ -2,33 +2,36 @@
 
 namespace Typedin\LaravelCalendly\Http\Controllers\CalendlyInviteeNoShowsController;
 
-class CalendlyInviteeNoShowsController extends Illuminate\Routing\Controller
-{
-    private readonly Typedin\LaravelCalendly\Contracts\CalendlyApiInterface $api;
+use Illuminate\Routing\Controller;
+use Typedin\LaravelCalendly\Contracts\CalendlyApiInterface;
+use Typedin\LaravelCalendly\Http\DeleteInviteeNoShowRequest;
+use Typedin\LaravelCalendly\Http\GetInviteeNoShowRequest;
+use Typedin\LaravelCalendly\Http\PostInviteeNoShowRequest;
 
-    public function __construct(Typedin\LaravelCalendly\Contracts\CalendlyApiInterface $api)
+class CalendlyInviteeNoShowsController extends Controller
+{
+    private CalendlyApiInterface $api;
+
+    public function __construct(CalendlyApiInterface $api)
     {
         $this->api = $api;
     }
 
-    public function show(\Typedin\LaravelCalendly\Http\GetInviteeNoShowRequest $request)
+    public function show(GetInviteeNoShowRequest $request)
     {
-        $uuid = null;
         $response = $this->api->get("/invitee_no_shows/{$uuid}/", $request);
-
         return response()->json([
-            'inviteenoshow' => new \Typedin\LaravelCalendly\Entities\InviteeNoShow($response),
+        "inviteenoshow" => new \Typedin\LaravelCalendly\Entities\InviteeNoShow($response),
         ]);
     }
 
-    public function destroy(\Typedin\LaravelCalendly\Http\DeleteInviteeNoShowRequest $request)
+    public function destroy(DeleteInviteeNoShowRequest $request)
     {
-        $uuid = null;
         $this->api->delete("/invitee_no_shows/{$uuid}/");
     }
 
-    public function post(\Typedin\LaravelCalendly\Http\PostInviteeNoShowRequest $request)
+    public function post(PostInviteeNoShowRequest $request)
     {
-        $this->api->post('/invitee_no_shows/', $request);
+        $this->api->post("/invitee_no_shows/", $request);
     }
 }

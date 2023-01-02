@@ -2,34 +2,37 @@
 
 namespace Typedin\LaravelCalendly\Http\Controllers\CalendlyUserAvailabilitySchedulesController;
 
-class CalendlyUserAvailabilitySchedulesController extends Illuminate\Routing\Controller
-{
-    private readonly Typedin\LaravelCalendly\Contracts\CalendlyApiInterface $api;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Routing\Controller;
+use Typedin\LaravelCalendly\Contracts\CalendlyApiInterface;
+use Typedin\LaravelCalendly\Http\GetUserAvailabilityScheduleRequest;
+use Typedin\LaravelCalendly\Http\IndexUserAvailabilityScheduleRequest;
 
-    public function __construct(Typedin\LaravelCalendly\Contracts\CalendlyApiInterface $api)
+class CalendlyUserAvailabilitySchedulesController extends Controller
+{
+    private CalendlyApiInterface $api;
+
+    public function __construct(CalendlyApiInterface $api)
     {
         $this->api = $api;
     }
 
-    public function index(\Typedin\LaravelCalendly\Http\IndexUserAvailabilityScheduleRequest $request)
+    public function index(IndexUserAvailabilityScheduleRequest $request): JsonResponse
     {
-        $response = $this->api->get('/user_availability_schedules/', $request);
+        $response = $this->api->get("/user_availability_schedules/", $request);
 
-        $all = collect($response['collection'])
+        $all = collect($response["collection"])
         ->mapInto(UserAvailabilitySchedule::class)->all();
-
         return response()->json([
-            'user_availability_schedules' => $all,
+        "user_availability_schedules" => $all,
         ]);
     }
 
-    public function show(\Typedin\LaravelCalendly\Http\GetUserAvailabilityScheduleRequest $request)
+    public function show(GetUserAvailabilityScheduleRequest $request)
     {
-        $uuid = null;
         $response = $this->api->get("/user_availability_schedules/{$uuid}/", $request);
-
         return response()->json([
-            'useravailabilityschedule' => new \Typedin\LaravelCalendly\Entities\UserAvailabilitySchedule($response),
+        "useravailabilityschedule" => new \Typedin\LaravelCalendly\Entities\UserAvailabilitySchedule($response),
         ]);
     }
 }

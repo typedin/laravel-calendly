@@ -2,36 +2,36 @@
 
 namespace Typedin\LaravelCalendly\Http\Controllers\CalendlyOrganizationInvitationsController;
 
-class CalendlyOrganizationInvitationsController extends Illuminate\Routing\Controller
-{
-    private readonly Typedin\LaravelCalendly\Contracts\CalendlyApiInterface $api;
+use Illuminate\Routing\Controller;
+use Typedin\LaravelCalendly\Contracts\CalendlyApiInterface;
+use Typedin\LaravelCalendly\Http\DeleteOrganizationInvitationRequest;
+use Typedin\LaravelCalendly\Http\GetOrganizationInvitationRequest;
+use Typedin\LaravelCalendly\Http\PostOrganizationInvitationRequest;
 
-    public function __construct(Typedin\LaravelCalendly\Contracts\CalendlyApiInterface $api)
+class CalendlyOrganizationInvitationsController extends Controller
+{
+    private CalendlyApiInterface $api;
+
+    public function __construct(CalendlyApiInterface $api)
     {
         $this->api = $api;
     }
 
-    public function post(\Typedin\LaravelCalendly\Http\PostOrganizationInvitationRequest $request)
+    public function post(PostOrganizationInvitationRequest $request)
     {
-        $uuid = null;
         $this->api->post("/organizations/{$uuid}/invitations/", $request);
     }
 
-    public function show(\Typedin\LaravelCalendly\Http\GetOrganizationInvitationRequest $request)
+    public function show(GetOrganizationInvitationRequest $request)
     {
-        $org_uuid = null;
-        $uuid = null;
         $response = $this->api->get("/organizations/{$org_uuid}/invitations/{$uuid}/", $request);
-
         return response()->json([
-            'organizationinvitation' => new \Typedin\LaravelCalendly\Entities\OrganizationInvitation($response),
+        "organizationinvitation" => new \Typedin\LaravelCalendly\Entities\OrganizationInvitation($response),
         ]);
     }
 
-    public function destroy(\Typedin\LaravelCalendly\Http\DeleteOrganizationInvitationRequest $request)
+    public function destroy(DeleteOrganizationInvitationRequest $request)
     {
-        $org_uuid = null;
-        $uuid = null;
         $this->api->delete("/organizations/{$org_uuid}/invitations/{$uuid}/");
     }
 }

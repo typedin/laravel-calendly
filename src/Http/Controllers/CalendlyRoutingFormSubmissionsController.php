@@ -2,34 +2,37 @@
 
 namespace Typedin\LaravelCalendly\Http\Controllers\CalendlyRoutingFormSubmissionsController;
 
-class CalendlyRoutingFormSubmissionsController extends Illuminate\Routing\Controller
-{
-    private readonly Typedin\LaravelCalendly\Contracts\CalendlyApiInterface $api;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Routing\Controller;
+use Typedin\LaravelCalendly\Contracts\CalendlyApiInterface;
+use Typedin\LaravelCalendly\Http\GetRoutingFormSubmissionRequest;
+use Typedin\LaravelCalendly\Http\IndexRoutingFormSubmissionRequest;
 
-    public function __construct(Typedin\LaravelCalendly\Contracts\CalendlyApiInterface $api)
+class CalendlyRoutingFormSubmissionsController extends Controller
+{
+    private CalendlyApiInterface $api;
+
+    public function __construct(CalendlyApiInterface $api)
     {
         $this->api = $api;
     }
 
-    public function index(\Typedin\LaravelCalendly\Http\IndexRoutingFormSubmissionRequest $request)
+    public function index(IndexRoutingFormSubmissionRequest $request): JsonResponse
     {
-        $response = $this->api->get('/routing_form_submissions/', $request);
+        $response = $this->api->get("/routing_form_submissions/", $request);
 
-        $all = collect($response['collection'])
+        $all = collect($response["collection"])
         ->mapInto(RoutingFormSubmission::class)->all();
-
         return response()->json([
-            'routing_form_submissions' => $all,
+        "routing_form_submissions" => $all,
         ]);
     }
 
-    public function show(\Typedin\LaravelCalendly\Http\GetRoutingFormSubmissionRequest $request)
+    public function show(GetRoutingFormSubmissionRequest $request)
     {
-        $uuid = null;
         $response = $this->api->get("/routing_form_submissions/{$uuid}/", $request);
-
         return response()->json([
-            'routingformsubmission' => new \Typedin\LaravelCalendly\Entities\RoutingFormSubmission($response),
+        "routingformsubmission" => new \Typedin\LaravelCalendly\Entities\RoutingFormSubmission($response),
         ]);
     }
 }

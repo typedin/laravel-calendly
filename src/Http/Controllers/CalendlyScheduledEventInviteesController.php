@@ -2,36 +2,37 @@
 
 namespace Typedin\LaravelCalendly\Http\Controllers\CalendlyScheduledEventInviteesController;
 
-class CalendlyScheduledEventInviteesController extends Illuminate\Routing\Controller
-{
-    private readonly Typedin\LaravelCalendly\Contracts\CalendlyApiInterface $api;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Routing\Controller;
+use Typedin\LaravelCalendly\Contracts\CalendlyApiInterface;
+use Typedin\LaravelCalendly\Http\GetScheduledEventInviteeRequest;
+use Typedin\LaravelCalendly\Http\IndexScheduledEventInviteeRequest;
 
-    public function __construct(Typedin\LaravelCalendly\Contracts\CalendlyApiInterface $api)
+class CalendlyScheduledEventInviteesController extends Controller
+{
+    private CalendlyApiInterface $api;
+
+    public function __construct(CalendlyApiInterface $api)
     {
         $this->api = $api;
     }
 
-    public function index(\Typedin\LaravelCalendly\Http\IndexScheduledEventInviteeRequest $request)
+    public function index(IndexScheduledEventInviteeRequest $request): JsonResponse
     {
-        $uuid = null;
         $response = $this->api->get("/scheduled_events/{$uuid}/invitees/", $request);
 
-        $all = collect($response['collection'])
+        $all = collect($response["collection"])
         ->mapInto(ScheduledEventInvitee::class)->all();
-
         return response()->json([
-            'scheduled_event_invitees' => $all,
+        "scheduled_event_invitees" => $all,
         ]);
     }
 
-    public function show(\Typedin\LaravelCalendly\Http\GetScheduledEventInviteeRequest $request)
+    public function show(GetScheduledEventInviteeRequest $request)
     {
-        $event_uuid = null;
-        $invitee_uuid = null;
         $response = $this->api->get("/scheduled_events/{$event_uuid}/invitees/{$invitee_uuid}/", $request);
-
         return response()->json([
-            'scheduledeventinvitee' => new \Typedin\LaravelCalendly\Entities\ScheduledEventInvitee($response),
+        "scheduledeventinvitee" => new \Typedin\LaravelCalendly\Entities\ScheduledEventInvitee($response),
         ]);
     }
 }

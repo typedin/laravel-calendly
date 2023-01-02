@@ -2,34 +2,37 @@
 
 namespace Typedin\LaravelCalendly\Http\Controllers\CalendlyRoutingFormsController;
 
-class CalendlyRoutingFormsController extends Illuminate\Routing\Controller
-{
-    private readonly Typedin\LaravelCalendly\Contracts\CalendlyApiInterface $api;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Routing\Controller;
+use Typedin\LaravelCalendly\Contracts\CalendlyApiInterface;
+use Typedin\LaravelCalendly\Http\GetRoutingFormRequest;
+use Typedin\LaravelCalendly\Http\IndexRoutingFormRequest;
 
-    public function __construct(Typedin\LaravelCalendly\Contracts\CalendlyApiInterface $api)
+class CalendlyRoutingFormsController extends Controller
+{
+    private CalendlyApiInterface $api;
+
+    public function __construct(CalendlyApiInterface $api)
     {
         $this->api = $api;
     }
 
-    public function index(\Typedin\LaravelCalendly\Http\IndexRoutingFormRequest $request)
+    public function index(IndexRoutingFormRequest $request): JsonResponse
     {
-        $response = $this->api->get('/routing_forms/', $request);
+        $response = $this->api->get("/routing_forms/", $request);
 
-        $all = collect($response['collection'])
+        $all = collect($response["collection"])
         ->mapInto(RoutingForm::class)->all();
-
         return response()->json([
-            'routing_forms' => $all,
+        "routing_forms" => $all,
         ]);
     }
 
-    public function show(\Typedin\LaravelCalendly\Http\GetRoutingFormRequest $request)
+    public function show(GetRoutingFormRequest $request)
     {
-        $uuid = null;
         $response = $this->api->get("/routing_forms/{$uuid}/", $request);
-
         return response()->json([
-            'routingform' => new \Typedin\LaravelCalendly\Entities\RoutingForm($response),
+        "routingform" => new \Typedin\LaravelCalendly\Entities\RoutingForm($response),
         ]);
     }
 }

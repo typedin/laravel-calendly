@@ -2,17 +2,21 @@
 
 namespace Typedin\LaravelCalendly\Http\Controllers\CalendlySchedulingLinksController;
 
-class CalendlySchedulingLinksController extends Illuminate\Routing\Controller
-{
-    private readonly Typedin\LaravelCalendly\Contracts\CalendlyApiInterface $api;
+use Illuminate\Routing\Controller;
+use Typedin\LaravelCalendly\Contracts\CalendlyApiInterface;
+use Typedin\LaravelCalendly\Http\PostSchedulingLinkRequest;
 
-    public function __construct(Typedin\LaravelCalendly\Contracts\CalendlyApiInterface $api)
+class CalendlySchedulingLinksController extends Controller
+{
+    private CalendlyApiInterface $api;
+
+    public function __construct(CalendlyApiInterface $api)
     {
         $this->api = $api;
     }
 
-    public function post(\Typedin\LaravelCalendly\Http\PostSchedulingLinkRequest $request)
+    public function post(PostSchedulingLinkRequest $request)
     {
-        $this->api->post('/scheduling_links/', $request);
+        $this->api->post("/scheduling_links/", $request);
     }
 }

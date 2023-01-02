@@ -5,17 +5,20 @@ namespace Typedin\LaravelCalendly\Entities\CalendlySubmissionCustomMessageResult
 class CalendlySubmissionCustomMessageResult
 {
     /**
-     * @param  mixed  $type
+     * Indicates if the routing form submission resulted in a custom "thank you" message.
+     * @var string<custom_message> $type
      */
-    public function __construct(
-     /**
-      * Indicates if the routing form submission resulted in a custom "thank you" message.
-      */
-     public string $type,
-     /**
-      * Contains an object with custom message headline and body.
-      */
-     public object $value
-    ) {
+    public string $type;
+
+    /**
+     * Contains an object with custom message headline and body.
+     * @var object $value
+     */
+    public object $value;
+
+    public function __construct(string $type, object $value)
+    {
+        $this->type = $type;
+        $this->value = $value;
     }
 }

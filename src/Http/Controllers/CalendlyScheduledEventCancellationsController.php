@@ -2,18 +2,21 @@
 
 namespace Typedin\LaravelCalendly\Http\Controllers\CalendlyScheduledEventCancellationsController;
 
-class CalendlyScheduledEventCancellationsController extends Illuminate\Routing\Controller
-{
-    private readonly Typedin\LaravelCalendly\Contracts\CalendlyApiInterface $api;
+use Illuminate\Routing\Controller;
+use Typedin\LaravelCalendly\Contracts\CalendlyApiInterface;
+use Typedin\LaravelCalendly\Http\PostScheduledEventCancellationRequest;
 
-    public function __construct(Typedin\LaravelCalendly\Contracts\CalendlyApiInterface $api)
+class CalendlyScheduledEventCancellationsController extends Controller
+{
+    private CalendlyApiInterface $api;
+
+    public function __construct(CalendlyApiInterface $api)
     {
         $this->api = $api;
     }
 
-    public function post(\Typedin\LaravelCalendly\Http\PostScheduledEventCancellationRequest $request)
+    public function post(PostScheduledEventCancellationRequest $request)
     {
-        $uuid = null;
         $this->api->post("/scheduled_events/{$uuid}/cancellation/", $request);
     }
 }

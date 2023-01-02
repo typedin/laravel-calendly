@@ -4,15 +4,21 @@ namespace Typedin\LaravelCalendly\Entities\CalendlySubmissionQuestionAndAnswer;
 
 class CalendlySubmissionQuestionAndAnswer
 {
-    public function __construct(
-     /**
-      * Unique identifier for the routing form question.
-      */
-     public ?string $question_uuid,
-     /**
-      * Question name (in human-readable format).
-      */
-     public string $question
-    ) {
+    /**
+     * Unique identifier for the routing form question.
+     * @var string|null $question_uuid
+     */
+    public string $question_uuid;
+
+    /**
+     * Question name (in human-readable format).
+     * @var string $question
+     */
+    public string $question;
+
+    public function __construct(?string $question_uuid, string $question)
+    {
+        $this->question_uuid = $question_uuid;
+        $this->question = $question;
     }
 }

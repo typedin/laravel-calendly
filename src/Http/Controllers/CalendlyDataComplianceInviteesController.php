@@ -2,17 +2,21 @@
 
 namespace Typedin\LaravelCalendly\Http\Controllers\CalendlyDataComplianceInviteesController;
 
-class CalendlyDataComplianceInviteesController extends Illuminate\Routing\Controller
-{
-    private readonly Typedin\LaravelCalendly\Contracts\CalendlyApiInterface $api;
+use Illuminate\Routing\Controller;
+use Typedin\LaravelCalendly\Contracts\CalendlyApiInterface;
+use Typedin\LaravelCalendly\Http\PostDataComplianceInviteeRequest;
 
-    public function __construct(Typedin\LaravelCalendly\Contracts\CalendlyApiInterface $api)
+class CalendlyDataComplianceInviteesController extends Controller
+{
+    private CalendlyApiInterface $api;
+
+    public function __construct(CalendlyApiInterface $api)
     {
         $this->api = $api;
     }
 
-    public function post(\Typedin\LaravelCalendly\Http\PostDataComplianceInviteeRequest $request)
+    public function post(PostDataComplianceInviteeRequest $request)
     {
-        $this->api->post('/data_compliance/deletion/invitees/', $request);
+        $this->api->post("/data_compliance/deletion/invitees/", $request);
     }
 }

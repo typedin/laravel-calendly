@@ -2,22 +2,24 @@
 
 namespace Typedin\LaravelCalendly\Http\Controllers\CalendlyUsersController;
 
-class CalendlyUsersController extends Illuminate\Routing\Controller
-{
-    private readonly Typedin\LaravelCalendly\Contracts\CalendlyApiInterface $api;
+use Illuminate\Routing\Controller;
+use Typedin\LaravelCalendly\Contracts\CalendlyApiInterface;
+use Typedin\LaravelCalendly\Http\GetUserRequest;
 
-    public function __construct(Typedin\LaravelCalendly\Contracts\CalendlyApiInterface $api)
+class CalendlyUsersController extends Controller
+{
+    private CalendlyApiInterface $api;
+
+    public function __construct(CalendlyApiInterface $api)
     {
         $this->api = $api;
     }
 
-    public function show(\Typedin\LaravelCalendly\Http\GetUserRequest $request)
+    public function show(GetUserRequest $request)
     {
-        $uuid = null;
         $response = $this->api->get("/users/{$uuid}/", $request);
-
         return response()->json([
-            'user' => new \Typedin\LaravelCalendly\Entities\User($response),
+        "user" => new \Typedin\LaravelCalendly\Entities\User($response),
         ]);
     }
 }

@@ -5,17 +5,20 @@ namespace Typedin\LaravelCalendly\Entities\CalendlyInPersonMeeting;
 class CalendlyInPersonMeeting
 {
     /**
-     * @param  mixed  $type
+     * Indicates that the event will be an in-person meeting.
+     * @var string<physical> $type
      */
-    public function __construct(
-     /**
-      * Indicates that the event will be an in-person meeting.
-      */
-     public string $type,
-     /**
-      * The physical location specified by the event host (publisher)
-      */
-     public string $location
-    ) {
+    public string $type;
+
+    /**
+     * The physical location specified by the event host (publisher)
+     * @var string $location
+     */
+    public string $location;
+
+    public function __construct(string $type, string $location)
+    {
+        $this->type = $type;
+        $this->location = $location;
     }
 }

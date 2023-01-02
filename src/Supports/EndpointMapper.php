@@ -47,9 +47,11 @@ class EndpointMapper
      */
     public function controllerNames(): Collection
     {
-        return $this->paths()
-                    ->keys()
-                    ->map(fn ($applesauce) => self::fullname($applesauce));
+        return $this->paths()->keys()
+                   ->map(fn ($key) => self::fullname($key))
+                   ->filter(fn ($key) => (bool) $key)
+                   ->unique()
+                   ->values();
     }
 
     /**
@@ -58,19 +60,20 @@ class EndpointMapper
     public function mapControllerNamesToEndpoints(): Collection
     {
         return $this->controllerNames()
-                    ->flatMap(function ($controller_name) {
-                        return [
-                            $controller_name => $this->paths()->filter(fn ($value, $key) => self::fullname($key) == $controller_name),
-                        ];
-                    });
+                   ->flatMap(function ($controller_name) {
+                       return [
+                           $controller_name => $this->paths()->filter(fn ($_value, $key) => self::fullname($key) == $controller_name),
+                       ];
+                   });
     }
 
     public static function fullname(string $input): string
     {
         $local = collect(array_values(array_filter(explode('/', $input))))
-                    ->filter(fn ($part) => ! Str::contains($part, ['me', 'deletion', 'uuid']))
-                    ->values()
-                    ->map(fn ($part): string => ucfirst(Str::camel($part)));
+                   ->filter(fn ($part) => ! Str::contains($part, ['deletion', 'uuid']))
+                   ->filter(fn ($part) => $part !== 'me')
+                   ->values()
+                   ->map(fn ($part): string => ucfirst(Str::camel($part)));
 
         return $local->map(function ($part, $key) use ($local) {
             if ($key < count($local) - 1) {
