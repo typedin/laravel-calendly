@@ -17,8 +17,7 @@ class CalendlyInviteeQuestionAndAnswer
   */
  public string $answer,
         \number $position
-    )
-    {
+    ) {
         $this->position = $position;
     }
 }
