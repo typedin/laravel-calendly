@@ -3,12 +3,12 @@
 # WORK IN PROGRESS
 
 This code is not ment to be used. PLEASE don't use it in production.
-Initial url for the api is [here](https://stoplight.io/api/v1/projects/calendly/api-docs/nodes/reference/calendly-api/openapi.yaml) this api follows those (specs)[https://stoplight.io/api/v1/projects/calendly/api-docs/nodes/reference/calendly-api/openapi.yaml
-]
+Initial url for the api is [here](https://stoplight.io/api/v1/projects/calendly/api-docs/nodes/reference/calendly-api/openapi.yaml).
+This api follows [those specs](https://stoplight.io/api/v1/projects/calendly/api-docs/nodes/reference/calendly-api/openapi.yaml).
 
 # Interact with Calendly API with Laravel
 
-![GitHub Workflow Status](https://img.shields.io/github/workflow/status/typedin/laravel-calendly/run-tests?label=test)
+[![GitHub Workflow Status](https://img.shields.io/github/workflow/status/typedin/laravel-calendly/run-tests?label=test)
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/typedin/laravel-calendly.svg?style=flat-square)](https://packagist.org/packages/typedin/laravel-calendly)
 
