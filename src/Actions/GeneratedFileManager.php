@@ -2,26 +2,42 @@
 
 namespace Typedin\LaravelCalendly\Actions;
 
+use Illuminate\Support\Collection;
 use Nette\PhpGenerator\ClassType;
 use Nette\PhpGenerator\PhpNamespace;
+use Nette\PhpGenerator\PsrPrinter;
 use Typedin\LaravelCalendly\Supports\ControllerGenerator;
 use Typedin\LaravelCalendly\Supports\EndpointMapper;
 use Typedin\LaravelCalendly\Supports\EntityGenerator;
 
 class GeneratedFileManager
 {
+    /**
+     * @var Collection<array-key,<missing>>
+     */
+    public readonly Collection $entities;
+
+    /**
+     * @var Collection<array-key,<missing>>
+     */
+    public readonly Collection $controllers;
+
     public function __construct(private readonly EndpointMapper $mapper, private readonly string $path)
     {
+        $this->entities = new Collection();
+        $this->controllers = new Collection();
     }
 
     private static function write(string $path, ClassType $class, PhpNamespace $namespace): void
     {
+        $printer = new PsrPrinter;
+
         if (! is_dir($path)) {
             mkdir($path, 0777, true);
         }
         $content = '<?php'.PHP_EOL."\n";
         $content .= $namespace;
-        $content .= $class->__toString();
+        $content .= $printer->printClass($class);
         // the @ suppresses the warning
         $return_value = @file_put_contents($path.$class->getName().'.php', $content);
         if (! $return_value) {
@@ -29,21 +45,104 @@ class GeneratedFileManager
         }
     }
 
-    public function writeEntities()
+    private static function buildSimplifiedReturnType($input): mixed
+    {
+        if (! $input) {
+            return null;
+        }
+
+        return (string) collect(explode('\\', $input))->last();
+    }
+
+    private static function replaceQualifiersWithImport(ClassType $class): ClassType
+    {
+        if ($extends = $class->getExtends()) {
+            $class->setExtends(self::buildSimplifiedReturnType($extends));
+        }
+        collect($class->getMethods())->each(function ($method) {
+            collect($method->getParameters())
+                ->each(function ($parameter) {
+                    $parameter->setType(self::buildSimplifiedReturnType($parameter->getType()));
+                });
+            $method->setReturnType(self::buildSimplifiedReturnType($method->getReturnType()));
+        });
+
+        collect($class->getProperties())->each(function ($property) {
+            $property->setType(self::buildSimplifiedReturnType($property->getType()));
+        });
+
+        return $class;
+    }
+
+    public function createEntities(): GeneratedFileManager
     {
         $this->mapper->entityNames()->each(function ($key) {
             $entity = ( new EntityGenerator($key, $this->mapper->schemas()->get($key)) )->entity;
-            $namespace = new PhpNamespace(name: "Typedin\LaravelCalendly\Entities\\".$entity->getName());
-            self::write($this->path.'Entities/', $entity, $namespace);
+
+            $namespace = $this->createNamespace($entity, "Typedin\LaravelCalendly\Entities\\".$entity->getName());
+            $this->entities->push(['entity' => self::replaceQualifiersWithImport($entity), 'namespace' => $namespace]);
         });
+
+        return $this;
     }
 
-    public function writeControllers()
+    public function createControllers(): GeneratedFileManager
     {
         $this->mapper->controllerNames()->each(function ($key) {
             $controller = ( new ControllerGenerator($key, $this->mapper->mapControllerNamesToEndpoints()->get($key)->all()) )->controller;
-            $namespace = new PhpNamespace(name: "Typedin\LaravelCalendly\Http\Controllers\\".$controller->getName());
-            self::write($this->path.'/Http/Controllers/', $controller, $namespace);
+            $namespace = $this->createNamespace($controller, "Typedin\LaravelCalendly\Http\Controllers\\".$controller->getName());
+
+            $this->controllers->push(['controller' => self::replaceQualifiersWithImport($controller), 'namespace' => $namespace]);
         });
+
+        return $this;
+    }
+
+    public function writeAllFiles(): void
+    {
+        $this->entities->each(function ($entry) {
+            self::write($this->path.'Entities/', $entry['entity'], $entry['namespace']);
+        });
+        $this->controllers->each(function ($entry) {
+            self::write($this->path.'/Http/Controllers/', $entry['controller'], $entry['namespace']);
+        });
+    }
+
+    private function createNamespace(ClassType $class, $name): PhpNamespace
+    {
+        $namespace = new PhpNamespace($name);
+        foreach ($class->getMethods() as $method) {
+            $types[] = $method->getReturnType(true);
+            array_map(function ($param) use (&$types) {
+                $types[] = $param->getType(true);
+            }, $method->getParameters());
+        }
+        array_map(function ($param) use (&$types) {
+            $types[] = $param->getType(true);
+        }, $class->getProperties());
+        foreach (array_filter($types) as $type) {
+            foreach ($type->getTypes() as $subtype) {
+                if ($subtype->isClass() && ! $subtype->isClassKeyword()) {
+                    $namespace->addUse((string) $subtype);
+                }
+            }
+        }
+        foreach ($class->getImplements() as $implement) {
+            $namespace->addUse((string) $implement);
+        }
+        if ($class->getExtends()) {
+            $namespace->addUse((string) $class->getExtends());
+        }
+        // cannot add keyword as use type
+        // So I rely on fail silently
+        foreach ($class->getProperties() as $property) {
+            try {
+                $namespace->addUse((string) $property->getType());
+            } catch (\Throwable $th) {
+                //throw $th;
+            }
+        }
+
+        return $namespace;
     }
 }

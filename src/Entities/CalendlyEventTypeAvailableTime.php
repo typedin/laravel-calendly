@@ -20,8 +20,7 @@ class CalendlyEventTypeAvailableTime
   * The URL of the user’s scheduling site where invitees book this event type
   */
  public string $scheduling_url
-    )
-    {
+    ) {
         $this->invitees_remaining = $invitees_remaining;
     }
 }

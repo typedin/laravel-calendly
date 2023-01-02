@@ -2,7 +2,6 @@
 
 namespace Typedin\LaravelCalendly\Supports;
 
-use Illuminate\Routing\Controller;
 use Illuminate\Support\Str;
 use Nette\PhpGenerator\ClassType;
 
@@ -16,7 +15,7 @@ class ControllerGenerator
             sprintf('Calendly%sController', $this->name),
         );
 
-        $this->controller->setExtends(Controller::class);
+        $this->controller->setExtends('\Illuminate\Routing\Controller');
 
         $this->generateConstructor()->generateMethods();
 
@@ -66,6 +65,7 @@ class ControllerGenerator
         try {
             $this->controller
                     ->addMethod('index')
+                    ->setReturnType(\Illuminate\Http\JsonResponse::class)
                     ->addBody(sprintf('$response = $this->api->get("/%s/", $request);', $this->buildUri($key)))
                     ->addBody('')
                     ->addBody('$all = collect($response["collection"])')
