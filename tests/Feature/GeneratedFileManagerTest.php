@@ -25,11 +25,10 @@ class GeneratedFileManagerTest extends TestCase
 
     /**
      * @test
-     * @group integrations
+     * @group integration
      */
     public function it_writes_all_files_to_a_given_path(): void
     {
-        $this->cleanDestinationFolder();
         $yaml = file_get_contents(__DIR__.'/../../doc/openapi.yaml');
         $mapper = (new EndpointMapper($yaml));
 
@@ -38,6 +37,7 @@ class GeneratedFileManagerTest extends TestCase
 
         $this->assertCount(15, glob($this->destination.'Http/Controllers/*.php'));
         $this->assertCount(45, glob($this->destination.'Entities/*.php'));
+        $this->cleanDestinationFolder();
     }
 
     /** @test */
@@ -56,6 +56,6 @@ class GeneratedFileManagerTest extends TestCase
         $mapper = (new EndpointMapper($yaml));
         $controllers = (new GeneratedFileManager($mapper, $this->destination))->createControllers()->controllers;
 
-        /* $this->assertCount(15, $controllers); */
+        $this->assertCount(28, $controllers);
     }
 }
