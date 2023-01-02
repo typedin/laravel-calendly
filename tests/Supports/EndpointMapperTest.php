@@ -24,30 +24,17 @@ class EndpointMapperTest extends TestCase
     /**
      * @return array<int,array<int,string>>
      */
-    public function endpointProvider()
+    public function endpointProvider(): array
     {
-        $content = file_get_contents(__DIR__.'/__fixtures__/Endpoints.json');
+        $content = collect(json_decode(file_get_contents(__DIR__.'/__fixtures__/Endpoints.json')));
 
-        return collect(json_decode($content))
+        return $content
             ->values()
             ->flatMap(function ($value) {
-                return collect($value->endpoints)->map(function ($endpoint) use ($value) {
-                    return [$value->name, $endpoint];
-                });
-            })->all();
-
-        return [
-            ['DataComplianceInvitees', '/data_compliance/deletion/invitee'],
-            ['EventTypes', '/event_types'],
-            ['InviteeNoShows', '/invitee_no_shows/{uuid}'],
-            ['OrganizationInvitations', '/organizations/{org_uuid}/invitations/{uuid}'],
-            ['ScheduledEventInvitees', '/scheduled_events/{event_uuid}/invitees/{invitee_uuid}'],
-            ['ScheduledEventInvitees', '/scheduled_events/{uuid}/invitees'],
-            ['ScheduledEvents', '/scheduled_events'],
-            ['Users', '/users/me'],
-            ['Users', '/users/{uuid}'],
-            ['WebhookSubscriptions', '/webhook_subscriptions/{webhook_uuid}'],
-        ];
+                return collect($value->endpoints)->map(fn ($endpoint) => [$value->name, $endpoint]
+                );
+            })
+            ->all();
     }
 
     /**
