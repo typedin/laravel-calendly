@@ -11,7 +11,7 @@ class GeneratedFileManagerTest extends TestCase
     /**
      * url https://stoplight.io/api/v1/projects/calendly/api-docs/nodes/reference/calendly-api/openapi.yaml
      */
-    private $destination = __DIR__.'/../../tests/output/';
+    private $destination = __DIR__.'/../../src/';
 
     private function cleanDestinationFolder(): void
     {
