@@ -25,7 +25,7 @@ class GeneratedFileManagerTest extends TestCase
 
     /**
      * @test
-     * @group integrations
+     * @group integration
      */
     public function it_writes_all_files_to_a_given_path(): void
     {
