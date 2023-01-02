@@ -8,7 +8,7 @@ This api follows [those specs](https://stoplight.io/api/v1/projects/calendly/api
 
 # Interact with Calendly API with Laravel
 
-[GitHub Workflow Status](https://img.shields.io/github/workflow/status/typedin/laravel-calendly/run-tests?label=test)
+![GitHub Workflow Status](https://img.shields.io/github/workflow/status/typedin/laravel-calendly/run-tests?label=test)
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/typedin/laravel-calendly.svg?style=flat-square)](https://packagist.org/packages/typedin/laravel-calendly)
 
