@@ -30,7 +30,7 @@ class GeneratedFileManager
 
     private static function write(string $path, ClassType $class, PhpNamespace $namespace): void
     {
-        $printer = new PsrPrinter;
+        $printer = new PsrPrinter();
 
         if (! is_dir($path)) {
             mkdir($path, 0777, true);

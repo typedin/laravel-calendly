@@ -31,7 +31,8 @@ class EndpointMapperTest extends TestCase
         return $content
             ->values()
             ->flatMap(function ($value) {
-                return collect($value->endpoints)->map(fn ($endpoint) => [$value->name, $endpoint]
+                return collect($value->endpoints)->map(
+                    fn ($endpoint) => [$value->name, $endpoint]
                 );
             })
             ->all();
