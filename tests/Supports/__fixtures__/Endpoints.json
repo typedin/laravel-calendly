@@ -1,0 +1,88 @@
+[
+  {
+    "name": "ScheduledEvents",
+    "endpoints": ["/scheduled_events/{uuid}", "/scheduled_events"]
+  },
+  {
+    "name": "EventTypes",
+    "endpoints": ["/event_types", "/event_types/{uuid}"]
+  },
+  {
+    "name": "Users",
+    "endpoints": ["/users/{uuid}", "/users/me"]
+  },
+  {
+    "name": "ScheduledEventInvitees",
+    "endpoints": [
+      "/scheduled_events/{event_uuid}/invitees/{invitee_uuid}",
+      "/scheduled_events/{uuid}/invitees"
+    ]
+  },
+  {
+    "name": "OrganizationInvitations",
+    "endpoints": [
+      "/organizations/{uuid}/invitations",
+      "/organizations/{org_uuid}/invitations/{uuid}"
+    ]
+  },
+  {
+    "name": "OrganizationMemberships",
+    "endpoints": [
+      "/organization_memberships/{uuid}",
+      "/organization_memberships"
+    ]
+  },
+  {
+    "name": "WebhookSubscriptions",
+    "endpoints": [
+      "/webhook_subscriptions",
+      "/webhook_subscriptions/{webhook_uuid}"
+    ]
+  },
+  {
+    "name": "SchedulingLinks",
+    "endpoints": ["/scheduling_links"]
+  },
+  {
+    "name": "DataComplianceInvitees",
+    "endpoints": ["/data_compliance/deletion/invitees"]
+  },
+  {
+    "name": "InviteeNoShows",
+    "endpoints": ["/invitee_no_shows/{uuid}", "/invitee_no_shows"]
+  },
+  {
+    "name": "ScheduledEventCancellations",
+    "endpoints": ["/scheduled_events/{uuid}/cancellation"]
+  },
+  {
+    "name": "RoutingForms",
+    "endpoints": ["/routing_forms", "/routing_forms/{uuid}"]
+  },
+  {
+    "name": "RoutingFormSubmissions",
+    "endpoints": [
+      "/routing_form_submissions",
+      "/routing_form_submissions/{uuid}"
+    ]
+  },
+  {
+    "name": "EventTypeAvailableTimes",
+    "endpoints": ["/event_type_available_times"]
+  },
+  {
+    "name": "ActivityLogEntries",
+    "endpoints": ["/activity_log_entries"]
+  },
+  {
+    "name": "UserBusyTimes",
+    "endpoints": ["/user_busy_times"]
+  },
+  {
+    "name": "UserAvailabilitySchedules",
+    "endpoints": [
+      "/user_availability_schedules",
+      "/user_availability_schedules/{uuid}"
+    ]
+  }
+]
