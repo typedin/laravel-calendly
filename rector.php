@@ -17,7 +17,7 @@ return static function (RectorConfig $rectorConfig): void {
     $rectorConfig->skip([
         __DIR__.'/tests/fakes',
     ]);
-
+    $rectorConfig->importNames();
     // define sets of rules
     $rectorConfig->sets([
         SetList::EARLY_RETURN,
