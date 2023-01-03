@@ -79,7 +79,7 @@ class GeneratedFileManager
         $this->mapper->entityNames()->each(function ($key) {
             $entity = ( new EntityGenerator($key, $this->mapper->schemas()->get($key)) )->entity;
 
-            $namespace = $this->createNamespace($entity, "Typedin\LaravelCalendly\Entities\\".$entity->getName());
+            $namespace = $this->createNamespace($entity, "Typedin\LaravelCalendly\Entities");
             $this->entities->push(['entity' => self::replaceQualifiersWithImport($entity), 'namespace' => $namespace]);
         });
 
@@ -90,7 +90,7 @@ class GeneratedFileManager
     {
         $this->mapper->controllerNames()->each(function ($key) {
             $controller = ( new ControllerGenerator($key, $this->mapper->mapControllerNamesToEndpoints()->get($key)->all()) )->controller;
-            $namespace = $this->createNamespace($controller, "Typedin\LaravelCalendly\Http\Controllers\\".$controller->getName());
+            $namespace = $this->createNamespace($controller, "Typedin\LaravelCalendly\Http\Controllers");
 
             $this->controllers->push(['controller' => self::replaceQualifiersWithImport($controller), 'namespace' => $namespace]);
         });
