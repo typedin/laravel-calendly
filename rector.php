@@ -20,6 +20,11 @@ return static function (RectorConfig $rectorConfig): void {
     ]);
     // register a single rule
     $rectorConfig->rule(InlineConstructorDefaultToPropertyRector::class);
+    $rectorConfig->skip([
+        InlineConstructorDefaultToPropertyRector::class => [
+            __DIR__.'/src/Entities/*',
+        ],
+    ]);
 
     // define sets of rules
     $rectorConfig->sets([
