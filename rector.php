@@ -15,6 +15,7 @@ return static function (RectorConfig $rectorConfig): void {
     ]);
 
     $rectorConfig->skip([
+        InlineConstructorDefaultToPropertyRector::class,
         __DIR__.'/tests/fakes',
     ]);
     $rectorConfig->importNames();
@@ -24,9 +25,5 @@ return static function (RectorConfig $rectorConfig): void {
         SetList::CODE_QUALITY,
         SetList::DEAD_CODE,
         LevelSetList::UP_TO_PHP_82,
-    ]);
-
-    $rectorConfig->skip([
-        InlineConstructorDefaultToPropertyRector::class,
     ]);
 };
