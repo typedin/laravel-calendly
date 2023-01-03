@@ -60,11 +60,9 @@ class EndpointMapper
     public function mapControllerNamesToEndpoints(): Collection
     {
         return $this->controllerNames()
-                   ->flatMap(function ($controller_name) {
-                       return [
-                           $controller_name => $this->paths()->filter(fn ($_value, $key) => self::fullname($key) == $controller_name),
-                       ];
-                   });
+                   ->flatMap(fn ($controller_name) => [
+                       $controller_name => $this->paths()->filter(fn ($_value, $key) => self::fullname($key) == $controller_name),
+                   ]);
     }
 
     public static function fullname(string $input): string

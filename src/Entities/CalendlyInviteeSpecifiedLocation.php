@@ -1,24 +1,21 @@
 <?php
 
-namespace Typedin\LaravelCalendly\Entities\CalendlyInviteeSpecifiedLocation;
+namespace Typedin\LaravelCalendly\Entities;
 
 class CalendlyInviteeSpecifiedLocation
 {
     /**
-     * The event location selected by the invitee
-     * @var string<ask_invitee> $type
+     * @param  mixed  $type
      */
-    public string $type;
-
-    /**
-     * The event location description provided by the invitee
-     * @var string $location
-     */
-    public string $location;
-
-    public function __construct(string $type, string $location)
-    {
-        $this->type = $type;
-        $this->location = $location;
+    public function __construct(
+        /**
+         * The event location selected by the invitee
+         */
+        public string $type,
+        /**
+         * The event location description provided by the invitee
+         */
+        public string $location
+    ) {
     }
 }

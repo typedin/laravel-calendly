@@ -2,7 +2,9 @@
 
 namespace Typedin\LaravelCalendly\Tests\Supports;
 
+use Nette\PhpGenerator\ClassType;
 use PHPUnit\Framework\TestCase;
+use Typedin\LaravelCalendly\Entities\CalendlyUser;
 use Typedin\LaravelCalendly\Supports\EntityGenerator;
 
 class EntityGeneratorTest extends TestCase
@@ -25,7 +27,7 @@ class EntityGeneratorTest extends TestCase
         $generated_class = ( new EntityGenerator('User', $this->schema('User')) )->entity;
 
         $this->assertEquals('CalendlyUser', $generated_class->getName());
-        $this->assertEquals('Typedin\LaravelCalendly\Entities\CalendlyUser', $generated_class->getNamespace()->getName());
+        $this->assertEquals(CalendlyUser::class, $generated_class->getNamespace()->getName());
     }
 
     /**
@@ -132,7 +134,7 @@ class EntityGeneratorTest extends TestCase
         $keys = collect(json_decode($content, true, 512, JSON_THROW_ON_ERROR)['components']['schemas'])->keys();
         $keys->each(function ($key) {
             $entity = ( new EntityGenerator($key, $this->schema($key)) )->entity;
-            $this->assertInstanceOf(\Nette\PhpGenerator\ClassType::class, $entity);
+            $this->assertInstanceOf(ClassType::class, $entity);
         });
     }
 }

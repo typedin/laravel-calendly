@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Http;
 use Orchestra\Testbench\TestCase;
 use Typedin\LaravelCalendly\Api\BaseApiClient;
 use Typedin\LaravelCalendly\Exceptions\ApiClientException;
+use Typedin\LaravelCalendly\LaravelCalendlyServiceProvider;
 
 class BaseApiClientTest extends TestCase
 {
@@ -31,7 +32,7 @@ class BaseApiClientTest extends TestCase
     protected function getPackageProviders($app): array
     {
         return [
-            \Typedin\LaravelCalendly\LaravelCalendlyServiceProvider::class,
+            LaravelCalendlyServiceProvider::class,
         ];
     }
 

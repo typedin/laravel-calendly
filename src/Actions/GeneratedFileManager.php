@@ -2,10 +2,12 @@
 
 namespace Typedin\LaravelCalendly\Actions;
 
+use Exception;
 use Illuminate\Support\Collection;
 use Nette\PhpGenerator\ClassType;
 use Nette\PhpGenerator\PhpNamespace;
 use Nette\PhpGenerator\PsrPrinter;
+use Throwable;
 use Typedin\LaravelCalendly\Supports\ControllerGenerator;
 use Typedin\LaravelCalendly\Supports\EndpointMapper;
 use Typedin\LaravelCalendly\Supports\EntityGenerator;
@@ -41,7 +43,7 @@ class GeneratedFileManager
         // the @ suppresses the warning
         $return_value = @file_put_contents($path.$class->getName().'.php', $content);
         if (! $return_value) {
-            throw new \Exception(sprintf('Could not write file (%s) in folder: %s', $class->getName().'.php', $path));
+            throw new Exception(sprintf('Could not write file (%s) in folder: %s', $class->getName().'.php', $path));
         }
     }
 
@@ -51,7 +53,7 @@ class GeneratedFileManager
             return null;
         }
 
-        return (string) collect(explode('\\', $input))->last();
+        return (string) collect(explode('\\', (string) $input))->last();
     }
 
     private static function replaceQualifiersWithImport(ClassType $class): ClassType
@@ -122,23 +124,27 @@ class GeneratedFileManager
         }, $class->getProperties());
         foreach (array_filter($types) as $type) {
             foreach ($type->getTypes() as $subtype) {
-                if ($subtype->isClass() && ! $subtype->isClassKeyword()) {
-                    $namespace->addUse((string) $subtype);
+                if (! $subtype->isClass()) {
+                    continue;
                 }
+                if ($subtype->isClassKeyword()) {
+                    continue;
+                }
+                $namespace->addUse((string) $subtype);
             }
         }
         foreach ($class->getImplements() as $implement) {
-            $namespace->addUse((string) $implement);
+            $namespace->addUse($implement);
         }
         if ($class->getExtends()) {
-            $namespace->addUse((string) $class->getExtends());
+            $namespace->addUse($class->getExtends());
         }
         // cannot add keyword as use type
         // So I rely on fail silently
         foreach ($class->getProperties() as $property) {
             try {
                 $namespace->addUse((string) $property->getType());
-            } catch (\Throwable $th) {
+            } catch (Throwable) {
                 //throw $th;
             }
         }

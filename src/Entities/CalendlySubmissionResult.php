@@ -1,10 +1,7 @@
 <?php
 
-namespace Typedin\LaravelCalendly\Entities\CalendlySubmissionResult;
+namespace Typedin\LaravelCalendly\Entities;
 
 class CalendlySubmissionResult
 {
-    public function __construct()
-    {
-    }
 }

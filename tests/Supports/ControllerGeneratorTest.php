@@ -2,6 +2,8 @@
 
 namespace Typedin\LaravelCalendly\Tests\Supports;
 
+use Illuminate\Http\JsonResponse;
+use Nette\PhpGenerator\ClassType;
 use PHPUnit\Framework\TestCase;
 use Typedin\LaravelCalendly\Supports\ControllerGenerator;
 use Typedin\LaravelCalendly\Supports\EndpointMapper;
@@ -141,7 +143,7 @@ class ControllerGeneratorTest extends TestCase
         $this->assertCount(3, $rest_methods);
 
         tap($rest_methods->each(function ($method) {
-            $this->assertEquals('Illuminate\\Http\\JsonResponse', $method->getReturnType());
+            $this->assertEquals(JsonResponse::class, $method->getReturnType());
         }));
     }
 
@@ -161,7 +163,7 @@ class ControllerGeneratorTest extends TestCase
 
         $keys->each(function ($key) {
             $controller = ( new ControllerGenerator($key, $this->endpoints($key)) )->controller;
-            $this->assertInstanceOf(\Nette\PhpGenerator\ClassType::class, $controller);
+            $this->assertInstanceOf(ClassType::class, $controller);
         });
     }
 }

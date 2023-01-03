@@ -1,26 +1,26 @@
 <?php
 
-namespace Typedin\LaravelCalendly\Http\Controllers\CalendlyUsersController;
+namespace Typedin\LaravelCalendly\Http\Controllers;
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Routing\Controller;
 use Typedin\LaravelCalendly\Contracts\CalendlyApiInterface;
+use Typedin\LaravelCalendly\Entities\CalendlyUser;
 use Typedin\LaravelCalendly\Http\GetUserRequest;
 
 class CalendlyUsersController extends Controller
 {
-    private CalendlyApiInterface $api;
-
-    public function __construct(CalendlyApiInterface $api)
+    public function __construct(private readonly CalendlyApiInterface $api)
     {
-        $this->api = $api;
     }
 
     public function show(GetUserRequest $request): JsonResponse
     {
+        $uuid = null;
         $response = $this->api->get("/users/{$uuid}/", $request);
+
         return response()->json([
-        "user" => new \Typedin\LaravelCalendly\Entities\CalendlyUser($response),
+            'user' => new CalendlyUser($response),
         ]);
     }
 }

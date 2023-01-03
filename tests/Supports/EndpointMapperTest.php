@@ -26,15 +26,13 @@ class EndpointMapperTest extends TestCase
      */
     public function endpointProvider(): array
     {
-        $content = collect(json_decode(file_get_contents(__DIR__.'/__fixtures__/Endpoints.json')));
+        $content = collect(json_decode(file_get_contents(__DIR__.'/__fixtures__/Endpoints.json'), null, 512, JSON_THROW_ON_ERROR));
 
         return $content
             ->values()
-            ->flatMap(function ($value) {
-                return collect($value->endpoints)->map(
-                    fn ($endpoint) => [$value->name, $endpoint]
-                );
-            })
+            ->flatMap(fn ($value) => collect($value->endpoints)->map(
+                fn ($endpoint) => [$value->name, $endpoint]
+            ))
             ->all();
     }
 
