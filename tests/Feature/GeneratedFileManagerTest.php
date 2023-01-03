@@ -15,8 +15,12 @@ class GeneratedFileManagerTest extends TestCase
 
     private function cleanDestinationFolder(): void
     {
-        $files = glob($this->destination.'/*'); // get all file names
-        foreach ($files as $file) { // iterate files
+        foreach (glob($this->destination.'/Entities/*') as $file) { // iterate files
+            if (is_file($file)) {
+                unlink($file); // delete file
+            }
+        }
+        foreach (glob($this->destination.'/Http/Controllers/*') as $file) { // iterate files
             if (is_file($file)) {
                 unlink($file); // delete file
             }

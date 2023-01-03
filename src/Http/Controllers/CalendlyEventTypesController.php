@@ -29,12 +29,12 @@ class CalendlyEventTypesController extends Controller
         ]);
     }
 
-    public function show(GetEventTypeRequest $request)
+    public function show(GetEventTypeRequest $request): JsonResponse
     {
         $response = $this->api->get("/event_types/{$uuid}/", $request);
 
         return response()->json([
-            'eventtype' => new \Typedin\LaravelCalendly\Entities\EventType($response),
+            'event_type' => new \Typedin\LaravelCalendly\Entities\EventType($response),
         ]);
     }
 }

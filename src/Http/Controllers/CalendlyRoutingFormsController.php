@@ -29,12 +29,12 @@ class CalendlyRoutingFormsController extends Controller
         ]);
     }
 
-    public function show(GetRoutingFormRequest $request)
+    public function show(GetRoutingFormRequest $request): JsonResponse
     {
         $response = $this->api->get("/routing_forms/{$uuid}/", $request);
 
         return response()->json([
-            'routingform' => new \Typedin\LaravelCalendly\Entities\RoutingForm($response),
+            'routing_form' => new \Typedin\LaravelCalendly\Entities\RoutingForm($response),
         ]);
     }
 }

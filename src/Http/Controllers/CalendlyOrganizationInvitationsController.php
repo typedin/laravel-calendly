@@ -2,6 +2,7 @@
 
 namespace Typedin\LaravelCalendly\Http\Controllers\CalendlyOrganizationInvitationsController;
 
+use Illuminate\Http\JsonResponse;
 use Illuminate\Routing\Controller;
 use Typedin\LaravelCalendly\Contracts\CalendlyApiInterface;
 use Typedin\LaravelCalendly\Http\DeleteOrganizationInvitationRequest;
@@ -17,22 +18,28 @@ class CalendlyOrganizationInvitationsController extends Controller
         $this->api = $api;
     }
 
-    public function post(PostOrganizationInvitationRequest $request)
+    public function create(PostOrganizationInvitationRequest $request): JsonResponse
     {
-        $this->api->post("/organizations/{$uuid}/invitations/", $request);
+        $response = $this->api->post("/organizations/{$uuid}/invitations/", $request);
+
+        return response()->json([
+            'organization_invitation' => new \Typedin\LaravelCalendly\Entities\OrganizationInvitation($response),
+        ]);
     }
 
-    public function show(GetOrganizationInvitationRequest $request)
+    public function show(GetOrganizationInvitationRequest $request): JsonResponse
     {
         $response = $this->api->get("/organizations/{$org_uuid}/invitations/{$uuid}/", $request);
 
         return response()->json([
-            'organizationinvitation' => new \Typedin\LaravelCalendly\Entities\OrganizationInvitation($response),
+            'organization_invitation' => new \Typedin\LaravelCalendly\Entities\OrganizationInvitation($response),
         ]);
     }
 
-    public function destroy(DeleteOrganizationInvitationRequest $request)
+    public function destroy(DeleteOrganizationInvitationRequest $request): JsonResponse
     {
         $this->api->delete("/organizations/{$org_uuid}/invitations/{$uuid}/");
+
+        return response()->noContent();
     }
 }

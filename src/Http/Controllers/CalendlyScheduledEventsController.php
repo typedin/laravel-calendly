@@ -29,12 +29,12 @@ class CalendlyScheduledEventsController extends Controller
         ]);
     }
 
-    public function show(GetScheduledEventRequest $request)
+    public function show(GetScheduledEventRequest $request): JsonResponse
     {
         $response = $this->api->get("/scheduled_events/{$uuid}/", $request);
 
         return response()->json([
-            'scheduledevent' => new \Typedin\LaravelCalendly\Entities\ScheduledEvent($response),
+            'scheduled_event' => new \Typedin\LaravelCalendly\Entities\ScheduledEvent($response),
         ]);
     }
 }

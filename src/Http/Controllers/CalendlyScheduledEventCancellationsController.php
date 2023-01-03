@@ -2,6 +2,7 @@
 
 namespace Typedin\LaravelCalendly\Http\Controllers\CalendlyScheduledEventCancellationsController;
 
+use Illuminate\Http\JsonResponse;
 use Illuminate\Routing\Controller;
 use Typedin\LaravelCalendly\Contracts\CalendlyApiInterface;
 use Typedin\LaravelCalendly\Http\PostScheduledEventCancellationRequest;
@@ -15,8 +16,12 @@ class CalendlyScheduledEventCancellationsController extends Controller
         $this->api = $api;
     }
 
-    public function post(PostScheduledEventCancellationRequest $request)
+    public function create(PostScheduledEventCancellationRequest $request): JsonResponse
     {
-        $this->api->post("/scheduled_events/{$uuid}/cancellation/", $request);
+        $response = $this->api->post("/scheduled_events/{$uuid}/cancellation/", $request);
+
+        return response()->json([
+            'scheduled_event_cancellation' => new \Typedin\LaravelCalendly\Entities\ScheduledEventCancellation($response),
+        ]);
     }
 }
