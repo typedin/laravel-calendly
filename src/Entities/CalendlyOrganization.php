@@ -6,36 +6,31 @@ class CalendlyOrganization
 {
     /**
      * Canonical resource reference
-     *
-     * @var string
+     * @var string $uri
      */
     public string $uri;
 
     /**
      * Active subscription plan or trial plan
-     *
-     * @var string<basic|essentials|professional|teams|enterprise>
+     * @var string<basic|essentials|professional|teams|enterprise> $plan
      */
     public string $plan;
 
     /**
      * Current stage of organization
-     *
-     * @var string<trial|free|paid>
+     * @var string<trial|free|paid> $stage
      */
     public string $stage;
 
     /**
      * Timestamp of when the organization was created.
-     *
-     * @var string
+     * @var string $created_at
      */
     public string $created_at;
 
     /**
      * Timestamp of when the organization was created or updated.
-     *
-     * @var string
+     * @var string $updated_at
      */
     public string $updated_at;
 

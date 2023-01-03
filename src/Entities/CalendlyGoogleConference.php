@@ -6,22 +6,19 @@ class CalendlyGoogleConference
 {
     /**
      * The event location is a Google Meet or Hangouts conference
-     *
-     * @var string<google_conference>
+     * @var string<google_conference> $type
      */
     public string $type;
 
     /**
      * Indicates the current status of the Google conference
-     *
-     * @var string<initiated|processing|pushed|failed>
+     * @var string<initiated|processing|pushed|failed> $status
      */
     public string $status;
 
     /**
      * Google conference meeting url
-     *
-     * @var string|null
+     * @var string|null $join_url
      */
     public string $join_url;
 

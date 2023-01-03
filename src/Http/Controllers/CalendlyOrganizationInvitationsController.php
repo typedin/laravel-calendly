@@ -21,25 +21,22 @@ class CalendlyOrganizationInvitationsController extends Controller
     public function create(PostOrganizationInvitationRequest $request): JsonResponse
     {
         $response = $this->api->post("/organizations/{$uuid}/invitations/", $request);
-
         return response()->json([
-            'organization_invitation' => new \Typedin\LaravelCalendly\Entities\OrganizationInvitation($response),
+        "organization_invitation" => new \Typedin\LaravelCalendly\Entities\CalendlyOrganizationInvitation($response),
         ]);
     }
 
     public function show(GetOrganizationInvitationRequest $request): JsonResponse
     {
         $response = $this->api->get("/organizations/{$org_uuid}/invitations/{$uuid}/", $request);
-
         return response()->json([
-            'organization_invitation' => new \Typedin\LaravelCalendly\Entities\OrganizationInvitation($response),
+        "organization_invitation" => new \Typedin\LaravelCalendly\Entities\CalendlyOrganizationInvitation($response),
         ]);
     }
 
     public function destroy(DeleteOrganizationInvitationRequest $request): JsonResponse
     {
         $this->api->delete("/organizations/{$org_uuid}/invitations/{$uuid}/");
-
         return response()->noContent();
     }
 }

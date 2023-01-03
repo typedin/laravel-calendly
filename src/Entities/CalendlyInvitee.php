@@ -6,150 +6,128 @@ class CalendlyInvitee
 {
     /**
      * Canonical reference (unique identifier) for the invitee
-     *
-     * @var string
+     * @var string $uri
      */
     public string $uri;
 
     /**
      * The invitee’s email address
-     *
-     * @var string
+     * @var string $email
      */
     public string $email;
 
     /**
      * The first name of the invitee who booked the event when the event type is configured to use separate fields for first name and last name. Null when event type is configured to use a single field for name.
-     *
-     * @var string|null
+     * @var string|null $first_name
      */
     public string $first_name;
 
     /**
      * The last name of the invitee who booked the event when the event type is configured to use separate fields for first name and last name. Null when event type is configured to use a single field for name.
-     *
-     * @var string|null
+     * @var string|null $last_name
      */
     public string $last_name;
 
     /**
      * The invitee’s name (in human-readable format)
-     *
-     * @var string
+     * @var string $name
      */
     public string $name;
 
     /**
      * Indicates if the invitee is "active" or "canceled"
-     *
-     * @var string<active|canceled>
+     * @var string<active|canceled> $status
      */
     public string $status;
 
     /**
      * A collection of the invitee's responses to questions on the event booking confirmation form
-     *
-     * @var array
+     * @var array $questions_and_answers
      */
     public array $questions_and_answers;
 
     /**
      * Time zone to use when displaying time to the invitee
-     *
-     * @var string|null
+     * @var string|null $timezone
      */
     public string $timezone;
 
     /**
      * A reference to the event
-     *
-     * @var string
+     * @var string $event
      */
     public string $event;
 
     /**
      * The moment when the event was created (e.g. "2020-01-02T03:04:05.678123Z")
-     *
-     * @var string
+     * @var string $created_at
      */
     public string $created_at;
 
     /**
      * The moment when the event was last updated (e.g. "2020-01-02T03:04:05.678123Z")
-     *
-     * @var string
+     * @var string $updated_at
      */
     public string $updated_at;
-
     public $tracking;
 
     /**
      * The phone number to use when sending text (SMS) reminders
-     *
-     * @var string|null
+     * @var string|null $text_reminder_number
      */
     public string $text_reminder_number;
 
     /**
      * Indicates if this invitee has rescheduled. If `true`, a reference to the new Invitee instance is provided in the `new_invitee` field.
-     *
-     * @var bool
+     * @var boolean $rescheduled
      */
     public bool $rescheduled;
 
     /**
      * Reference to old Invitee instance that got rescheduled
-     *
-     * @var string|null
+     * @var string|null $old_invitee
      */
     public string $old_invitee;
 
     /**
      * Link to new invitee, after reschedule
-     *
-     * @var string|null
+     * @var string|null $new_invitee
      */
     public string $new_invitee;
 
     /**
      * Link to cancelling the event for the invitee
-     *
-     * @var string
+     * @var string $cancel_url
      */
     public string $cancel_url;
 
     /**
      * Link to rescheduling the event for the invitee
-     *
-     * @var string
+     * @var string $reschedule_url
      */
     public string $reschedule_url;
 
     /**
      * Reference to a routing form submission that redirected the invitee to a booking page.
-     *
-     * @var string|null
+     * @var string|null $routing_form_submission
      */
     public string $routing_form_submission;
 
     /**
      * Invitee payment
-     *
-     * @var object|null
+     * @var object|null $payment
      */
     public object $payment;
 
     /**
      * Provides data pertaining to the associated no show for the Invitee
-     *
-     * @var object|null
+     * @var object|null $no_show
      */
     public object $no_show;
 
     /**
      * Assuming reconfirmation is enabled for the event type, when reconfirmation is requested this object is present with a `created_at` that reflects when the reconfirmation notification was sent. Once the invitee has reconfirmed the `confirmed_at` attribute will change from `null` to a timestamp that reflects when they took action.
-     *
-     * @var object|null
+     * @var object|null $reconfirmation
      */
     public object $reconfirmation;
 

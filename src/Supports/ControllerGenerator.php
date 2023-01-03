@@ -89,7 +89,7 @@ class ControllerGenerator
                     ->setReturnType(\Illuminate\Http\JsonResponse::class)
                     ->addBody(sprintf('$response = $this->api->get("/%s/", $request);', $this->buildUri($key)))
                     ->addBody('return response()->json([')
-                    ->addBody(sprintf('"%s" => new \Typedin\LaravelCalendly\Entities\%s($response),', Str::snake(Str::singular($this->name)), Str::singular($this->name)))
+                    ->addBody(sprintf('"%s" => new \Typedin\LaravelCalendly\Entities\Calendly%s($response),', Str::snake(Str::singular($this->name)), Str::singular($this->name)))
                     ->addBody(']);')
                     ->addParameter('request')
                     ->setType(sprintf('\Typedin\LaravelCalendly\Http\Get%sRequest', Str::singular($this->name)));
@@ -105,7 +105,7 @@ class ControllerGenerator
                 ->setReturnType(\Illuminate\Http\JsonResponse::class)
                 ->addBody(sprintf('$response = $this->api->post("/%s/", $request);', $this->buildUri($key)))
                 ->addBody('return response()->json([')
-                ->addBody(sprintf('"%s" => new \Typedin\LaravelCalendly\Entities\%s($response),', Str::snake(Str::singular($this->name)), Str::singular($this->name)))
+                ->addBody(sprintf('"%s" => new \Typedin\LaravelCalendly\Entities\Calendly%s($response),', Str::snake(Str::singular($this->name)), Str::singular($this->name)))
                 ->addBody(']);')
                 ->addParameter('request')
                 ->setType(sprintf('\Typedin\LaravelCalendly\Http\Post%sRequest', Str::singular($this->name)));

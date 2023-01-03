@@ -18,13 +18,12 @@ class CalendlyEventTypeAvailableTimesController extends Controller
 
     public function index(IndexEventTypeAvailableTimeRequest $request): JsonResponse
     {
-        $response = $this->api->get('/event_type_available_times/', $request);
+        $response = $this->api->get("/event_type_available_times/", $request);
 
-        $all = collect($response['collection'])
-        ->mapInto(EventTypeAvailableTime::class)->all();
-
+        $all = collect($response["collection"])
+        ->mapInto(\Typedin\LaravelCalendly\Entities\CalendlyEventTypeAvailableTime::class)->all();
         return response()->json([
-            'event_type_available_times' => $all,
+        "event_type_available_times" => $all,
         ]);
     }
 }

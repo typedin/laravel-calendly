@@ -19,9 +19,8 @@ class CalendlyUsersController extends Controller
     public function show(GetUserRequest $request): JsonResponse
     {
         $response = $this->api->get("/users/{$uuid}/", $request);
-
         return response()->json([
-            'user' => new \Typedin\LaravelCalendly\Entities\User($response),
+        "user" => new \Typedin\LaravelCalendly\Entities\CalendlyUser($response),
         ]);
     }
 }

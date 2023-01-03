@@ -6,36 +6,32 @@ class CalendlyQuestion
 {
     /**
      * Unique identifier for the routing form question.
-     *
-     * @var string
+     * @var string $uuid
      */
     public string $uuid;
 
     /**
      * Question name (in human-readable format).
-     *
-     * @var string
+     * @var string $name
      */
     public string $name;
 
     /**
      * Question type: name, text input, email, phone, textarea input, dropdown list or radio button list.
-     *
-     * @var string<name|text|email|phone|textarea|select|radios>
+     * @var string<name|text|email|phone|textarea|select|radios> $type
      */
     public string $type;
 
     /**
      * true if an answer to the question is required for respondents to submit the routing form; false if not required.
      *
-     * @var bool
+     * @var boolean $required
      */
     public bool $required;
 
     /**
      * The respondent’s option(s) for "select" or "radios" types of questions.
-     *
-     * @var array|null
+     * @var array|null $answer_choices
      */
     public array $answer_choices;
 

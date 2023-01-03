@@ -6,29 +6,25 @@ class CalendlyZoomConference
 {
     /**
      * The event location is a Zoom conference
-     *
-     * @var string<zoom_conference>
+     * @var string<zoom_conference> $type
      */
     public string $type;
 
     /**
      * Indicates the current status of the Zoom conference
-     *
-     * @var string<initiated|processing|pushed|failed>
+     * @var string<initiated|processing|pushed|failed> $status
      */
     public string $status;
 
     /**
      * Zoom meeting url
-     *
-     * @var string|null
+     * @var string|null $join_url
      */
     public string $join_url;
 
     /**
      * The conference metadata supplied by Zoom
-     *
-     * @var object|null
+     * @var object|null $data
      */
     public object $data;
 

@@ -18,10 +18,9 @@ class CalendlySchedulingLinksController extends Controller
 
     public function create(PostSchedulingLinkRequest $request): JsonResponse
     {
-        $response = $this->api->post('/scheduling_links/', $request);
-
+        $response = $this->api->post("/scheduling_links/", $request);
         return response()->json([
-            'scheduling_link' => new \Typedin\LaravelCalendly\Entities\SchedulingLink($response),
+        "scheduling_link" => new \Typedin\LaravelCalendly\Entities\CalendlySchedulingLink($response),
         ]);
     }
 }

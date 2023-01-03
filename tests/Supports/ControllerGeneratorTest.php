@@ -69,7 +69,7 @@ class ControllerGeneratorTest extends TestCase
         $this->assertEquals('\Typedin\LaravelCalendly\Http\GetInviteeNoShowRequest', $method->getParameters()['request']->getType());
         $this->assertStringContainsString('$response = $this->api->get("/invitee_no_shows/{$uuid}/", $request);', $method->getBody());
         $this->assertStringContainsString('return response()->json([', $method->getBody());
-        $this->assertStringContainsString('"invitee_no_show" => new \Typedin\LaravelCalendly\Entities\InviteeNoShow($response),', $method->getBody());
+        $this->assertStringContainsString('"invitee_no_show" => new \Typedin\LaravelCalendly\Entities\CalendlyInviteeNoShow($response),', $method->getBody());
         $this->assertStringContainsString(']);', $method->getBody());
     }
 
@@ -84,7 +84,7 @@ class ControllerGeneratorTest extends TestCase
         $this->assertStringContainsString('$response = $this->api->post("/scheduling_links/", $request);', $method->getBody());
 
         $this->assertStringContainsString('return response()->json([', $method->getBody());
-        $this->assertStringContainsString('"scheduling_link" => new \Typedin\LaravelCalendly\Entities\SchedulingLink($response),', $method->getBody());
+        $this->assertStringContainsString('"scheduling_link" => new \Typedin\LaravelCalendly\Entities\CalendlySchedulingLink($response),', $method->getBody());
         $this->assertStringContainsString(']);', $method->getBody());
     }
 
@@ -99,7 +99,7 @@ class ControllerGeneratorTest extends TestCase
         $this->assertStringContainsString('$this->api->post("/organizations/{$uuid}/invitations/", $request);', $method->getBody());
 
         $this->assertStringContainsString('return response()->json([', $method->getBody());
-        $this->assertStringContainsString('"organization_invitation" => new \Typedin\LaravelCalendly\Entities\OrganizationInvitation($response),', $method->getBody());
+        $this->assertStringContainsString('"organization_invitation" => new \Typedin\LaravelCalendly\Entities\CalendlyOrganizationInvitation($response),', $method->getBody());
         $this->assertStringContainsString(']);', $method->getBody());
     }
 
@@ -140,10 +140,9 @@ class ControllerGeneratorTest extends TestCase
         // this includes the constructor
         $this->assertCount(3, $rest_methods);
 
-        /* tap($methods->filter(fn ($method) => in_array($method->getName(), ['index', 'show', 'create', 'store', 'edit', 'update', 'destroy']) */
-        /* )->each(function ($method) { */
-        /*     $this->assertEquals('Illuminate\\Http\\JsonResponse', $method->getReturnType()); */
-        /* })); */
+        tap($rest_methods->each(function ($method) {
+            $this->assertEquals('Illuminate\\Http\\JsonResponse', $method->getReturnType());
+        }));
     }
 
     /**
