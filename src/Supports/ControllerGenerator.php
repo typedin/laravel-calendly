@@ -86,6 +86,7 @@ class ControllerGenerator
         try {
             $this->controller
                     ->addMethod('show')
+                    ->setReturnType(\Illuminate\Http\JsonResponse::class)
                     ->addBody(sprintf('$response = $this->api->get("/%s/", $request);', $this->buildUri($key)))
                     ->addBody('return response()->json([')
                     ->addBody(sprintf('"%s" => new \Typedin\LaravelCalendly\Entities\%s($response),', Str::snake(Str::singular($this->name)), Str::singular($this->name)))
@@ -100,8 +101,12 @@ class ControllerGenerator
     private function addCreateMethod($key): void
     {
         $this->controller
-                ->addMethod('post')
-                ->addBody(sprintf('$this->api->post("/%s/", $request);', $this->buildUri($key)))
+                ->addMethod('create')
+                ->setReturnType(\Illuminate\Http\JsonResponse::class)
+                ->addBody(sprintf('$response = $this->api->post("/%s/", $request);', $this->buildUri($key)))
+                ->addBody('return response()->json([')
+                ->addBody(sprintf('"%s" => new \Typedin\LaravelCalendly\Entities\%s($response),', Str::snake(Str::singular($this->name)), Str::singular($this->name)))
+                ->addBody(']);')
                 ->addParameter('request')
                 ->setType(sprintf('\Typedin\LaravelCalendly\Http\Post%sRequest', Str::singular($this->name)));
     }
@@ -110,7 +115,9 @@ class ControllerGenerator
     {
         $this->controller
                 ->addMethod('destroy')
+                ->setReturnType(\Illuminate\Http\JsonResponse::class)
                 ->addBody(sprintf('$this->api->delete("/%s/");', $this->buildUri($key)))
+                ->addBody('return response()->noContent();')
                 ->addParameter('request')
                 ->setType(sprintf('\Typedin\LaravelCalendly\Http\Delete%sRequest', Str::singular($this->name)));
     }
