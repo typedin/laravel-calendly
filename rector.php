@@ -19,7 +19,7 @@ return static function (RectorConfig $rectorConfig): void {
         __DIR__.'/tests/CalendlyTestCase.php',
     ]);
     // register a single rule
-    $rectorConfig->rule(InlineConstructorDefaultToPropertyRector::class);
+    /* $rectorConfig->rule(InlineConstructorDefaultToPropertyRector::class); */
     $rectorConfig->skip([
         InlineConstructorDefaultToPropertyRector::class => [
             __DIR__.'/src/Entities/*',
@@ -28,6 +28,7 @@ return static function (RectorConfig $rectorConfig): void {
 
     // define sets of rules
     $rectorConfig->sets([
+        SetList::EARLY_RETURN,
         SetList::CODE_QUALITY,
         SetList::DEAD_CODE,
         LevelSetList::UP_TO_PHP_82,
