@@ -69,7 +69,7 @@ class ControllerGenerator
                     ->addBody(sprintf('$response = $this->api->get("/%s/", $request);', $this->buildUri($key)))
                     ->addBody('')
                     ->addBody('$all = collect($response["collection"])')
-                    ->addBody(sprintf('->mapInto(%s::class)->all();', Str::singular($this->name)))
+                    ->addBody(sprintf('->mapInto(\Typedin\LaravelCalendly\Entities\Calendly%s::class)->all();', Str::singular($this->name)))
                     ->addBody('return response()->json([')
                     ->addBody(sprintf('"%s" => $all,', Str::snake($this->name)))
                     ->addBody(']);')

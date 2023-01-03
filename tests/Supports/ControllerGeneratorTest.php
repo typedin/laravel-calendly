@@ -48,7 +48,7 @@ class ControllerGeneratorTest extends TestCase
         $this->assertEquals('\Typedin\LaravelCalendly\Http\IndexEventTypeRequest', $method->getParameters()['request']->getType());
         $this->assertStringContainsString('$response = $this->api->get("/event_types/", $request);', $method->getBody());
         $this->assertStringContainsString('$all = collect($response["collection"])', $method->getBody());
-        $this->assertStringContainsString('->mapInto(EventType::class)->all();', $method->getBody());
+        $this->assertStringContainsString('->mapInto(\Typedin\LaravelCalendly\Entities\CalendlyEventType::class)->all();', $method->getBody());
 
         $this->assertStringContainsString('return response()->json([', $method->getBody());
         $this->assertStringContainsString('"event_types" => $all,', $method->getBody());
