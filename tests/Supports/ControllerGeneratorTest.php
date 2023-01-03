@@ -13,11 +13,9 @@ class ControllerGeneratorTest extends TestCase
      */
     private function endpoints($filter): array
     {
-        $content = file_get_contents(__DIR__.'/__fixtures__/api.json');
+        $mapper = new EndpointMapper(file_get_contents(__DIR__.'/../../doc/openapi.yaml'));
 
-        $local = collect(json_decode($content, true, 512, JSON_THROW_ON_ERROR)['paths']);
-
-        return $local->filter(fn ($_value, $key) => $filter == EndpointMapper::fullname($key))->all();
+        return $mapper->mapControllerNamesToEndpoints()->get($filter)->all();
     }
 
     /**
@@ -56,8 +54,7 @@ class ControllerGeneratorTest extends TestCase
         $this->assertStringContainsString('"event_types" => $all,', $method->getBody());
         $this->assertStringContainsString(']);', $method->getBody());
 
-        // collection: EnventType
-        // pagination
+        // TODO pagination
     }
 
     /**
