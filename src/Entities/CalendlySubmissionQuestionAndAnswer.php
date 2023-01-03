@@ -6,7 +6,8 @@ class CalendlySubmissionQuestionAndAnswer
 {
     /**
      * Unique identifier for the routing form question.
-     * @var string|null $question_uuid
+     *
+     * @var string|null
      */
     public string $question_uuid;
 

@@ -6,7 +6,8 @@ class CalendlyInboundCall
 {
     /**
      * Indicates that the invitee will call the event host
-     * @var string<inbound_call> $type
+     *
+     * @var string<inbound_call>
      */
     public string $type;
 

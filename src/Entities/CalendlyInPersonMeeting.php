@@ -6,7 +6,8 @@ class CalendlyInPersonMeeting
 {
     /**
      * Indicates that the event will be an in-person meeting.
-     * @var string<physical> $type
+     *
+     * @var string<physical>
      */
     public string $type;
 

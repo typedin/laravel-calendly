@@ -14,6 +14,7 @@ class EndpointMapperTest extends TestCase
 
     /**
      * @dataProvider endpointProvider
+     *
      * @test
      */
     public function it_creates_cruddy_controller_names_for_endpoints($result, $input): void

@@ -6,7 +6,8 @@ class CalendlyInviteeSpecifiedLocation
 {
     /**
      * The event location selected by the invitee
-     * @var string<ask_invitee> $type
+     *
+     * @var string<ask_invitee>
      */
     public string $type;
 

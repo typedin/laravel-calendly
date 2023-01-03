@@ -11,13 +11,15 @@ class CalendlyEvent
 
     /**
      * The event name
-     * @var string|null $name
+     *
+     * @var string|null
      */
     public string $name;
 
     /**
      * Indicates if the event is "active" or "canceled"
-     * @var string<active|canceled> $status
+     *
+     * @var string<active|canceled>
      */
     public string $status;
 
@@ -35,6 +37,7 @@ class CalendlyEvent
      * The event type associated with this event
      */
     public string $event_type;
+
     public $location;
 
     public object $invitees_counter;
@@ -58,6 +61,7 @@ class CalendlyEvent
      * Additional people added to an event by an invitee
      */
     public array $event_guests;
+
     public $calendar_event;
 
     public function __construct(

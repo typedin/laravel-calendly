@@ -6,7 +6,8 @@ class CalendlyWebhookPayload
 {
     /**
      * The event that caused the webhook to fire
-     * @var string<invitee.created|invitee.canceled|routing_form_submission.created> $event
+     *
+     * @var string<invitee.created|invitee.canceled|routing_form_submission.created>
      */
     public string $event;
 

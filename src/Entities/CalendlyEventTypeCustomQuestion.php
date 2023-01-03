@@ -13,7 +13,8 @@ class CalendlyEventTypeCustomQuestion
 
     /**
      * The type of response that the invitee provides to the custom question; can be one or multiple lines of text, a phone number, or single- or multiple-select.
-     * @var string<string|text|phone_number|single_select|multi_select> $type
+     *
+     * @var string<string|text|phone_number|single_select|multi_select>
      */
     public string $type;
 
