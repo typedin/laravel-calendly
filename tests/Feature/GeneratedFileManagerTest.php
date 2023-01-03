@@ -13,23 +13,9 @@ class GeneratedFileManagerTest extends TestCase
      */
     private $destination = __DIR__.'/../../src/';
 
-    private function cleanDestinationFolder(): void
-    {
-        foreach (glob($this->destination.'/Entities/*') as $file) { // iterate files
-            if (is_file($file)) {
-                unlink($file); // delete file
-            }
-        }
-        foreach (glob($this->destination.'/Http/Controllers/*') as $file) { // iterate files
-            if (is_file($file)) {
-                unlink($file); // delete file
-            }
-        }
-    }
-
     /**
      * @test
-     * @group integration
+     * @group integrations
      */
     public function it_writes_all_files_to_a_given_path(): void
     {
@@ -41,7 +27,7 @@ class GeneratedFileManagerTest extends TestCase
 
         $this->assertCount(17, glob($this->destination.'Http/Controllers/*.php'));
         $this->assertCount(45, glob($this->destination.'Entities/*.php'));
-        $this->cleanDestinationFolder();
+        /* $this->cleanDestinationFolder(); */
     }
 
     /** @test */

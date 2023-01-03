@@ -5,17 +5,19 @@ namespace Typedin\LaravelCalendly\Entities;
 class CalendlyInboundCall
 {
     /**
-     * @param  mixed  $type
+     * Indicates that the invitee will call the event host
+     * @var string<inbound_call> $type
      */
-    public function __construct(
-        /**
-         * Indicates that the invitee will call the event host
-         */
-        public string $type,
-        /**
-         * The phone number the invitee will use to call the event host (publisher)
-         */
-        public string $location
-    ) {
+    public string $type;
+
+    /**
+     * The phone number the invitee will use to call the event host (publisher)
+     */
+    public string $location;
+
+    public function __construct(string $type, string $location)
+    {
+        $this->type = $type;
+        $this->location = $location;
     }
 }

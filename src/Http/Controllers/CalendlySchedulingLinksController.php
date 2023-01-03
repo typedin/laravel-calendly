@@ -2,24 +2,26 @@
 
 namespace Typedin\LaravelCalendly\Http\Controllers;
 
+use Typedin\LaravelCalendly\Entities\CalendlySchedulingLink;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Routing\Controller;
 use Typedin\LaravelCalendly\Contracts\CalendlyApiInterface;
-use Typedin\LaravelCalendly\Http\Controllers\Typedin\LaravelCalendly\Entities\CalendlySchedulingLink;
 use Typedin\LaravelCalendly\Http\PostSchedulingLinkRequest;
 
 class CalendlySchedulingLinksController extends Controller
 {
-    public function __construct(private readonly CalendlyApiInterface $api)
+    private readonly CalendlyApiInterface $api;
+
+    public function __construct(CalendlyApiInterface $api)
     {
+        $this->api = $api;
     }
 
     public function create(PostSchedulingLinkRequest $request): JsonResponse
     {
-        $response = $this->api->post('/scheduling_links/', $request);
-
+        $response = $this->api->post("/scheduling_links/", $request);
         return response()->json([
-            'scheduling_link' => new CalendlySchedulingLink($response),
+        "scheduling_link" => new CalendlySchedulingLink($response),
         ]);
     }
 }

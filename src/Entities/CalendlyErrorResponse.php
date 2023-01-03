@@ -4,7 +4,13 @@ namespace Typedin\LaravelCalendly\Entities;
 
 class CalendlyErrorResponse
 {
-    public function __construct(public string $title, public string $message)
+    public string $title;
+
+    public string $message;
+
+    public function __construct(string $title, string $message)
     {
+        $this->title = $title;
+        $this->message = $message;
     }
 }
