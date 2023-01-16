@@ -28,52 +28,42 @@ class FormRequestGeneratorTest extends TestCase
     }
 
     /**
-     * @dataProvider ruleProvider
+     * @dataProvider EventTypeProvider
      *
      * @test
      */
-    public function it_generates_rules($a, $b): void
+    public function it_generates_rules_for_event_typed($property, $expected_rules): void
     {
         $rules = ( new FormRequestGenerator('EventType', $this->schema('EventType')) )->validator->getMethod('rules');
 
-
-        $this->assertStringContainsString('return [', $rules->getBody());
-        $this->assertStringContainsString('];', $rules->getBody());
-
-        $this->assertStringContainsString(sprintf("'%s' => '%s',", $a, $b), $rules->getBody());
+        $this->assertStringContainsString(sprintf("'%s' => '%s',", $property, $expected_rules), $rules->getBody());
     }
-    
-    public function ruleProvider(): array {
+
+    public function EventTypeProvider(): array
+    {
         return [
-            [ 'name' , "required,string" ],
-            [ 'slug' , "required,string" ] ,
-            [ 'kind_description', "required,in:Collective,Group,One-on-One,Round Robin"],
-            [ 'color', "required,regex:^#[a-f\\d]{6}$"],
-            /* "kind", => enum */
-            /* "pooling_type",=> enum  */
-            /* "type", => enum */
-            /* "kind", => enum */
-            /* "pooling_type",=> enum  */
-            /* "type", => enum */
-            /* "booking_method", */
-            /* "custom_questions", */
-            /* "deleted_at", */
-            /* "kind_description", */
-            /* 'active', */
-            /* "admin_managed" */
-            /* "secret", => boolean*/
-            /* 'uri', */
-            /* 'scheduling_url', */
-            /* "duration", */
-            /* "created_at", */
-            /* "updated_at", */
-            /* "internal_note", */
-            /* "description_plain", */
-            /* "description_html", */
-            /* "profile", */
-            /* "custom_questions", => array */
-            /* "deleted_at", */
-            /* "admin_managed" */
+            ['uri', 'required,url'],
+            ['name', 'nullable,string'],
+            ['active',  'required,boolean'],
+            ['slug', 'nullable,string'],
+            ['scheduling_url', 'required,url'],
+            ['duration', 'required,numeric'],
+            ['kind', 'required,in:solo,group'],
+            ['pooling_type', 'nullable,in:round_robin,collective'],
+            ['type', 'required,in:StandardEventType,AdhocEventType'],
+            ['color', 'required,regex:^#[a-f\\d]{6}$'],
+            ['created_at', 'required,date'],
+            ['updated_at', 'required,date'],
+            ['internal_note', 'nullable,string'],
+            ['description_plain', 'nullable,string'],
+            ['description_html', 'nullable,string'],
+            // profile
+            ['secret',  'required,boolean'],
+            ['booking_method', 'required,in:instant,poll'],
+            // custom question
+            ['deleted_at', 'nullable,date'],
+            ['kind_description', 'required,in:Collective,Group,One-on-One,Round Robin'],
+            ['admin_managed', 'required,boolean'],
         ];
     }
 }

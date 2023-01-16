@@ -16,7 +16,25 @@ class FormRequestGenerator
         $this->validator->validate();
     }
 
-    private function createRules()
+    private function getFormat(string $needle): string
+    {
+        $local = [
+            'date-time' => 'date',
+            'uri' => 'url',
+            'number' => 'numeric',
+        ];
+
+        return $local[$needle];
+    }
+
+    private function getType(string $needle): string
+    {
+        $local = ['number' => 'numeric'];
+
+        return $local[$needle] ?? $needle;
+    }
+
+    private function createRules(): FormRequestGenerator
     {
         $rules = collect($this->schema['properties'])
             ->map(function ($value, $key) {
@@ -24,21 +42,18 @@ class FormRequestGenerator
                 if (in_array($key, $this->schema['required'])) {
                     $local[] = 'required';
                 }
+                if (isset($value['nullable']) && $value['nullable'] == true) {
+                    $local[0] = 'nullable';
+                }
+
                 if (isset($value['enum'])) {
                     $local[] = sprintf('in:%s', implode(',', $value['enum']));
                 } elseif (isset($value['pattern'])) {
-                    $local[] = "regex:".$value['pattern'];
+                    $local[] = 'regex:'.$value['pattern'];
                 } elseif (isset($value['format'])) {
-                    if ($value['format'] == 'date-time') {
-                        $local[] = 'date';
-                    } elseif ($value['format'] == 'uri') {
-                        $local[] = 'url';
-                    } elseif ($value['format'] == 'number') {
-                        $local[] = 'numeric';
-
-                    }  
+                    $local[] = $this->getFormat($value['format']);
                 } elseif (isset($value['type'])) {
-                    $local[] = $value['type'];
+                    $local[] = $this->getType($value['type']);
                 }
 
                 return implode(',', $local);
