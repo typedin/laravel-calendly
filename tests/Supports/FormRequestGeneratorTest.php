@@ -57,13 +57,47 @@ class FormRequestGeneratorTest extends TestCase
             ['internal_note', 'nullable,string'],
             ['description_plain', 'nullable,string'],
             ['description_html', 'nullable,string'],
-            // profile
             ['secret',  'required,boolean'],
             ['booking_method', 'required,in:instant,poll'],
-            // custom question
             ['deleted_at', 'nullable,date'],
             ['kind_description', 'required,in:Collective,Group,One-on-One,Round Robin'],
             ['admin_managed', 'required,boolean'],
+            // TODO
+            // profile
+            // custom question
+        ];
+    }
+
+    /**
+     * @dataProvider EventProvider
+     *
+     * @test
+     */
+    public function it_generates_rules_for_event($property, $expected_rules): void
+    {
+        $rules = ( new FormRequestGenerator('Event', $this->schema('Event')) )->validator->getMethod('rules');
+
+        $this->assertStringContainsString(sprintf("'%s' => '%s',", $property, $expected_rules), $rules->getBody());
+    }
+
+    public function EventProvider(): array
+    {
+        return [
+            ['uri', 'required,url'],
+            ['name', 'nullable,string'],
+            ['status', 'required,in:active,canceled'],
+            ['start_time', 'required,date'],
+            ['end_time', 'required,date'],
+            ['created_at', 'required,date'],
+            ['updated_at', 'required,date'],
+            ['event_type', 'required,url'],
+            ["event_memberships", "required,array"],
+            /* ["event_memberships.*.user", "required,array"] */
+            // TODO
+            // location 
+            // event_guests
+            // cancellation 
+            // calendar_event
         ];
     }
 }

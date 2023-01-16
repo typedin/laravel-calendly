@@ -45,7 +45,12 @@ class FormRequestGenerator
                 if (isset($value['nullable']) && $value['nullable'] == true) {
                     $local[0] = 'nullable';
                 }
-
+                if(isset($value["items"] ) && isset($value["items"]["properties"] )){
+                    if(isset($value["items"]["required"])) {
+$local[] = ".*.user";
+                    /* dd($value["items"]); */
+}
+                }
                 if (isset($value['enum'])) {
                     $local[] = sprintf('in:%s', implode(',', $value['enum']));
                 } elseif (isset($value['pattern'])) {
