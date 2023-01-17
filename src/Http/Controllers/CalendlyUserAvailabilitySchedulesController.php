@@ -6,7 +6,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Routing\Controller;
 use Typedin\LaravelCalendly\Contracts\CalendlyApiInterface;
 use Typedin\LaravelCalendly\Entities\CalendlyUserAvailabilitySchedule;
-use Typedin\LaravelCalendly\Http\UserAvailabilityScheduleRequest;
+use Typedin\LaravelCalendly\Http\Requests\UserAvailabilityScheduleRequest;
 
 class CalendlyUserAvailabilitySchedulesController extends Controller
 {

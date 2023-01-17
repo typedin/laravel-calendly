@@ -6,7 +6,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Routing\Controller;
 use Typedin\LaravelCalendly\Contracts\CalendlyApiInterface;
 use Typedin\LaravelCalendly\Entities\CalendlyInviteeNoShow;
-use Typedin\LaravelCalendly\Http\InviteeNoShowRequest;
+use Typedin\LaravelCalendly\Http\Requests\InviteeNoShowRequest;
 
 class CalendlyInviteeNoShowsController extends Controller
 {

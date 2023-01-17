@@ -6,7 +6,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Routing\Controller;
 use Typedin\LaravelCalendly\Contracts\CalendlyApiInterface;
 use Typedin\LaravelCalendly\Entities\CalendlyWebhookSubscription;
-use Typedin\LaravelCalendly\Http\WebhookSubscriptionRequest;
+use Typedin\LaravelCalendly\Http\Requests\WebhookSubscriptionRequest;
 
 class CalendlyWebhookSubscriptionsController extends Controller
 {

@@ -6,7 +6,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Routing\Controller;
 use Typedin\LaravelCalendly\Contracts\CalendlyApiInterface;
 use Typedin\LaravelCalendly\Entities\CalendlySchedulingLink;
-use Typedin\LaravelCalendly\Http\SchedulingLinkRequest;
+use Typedin\LaravelCalendly\Http\Requests\SchedulingLinkRequest;
 
 class CalendlySchedulingLinksController extends Controller
 {

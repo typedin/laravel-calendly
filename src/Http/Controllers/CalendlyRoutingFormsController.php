@@ -6,7 +6,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Routing\Controller;
 use Typedin\LaravelCalendly\Contracts\CalendlyApiInterface;
 use Typedin\LaravelCalendly\Entities\CalendlyRoutingForm;
-use Typedin\LaravelCalendly\Http\RoutingFormRequest;
+use Typedin\LaravelCalendly\Http\Requests\RoutingFormRequest;
 
 class CalendlyRoutingFormsController extends Controller
 {

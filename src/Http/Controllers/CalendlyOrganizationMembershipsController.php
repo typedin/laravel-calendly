@@ -6,7 +6,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Routing\Controller;
 use Typedin\LaravelCalendly\Contracts\CalendlyApiInterface;
 use Typedin\LaravelCalendly\Entities\CalendlyOrganizationMembership;
-use Typedin\LaravelCalendly\Http\OrganizationMembershipRequest;
+use Typedin\LaravelCalendly\Http\Requests\OrganizationMembershipRequest;
 
 class CalendlyOrganizationMembershipsController extends Controller
 {

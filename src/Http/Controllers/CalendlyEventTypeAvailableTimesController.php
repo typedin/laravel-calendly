@@ -6,7 +6,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Routing\Controller;
 use Typedin\LaravelCalendly\Contracts\CalendlyApiInterface;
 use Typedin\LaravelCalendly\Entities\CalendlyEventTypeAvailableTime;
-use Typedin\LaravelCalendly\Http\EventTypeAvailableTimeRequest;
+use Typedin\LaravelCalendly\Http\Requests\EventTypeAvailableTimeRequest;
 
 class CalendlyEventTypeAvailableTimesController extends Controller
 {

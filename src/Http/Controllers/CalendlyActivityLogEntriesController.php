@@ -6,7 +6,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Routing\Controller;
 use Typedin\LaravelCalendly\Contracts\CalendlyApiInterface;
 use Typedin\LaravelCalendly\Entities\CalendlyActivityLogEntry;
-use Typedin\LaravelCalendly\Http\ActivityLogEntryRequest;
+use Typedin\LaravelCalendly\Http\Requests\ActivityLogEntryRequest;
 
 class CalendlyActivityLogEntriesController extends Controller
 {

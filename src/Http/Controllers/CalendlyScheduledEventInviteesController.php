@@ -6,7 +6,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Routing\Controller;
 use Typedin\LaravelCalendly\Contracts\CalendlyApiInterface;
 use Typedin\LaravelCalendly\Entities\CalendlyScheduledEventInvitee;
-use Typedin\LaravelCalendly\Http\ScheduledEventInviteeRequest;
+use Typedin\LaravelCalendly\Http\Requests\ScheduledEventInviteeRequest;
 
 class CalendlyScheduledEventInviteesController extends Controller
 {

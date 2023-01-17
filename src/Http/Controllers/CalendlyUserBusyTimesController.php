@@ -6,7 +6,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Routing\Controller;
 use Typedin\LaravelCalendly\Contracts\CalendlyApiInterface;
 use Typedin\LaravelCalendly\Entities\CalendlyUserBusyTime;
-use Typedin\LaravelCalendly\Http\UserBusyTimeRequest;
+use Typedin\LaravelCalendly\Http\Requests\UserBusyTimeRequest;
 
 class CalendlyUserBusyTimesController extends Controller
 {
