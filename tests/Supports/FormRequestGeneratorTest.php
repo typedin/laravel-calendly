@@ -83,21 +83,20 @@ class FormRequestGeneratorTest extends TestCase
     public function EventProvider(): array
     {
         return [
-            ['uri', 'required,url'],
-            ['name', 'nullable,string'],
-            ['status', 'required,in:active,canceled'],
-            ['start_time', 'required,date'],
-            ['end_time', 'required,date'],
+            /* ['calendar_event', 'required'], */
             ['created_at', 'required,date'],
-            ['updated_at', 'required,date'],
+            ['end_time', 'required,date'],
+            /* ['event_guests', 'required,date'], */
+            ['event_memberships', 'required,array'],
             ['event_type', 'required,url'],
-            ["event_memberships", "required,array"],
-            /* ["event_memberships.*.user", "required,array"] */
-            // TODO
-            // location 
-            // event_guests
-            // cancellation 
-            // calendar_event
+            /* [ "invitees_counter", 'required'], */
+            /* ['location', 'required'], */
+            ['name', 'nullable,string'],
+            ['start_time', 'required,date'],
+            ['status', 'required,in:active,canceled'],
+            ['updated_at', 'required,date'],
+            ['uri', 'required,url'],
+            ['event_memberships.*.user', 'required,url'],
         ];
     }
 }

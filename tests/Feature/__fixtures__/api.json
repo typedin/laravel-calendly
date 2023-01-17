@@ -4967,19 +4967,19 @@
           }
         },
         "required": [
-          "uri",
-          "name",
-          "status",
-          "start_time",
-          "end_time",
-          "event_type",
-          "location",
-          "invitees_counter",
+          "calendar_event",
           "created_at",
-          "updated_at",
-          "event_memberships",
+          "end_time",
           "event_guests",
-          "calendar_event"
+          "event_memberships",
+          "event_type",
+          "invitees_counter",
+          "location",
+          "name",
+          "start_time",
+          "status",
+          "updated_at",
+          "uri"
         ]
       },
       "CalendarEvent": {
