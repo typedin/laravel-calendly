@@ -6,21 +6,29 @@ class CalendlyWebhookSubscription
 {
     /**
      * Canonical reference (unique identifier) for the webhook
+     *
+     * @var string
      */
     public string $uri;
 
     /**
      * The callback URL to use when the event is triggered
+     *
+     * @var string
      */
     public string $callback_url;
 
     /**
      * The moment when the webhook subscription was created (e.g. "2020-01-02T03:04:05.678123Z")
+     *
+     * @var string
      */
     public string $created_at;
 
     /**
      * The moment when the webhook subscription was last updated (e.g. "2020-01-02T03:04:05.678123Z")
+     *
+     * @var string
      */
     public string $updated_at;
 
@@ -40,6 +48,8 @@ class CalendlyWebhookSubscription
 
     /**
      * A list of events to which the webhook is subscribed
+     *
+     * @var array
      */
     public array $events;
 
@@ -52,6 +62,8 @@ class CalendlyWebhookSubscription
 
     /**
      * The URI of the organization that's associated with the webhook subscription
+     *
+     * @var string
      */
     public string $organization;
 

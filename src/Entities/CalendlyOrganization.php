@@ -6,6 +6,8 @@ class CalendlyOrganization
 {
     /**
      * Canonical resource reference
+     *
+     * @var string
      */
     public string $uri;
 
@@ -25,11 +27,15 @@ class CalendlyOrganization
 
     /**
      * Timestamp of when the organization was created.
+     *
+     * @var string
      */
     public string $created_at;
 
     /**
      * Timestamp of when the organization was created or updated.
+     *
+     * @var string
      */
     public string $updated_at;
 

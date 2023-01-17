@@ -8,6 +8,8 @@ class CalendlyPagination
 {
     /**
      * The number of rows to return
+     *
+     * @var number
      */
     public number $count;
 

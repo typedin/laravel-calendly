@@ -6,16 +6,22 @@ class CalendlyOrganizationInvitation
 {
     /**
      * Canonical reference (unique identifier) for the organization invitation
+     *
+     * @var string
      */
     public string $uri;
 
     /**
      * Canonical reference (unique identifier) for the organization
+     *
+     * @var string
      */
     public string $organization;
 
     /**
      * The email address of the person who was invited to join the organization
+     *
+     * @var string
      */
     public string $email;
 
@@ -28,11 +34,15 @@ class CalendlyOrganizationInvitation
 
     /**
      * The moment the invitation was created (e.g. “2020-01-02T03:04:05.678123Z")
+     *
+     * @var string
      */
     public string $created_at;
 
     /**
      * The moment the invitation was last updated (e.g. "2020-01-02T03:04:05.678123Z")
+     *
+     * @var string
      */
     public string $updated_at;
 

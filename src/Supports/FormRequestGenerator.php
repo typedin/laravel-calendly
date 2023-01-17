@@ -17,7 +17,7 @@ class FormRequestGenerator
         $this->fieldValidationPairs()->each(function ($value, $key) {
             $this->validator->getMethod('rules')->addBody(sprintf("'%s' => '%s',", $key, implode(',', $value)));
         });
-        $this->validator->getMethod('rules')->addBody('];');
+        $this->validator->getMethod('rules')->addBody('];')->setReturnType(type: 'array');
         $this->validator->validate();
     }
 
@@ -28,12 +28,12 @@ class FormRequestGenerator
 
         $nested = collect($this->schema['properties'])
                         ->filter(fn ($value) => isset($value['items']['properties']))
-                        ->flatMap(function ($value, $key) {
-                            $requirements = $value['items']['required'] ?? [];
-                            $nested_value = $key.'.*.';
+                       ->flatMap(function ($value, $key) {
+                           $requirements = $value['items']['required'] ?? [];
+                           $nested_value = $key.'.*.';
 
-                            return collect($value['items']['properties'])->flatMap(fn ($value, $key) => [$nested_value.$key => $this->buildValidation($value, $key, $requirements)])->all();
-                        });
+                           return collect($value['items']['properties'])->flatMap(fn ($value, $key) => [$nested_value.$key => $this->buildValidation($value, $key, $requirements)])->all();
+                       });
 
         return $not_nested->merge($nested);
     }

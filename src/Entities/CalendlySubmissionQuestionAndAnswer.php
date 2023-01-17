@@ -13,6 +13,8 @@ class CalendlySubmissionQuestionAndAnswer
 
     /**
      * Question name (in human-readable format).
+     *
+     * @var string
      */
     public string $question;
 

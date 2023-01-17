@@ -8,6 +8,8 @@ class CalendlyEventType
 {
     /**
      * Canonical reference (unique identifier) for the event type
+     *
+     * @var string
      */
     public string $uri;
 
@@ -20,6 +22,8 @@ class CalendlyEventType
 
     /**
      * Indicates if the event is active or not.
+     *
+     * @var bool
      */
     public bool $active;
 
@@ -32,11 +36,15 @@ class CalendlyEventType
 
     /**
      * The URL of the user’s scheduling site where invitees book this event type
+     *
+     * @var string
      */
     public string $scheduling_url;
 
     /**
      * The length of sessions booked with this event type
+     *
+     * @var number
      */
     public number $duration;
 
@@ -63,16 +71,22 @@ class CalendlyEventType
 
     /**
      * The hexadecimal color value of the event type's scheduling page
+     *
+     * @var string
      */
     public string $color;
 
     /**
      * The moment the event type was created (e.g. "2020-01-02T03:04:05.678123Z")
+     *
+     * @var string
      */
     public string $created_at;
 
     /**
      * The moment the event type was last updated (e.g. "2020-01-02T03:04:05.678123Z")
+     *
+     * @var string
      */
     public string $updated_at;
 
@@ -101,6 +115,8 @@ class CalendlyEventType
 
     /**
      * Indicates if the event type is hidden on the owner's main scheduling page
+     *
+     * @var bool
      */
     public bool $secret;
 
@@ -111,6 +127,7 @@ class CalendlyEventType
      */
     public string $booking_method;
 
+    /** @var array */
     public array $custom_questions;
 
     /**
@@ -129,6 +146,8 @@ class CalendlyEventType
 
     /**
      * Indicates if this event type is managed by an organization admin
+     *
+     * @var bool
      */
     public bool $admin_managed;
 

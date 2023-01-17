@@ -40,7 +40,7 @@ class EndpointMapperTest extends TestCase
     /**
      * @test
      */
-    public function it_creates_entity_names_(): void
+    public function it_creates_entity_names(): void
     {
         $this->assertCount(45, (new EndpointMapper($this->yaml()))->entityNames());
     }
@@ -48,7 +48,7 @@ class EndpointMapperTest extends TestCase
     /**
      * @test
      */
-    public function it_creates_controller_names_(): void
+    public function it_creates_controller_names(): void
     {
         $things = [
             'ScheduledEvents',
@@ -60,6 +60,14 @@ class EndpointMapperTest extends TestCase
         $this->assertContains($things[0], (new EndpointMapper($this->yaml()))->controllerNames());
         $this->assertContains($things[1], (new EndpointMapper($this->yaml()))->controllerNames());
         $this->assertContains($things[2], (new EndpointMapper($this->yaml()))->controllerNames());
+    }
+
+    /**
+     * @test
+     */
+    public function it_creates_form_request_names(): void
+    {
+        $this->assertCount(45, (new EndpointMapper($this->yaml()))->formRequestNames());
     }
 
     /**

@@ -13,6 +13,8 @@ class CalendlyInviteeSpecifiedLocation
 
     /**
      * The event location description provided by the invitee
+     *
+     * @var string
      */
     public string $location;
 

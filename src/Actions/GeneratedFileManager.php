@@ -11,6 +11,7 @@ use Throwable;
 use Typedin\LaravelCalendly\Supports\ControllerGenerator;
 use Typedin\LaravelCalendly\Supports\EndpointMapper;
 use Typedin\LaravelCalendly\Supports\EntityGenerator;
+use Typedin\LaravelCalendly\Supports\FormRequestGenerator;
 
 class GeneratedFileManager
 {
@@ -24,9 +25,15 @@ class GeneratedFileManager
      */
     public readonly Collection $controllers;
 
+    /**
+     * @var Collection<array-key,<missing>>
+     */
+    private readonly Collection $formRequests;
+
     public function __construct(private readonly EndpointMapper $mapper, private readonly string $path)
     {
         $this->entities = new Collection();
+        $this->formRequests = new Collection();
         $this->controllers = new Collection();
     }
 
@@ -69,9 +76,11 @@ class GeneratedFileManager
             $method->setReturnType(self::buildSimplifiedReturnType($method->getReturnType()));
         });
 
-        collect($class->getProperties())->each(function ($property) {
-            $property->setType(self::buildSimplifiedReturnType($property->getType()));
-        });
+        if (collect($class->getProperties())->count()) {
+            collect($class->getProperties())->each(function ($property) {
+                $property->setType(self::buildSimplifiedReturnType($property->getType()));
+            });
+        }
 
         return $class;
     }
@@ -83,6 +92,22 @@ class GeneratedFileManager
 
             $namespace = $this->createNamespace($entity, "Typedin\LaravelCalendly\Entities");
             $this->entities->push(['entity' => self::replaceQualifiersWithImport($entity), 'namespace' => $namespace]);
+        });
+
+        return $this;
+    }
+
+    public function createFormRequests(): GeneratedFileManager
+    {
+        $this->mapper->formRequestNames()->each(function ($key) {
+            $schema = $this->mapper->schemas()->get($key);
+            if (! isset($schema['properties'])) {
+                $schema['properties'] = [];
+            }
+            $request = ( new FormRequestGenerator($key, $schema) )->validator;
+
+            $namespace = $this->createNamespace($request, "Typedin\LaravelCalendly\Http\Requests");
+            $this->formRequests->push(['form_request' => self::replaceQualifiersWithImport($request), 'namespace' => $namespace]);
         });
 
         return $this;
@@ -107,6 +132,9 @@ class GeneratedFileManager
         });
         $this->controllers->each(function ($entry) {
             self::write($this->path.'/Http/Controllers/', $entry['controller'], $entry['namespace']);
+        });
+        $this->formRequests->each(function ($entry) {
+            self::write($this->path.'/Http/Requests/', $entry['form_request'], $entry['namespace']);
         });
     }
 

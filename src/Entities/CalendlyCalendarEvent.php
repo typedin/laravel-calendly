@@ -13,6 +13,8 @@ class CalendlyCalendarEvent
 
     /**
      * the id provided from the calendar provider for this calendar event.
+     *
+     * @var string
      */
     public string $external_id;
 

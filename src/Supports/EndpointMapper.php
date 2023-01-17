@@ -45,6 +45,14 @@ class EndpointMapper
     /**
      * @return Collection<TKey,TValue>
      */
+    public function formRequestNames(): Collection
+    {
+        return collect($this->schemas()->keys());
+    }
+
+    /**
+     * @return Collection<TKey,TValue>
+     */
     public function controllerNames(): Collection
     {
         return $this->paths()->keys()

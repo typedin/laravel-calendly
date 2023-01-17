@@ -6,16 +6,22 @@ class CalendlyRoutingForm
 {
     /**
      * Canonical reference (unique identifier) for the routing form.
+     *
+     * @var string
      */
     public string $uri;
 
     /**
      * The URI of the organization that's associated with the routing form.
+     *
+     * @var string
      */
     public string $organization;
 
     /**
      * The routing form name (in human-readable format).
+     *
+     * @var string
      */
     public string $name;
 
@@ -28,16 +34,22 @@ class CalendlyRoutingForm
 
     /**
      * An ordered collection of Routing Form non-deleted questions.
+     *
+     * @var array
      */
     public array $questions;
 
     /**
      * The moment the routing form was created.
+     *
+     * @var string
      */
     public string $created_at;
 
     /**
      * The moment when the routing form was last updated.
+     *
+     * @var string
      */
     public string $updated_at;
 

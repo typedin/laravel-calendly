@@ -13,6 +13,8 @@ class CalendlySubmissionEventTypeResult
 
     /**
      * A reference to the event type resource.
+     *
+     * @var string
      */
     public string $value;
 

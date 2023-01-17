@@ -13,6 +13,8 @@ class CalendlyInboundCall
 
     /**
      * The phone number the invitee will use to call the event host (publisher)
+     *
+     * @var string
      */
     public string $location;
 

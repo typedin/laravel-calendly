@@ -13,6 +13,8 @@ class CalendlySubmissionExternalUrlResult
 
     /**
      * The external URL the respondent were redirected to.
+     *
+     * @var string
      */
     public string $value;
 

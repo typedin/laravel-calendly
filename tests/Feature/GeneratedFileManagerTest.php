@@ -24,11 +24,12 @@ class GeneratedFileManagerTest extends TestCase
         $mapper = (new EndpointMapper($yaml));
 
         (new GeneratedFileManager($mapper, $this->destination))->createEntities()->writeAllFiles();
+        (new GeneratedFileManager($mapper, $this->destination))->createFormRequests()->writeAllFiles();
         (new GeneratedFileManager($mapper, $this->destination))->createControllers()->writeAllFiles();
 
         $this->assertCount(17, glob($this->destination.'Http/Controllers/*.php'));
+        $this->assertCount(45, glob($this->destination.'Http/Requests/*.php'));
         $this->assertCount(45, glob($this->destination.'Entities/*.php'));
-        /* $this->cleanDestinationFolder(); */
     }
 
     /** @test */

@@ -13,11 +13,15 @@ class CalendlyWebhookPayload
 
     /**
      * The moment when the event was created (e.g. "2020-01-02T03:04:05.678123Z")
+     *
+     * @var string
      */
     public string $created_at;
 
     /**
      * The user who created the webhook
+     *
+     * @var string
      */
     public string $created_by;
 
