@@ -6,8 +6,6 @@ class CalendlyCancellation
 {
     /**
      * Name of the person whom canceled
-     *
-     * @var string
      */
     public string $canceled_by;
 

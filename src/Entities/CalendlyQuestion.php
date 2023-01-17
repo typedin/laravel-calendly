@@ -6,15 +6,11 @@ class CalendlyQuestion
 {
     /**
      * Unique identifier for the routing form question.
-     *
-     * @var string
      */
     public string $uuid;
 
     /**
      * Question name (in human-readable format).
-     *
-     * @var string
      */
     public string $name;
 
@@ -27,8 +23,6 @@ class CalendlyQuestion
 
     /**
      * true if an answer to the question is required for respondents to submit the routing form; false if not required.
-     *
-     * @var bool
      */
     public bool $required;
 

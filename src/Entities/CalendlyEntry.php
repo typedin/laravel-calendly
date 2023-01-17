@@ -4,29 +4,21 @@ namespace Typedin\LaravelCalendly\Entities;
 
 class CalendlyEntry
 {
-    /** @var string */
     public string $action;
 
-    /** @var object */
     public object $details;
 
-    /** @var string */
     public string $fully_qualified_name;
 
-    /** @var string */
     public string $uri;
 
-    /** @var string */
     public string $namespace;
 
     /**
      * The date and time of the entry (format: "2020-01-02T03:04:05.678Z").
-     *
-     * @var string
      */
     public string $occurred_at;
 
-    /** @var string */
     public string $organization;
 
     public function __construct(

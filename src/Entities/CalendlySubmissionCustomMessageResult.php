@@ -13,8 +13,6 @@ class CalendlySubmissionCustomMessageResult
 
     /**
      * Contains an object with custom message headline and body.
-     *
-     * @var object
      */
     public object $value;
 

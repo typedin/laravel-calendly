@@ -67,7 +67,6 @@ class FormRequestGenerator
         $local = [
             'date-time' => 'date',
             'number' => 'numeric',
-            'number' => 'numeric',
             'uri' => 'url',
         ];
 
