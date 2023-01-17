@@ -7,8 +7,8 @@ class SubmissionExternalUrlResultRequest
     public function rules(): array
     {
         return [
-        'type' => 'required,in:external_url',
-        'value' => 'required,url',
+            'type' => 'required,in:external_url',
+            'value' => 'required,url',
         ];
     }
 }

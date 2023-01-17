@@ -2,6 +2,7 @@
 
 namespace Typedin\LaravelCalendly\Http\Controllers;
 
+use Typedin\LaravelCalendly\Entities\CalendlyUserBusyTime;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Routing\Controller;
 use Typedin\LaravelCalendly\Contracts\CalendlyApiInterface;
@@ -9,7 +10,7 @@ use Typedin\LaravelCalendly\Http\UserBusyTimeRequest;
 
 class CalendlyUserBusyTimesController extends Controller
 {
-    private CalendlyApiInterface $api;
+    private readonly CalendlyApiInterface $api;
 
     public function __construct(CalendlyApiInterface $api)
     {
@@ -18,12 +19,13 @@ class CalendlyUserBusyTimesController extends Controller
 
     public function index(UserBusyTimeRequest $request): JsonResponse
     {
-        $response = $this->api->get("/user_busy_times/", $request);
+        $response = $this->api->get('/user_busy_times/', $request);
 
-        $all = collect($response["collection"])
-        ->mapInto(\Typedin\LaravelCalendly\Entities\CalendlyUserBusyTime::class)->all();
+        $all = collect($response['collection'])
+        ->mapInto(CalendlyUserBusyTime::class)->all();
+
         return response()->json([
-        "user_busy_times" => $all,
+            'user_busy_times' => $all,
         ]);
     }
 }
