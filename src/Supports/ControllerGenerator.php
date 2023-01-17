@@ -78,7 +78,7 @@ class ControllerGenerator
                     ->addBody(sprintf('"%s" => $all,', Str::snake($this->name)))
                     ->addBody(']);')
                     ->addParameter('request')
-                    ->setType(sprintf('\Typedin\LaravelCalendly\Http\Index%sRequest', Str::singular($this->name)));
+                    ->setType(sprintf('\Typedin\LaravelCalendly\Http\%sRequest', Str::singular($this->name)));
         } catch (Throwable) {
             //throw $th;
         }
@@ -96,7 +96,7 @@ class ControllerGenerator
                     ->addBody(sprintf('"%s" => new \Typedin\LaravelCalendly\Entities\Calendly%s($response),', Str::snake(Str::singular($this->name)), Str::singular($this->name)))
                     ->addBody(']);')
                     ->addParameter('request')
-                    ->setType(sprintf('\Typedin\LaravelCalendly\Http\Get%sRequest', Str::singular($this->name)));
+                    ->setType(sprintf('\Typedin\LaravelCalendly\Http\%sRequest', Str::singular($this->name)));
         } catch (Throwable) {
             //throw $th;
         }
@@ -112,7 +112,7 @@ class ControllerGenerator
                 ->addBody(sprintf('"%s" => new \Typedin\LaravelCalendly\Entities\Calendly%s($response),', Str::snake(Str::singular($this->name)), Str::singular($this->name)))
                 ->addBody(']);')
                 ->addParameter('request')
-                ->setType(sprintf('\Typedin\LaravelCalendly\Http\Post%sRequest', Str::singular($this->name)));
+                ->setType(sprintf('\Typedin\LaravelCalendly\Http\%sRequest', Str::singular($this->name)));
     }
 
     private function addDestroyMethod($key): void
@@ -123,7 +123,7 @@ class ControllerGenerator
                 ->addBody(sprintf('$this->api->delete("/%s/");', $this->buildUri($key)))
                 ->addBody('return response()->noContent();')
                 ->addParameter('request')
-                ->setType(sprintf('\Typedin\LaravelCalendly\Http\Delete%sRequest', Str::singular($this->name)));
+                ->setType(sprintf('\Typedin\LaravelCalendly\Http\%sRequest', Str::singular($this->name)));
     }
 
     private function getResponseType(array $value): array

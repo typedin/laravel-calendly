@@ -7,8 +7,8 @@ class SubmissionEventTypeResultRequest
     public function rules(): array
     {
         return [
-            'type' => 'required,in:event_type',
-            'value' => 'required,url',
+        'type' => 'required,in:event_type',
+        'value' => 'required,url',
         ];
     }
 }

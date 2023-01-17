@@ -7,8 +7,8 @@ class CustomLocationRequest
     public function rules(): array
     {
         return [
-            'type' => 'required,in:custom',
-            'location' => 'nullable,string',
+        'type' => 'required,in:custom',
+        'location' => 'nullable,string',
         ];
     }
 }

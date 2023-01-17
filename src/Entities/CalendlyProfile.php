@@ -6,22 +6,19 @@ class CalendlyProfile
 {
     /**
      * Indicates if the profile belongs to a "user" (individual) or "team"
-     *
-     * @var string<User|Team>
+     * @var string<User|Team> $type
      */
     public string $type;
 
     /**
      * Human-readable name for the profile of the user that's associated with the event type
-     *
-     * @var string
+     * @var string $name
      */
     public string $name;
 
     /**
      * The unique reference to the user associated with the profile
-     *
-     * @var string
+     * @var string $owner
      */
     public string $owner;
 

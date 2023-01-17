@@ -7,9 +7,9 @@ class InviteeNoShowRequest
     public function rules(): array
     {
         return [
-            'uri' => 'required,url',
-            'invitee' => 'required,url',
-            'created_at' => 'required,date',
+        'uri' => 'required,url',
+        'invitee' => 'required,url',
+        'created_at' => 'required,date',
         ];
     }
 }

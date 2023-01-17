@@ -7,49 +7,43 @@ class CalendlyRoutingForm
     /**
      * Canonical reference (unique identifier) for the routing form.
      *
-     * @var string
+     * @var string $uri
      */
     public string $uri;
 
     /**
      * The URI of the organization that's associated with the routing form.
-     *
-     * @var string
+     * @var string $organization
      */
     public string $organization;
 
     /**
      * The routing form name (in human-readable format).
-     *
-     * @var string
+     * @var string $name
      */
     public string $name;
 
     /**
      * Indicates if the form is in "draft" or "published" status.
-     *
-     * @var string<draft|published>
+     * @var string<draft|published> $status
      */
     public string $status;
 
     /**
      * An ordered collection of Routing Form non-deleted questions.
-     *
-     * @var array
+     * @var array $questions
      */
     public array $questions;
 
     /**
      * The moment the routing form was created.
-     *
-     * @var string
+     * @var string $created_at
      */
     public string $created_at;
 
     /**
      * The moment when the routing form was last updated.
-     *
-     * @var string
+     * @var string $updated_at
      */
     public string $updated_at;
 

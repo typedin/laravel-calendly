@@ -76,7 +76,7 @@ class GeneratedFileManager
             $method->setReturnType(self::buildSimplifiedReturnType($method->getReturnType()));
         });
 
-        if (collect($class->getProperties())->count()) {
+        if (collect($class->getProperties())->count() !== 0) {
             collect($class->getProperties())->each(function ($property) {
                 $property->setType(self::buildSimplifiedReturnType($property->getType()));
             });

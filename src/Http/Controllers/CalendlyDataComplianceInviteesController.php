@@ -5,7 +5,7 @@ namespace Typedin\LaravelCalendly\Http\Controllers;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Routing\Controller;
 use Typedin\LaravelCalendly\Contracts\CalendlyApiInterface;
-use Typedin\LaravelCalendly\Http\PostDataComplianceInviteeRequest;
+use Typedin\LaravelCalendly\Http\DataComplianceInviteeRequest;
 
 class CalendlyDataComplianceInviteesController extends Controller
 {
@@ -16,12 +16,11 @@ class CalendlyDataComplianceInviteesController extends Controller
         $this->api = $api;
     }
 
-    public function create(PostDataComplianceInviteeRequest $request): JsonResponse
+    public function create(DataComplianceInviteeRequest $request): JsonResponse
     {
-        $response = $this->api->post('/data_compliance/deletion/invitees/', $request);
-
+        $response = $this->api->post("/data_compliance/deletion/invitees/", $request);
         return response()->json([
-            'data_compliance_invitee' => new \Typedin\LaravelCalendly\Entities\CalendlyDataComplianceInvitee($response),
+        "data_compliance_invitee" => new \Typedin\LaravelCalendly\Entities\CalendlyDataComplianceInvitee($response),
         ]);
     }
 }

@@ -7,9 +7,9 @@ class ProfileRequest
     public function rules(): array
     {
         return [
-            'type' => 'required,in:User,Team',
-            'name' => 'required,string',
-            'owner' => 'required,url',
+        'type' => 'required,in:User,Team',
+        'name' => 'required,string',
+        'owner' => 'required,url',
         ];
     }
 }

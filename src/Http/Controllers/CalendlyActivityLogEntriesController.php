@@ -5,7 +5,7 @@ namespace Typedin\LaravelCalendly\Http\Controllers;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Routing\Controller;
 use Typedin\LaravelCalendly\Contracts\CalendlyApiInterface;
-use Typedin\LaravelCalendly\Http\IndexActivityLogEntryRequest;
+use Typedin\LaravelCalendly\Http\ActivityLogEntryRequest;
 
 class CalendlyActivityLogEntriesController extends Controller
 {
@@ -16,15 +16,14 @@ class CalendlyActivityLogEntriesController extends Controller
         $this->api = $api;
     }
 
-    public function index(IndexActivityLogEntryRequest $request): JsonResponse
+    public function index(ActivityLogEntryRequest $request): JsonResponse
     {
-        $response = $this->api->get('/activity_log_entries/', $request);
+        $response = $this->api->get("/activity_log_entries/", $request);
 
-        $all = collect($response['collection'])
+        $all = collect($response["collection"])
         ->mapInto(\Typedin\LaravelCalendly\Entities\CalendlyActivityLogEntry::class)->all();
-
         return response()->json([
-            'activity_log_entries' => $all,
+        "activity_log_entries" => $all,
         ]);
     }
 }
