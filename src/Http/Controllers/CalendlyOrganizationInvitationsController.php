@@ -2,10 +2,10 @@
 
 namespace Typedin\LaravelCalendly\Http\Controllers;
 
-use Typedin\LaravelCalendly\Entities\CalendlyOrganizationInvitation;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Routing\Controller;
 use Typedin\LaravelCalendly\Contracts\CalendlyApiInterface;
+use Typedin\LaravelCalendly\Entities\CalendlyOrganizationInvitation;
 use Typedin\LaravelCalendly\Http\OrganizationInvitationRequest;
 
 class CalendlyOrganizationInvitationsController extends Controller

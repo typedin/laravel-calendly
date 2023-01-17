@@ -2,10 +2,10 @@
 
 namespace Typedin\LaravelCalendly\Http\Controllers;
 
-use Typedin\LaravelCalendly\Entities\CalendlyRoutingFormSubmission;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Routing\Controller;
 use Typedin\LaravelCalendly\Contracts\CalendlyApiInterface;
+use Typedin\LaravelCalendly\Entities\CalendlyRoutingFormSubmission;
 use Typedin\LaravelCalendly\Http\RoutingFormSubmissionRequest;
 
 class CalendlyRoutingFormSubmissionsController extends Controller
