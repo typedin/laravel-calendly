@@ -57,12 +57,18 @@ class EndpointMapper
     {
         return $this->paths()
                    ->keys()
-                   ->map(fn ($key) => collect($this->paths()[$key])->only(['get', 'post', 'delete'])->map(fn ($schema, $verb) => [
-                       'endpoint' => $key,
-                       'name' => self::fullname($key),
-                       'verb' => $verb,
-                       'schema' => $schema,
-                   ])
+                   ->map(fn ($key) => collect($this->paths()[$key])->only(['get', 'post', 'delete'])->map(function ($schema, $verb) use ($key) {
+                       if (isset($this->paths()[$key]['parameters'])) {
+                           $schema['parameters'] = $this->paths()[$key]['parameters'];
+                       }
+
+                       return [
+                           'endpoint' => $key,
+                           'name' => self::fullname($key),
+                           'verb' => $verb,
+                           'schema' => $schema,
+                       ];
+                   })
                    )->flatten(1);
     }
 

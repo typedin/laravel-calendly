@@ -4,14 +4,15 @@ namespace Typedin\LaravelCalendly\Supports;
 
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
 use Nette\PhpGenerator\ClassType;
 
 class FormRequestGeneratorFromParameters
 {
     const HTTP_VERB = [
-        'get' => 'Index',
-        'post' => 'Post',
-        'delete' => 'Destroy',
+        'get' => ['singular' => 'Show', 'plural' => 'Index'],
+        'post' => ['singular' => 'Post', 'plural' => 'Post'],
+        'delete' => ['singular' => 'Destroy', 'plural' => 'Destroy'],
     ];
 
     public ClassType $validator;
@@ -23,7 +24,7 @@ class FormRequestGeneratorFromParameters
      */
     public function __construct(private readonly string $name, private readonly string $verb, private readonly array $path)
     {
-        $this->validator = new ClassType(sprintf('%s%sRequest', self::HTTP_VERB[$this->verb], $this->name));
+        $this->validator = new ClassType(sprintf('%s%sRequest', $this->verb(), $this->isSingular() ? Str::singular($this->name) : Str::plural($this->name)));
 
         $this->validator->addMethod('rules')->addBody('return [');
 
@@ -32,6 +33,20 @@ class FormRequestGeneratorFromParameters
         });
         $this->validator->getMethod('rules')->addBody('];')->setReturnType(type: 'array');
         $this->validator->validate();
+    }
+
+    private function verb(): string
+    {
+        return self::HTTP_VERB[$this->verb][$this->isSingular() ? 'singular' : 'plural'];
+    }
+
+    private function isSingular(): bool
+    {
+        if (! isset($this->path['parameters'])) {
+            return false;
+        }
+
+        return  (bool) $this->path['parameters'];
     }
 
     private function fieldValidationPairs(): Collection
