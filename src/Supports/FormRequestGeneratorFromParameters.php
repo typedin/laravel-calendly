@@ -8,15 +8,22 @@ use Nette\PhpGenerator\ClassType;
 
 class FormRequestGeneratorFromParameters
 {
+    const HTTP_VERB = [
+        'get' => 'Index',
+        'post' => 'Post',
+        'delete' => 'Destroy',
+    ];
+
     public ClassType $validator;
 
     /**
      * @param  string  $name
      * @param  array<int,mixed>  $path
+     * @param  array<int,mixed>  $parameters
      */
-    public function __construct(private readonly string $name, private readonly array $path)
+    public function __construct(private readonly string $name, private readonly string $verb, private readonly array $path)
     {
-        $this->validator = new ClassType(sprintf('%s%sRequest', $this->verb(), $this->name));
+        $this->validator = new ClassType(sprintf('%s%sRequest', self::HTTP_VERB[$this->verb], $this->name));
 
         $this->validator->addMethod('rules')->addBody('return [');
 
@@ -27,16 +34,9 @@ class FormRequestGeneratorFromParameters
         $this->validator->validate();
     }
 
-    private function verb(): string
-    {
-        if (isset($this->path['get'])) {
-            return 'Index';
-        }
-    }
-
     private function fieldValidationPairs(): Collection
     {
-        $parameters = isset($this->path['get']['parameters']) ? $this->path['get']['parameters'] : $this->path['parameters'];
+        $parameters = $this->path['parameters'] ?? $this->path;
 
         return collect($parameters)
                 ->filter(function ($value) {

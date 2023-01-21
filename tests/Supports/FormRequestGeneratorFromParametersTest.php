@@ -23,7 +23,7 @@ class FormRequestGeneratorFromParametersTest extends TestCase
      */
     public function it_generates_form_request_name_and_namespace(): void
     {
-        $generated_class = ( new FormRequestGeneratorFromParameters('ScheduledEvents', $this->path('/scheduled_events')) )->validator;
+        $generated_class = ( new FormRequestGeneratorFromParameters('ScheduledEvents', 'get', $this->path('/scheduled_events')['get']) )->validator;
 
         $this->assertEquals('IndexScheduledEventsRequest', $generated_class->getName());
     }
@@ -35,7 +35,7 @@ class FormRequestGeneratorFromParametersTest extends TestCase
      */
     public function it_generates_rules_for_scheduled_events($property, $expected_rules): void
     {
-        $rules = ( new FormRequestGeneratorFromParameters('ScheduledEvents', $this->path('/scheduled_events')) )->validator->getMethod('rules');
+        $rules = ( new FormRequestGeneratorFromParameters('ScheduledEvents', 'get', $this->path('/scheduled_events')['get']) )->validator->getMethod('rules');
 
         $this->assertStringContainsString(sprintf("'%s' => '%s',", $property, $expected_rules), $rules->getBody());
     }
@@ -60,7 +60,7 @@ class FormRequestGeneratorFromParametersTest extends TestCase
      */
     public function it_generates_rules_for_event_types($property, $expected_rules): void
     {
-        $rules = ( new FormRequestGeneratorFromParameters('EventTypes', $this->path('/event_types')) )->validator->getMethod('rules');
+        $rules = ( new FormRequestGeneratorFromParameters('EventTypes', 'get', $this->path('/event_types')['get']) )->validator->getMethod('rules');
 
         $this->assertStringContainsString(sprintf("'%s' => '%s',", $property, $expected_rules), $rules->getBody());
     }
@@ -82,7 +82,7 @@ class FormRequestGeneratorFromParametersTest extends TestCase
      */
     public function it_generates_rules_for_path_rules($property, $expected_rules): void
     {
-        $rules = ( new FormRequestGeneratorFromParameters('ScheduledEvents', $this->path('/scheduled_events/{event_uuid}/invitees/{invitee_uuid}')) )->validator->getMethod('rules');
+        $rules = ( new FormRequestGeneratorFromParameters('ScheduledEvents', 'get', $this->path('/scheduled_events/{event_uuid}/invitees/{invitee_uuid}')) )->validator->getMethod('rules');
 
         $this->assertStringContainsString(sprintf("'%s' => '%s',", $property, $expected_rules), $rules->getBody());
     }

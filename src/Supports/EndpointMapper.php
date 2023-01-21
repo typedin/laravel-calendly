@@ -53,6 +53,22 @@ class EndpointMapper
     /**
      * @return Collection<TKey,TValue>
      */
+    public function formRequestDTOS(): Collection
+    {
+        return $this->paths()
+                   ->keys()
+                   ->map(fn ($key) => collect($this->paths()[$key])->only(['get', 'post', 'delete'])->map(fn ($schema, $verb) => [
+                       'endpoint' => $key,
+                       'name' => self::fullname($key),
+                       'verb' => $verb,
+                       'schema' => $schema,
+                   ])
+                   )->flatten(1);
+    }
+
+    /**
+     * @return Collection<TKey,TValue>
+     */
     public function controllerNames(): Collection
     {
         return $this->paths()->keys()
@@ -76,10 +92,10 @@ class EndpointMapper
     public static function fullname(string $input): string
     {
         $local = collect(array_values(array_filter(explode('/', $input))))
-                   ->filter(fn ($part) => ! Str::contains($part, ['deletion', 'uuid']))
-                   ->filter(fn ($part) => $part !== 'me')
-                   ->values()
-                   ->map(fn ($part): string => ucfirst(Str::camel($part)));
+               ->filter(fn ($part) => ! Str::contains($part, ['deletion', 'uuid']))
+               ->filter(fn ($part) => $part !== 'me')
+               ->values()
+               ->map(fn ($part): string => ucfirst(Str::camel($part)));
 
         return $local->map(function ($part, $key) use ($local) {
             if ($key < count($local) - 1) {

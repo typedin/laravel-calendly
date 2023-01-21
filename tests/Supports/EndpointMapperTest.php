@@ -65,9 +65,9 @@ class EndpointMapperTest extends TestCase
     /**
      * @test
      */
-    public function it_creates_form_request_names(): void
+    public function it_creates_form_request_dto(): void
     {
-        $this->assertCount(45, (new EndpointMapper($this->yaml()))->formRequestNames());
+        $this->assertCount(34, (new EndpointMapper($this->yaml()))->formRequestDTOS());
     }
 
     /**

@@ -28,7 +28,7 @@ class GeneratedFileManagerTest extends TestCase
         (new GeneratedFileManager($mapper, $this->destination))->createControllers()->writeAllFiles();
 
         $this->assertCount(17, glob($this->destination.'Http/Controllers/*.php'));
-        $this->assertCount(45, glob($this->destination.'Http/Requests/*.php'));
+        $this->assertCount(34, glob($this->destination.'Http/Requests/*.php'));
         $this->assertCount(45, glob($this->destination.'Entities/*.php'));
     }
 
@@ -49,5 +49,15 @@ class GeneratedFileManagerTest extends TestCase
         $controllers = (new GeneratedFileManager($mapper, $this->destination))->createControllers()->controllers;
 
         $this->assertCount(17, $controllers);
+    }
+
+    /** @test */
+    public function it_creates_all_form_requests(): void
+    {
+        $yaml = file_get_contents(__DIR__.'/../../doc/openapi.yaml');
+        $mapper = (new EndpointMapper($yaml));
+        $form_requests = (new GeneratedFileManager($mapper, $this->destination))->createFormRequests()->formRequests;
+
+        $this->assertCount(34, $form_requests);
     }
 }
