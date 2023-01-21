@@ -5,7 +5,6 @@ namespace Typedin\LaravelCalendly\Tests\Supports;
 use Illuminate\Http\JsonResponse;
 use Nette\PhpGenerator\ClassType;
 use PHPUnit\Framework\TestCase;
-use Typedin\LaravelCalendly\Http\Requests\EventTypeRequest;
 use Typedin\LaravelCalendly\Http\Requests\InviteeNoShowRequest;
 use Typedin\LaravelCalendly\Http\Requests\OrganizationInvitationRequest;
 use Typedin\LaravelCalendly\Supports\ControllerGenerator;
@@ -14,6 +13,7 @@ use Typedin\LaravelCalendly\Supports\EndpointMapper;
 class ControllerGeneratorTest extends TestCase
 {
     /**
+     * @param  mixed  $filter
      * @return array<TKey,TValue>
      */
     private function endpoints($filter): array
@@ -50,7 +50,7 @@ class ControllerGeneratorTest extends TestCase
     {
         $method = ( new ControllerGenerator('EventTypes', $this->endpoints('EventTypes')) )->controller->getMethod('index');
 
-        $this->assertEquals('\\'.EventTypeRequest::class, $method->getParameters()['request']->getType());
+        $this->assertEquals('\Typedin\LaravelCalendly\Http\Requests\IndexEventTypesRequest', $method->getParameters()['request']->getType());
         $this->assertStringContainsString('$response = $this->api->get("/event_types/", $request);', $method->getBody());
         $this->assertStringContainsString('$all = collect($response["collection"])', $method->getBody());
         $this->assertStringContainsString('->mapInto(\Typedin\LaravelCalendly\Entities\CalendlyEventType::class)->all();', $method->getBody());

@@ -13,6 +13,9 @@ class ControllerGenerator
 {
     public ClassType $controller;
 
+    /**
+     * @param  array<int,mixed>  $endpoints
+     */
     public function __construct(private readonly string $name, private readonly array $endpoints)
     {
         $this->controller = new ClassType(
@@ -64,6 +67,9 @@ class ControllerGenerator
         return $this;
     }
 
+    /**
+     * @param  mixed  $key
+     */
     private function addIndexMethod($key): void
     {
         try {
@@ -78,12 +84,15 @@ class ControllerGenerator
                     ->addBody(sprintf('"%s" => $all,', Str::snake($this->name)))
                     ->addBody(']);')
                     ->addParameter('request')
-                    ->setType(sprintf('\Typedin\LaravelCalendly\Http\Requests\%sRequest', Str::singular($this->name)));
+                    ->setType(sprintf('\Typedin\LaravelCalendly\Http\Requests\Index%sRequest', Str::plural($this->name)));
         } catch (Throwable) {
             //throw $th;
         }
     }
 
+    /**
+     * @param  mixed  $key
+     */
     private function addShowMethod($key): void
     {
         // show method for /users/me would add twice the same method
@@ -102,6 +111,9 @@ class ControllerGenerator
         }
     }
 
+    /**
+     * @param  mixed  $key
+     */
     private function addCreateMethod($key): void
     {
         $this->controller
@@ -115,6 +127,9 @@ class ControllerGenerator
                 ->setType(sprintf('\Typedin\LaravelCalendly\Http\Requests\%sRequest', Str::singular($this->name)));
     }
 
+    /**
+     * @param  mixed  $key
+     */
     private function addDestroyMethod($key): void
     {
         $this->controller
@@ -126,31 +141,49 @@ class ControllerGenerator
                 ->setType(sprintf('\Typedin\LaravelCalendly\Http\Requests\%sRequest', Str::singular($this->name)));
     }
 
+    /**
+     * @param  array<int,mixed>  $value
+     */
     private function getResponseType(array $value): array
     {
         return $value['get']['responses']['200']['content']['application/json']['schema']['properties'];
     }
 
+    /**
+     * @param  mixed  $value
+     */
     private function hasIndexRestVerb($value): bool
     {
         return  array_key_first($value) == 'get' && array_key_exists('collection', $this->getResponseType($value));
     }
 
+    /**
+     * @param  array<int,mixed>  $value
+     */
     private function hasGetRestVerb(array $value): bool
     {
         return  array_key_exists('get', $value) && array_key_exists('resource', $this->getResponseType($value));
     }
 
+    /**
+     * @param  array<int,mixed>  $value
+     */
     private function hasPostRestVerb(array $value): bool
     {
         return  array_key_exists('post', $value);
     }
 
+    /**
+     * @param  mixed  $value
+     */
     private function hasDeleteRestVerb($value): bool
     {
         return  array_key_exists('delete', $value);
     }
 
+    /**
+     * @param  mixed  $key
+     */
     private function buildUri($key): string
     {
         return collect(explode('/', (string) $key))

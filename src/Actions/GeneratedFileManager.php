@@ -11,7 +11,7 @@ use Throwable;
 use Typedin\LaravelCalendly\Supports\ControllerGenerator;
 use Typedin\LaravelCalendly\Supports\EndpointMapper;
 use Typedin\LaravelCalendly\Supports\EntityGenerator;
-use Typedin\LaravelCalendly\Supports\FormRequestGenerator;
+use Typedin\LaravelCalendly\Supports\FormRequestGeneratorFromSchema;
 
 class GeneratedFileManager
 {
@@ -104,7 +104,7 @@ class GeneratedFileManager
             if (! isset($schema['properties'])) {
                 $schema['properties'] = [];
             }
-            $request = ( new FormRequestGenerator($key, $schema) )->validator;
+            $request = ( new FormRequestGeneratorFromSchema($key, $schema) )->validator;
 
             $namespace = $this->createNamespace($request, "Typedin\LaravelCalendly\Http\Requests");
             $this->formRequests->push(['form_request' => self::replaceQualifiersWithImport($request), 'namespace' => $namespace]);

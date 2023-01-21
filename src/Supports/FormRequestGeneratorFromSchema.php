@@ -5,10 +5,13 @@ namespace Typedin\LaravelCalendly\Supports;
 use Illuminate\Support\Collection;
 use Nette\PhpGenerator\ClassType;
 
-class FormRequestGenerator
+class FormRequestGeneratorFromSchema
 {
     public ClassType $validator;
 
+    /**
+     * @param  array<int,mixed>  $schema
+     */
     public function __construct(private readonly string $name, private readonly array $schema)
     {
         $this->validator = new ClassType(sprintf('%sRequest', $this->name));
@@ -39,6 +42,9 @@ class FormRequestGenerator
     }
 
     /**
+     * @param  mixed  $value
+     * @param  mixed  $key
+     * @param  mixed  $requirements
      * @return string[]
      */
     private function buildValidation($value, $key, $requirements): array

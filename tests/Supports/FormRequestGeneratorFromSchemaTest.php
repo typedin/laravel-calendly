@@ -3,11 +3,12 @@
 namespace Typedin\LaravelCalendly\Tests\Supports;
 
 use PHPUnit\Framework\TestCase;
-use Typedin\LaravelCalendly\Supports\FormRequestGenerator;
+use Typedin\LaravelCalendly\Supports\FormRequestGeneratorFromSchema;
 
-class FormRequestGeneratorTest extends TestCase
+class FormRequestGeneratorFromSchemaTest extends TestCase
 {
     /**
+     * @param  mixed  $filter
      * @return array<TKey,TValue>
      */
     private function schema($filter): array
@@ -20,9 +21,9 @@ class FormRequestGeneratorTest extends TestCase
     /**
      * @test
      */
-    public function it_generates_controller_name_and_namespace(): void
+    public function it_generates_form_request_name_and_namespace(): void
     {
-        $generated_class = ( new FormRequestGenerator('EventType', $this->schema('EventType')) )->validator;
+        $generated_class = ( new FormRequestGeneratorFromSchema('EventType', $this->schema('EventType')) )->validator;
 
         $this->assertEquals('EventTypeRequest', $generated_class->getName());
     }
@@ -31,14 +32,20 @@ class FormRequestGeneratorTest extends TestCase
      * @dataProvider EventTypeProvider
      *
      * @test
+     *
+     * @param  mixed  $property
+     * @param  mixed  $expected_rules
      */
     public function it_generates_rules_for_event_typed($property, $expected_rules): void
     {
-        $rules = ( new FormRequestGenerator('EventType', $this->schema('EventType')) )->validator->getMethod('rules');
+        $rules = ( new FormRequestGeneratorFromSchema('EventType', $this->schema('EventType')) )->validator->getMethod('rules');
 
         $this->assertStringContainsString(sprintf("'%s' => '%s',", $property, $expected_rules), $rules->getBody());
     }
 
+    /**
+     * @return array<int,array<int,string>>
+     */
     public function EventTypeProvider(): array
     {
         return [
@@ -72,14 +79,20 @@ class FormRequestGeneratorTest extends TestCase
      * @dataProvider EventProvider
      *
      * @test
+     *
+     * @param  mixed  $property
+     * @param  mixed  $expected_rules
      */
     public function it_generates_rules_for_event($property, $expected_rules): void
     {
-        $rules = ( new FormRequestGenerator('Event', $this->schema('Event')) )->validator->getMethod('rules');
+        $rules = ( new FormRequestGeneratorFromSchema('Event', $this->schema('Event')) )->validator->getMethod('rules');
 
         $this->assertStringContainsString(sprintf("'%s' => '%s',", $property, $expected_rules), $rules->getBody());
     }
 
+    /**
+     * @return array<int,array<int,string>>
+     */
     public function EventProvider(): array
     {
         return [
