@@ -13,15 +13,11 @@ class CalendlyUserBusyTime
 
     /**
      * The start time of the scheduled event in UTC time
-     *
-     * @var string
      */
     public string $start_time;
 
     /**
      * The end time of the scheduled event in UTC time
-     *
-     * @var string
      */
     public string $end_time;
 

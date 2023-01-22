@@ -13,15 +13,11 @@ class CalendlyProfile
 
     /**
      * Human-readable name for the profile of the user that's associated with the event type
-     *
-     * @var string
      */
     public string $name;
 
     /**
      * The unique reference to the user associated with the profile
-     *
-     * @var string
      */
     public string $owner;
 

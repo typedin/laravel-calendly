@@ -6,15 +6,11 @@ class CalendlyInvitee
 {
     /**
      * Canonical reference (unique identifier) for the invitee
-     *
-     * @var string
      */
     public string $uri;
 
     /**
      * The invitee’s email address
-     *
-     * @var string
      */
     public string $email;
 
@@ -34,8 +30,6 @@ class CalendlyInvitee
 
     /**
      * The invitee’s name (in human-readable format)
-     *
-     * @var string
      */
     public string $name;
 
@@ -48,8 +42,6 @@ class CalendlyInvitee
 
     /**
      * A collection of the invitee's responses to questions on the event booking confirmation form
-     *
-     * @var array
      */
     public array $questions_and_answers;
 
@@ -62,22 +54,16 @@ class CalendlyInvitee
 
     /**
      * A reference to the event
-     *
-     * @var string
      */
     public string $event;
 
     /**
      * The moment when the event was created (e.g. "2020-01-02T03:04:05.678123Z")
-     *
-     * @var string
      */
     public string $created_at;
 
     /**
      * The moment when the event was last updated (e.g. "2020-01-02T03:04:05.678123Z")
-     *
-     * @var string
      */
     public string $updated_at;
 
@@ -92,8 +78,6 @@ class CalendlyInvitee
 
     /**
      * Indicates if this invitee has rescheduled. If `true`, a reference to the new Invitee instance is provided in the `new_invitee` field.
-     *
-     * @var bool
      */
     public bool $rescheduled;
 
@@ -113,15 +97,11 @@ class CalendlyInvitee
 
     /**
      * Link to cancelling the event for the invitee
-     *
-     * @var string
      */
     public string $cancel_url;
 
     /**
      * Link to rescheduling the event for the invitee
-     *
-     * @var string
      */
     public string $reschedule_url;
 

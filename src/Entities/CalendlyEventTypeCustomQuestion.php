@@ -8,8 +8,6 @@ class CalendlyEventTypeCustomQuestion
 {
     /**
      * The custom question that the host created for the event type.
-     *
-     * @var string
      */
     public string $name;
 
@@ -22,36 +20,26 @@ class CalendlyEventTypeCustomQuestion
 
     /**
      * The numerical position of the question on the event booking page after the name and email address fields.
-     *
-     * @var number
      */
     public number $position;
 
     /**
      * true if the question created by the host is turned ON and visible on the event booking page; false if turned OFF and invisible on the event booking page.
-     *
-     * @var bool
      */
     public bool $enabled;
 
     /**
      * true if a response to the question created by the host is required for invitees to book the event type; false if not required.
-     *
-     * @var bool
      */
     public bool $required;
 
     /**
      * The invitee’s option(s) for single_select or multi_select type of responses.
-     *
-     * @var array
      */
     public array $answer_choices;
 
     /**
      * true if the custom question lets invitees record a written response in addition to single-select or multiple-select type of responses; false if it doesn’t.
-     *
-     * @var bool
      */
     public bool $include_other;
 
