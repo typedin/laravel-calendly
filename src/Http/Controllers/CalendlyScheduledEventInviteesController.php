@@ -21,18 +21,20 @@ class CalendlyScheduledEventInviteesController extends Controller
     {
         $response = $this->api->get("/scheduled_events/{$uuid}/invitees/", $request);
 
-        $all = collect($response["collection"])
+        $all = collect($response['collection'])
         ->mapInto(\Typedin\LaravelCalendly\Entities\CalendlyScheduledEventInvitee::class)->all();
+
         return response()->json([
-        "scheduled_event_invitees" => $all,
+            'scheduled_event_invitees' => $all,
         ]);
     }
 
     public function show(ScheduledEventInviteeRequest $request): JsonResponse
     {
         $response = $this->api->get("/scheduled_events/{$event_uuid}/invitees/{$invitee_uuid}/", $request);
+
         return response()->json([
-        "scheduled_event_invitee" => new \Typedin\LaravelCalendly\Entities\CalendlyScheduledEventInvitee($response),
+            'scheduled_event_invitee' => new \Typedin\LaravelCalendly\Entities\CalendlyScheduledEventInvitee($response),
         ]);
     }
 }

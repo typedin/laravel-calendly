@@ -7,7 +7,7 @@ class ShowInviteeNoShowRequest
     public function rules(): array
     {
         return [
-        'uuid' => 'required,string',
+            'uuid' => 'required,string',
         ];
     }
 }
