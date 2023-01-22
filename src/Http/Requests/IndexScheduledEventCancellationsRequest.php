@@ -2,7 +2,7 @@
 
 namespace Typedin\LaravelCalendly\Http\Requests;
 
-class IndexRoutingFormSubmissionsRequest
+class IndexScheduledEventCancellationsRequest
 {
     public function rules(): array
     {

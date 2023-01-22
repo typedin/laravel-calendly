@@ -6,18 +6,21 @@ class CalendlyQuestion
 {
     /**
      * Unique identifier for the routing form question.
+     *
      * @var string
      */
     public string $uuid;
 
     /**
      * Question name (in human-readable format).
+     *
      * @var string
      */
     public string $name;
 
     /**
      * Question type: name, text input, email, phone, textarea input, dropdown list or radio button list.
+     *
      * @var string<name|text|email|phone|textarea|select|radios>
      */
     public string $type;
@@ -31,6 +34,7 @@ class CalendlyQuestion
 
     /**
      * The respondent’s option(s) for "select" or "radios" types of questions.
+     *
      * @var array|null
      */
     public array $answer_choices;

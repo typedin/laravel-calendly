@@ -7,7 +7,6 @@ class ShowOrganizationMembershipRequest
     public function rules(): array
     {
         return [
-            'uuid' => 'required,string',
         ];
     }
 }

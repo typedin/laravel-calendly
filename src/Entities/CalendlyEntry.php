@@ -21,6 +21,7 @@ class CalendlyEntry
 
     /**
      * The date and time of the entry (format: "2020-01-02T03:04:05.678Z").
+     *
      * @var string
      */
     public string $occurred_at;

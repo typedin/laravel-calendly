@@ -7,7 +7,6 @@ class IndexScheduledEventsRequest
     public function rules(): array
     {
         return [
-        'uuid' => 'required,string',
         ];
     }
 }

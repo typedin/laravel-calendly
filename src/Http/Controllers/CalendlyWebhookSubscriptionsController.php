@@ -5,7 +5,9 @@ namespace Typedin\LaravelCalendly\Http\Controllers;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Routing\Controller;
 use Typedin\LaravelCalendly\Contracts\CalendlyApiInterface;
-use Typedin\LaravelCalendly\Http\Requests\WebhookSubscriptionRequest;
+use Typedin\LaravelCalendly\Http\Requests\DestroyWebhookSubscriptionRequest;
+use Typedin\LaravelCalendly\Http\Requests\ShowWebhookSubscriptionRequest;
+use Typedin\LaravelCalendly\Http\Requests\StoreWebhookSubscriptionRequest;
 
 class CalendlyWebhookSubscriptionsController extends Controller
 {
@@ -16,25 +18,25 @@ class CalendlyWebhookSubscriptionsController extends Controller
         $this->api = $api;
     }
 
-    public function create(WebhookSubscriptionRequest $request): JsonResponse
+    public function create(StoreWebhookSubscriptionRequest $request): JsonResponse
     {
-        $response = $this->api->post("/webhook_subscriptions/", $request);
+        $response = $this->api->post('/webhook_subscriptions/', $request);
 
         return response()->json([
-        "webhook_subscription" => new \Typedin\LaravelCalendly\Entities\CalendlyWebhookSubscription($response),
+            'webhook_subscription' => new \Typedin\LaravelCalendly\Entities\CalendlyWebhookSubscription($response),
         ]);
     }
 
-    public function show(WebhookSubscriptionRequest $request): JsonResponse
+    public function show(ShowWebhookSubscriptionRequest $request): JsonResponse
     {
         $response = $this->api->get("/webhook_subscriptions/{$webhook_uuid}/", $request);
 
         return response()->json([
-        "webhook_subscription" => new \Typedin\LaravelCalendly\Entities\CalendlyWebhookSubscription($response),
+            'webhook_subscription' => new \Typedin\LaravelCalendly\Entities\CalendlyWebhookSubscription($response),
         ]);
     }
 
-    public function destroy(WebhookSubscriptionRequest $request): JsonResponse
+    public function destroy(DestroyWebhookSubscriptionRequest $request): JsonResponse
     {
         $this->api->delete("/webhook_subscriptions/{$webhook_uuid}/");
 
