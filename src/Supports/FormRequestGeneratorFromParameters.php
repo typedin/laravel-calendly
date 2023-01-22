@@ -23,7 +23,7 @@ class FormRequestGeneratorFromParameters
      */
     public function __construct(private readonly string $name, private readonly array $path)
     {
-        $this->http_method = collect($this->path)->keys()->reject(fn ($value) => $value == 0)->first();
+        $this->http_method = collect($this->path)->keys()->reject(fn ($value) => $value == 'parameters')->first();
 
         $this->validator = new ClassType(sprintf('%s%sRequest', $this->verb(), $this->wantsIndex() ? Str::plural($this->name) : Str::singular($this->name)));
 
