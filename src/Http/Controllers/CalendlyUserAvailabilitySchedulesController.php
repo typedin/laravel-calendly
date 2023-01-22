@@ -2,6 +2,7 @@
 
 namespace Typedin\LaravelCalendly\Http\Controllers;
 
+use Typedin\LaravelCalendly\Entities\CalendlyUserAvailabilitySchedule;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Routing\Controller;
 use Typedin\LaravelCalendly\Contracts\CalendlyApiInterface;
@@ -10,7 +11,7 @@ use Typedin\LaravelCalendly\Http\Requests\ShowUserAvailabilityScheduleRequest;
 
 class CalendlyUserAvailabilitySchedulesController extends Controller
 {
-    private CalendlyApiInterface $api;
+    private readonly CalendlyApiInterface $api;
 
     public function __construct(CalendlyApiInterface $api)
     {
@@ -22,7 +23,7 @@ class CalendlyUserAvailabilitySchedulesController extends Controller
         $response = $this->api->get('/user_availability_schedules/', $request);
 
         $all = collect($response['collection'])
-        ->mapInto(\Typedin\LaravelCalendly\Entities\CalendlyUserAvailabilitySchedule::class)->all();
+        ->mapInto(CalendlyUserAvailabilitySchedule::class)->all();
 
         return response()->json([
             'user_availability_schedules' => $all,
@@ -31,10 +32,11 @@ class CalendlyUserAvailabilitySchedulesController extends Controller
 
     public function show(ShowUserAvailabilityScheduleRequest $request): JsonResponse
     {
+        $uuid = null;
         $response = $this->api->get("/user_availability_schedules/{$uuid}/", $request);
 
         return response()->json([
-            'user_availability_schedule' => new \Typedin\LaravelCalendly\Entities\CalendlyUserAvailabilitySchedule($response),
+            'user_availability_schedule' => new CalendlyUserAvailabilitySchedule($response),
         ]);
     }
 }

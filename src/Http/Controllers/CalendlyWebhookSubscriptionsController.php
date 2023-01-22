@@ -2,6 +2,7 @@
 
 namespace Typedin\LaravelCalendly\Http\Controllers;
 
+use Typedin\LaravelCalendly\Entities\CalendlyWebhookSubscription;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Routing\Controller;
 use Typedin\LaravelCalendly\Contracts\CalendlyApiInterface;
@@ -11,7 +12,7 @@ use Typedin\LaravelCalendly\Http\Requests\StoreWebhookSubscriptionRequest;
 
 class CalendlyWebhookSubscriptionsController extends Controller
 {
-    private CalendlyApiInterface $api;
+    private readonly CalendlyApiInterface $api;
 
     public function __construct(CalendlyApiInterface $api)
     {
@@ -23,21 +24,23 @@ class CalendlyWebhookSubscriptionsController extends Controller
         $response = $this->api->post('/webhook_subscriptions/', $request);
 
         return response()->json([
-            'webhook_subscription' => new \Typedin\LaravelCalendly\Entities\CalendlyWebhookSubscription($response),
+            'webhook_subscription' => new CalendlyWebhookSubscription($response),
         ]);
     }
 
     public function show(ShowWebhookSubscriptionRequest $request): JsonResponse
     {
+        $webhook_uuid = null;
         $response = $this->api->get("/webhook_subscriptions/{$webhook_uuid}/", $request);
 
         return response()->json([
-            'webhook_subscription' => new \Typedin\LaravelCalendly\Entities\CalendlyWebhookSubscription($response),
+            'webhook_subscription' => new CalendlyWebhookSubscription($response),
         ]);
     }
 
     public function destroy(DestroyWebhookSubscriptionRequest $request): JsonResponse
     {
+        $webhook_uuid = null;
         $this->api->delete("/webhook_subscriptions/{$webhook_uuid}/");
 
         return response()->noContent();

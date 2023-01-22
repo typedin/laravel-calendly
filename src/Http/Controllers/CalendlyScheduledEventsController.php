@@ -2,6 +2,7 @@
 
 namespace Typedin\LaravelCalendly\Http\Controllers;
 
+use Typedin\LaravelCalendly\Entities\CalendlyScheduledEvent;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Routing\Controller;
 use Typedin\LaravelCalendly\Contracts\CalendlyApiInterface;
@@ -10,7 +11,7 @@ use Typedin\LaravelCalendly\Http\Requests\ShowScheduledEventRequest;
 
 class CalendlyScheduledEventsController extends Controller
 {
-    private CalendlyApiInterface $api;
+    private readonly CalendlyApiInterface $api;
 
     public function __construct(CalendlyApiInterface $api)
     {
@@ -22,7 +23,7 @@ class CalendlyScheduledEventsController extends Controller
         $response = $this->api->get('/scheduled_events/', $request);
 
         $all = collect($response['collection'])
-        ->mapInto(\Typedin\LaravelCalendly\Entities\CalendlyScheduledEvent::class)->all();
+        ->mapInto(CalendlyScheduledEvent::class)->all();
 
         return response()->json([
             'scheduled_events' => $all,
@@ -31,10 +32,11 @@ class CalendlyScheduledEventsController extends Controller
 
     public function show(ShowScheduledEventRequest $request): JsonResponse
     {
+        $uuid = null;
         $response = $this->api->get("/scheduled_events/{$uuid}/", $request);
 
         return response()->json([
-            'scheduled_event' => new \Typedin\LaravelCalendly\Entities\CalendlyScheduledEvent($response),
+            'scheduled_event' => new CalendlyScheduledEvent($response),
         ]);
     }
 }
