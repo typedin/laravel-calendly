@@ -1,7 +1,7 @@
 build
 vendor
 tests/TestSupport/temp
-tests/temp
+tests/temp/
 composer.lock
 .env
 .phpunit.result.cache
