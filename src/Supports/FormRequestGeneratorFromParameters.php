@@ -7,14 +7,11 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Nette\PhpGenerator\ClassType;
 use Throwable;
+use Typedin\LaravelCalendly\traits\UseCrudVerbs;
 
 class FormRequestGeneratorFromParameters
 {
-    final public const CRUD_OPERATIONS = [
-        'get' => 'Show',
-        'post' => 'Store',
-        'delete' => 'Destroy',
-    ];
+    use UseCrudVerbs;
 
     public ClassType $validator;
 
@@ -42,10 +39,10 @@ class FormRequestGeneratorFromParameters
     private function verb(): string
     {
         if ($this->wantsIndex()) {
-            return 'Index';
+            return $this->CRUD_OPERATIONS['index'];
         }
 
-        return self::CRUD_OPERATIONS[$this->http_method];
+        return $this->CRUD_OPERATIONS[$this->http_method];
     }
 
     private function wantsIndex(): bool

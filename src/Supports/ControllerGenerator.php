@@ -8,9 +8,12 @@ use Illuminate\Support\Str;
 use Nette\PhpGenerator\ClassType;
 use Throwable;
 use Typedin\LaravelCalendly\Contracts\CalendlyApiInterface;
+use Typedin\LaravelCalendly\traits\UseCrudVerbs;
 
 class ControllerGenerator
 {
+    use UseCrudVerbs;
+
     public ClassType $controller;
 
     /**
@@ -67,6 +70,11 @@ class ControllerGenerator
         return $this;
     }
 
+    private function verb(string $http_method): string
+    {
+        return $this->CRUD_OPERATIONS[$http_method];
+    }
+
     private function addIndexMethod(mixed $key): void
     {
         try {
@@ -81,7 +89,7 @@ class ControllerGenerator
                     ->addBody(sprintf('"%s" => $all,', Str::snake($this->name)))
                     ->addBody(']);')
                     ->addParameter('request')
-                    ->setType(sprintf('\Typedin\LaravelCalendly\Http\Requests\Index%sRequest', Str::plural($this->name)));
+                    ->setType(sprintf('Typedin\LaravelCalendly\Http\Requests\%s%sRequest', $this->verb('index'), Str::plural($this->name)));
         } catch (Throwable) {
             //throw $th;
         }
@@ -99,7 +107,7 @@ class ControllerGenerator
                     ->addBody(sprintf('"%s" => new \Typedin\LaravelCalendly\Entities\Calendly%s($response),', Str::snake(Str::singular($this->name)), Str::singular($this->name)))
                     ->addBody(']);')
                     ->addParameter('request')
-                    ->setType(sprintf('\Typedin\LaravelCalendly\Http\Requests\%sRequest', Str::singular($this->name)));
+                    ->setType(sprintf('Typedin\LaravelCalendly\Http\Requests\%s%sRequest', $this->verb('get'), Str::singular($this->name)));
         } catch (Throwable) {
             //throw $th;
         }
@@ -115,7 +123,7 @@ class ControllerGenerator
                 ->addBody(sprintf('"%s" => new \Typedin\LaravelCalendly\Entities\Calendly%s($response),', Str::snake(Str::singular($this->name)), Str::singular($this->name)))
                 ->addBody(']);')
                 ->addParameter('request')
-                ->setType(sprintf('\Typedin\LaravelCalendly\Http\Requests\%sRequest', Str::singular($this->name)));
+                ->setType(sprintf('\Typedin\LaravelCalendly\Http\Requests\%s%sRequest', $this->verb('post'), Str::singular($this->name)));
     }
 
     private function addDestroyMethod(mixed $key): void
@@ -126,7 +134,7 @@ class ControllerGenerator
                 ->addBody(sprintf('$this->api->delete("/%s/");', $this->buildUri($key)))
                 ->addBody('return response()->noContent();')
                 ->addParameter('request')
-                ->setType(sprintf('\Typedin\LaravelCalendly\Http\Requests\%sRequest', Str::singular($this->name)));
+                ->setType(sprintf('\Typedin\LaravelCalendly\Http\Requests\%s%sRequest', $this->verb('delete'), Str::singular($this->name)));
     }
 
     /**
