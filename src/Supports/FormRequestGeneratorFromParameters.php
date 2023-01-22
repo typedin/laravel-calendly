@@ -67,7 +67,8 @@ class FormRequestGeneratorFromParameters
                 ->flatMap(fn ($property) => $property->flatMap(fn ($value, $key) => [$key => $this->buildValidation(
                     value: $value,
                     field: $key,
-                    requirements: $nested_parameters['application/json']['schema']['required'] ?? [])]));
+                    requirements: $nested_parameters['application/json']['schema']['required'] ?? []
+                )]));
 
         // TODO
         // figure out this mess
