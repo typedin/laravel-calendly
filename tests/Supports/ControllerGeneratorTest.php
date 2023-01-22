@@ -2,6 +2,10 @@
 
 namespace Typedin\LaravelCalendly\Tests\Supports;
 
+use Typedin\LaravelCalendly\Http\Requests\IndexEventTypesRequest;
+use Typedin\LaravelCalendly\Http\Requests\ShowInviteeNoShowRequest;
+use Typedin\LaravelCalendly\Http\Requests\DestroyInviteeNoShowRequest;
+use Typedin\LaravelCalendly\Http\Requests\DestroyOrganizationInvitationRequest;
 use Illuminate\Http\JsonResponse;
 use Nette\PhpGenerator\ClassType;
 use PHPUnit\Framework\TestCase;
@@ -47,7 +51,7 @@ class ControllerGeneratorTest extends TestCase
     {
         $method = ( new ControllerGenerator('EventTypes', $this->endpoints('EventTypes')) )->controller->getMethod('index');
 
-        $this->assertEquals('Typedin\LaravelCalendly\Http\Requests\IndexEventTypesRequest', $method->getParameters()['request']->getType());
+        $this->assertEquals(IndexEventTypesRequest::class, $method->getParameters()['request']->getType());
         $this->assertStringContainsString('$response = $this->api->get("/event_types/", $request);', $method->getBody());
         $this->assertStringContainsString('$all = collect($response["collection"])', $method->getBody());
         $this->assertStringContainsString('->mapInto(\Typedin\LaravelCalendly\Entities\CalendlyEventType::class)->all();', $method->getBody());
@@ -66,7 +70,7 @@ class ControllerGeneratorTest extends TestCase
     {
         $method = ( new ControllerGenerator('InviteeNoShows', $this->endpoints('InviteeNoShows')) )->controller->getMethod('show');
 
-        $this->assertEquals('Typedin\LaravelCalendly\Http\Requests\ShowInviteeNoShowRequest', $method->getParameters()['request']->getType());
+        $this->assertEquals(ShowInviteeNoShowRequest::class, $method->getParameters()['request']->getType());
 
         $this->assertStringContainsString('$response = $this->api->get("/invitee_no_shows/{$uuid}/", $request);', $method->getBody());
         $this->assertStringContainsString('return response()->json([', $method->getBody());
@@ -111,7 +115,7 @@ class ControllerGeneratorTest extends TestCase
     {
         $method = ( new ControllerGenerator('InviteeNoShows', $this->endpoints('InviteeNoShows')) )->controller->getMethods()['destroy'];
 
-        $this->assertEquals('\Typedin\LaravelCalendly\Http\Requests\DestroyInviteeNoShowRequest', $method->getParameters()['request']->getType());
+        $this->assertEquals('\\' . DestroyInviteeNoShowRequest::class, $method->getParameters()['request']->getType());
         $this->assertStringContainsString('$this->api->delete("/invitee_no_shows/{$uuid}/");', $method->getBody());
 
         $this->assertStringContainsString('return response()->noContent();', $method->getBody());
@@ -124,7 +128,7 @@ class ControllerGeneratorTest extends TestCase
     {
         $method = ( new ControllerGenerator('OrganizationInvitations', $this->endpoints('OrganizationInvitations')) )->controller->getMethods()['destroy'];
 
-        $this->assertEquals('\Typedin\LaravelCalendly\Http\Requests\DestroyOrganizationInvitationRequest', $method->getParameters()['request']->getType());
+        $this->assertEquals('\\' . DestroyOrganizationInvitationRequest::class, $method->getParameters()['request']->getType());
         $this->assertStringContainsString('$this->api->delete("/organizations/{$org_uuid}/invitations/{$uuid}/");', $method->getBody());
 
         $this->assertStringContainsString('return response()->noContent();', $method->getBody());
