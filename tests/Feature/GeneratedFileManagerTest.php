@@ -6,6 +6,9 @@ use PHPUnit\Framework\TestCase;
 use Typedin\LaravelCalendly\Actions\GeneratedFileManager;
 use Typedin\LaravelCalendly\Supports\EndpointMapper;
 
+/*
+ * @group integration
+ */
 class GeneratedFileManagerTest extends TestCase
 {
     /**

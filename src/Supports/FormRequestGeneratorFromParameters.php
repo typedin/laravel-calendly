@@ -10,21 +10,25 @@ use Throwable;
 
 class FormRequestGeneratorFromParameters
 {
-    final public const HTTP_VERB = [
-        'get' => ['singular' => 'Show', 'plural' => 'Index'],
-        'post' => ['singular' => 'Post', 'plural' => 'Post'],
-        'delete' => ['singular' => 'Destroy', 'plural' => 'Destroy'],
+    final public const CRUD_OPERATIONS = [
+        'get' => 'Show',
+        'post' => 'Store',
+        'delete' => 'Destroy',
     ];
 
     public ClassType $validator;
+
+    private string $http_method;
 
     /**
      * @param  array<int,mixed>  $path
      * @param  array<int,mixed>  $parameters
      */
-    public function __construct(private readonly string $name, private readonly string $verb, private readonly array $path)
+    public function __construct(private readonly string $name, private readonly array $path)
     {
-        $this->validator = new ClassType(sprintf('%s%sRequest', $this->verb(), $this->isSingular() ? Str::singular($this->name) : Str::plural($this->name)));
+        $this->http_method = collect($this->path)->keys()->reject(fn ($value) => $value == 'parameters')->first();
+
+        $this->validator = new ClassType(sprintf('%s%sRequest', $this->verb(), $this->wantsIndex() ? Str::plural($this->name) : Str::singular($this->name)));
 
         $this->validator->addMethod('rules')->addBody('return [');
 
@@ -37,19 +41,41 @@ class FormRequestGeneratorFromParameters
 
     private function verb(): string
     {
-        return self::HTTP_VERB[$this->verb][$this->isSingular() ? 'singular' : 'plural'];
+        if ($this->wantsIndex()) {
+            return 'Index';
+        }
+
+        return self::CRUD_OPERATIONS[$this->http_method];
     }
 
-    private function isSingular(): bool
+    private function wantsIndex(): bool
     {
-        return false;
+        // Index :
+        // get without parameters
+        // get + empty top level parameters
+        // Show :
+        // get + top level parameters
+        // Store :
+        // post + top level parameters
+        // Destroy
+        // delete + top level parameters
+        return ! (isset($this->path['parameters']) && ! empty($this->path['parameters']));
     }
 
     private function fieldValidationPairs(): Collection
     {
-        $parameters = $this->path['parameters'] ?? $this->path;
+        $nested_parameters = $this->path[$this->http_method]['requestBody']['content'] ?? [];
+        $rules_from_request_body = collect($nested_parameters)
+                ->map(fn ($value) => collect($value['schema']['properties']))
+                ->flatMap(fn ($property) => $property->flatMap(function ($value, $key) use ($nested_parameters) {
+                    return [$key => $this->buildValidation(
+                        value: $value,
+                        field: $key,
+                        requirements: $nested_parameters['application/json']['schema']['required'] ?? [])];
+                }));
 
-        return collect($parameters)
+        $parameters = $this->path[$this->http_method]['parameters'] ?? $this->path['parameters'];
+        $rules_from_parameters = collect($parameters)
                 ->filter(fn ($value) => isset($value['name']))
                ->flatMap(function ($value) {
                    try {
@@ -60,20 +86,27 @@ class FormRequestGeneratorFromParameters
                    } catch (Throwable) {
                        // do nothing
                    }
-                    $local_requirements = isset($value['required']) && $value['required'] ? [$value['name']] : [];
 
-                   return [$value['name'] => $this->buildValidation($value['schema'], $value['name'], $local_requirements)];
+                   return [$value['name'] => $this->buildValidation(
+                       value: $value['schema'],
+                       field: $value['name'],
+                       requirements: isset($value['required']) && $value['required'] ? [$value['name']] : []
+                   )];
                });
+
+        return $rules_from_parameters->merge($rules_from_request_body);
     }
 
     /**
-     * @param  mixed  $requirements
+     * @param  array<int,mixed>  $value
+     * @param  string  $field
+     * @param  array<int,mixed>  $requirements
      * @return string[]
      */
-    private function buildValidation(mixed $value, mixed $key, array $requirements): array
+    private function buildValidation(array $value, string $field, array $requirements): array
     {
         $local = [];
-        if (in_array($key, $requirements)) {
+        if (in_array($field, $requirements)) {
             $local[] = isset($value['nullable']) && $value['nullable'] == true
                 ? 'nullable'
                 : 'required';
