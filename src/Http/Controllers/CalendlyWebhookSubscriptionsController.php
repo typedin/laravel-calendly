@@ -2,10 +2,10 @@
 
 namespace Typedin\LaravelCalendly\Http\Controllers;
 
-use Typedin\LaravelCalendly\Entities\CalendlyWebhookSubscription;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Routing\Controller;
 use Typedin\LaravelCalendly\Contracts\CalendlyApiInterface;
+use Typedin\LaravelCalendly\Entities\CalendlyWebhookSubscription;
 use Typedin\LaravelCalendly\Http\Requests\DestroyWebhookSubscriptionRequest;
 use Typedin\LaravelCalendly\Http\Requests\ShowWebhookSubscriptionRequest;
 use Typedin\LaravelCalendly\Http\Requests\StoreWebhookSubscriptionRequest;

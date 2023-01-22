@@ -57,9 +57,9 @@ class EndpointMapper
     {
         return $this->paths()
                    ->map(function ($value, $path) {
-                       $http_methods = collect($value)->keys()->filter(fn($key): bool => in_array($key, ['get', 'post', 'delete']));
+                       $http_methods = collect($value)->keys()->filter(fn ($key): bool => in_array($key, ['get', 'post', 'delete']));
 
-                       return $http_methods->map(fn($key) => [
+                       return $http_methods->map(fn ($key) => [
                            'name' => self::fullname($path),
                            $path => [
                                $key => [

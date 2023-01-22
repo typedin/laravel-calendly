@@ -2,10 +2,10 @@
 
 namespace Typedin\LaravelCalendly\Http\Controllers;
 
-use Typedin\LaravelCalendly\Entities\CalendlyOrganizationMembership;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Routing\Controller;
 use Typedin\LaravelCalendly\Contracts\CalendlyApiInterface;
+use Typedin\LaravelCalendly\Entities\CalendlyOrganizationMembership;
 use Typedin\LaravelCalendly\Http\Requests\DestroyOrganizationMembershipRequest;
 use Typedin\LaravelCalendly\Http\Requests\IndexOrganizationMembershipsRequest;
 use Typedin\LaravelCalendly\Http\Requests\ShowOrganizationMembershipRequest;

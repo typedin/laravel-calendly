@@ -2,10 +2,10 @@
 
 namespace Typedin\LaravelCalendly\Http\Controllers;
 
-use Typedin\LaravelCalendly\Entities\CalendlyEventTypeAvailableTime;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Routing\Controller;
 use Typedin\LaravelCalendly\Contracts\CalendlyApiInterface;
+use Typedin\LaravelCalendly\Entities\CalendlyEventTypeAvailableTime;
 use Typedin\LaravelCalendly\Http\Requests\IndexEventTypeAvailableTimesRequest;
 
 class CalendlyEventTypeAvailableTimesController extends Controller

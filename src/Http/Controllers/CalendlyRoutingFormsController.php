@@ -2,10 +2,10 @@
 
 namespace Typedin\LaravelCalendly\Http\Controllers;
 
-use Typedin\LaravelCalendly\Entities\CalendlyRoutingForm;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Routing\Controller;
 use Typedin\LaravelCalendly\Contracts\CalendlyApiInterface;
+use Typedin\LaravelCalendly\Entities\CalendlyRoutingForm;
 use Typedin\LaravelCalendly\Http\Requests\IndexRoutingFormsRequest;
 use Typedin\LaravelCalendly\Http\Requests\ShowRoutingFormRequest;
 
