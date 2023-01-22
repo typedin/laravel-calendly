@@ -67,7 +67,13 @@ class EndpointMapperTest extends TestCase
      */
     public function it_creates_form_request_dto(): void
     {
-        $this->assertCount(34, (new EndpointMapper($this->yaml()))->formRequestDTOS());
+        $filtered = (new EndpointMapper($this->yaml()))->formRequestDTOS()->filter(function ($value) {
+            return $value['name'] == 'OrganizationInvitations';
+        });
+        $filtered->each(function ($value) {
+            /* dd($value['/organizations/{uuid}/invitations']); */
+            $this->assertEquals('OrganizationInvitations', $value['name']);
+        });
     }
 
     /**

@@ -71,7 +71,11 @@ class FormRequestGeneratorFromParameters
                         requirements: $nested_parameters['application/json']['schema']['required'] ?? [])];
                 }));
 
-        $parameters = $this->path[$this->http_method]['parameters'] ?? $this->path['parameters'];
+        // TODO
+        // figure out this mess
+        $parameters = $this->path[$this->http_method]['parameters']
+            ?? $this->path['parameters']
+            ?? $this->path;
         $rules_from_parameters = collect($parameters)
                 ->filter(fn ($value) => isset($value['name']))
                ->flatMap(function ($value) {

@@ -56,21 +56,24 @@ class EndpointMapper
     public function formRequestDTOS(): Collection
     {
         return $this->paths()
-                   ->keys()
-                   ->map(
-                       fn ($key) => collect($this->paths()[$key])->only(['get', 'post', 'delete'])->map(function ($schema, $verb) use ($key) {
-                       if (isset($this->paths()[$key]['parameters'])) {
-                           $schema['parameters'] = $this->paths()[$key]['parameters'];
-                       }
+                   ->map(function ($value, $path) {
+                       $http_methods = collect($value)->keys()->filter(function ($key) {
+                           return in_array($key, ['get', 'post', 'delete']);
+                       });
+                       $applesauce = $http_methods->map(function ($key) use ($path) {
+                           return [
+                               'name' => self::fullname($path),
+                               $path => [
+                                   $key => [
+                                       'parameters' => $this->paths()[$path]['parameters'] ?? [],
+                                       ...$this->paths()[$path][$key],
+                                   ],
+                               ],
+                           ];
+                       });
 
-                       return [
-                           'endpoint' => $key,
-                           'name' => self::fullname($key),
-                           'verb' => $verb,
-                           'schema' => $schema,
-                       ];
-                   })
-                   )->flatten(1);
+                       return $applesauce;
+                   })->flatten(1);
     }
 
     /**

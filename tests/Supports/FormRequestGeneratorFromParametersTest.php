@@ -98,6 +98,7 @@ class FormRequestGeneratorFromParametersTest extends TestCase
     {
         $path = $this->path('/organizations/{uuid}/invitations');
         unset($path['get']);
+
         $sut = ( new FormRequestGeneratorFromParameters('OrganizationInviations', $path) );
 
         $this->assertEquals('StoreOrganizationInviationRequest', $sut->validator->getName());

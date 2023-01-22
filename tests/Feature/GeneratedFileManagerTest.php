@@ -31,7 +31,7 @@ class GeneratedFileManagerTest extends TestCase
         (new GeneratedFileManager($mapper, $this->destination))->createControllers()->writeAllFiles();
 
         $this->assertCount(17, glob($this->destination.'Http/Controllers/*.php'));
-        $this->assertCount(34, glob($this->destination.'Http/Requests/*.php'));
+        $this->assertCount(48, glob($this->destination.'Http/Requests/*.php'));
         $this->assertCount(45, glob($this->destination.'Entities/*.php'));
     }
 

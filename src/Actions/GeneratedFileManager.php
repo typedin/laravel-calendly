@@ -100,7 +100,7 @@ class GeneratedFileManager
     public function createFormRequests(): GeneratedFileManager
     {
         $this->mapper->formRequestDTOS()->each(function ($value) {
-            $request = ( new FormRequestGeneratorFromParameters($value['name'], $value['verb'], $value['schema']) )->validator;
+            $request = ( new FormRequestGeneratorFromParameters($value['name'], $value) )->validator;
 
             $namespace = $this->createNamespace($request, "Typedin\LaravelCalendly\Http\Requests");
             $this->formRequests->push(['form_request' => self::replaceQualifiersWithImport($request), 'namespace' => $namespace]);
