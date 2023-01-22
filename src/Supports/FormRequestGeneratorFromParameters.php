@@ -15,7 +15,7 @@ class FormRequestGeneratorFromParameters
 
     public ClassType $validator;
 
-    private string $http_method;
+    private readonly string $http_method;
 
     /**
      * @param  array<int,mixed>  $path
@@ -23,7 +23,7 @@ class FormRequestGeneratorFromParameters
      */
     public function __construct(private readonly string $name, private readonly array $path)
     {
-        $this->http_method = collect($this->path)->keys()->reject(fn ($value) => $value == 'parameters')->first();
+        $this->http_method = collect($this->path)->keys()->reject(fn ($value) => $value == 0)->first();
 
         $this->validator = new ClassType(sprintf('%s%sRequest', $this->verb(), $this->wantsIndex() ? Str::plural($this->name) : Str::singular($this->name)));
 
@@ -64,12 +64,10 @@ class FormRequestGeneratorFromParameters
         $nested_parameters = $this->path[$this->http_method]['requestBody']['content'] ?? [];
         $rules_from_request_body = collect($nested_parameters)
                 ->map(fn ($value) => collect($value['schema']['properties']))
-                ->flatMap(fn ($property) => $property->flatMap(function ($value, $key) use ($nested_parameters) {
-                    return [$key => $this->buildValidation(
-                        value: $value,
-                        field: $key,
-                        requirements: $nested_parameters['application/json']['schema']['required'] ?? [])];
-                }));
+                ->flatMap(fn ($property) => $property->flatMap(fn ($value, $key) => [$key => $this->buildValidation(
+                    value: $value,
+                    field: $key,
+                    requirements: $nested_parameters['application/json']['schema']['required'] ?? [])]));
 
         // TODO
         // figure out this mess
@@ -100,7 +98,6 @@ class FormRequestGeneratorFromParameters
 
     /**
      * @param  array<int,mixed>  $value
-     * @param  string  $field
      * @param  array<int,mixed>  $requirements
      * @return string[]
      */
