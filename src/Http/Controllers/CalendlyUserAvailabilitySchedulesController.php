@@ -23,6 +23,7 @@ class CalendlyUserAvailabilitySchedulesController extends Controller
 
         $all = collect($response["collection"])
         ->mapInto(\Typedin\LaravelCalendly\Entities\CalendlyUserAvailabilitySchedule::class)->all();
+
         return response()->json([
         "user_availability_schedules" => $all,
         ]);
@@ -31,6 +32,7 @@ class CalendlyUserAvailabilitySchedulesController extends Controller
     public function show(UserAvailabilityScheduleRequest $request): JsonResponse
     {
         $response = $this->api->get("/user_availability_schedules/{$uuid}/", $request);
+
         return response()->json([
         "user_availability_schedule" => new \Typedin\LaravelCalendly\Entities\CalendlyUserAvailabilitySchedule($response),
         ]);

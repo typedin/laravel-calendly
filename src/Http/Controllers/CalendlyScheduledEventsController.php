@@ -23,6 +23,7 @@ class CalendlyScheduledEventsController extends Controller
 
         $all = collect($response["collection"])
         ->mapInto(\Typedin\LaravelCalendly\Entities\CalendlyScheduledEvent::class)->all();
+
         return response()->json([
         "scheduled_events" => $all,
         ]);
@@ -31,6 +32,7 @@ class CalendlyScheduledEventsController extends Controller
     public function show(ScheduledEventRequest $request): JsonResponse
     {
         $response = $this->api->get("/scheduled_events/{$uuid}/", $request);
+
         return response()->json([
         "scheduled_event" => new \Typedin\LaravelCalendly\Entities\CalendlyScheduledEvent($response),
         ]);

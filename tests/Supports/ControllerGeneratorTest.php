@@ -2,10 +2,10 @@
 
 namespace Typedin\LaravelCalendly\Tests\Supports;
 
-use Typedin\LaravelCalendly\Http\Requests\IndexEventTypesRequest;
 use Illuminate\Http\JsonResponse;
 use Nette\PhpGenerator\ClassType;
 use PHPUnit\Framework\TestCase;
+use Typedin\LaravelCalendly\Http\Requests\IndexEventTypesRequest;
 use Typedin\LaravelCalendly\Http\Requests\InviteeNoShowRequest;
 use Typedin\LaravelCalendly\Http\Requests\OrganizationInvitationRequest;
 use Typedin\LaravelCalendly\Supports\ControllerGenerator;

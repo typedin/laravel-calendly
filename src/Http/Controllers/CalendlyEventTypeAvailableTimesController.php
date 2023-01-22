@@ -22,6 +22,7 @@ class CalendlyEventTypeAvailableTimesController extends Controller
 
         $all = collect($response["collection"])
         ->mapInto(\Typedin\LaravelCalendly\Entities\CalendlyEventTypeAvailableTime::class)->all();
+
         return response()->json([
         "event_type_available_times" => $all,
         ]);

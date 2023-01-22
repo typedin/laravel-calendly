@@ -22,6 +22,7 @@ class CalendlyUserBusyTimesController extends Controller
 
         $all = collect($response["collection"])
         ->mapInto(\Typedin\LaravelCalendly\Entities\CalendlyUserBusyTime::class)->all();
+
         return response()->json([
         "user_busy_times" => $all,
         ]);

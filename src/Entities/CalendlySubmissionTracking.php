@@ -6,37 +6,37 @@ class CalendlySubmissionTracking
 {
     /**
      * The UTM parameter used to track a campaign.
-     * @var string|null $utm_campaign
+     * @var string|null
      */
     public string $utm_campaign;
 
     /**
      * The UTM parameter that identifies the source (platform where the traffic originates).
-     * @var string|null $utm_source
+     * @var string|null
      */
     public string $utm_source;
 
     /**
      * The UTM parameter that identifies the type of input (e.g. Cost Per Click (CPC), social media, affiliate or QR code).
-     * @var string|null $utm_medium
+     * @var string|null
      */
     public string $utm_medium;
 
     /**
      * UTM content tracking parameter.
-     * @var string|null $utm_content
+     * @var string|null
      */
     public string $utm_content;
 
     /**
      * The UTM parameter used to track keywords.
-     * @var string|null $utm_term
+     * @var string|null
      */
     public string $utm_term;
 
     /**
      * The Salesforce record unique identifier.
-     * @var string|null $salesforce_uuid
+     * @var string|null
      */
     public string $salesforce_uuid;
 

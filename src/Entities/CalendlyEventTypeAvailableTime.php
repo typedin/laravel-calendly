@@ -8,25 +8,25 @@ class CalendlyEventTypeAvailableTime
 {
     /**
      * Indicates that the open time slot is "available"
-     * @var string $status
+     * @var string
      */
     public string $status;
 
     /**
      * Total remaining invitees for this available time. For Group Event Type, more than one invitee can book in this available time. For all other Event Types, only one invitee can book in this available time.
-     * @var number $invitees_remaining
+     * @var number
      */
     public number $invitees_remaining;
 
     /**
      * The moment the event was scheduled to start in UTC time
-     * @var string $start_time
+     * @var string
      */
     public string $start_time;
 
     /**
      * The URL of the user’s scheduling site where invitees book this event type
-     * @var string $scheduling_url
+     * @var string
      */
     public string $scheduling_url;
 

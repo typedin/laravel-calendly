@@ -19,6 +19,7 @@ class CalendlyOrganizationInvitationsController extends Controller
     public function create(OrganizationInvitationRequest $request): JsonResponse
     {
         $response = $this->api->post("/organizations/{$uuid}/invitations/", $request);
+
         return response()->json([
         "organization_invitation" => new \Typedin\LaravelCalendly\Entities\CalendlyOrganizationInvitation($response),
         ]);
@@ -27,6 +28,7 @@ class CalendlyOrganizationInvitationsController extends Controller
     public function show(OrganizationInvitationRequest $request): JsonResponse
     {
         $response = $this->api->get("/organizations/{$org_uuid}/invitations/{$uuid}/", $request);
+
         return response()->json([
         "organization_invitation" => new \Typedin\LaravelCalendly\Entities\CalendlyOrganizationInvitation($response),
         ]);
@@ -35,6 +37,7 @@ class CalendlyOrganizationInvitationsController extends Controller
     public function destroy(OrganizationInvitationRequest $request): JsonResponse
     {
         $this->api->delete("/organizations/{$org_uuid}/invitations/{$uuid}/");
+
         return response()->noContent();
     }
 }

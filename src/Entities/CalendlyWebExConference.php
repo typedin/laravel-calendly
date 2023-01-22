@@ -6,25 +6,25 @@ class CalendlyWebExConference
 {
     /**
      * The event location is a WebEx conference
-     * @var string<webex_conference> $type
+     * @var string<webex_conference>
      */
     public string $type;
 
     /**
      * Indicates the current status of the WebEx conference
-     * @var string<initiated|processing|pushed|failed> $status
+     * @var string<initiated|processing|pushed|failed>
      */
     public string $status;
 
     /**
      * WebEx conference meeting url
-     * @var string|null $join_url
+     * @var string|null
      */
     public string $join_url;
 
     /**
      * The conference metadata supplied by GoToMeeting
-     * @var object|null $data
+     * @var object|null
      */
     public object $data;
 

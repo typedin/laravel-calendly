@@ -19,6 +19,7 @@ class CalendlyScheduledEventCancellationsController extends Controller
     public function create(ScheduledEventCancellationRequest $request): JsonResponse
     {
         $response = $this->api->post("/scheduled_events/{$uuid}/cancellation/", $request);
+
         return response()->json([
         "scheduled_event_cancellation" => new \Typedin\LaravelCalendly\Entities\CalendlyScheduledEventCancellation($response),
         ]);

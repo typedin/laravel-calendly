@@ -6,17 +6,17 @@ class CalendlyCancellation
 {
     /**
      * Name of the person whom canceled
-     * @var string $canceled_by
+     * @var string
      */
     public string $canceled_by;
 
     /**
      * Reason that the cancellation occurred
-     * @var string|null $reason
+     * @var string|null
      */
     public string $reason;
 
-    /** @var string<host|invitee> $canceler_type */
+    /** @var string<host|invitee> */
     public string $canceler_type;
 
     public function __construct(string $canceled_by, ?string $reason, string $canceler_type)

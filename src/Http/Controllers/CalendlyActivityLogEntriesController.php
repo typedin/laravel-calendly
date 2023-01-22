@@ -22,6 +22,7 @@ class CalendlyActivityLogEntriesController extends Controller
 
         $all = collect($response["collection"])
         ->mapInto(\Typedin\LaravelCalendly\Entities\CalendlyActivityLogEntry::class)->all();
+
         return response()->json([
         "activity_log_entries" => $all,
         ]);

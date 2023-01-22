@@ -6,37 +6,37 @@ class CalendlyAvailabilitySchedule
 {
     /**
      * A URI reference to this Availability Schedule.
-     * @var string $uri
+     * @var string
      */
     public string $uri;
 
     /**
      * This is the default Availability Schedule in use.
-     * @var boolean $default
+     * @var bool
      */
     public bool $default;
 
     /**
      * The name of this Availability Schedule.
-     * @var string $name
+     * @var string
      */
     public string $name;
 
     /**
      * A URI reference to a User.
-     * @var string $user
+     * @var string
      */
     public string $user;
 
     /**
      * The timezone for which this Availability Schedule is originated in.
-     * @var string $timezone
+     * @var string
      */
     public string $timezone;
 
     /**
      * The rules of this Availability Schedule.
-     * @var array $rules
+     * @var array
      */
     public array $rules;
 

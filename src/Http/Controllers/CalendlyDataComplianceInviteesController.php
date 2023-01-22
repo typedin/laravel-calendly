@@ -19,6 +19,7 @@ class CalendlyDataComplianceInviteesController extends Controller
     public function create(DataComplianceInviteeRequest $request): JsonResponse
     {
         $response = $this->api->post("/data_compliance/deletion/invitees/", $request);
+
         return response()->json([
         "data_compliance_invitee" => new \Typedin\LaravelCalendly\Entities\CalendlyDataComplianceInvitee($response),
         ]);

@@ -2,15 +2,15 @@
 
 namespace Typedin\LaravelCalendly\Supports;
 
-use Throwable;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Nette\PhpGenerator\ClassType;
+use Throwable;
 
 class FormRequestGeneratorFromParameters
 {
-    final const HTTP_VERB = [
+    final public const HTTP_VERB = [
         'get' => ['singular' => 'Show', 'plural' => 'Index'],
         'post' => ['singular' => 'Post', 'plural' => 'Post'],
         'delete' => ['singular' => 'Destroy', 'plural' => 'Destroy'],
@@ -50,7 +50,7 @@ class FormRequestGeneratorFromParameters
         $parameters = $this->path['parameters'] ?? $this->path;
 
         return collect($parameters)
-                ->filter(fn($value) => isset($value['name']))
+                ->filter(fn ($value) => isset($value['name']))
                ->flatMap(function ($value) {
                    try {
                        if (isset($value['example'])) {

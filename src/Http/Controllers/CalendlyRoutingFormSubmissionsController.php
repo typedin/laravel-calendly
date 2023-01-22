@@ -23,6 +23,7 @@ class CalendlyRoutingFormSubmissionsController extends Controller
 
         $all = collect($response["collection"])
         ->mapInto(\Typedin\LaravelCalendly\Entities\CalendlyRoutingFormSubmission::class)->all();
+
         return response()->json([
         "routing_form_submissions" => $all,
         ]);
@@ -31,6 +32,7 @@ class CalendlyRoutingFormSubmissionsController extends Controller
     public function show(RoutingFormSubmissionRequest $request): JsonResponse
     {
         $response = $this->api->get("/routing_form_submissions/{$uuid}/", $request);
+
         return response()->json([
         "routing_form_submission" => new \Typedin\LaravelCalendly\Entities\CalendlyRoutingFormSubmission($response),
         ]);
