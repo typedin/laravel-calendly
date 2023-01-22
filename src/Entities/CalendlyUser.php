@@ -36,7 +36,8 @@ class CalendlyUser
 
     /**
      * The URL of the user's avatar (image)
-     * @var string|null $avatar_url
+     *
+     * @var string|null
      */
     public string $avatar_url;
 

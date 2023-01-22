@@ -18,17 +18,20 @@ class CalendlyRoutingFormSubmission
      * All Routing Form Submission questions with answers.
      */
     public array $questions_and_answers;
+
     public $tracking;
 
     /**
      * The reference to the Invitee resource when routing form submission results in a scheduled meeting.
-     * @var string|null $submitter
+     *
+     * @var string|null
      */
     public string $submitter;
 
     /**
      * Type of the respondent resource that submitted the form and scheduled a meeting.
-     * @var string<Invitee> $submitter_type
+     *
+     * @var string<Invitee>
      */
     public string $submitter_type;
 

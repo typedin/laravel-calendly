@@ -6,7 +6,8 @@ class CalendlyCalendarEvent
 {
     /**
      * Indicates the calendar provider the event belongs to.
-     * @var string<exchange|google|icloud|outlook|outlook_desktop> $kind
+     *
+     * @var string<exchange|google|icloud|outlook|outlook_desktop>
      */
     public string $kind;
 
