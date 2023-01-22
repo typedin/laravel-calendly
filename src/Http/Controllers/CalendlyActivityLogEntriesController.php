@@ -18,13 +18,12 @@ class CalendlyActivityLogEntriesController extends Controller
 
     public function index(IndexActivityLogEntriesRequest $request): JsonResponse
     {
-        $response = $this->api->get('/activity_log_entries/', $request);
+        $response = $this->api->get("/activity_log_entries/", $request);
 
-        $all = collect($response['collection'])
+        $all = collect($response["collection"])
         ->mapInto(\Typedin\LaravelCalendly\Entities\CalendlyActivityLogEntry::class)->all();
-
         return response()->json([
-            'activity_log_entries' => $all,
+        "activity_log_entries" => $all,
         ]);
     }
 }

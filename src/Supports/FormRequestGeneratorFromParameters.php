@@ -2,6 +2,7 @@
 
 namespace Typedin\LaravelCalendly\Supports;
 
+use Throwable;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
@@ -9,7 +10,7 @@ use Nette\PhpGenerator\ClassType;
 
 class FormRequestGeneratorFromParameters
 {
-    const HTTP_VERB = [
+    final const HTTP_VERB = [
         'get' => ['singular' => 'Show', 'plural' => 'Index'],
         'post' => ['singular' => 'Post', 'plural' => 'Post'],
         'delete' => ['singular' => 'Destroy', 'plural' => 'Destroy'],
@@ -18,7 +19,6 @@ class FormRequestGeneratorFromParameters
     public ClassType $validator;
 
     /**
-     * @param  string  $name
      * @param  array<int,mixed>  $path
      * @param  array<int,mixed>  $parameters
      */
@@ -42,11 +42,7 @@ class FormRequestGeneratorFromParameters
 
     private function isSingular(): bool
     {
-        if (! isset($this->path['parameters'])) {
-            return false;
-        }
-
-        return  (bool) $this->path['parameters'];
+        return false;
     }
 
     private function fieldValidationPairs(): Collection
@@ -54,16 +50,14 @@ class FormRequestGeneratorFromParameters
         $parameters = $this->path['parameters'] ?? $this->path;
 
         return collect($parameters)
-                ->filter(function ($value) {
-                    return isset($value['name']);
-                })
+                ->filter(fn($value) => isset($value['name']))
                ->flatMap(function ($value) {
                    try {
                        if (isset($value['example'])) {
                            Carbon::parse($value['example']);
                            $value['schema']['type'] = 'date-time';
                        }
-                   } catch (\Throwable $ignored) {
+                   } catch (Throwable) {
                        // do nothing
                    }
                     $local_requirements = isset($value['required']) && $value['required'] ? [$value['name']] : [];
@@ -73,12 +67,10 @@ class FormRequestGeneratorFromParameters
     }
 
     /**
-     * @param  mixed  $value
-     * @param  mixed  $key
      * @param  mixed  $requirements
      * @return string[]
      */
-    private function buildValidation($value, $key, array $requirements): array
+    private function buildValidation(mixed $value, mixed $key, array $requirements): array
     {
         $local = [];
         if (in_array($key, $requirements)) {

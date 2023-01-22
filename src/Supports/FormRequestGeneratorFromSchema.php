@@ -42,12 +42,9 @@ class FormRequestGeneratorFromSchema
     }
 
     /**
-     * @param  mixed  $value
-     * @param  mixed  $key
-     * @param  mixed  $requirements
      * @return string[]
      */
-    private function buildValidation($value, $key, $requirements): array
+    private function buildValidation(mixed $value, mixed $key, mixed $requirements): array
     {
         $local = [];
         if (in_array($key, $requirements)) {

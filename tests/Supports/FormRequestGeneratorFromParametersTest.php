@@ -8,10 +8,9 @@ use Typedin\LaravelCalendly\Supports\FormRequestGeneratorFromParameters;
 class FormRequestGeneratorFromParametersTest extends TestCase
 {
     /**
-     * @param  mixed  $filter
      * @return array<TKey,TValue>
      */
-    private function path($filter): array
+    private function path(mixed $filter): array
     {
         $content = file_get_contents(__DIR__.'/__fixtures__/api.json');
 

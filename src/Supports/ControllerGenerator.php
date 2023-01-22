@@ -67,10 +67,7 @@ class ControllerGenerator
         return $this;
     }
 
-    /**
-     * @param  mixed  $key
-     */
-    private function addIndexMethod($key): void
+    private function addIndexMethod(mixed $key): void
     {
         try {
             $this->controller
@@ -90,10 +87,7 @@ class ControllerGenerator
         }
     }
 
-    /**
-     * @param  mixed  $key
-     */
-    private function addShowMethod($key): void
+    private function addShowMethod(mixed $key): void
     {
         // show method for /users/me would add twice the same method
         try {
@@ -111,10 +105,7 @@ class ControllerGenerator
         }
     }
 
-    /**
-     * @param  mixed  $key
-     */
-    private function addCreateMethod($key): void
+    private function addCreateMethod(mixed $key): void
     {
         $this->controller
                 ->addMethod('create')
@@ -127,10 +118,7 @@ class ControllerGenerator
                 ->setType(sprintf('\Typedin\LaravelCalendly\Http\Requests\%sRequest', Str::singular($this->name)));
     }
 
-    /**
-     * @param  mixed  $key
-     */
-    private function addDestroyMethod($key): void
+    private function addDestroyMethod(mixed $key): void
     {
         $this->controller
                 ->addMethod('destroy')
@@ -149,10 +137,7 @@ class ControllerGenerator
         return $value['get']['responses']['200']['content']['application/json']['schema']['properties'];
     }
 
-    /**
-     * @param  mixed  $value
-     */
-    private function hasIndexRestVerb($value): bool
+    private function hasIndexRestVerb(mixed $value): bool
     {
         return  array_key_first($value) == 'get' && array_key_exists('collection', $this->getResponseType($value));
     }
@@ -173,18 +158,12 @@ class ControllerGenerator
         return  array_key_exists('post', $value);
     }
 
-    /**
-     * @param  mixed  $value
-     */
-    private function hasDeleteRestVerb($value): bool
+    private function hasDeleteRestVerb(mixed $value): bool
     {
         return  array_key_exists('delete', $value);
     }
 
-    /**
-     * @param  mixed  $key
-     */
-    private function buildUri($key): string
+    private function buildUri(mixed $key): string
     {
         return collect(explode('/', (string) $key))
         // remove empty string

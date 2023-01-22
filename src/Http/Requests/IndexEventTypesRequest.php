@@ -7,6 +7,7 @@ class IndexEventTypesRequest
     public function rules(): array
     {
         return [
+        'uuid' => 'required,string',
         ];
     }
 }

@@ -6,22 +6,19 @@ class CalendlyUserBusyTime
 {
     /**
      * Indicates whether the scheduled event is internal or external
-     *
-     * @var string<calendly|external>
+     * @var string<calendly|external> $type
      */
     public string $type;
 
     /**
      * The start time of the scheduled event in UTC time
-     *
-     * @var string
+     * @var string $start_time
      */
     public string $start_time;
 
     /**
      * The end time of the scheduled event in UTC time
-     *
-     * @var string
+     * @var string $end_time
      */
     public string $end_time;
 

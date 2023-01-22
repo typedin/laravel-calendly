@@ -8,10 +8,9 @@ use Typedin\LaravelCalendly\Supports\FormRequestGeneratorFromSchema;
 class FormRequestGeneratorFromSchemaTest extends TestCase
 {
     /**
-     * @param  mixed  $filter
      * @return array<TKey,TValue>
      */
-    private function schema($filter): array
+    private function schema(mixed $filter): array
     {
         $content = file_get_contents(__DIR__.'/__fixtures__/api.json');
 
@@ -32,11 +31,8 @@ class FormRequestGeneratorFromSchemaTest extends TestCase
      * @dataProvider EventTypeProvider
      *
      * @test
-     *
-     * @param  mixed  $property
-     * @param  mixed  $expected_rules
      */
-    public function it_generates_rules_for_event_typed($property, $expected_rules): void
+    public function it_generates_rules_for_event_typed(mixed $property, mixed $expected_rules): void
     {
         $rules = ( new FormRequestGeneratorFromSchema('EventType', $this->schema('EventType')) )->validator->getMethod('rules');
 
@@ -79,11 +75,8 @@ class FormRequestGeneratorFromSchemaTest extends TestCase
      * @dataProvider EventProvider
      *
      * @test
-     *
-     * @param  mixed  $property
-     * @param  mixed  $expected_rules
      */
-    public function it_generates_rules_for_event($property, $expected_rules): void
+    public function it_generates_rules_for_event(mixed $property, mixed $expected_rules): void
     {
         $rules = ( new FormRequestGeneratorFromSchema('Event', $this->schema('Event')) )->validator->getMethod('rules');
 
