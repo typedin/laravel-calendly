@@ -21,8 +21,7 @@ class CalendlyRoutingForm
 
     /**
      * Indicates if the form is in "draft" or "published" status.
-     *
-     * @var string<draft|published>
+     * @var string<draft|published> $status
      */
     public string $status;
 

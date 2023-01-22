@@ -11,8 +11,7 @@ class CalendlyOrganizationMembership
 
     /**
      * The user's role in the organization
-     *
-     * @var string<user|admin|owner>
+     * @var string<user|admin|owner> $role
      */
     public string $role;
 

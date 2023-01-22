@@ -6,8 +6,7 @@ class CalendlyProfile
 {
     /**
      * Indicates if the profile belongs to a "user" (individual) or "team"
-     *
-     * @var string<User|Team>
+     * @var string<User|Team> $type
      */
     public string $type;
 

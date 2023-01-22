@@ -11,12 +11,11 @@ class CalendlyCancellation
 
     /**
      * Reason that the cancellation occurred
-     *
-     * @var string|null
+     * @var string|null $reason
      */
     public string $reason;
 
-    /** @var string<host|invitee> */
+    /** @var string<host|invitee> $canceler_type */
     public string $canceler_type;
 
     public function __construct(string $canceled_by, ?string $reason, string $canceler_type)

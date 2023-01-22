@@ -6,8 +6,7 @@ class CalendlySubmissionEventTypeResult
 {
     /**
      * Indicates that the routing form submission resulted in a redirect to an event type booking page.
-     *
-     * @var string<event_type>
+     * @var string<event_type> $type
      */
     public string $type;
 

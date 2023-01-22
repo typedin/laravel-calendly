@@ -11,15 +11,13 @@ class CalendlyOrganization
 
     /**
      * Active subscription plan or trial plan
-     *
-     * @var string<basic|essentials|professional|teams|enterprise>
+     * @var string<basic|essentials|professional|teams|enterprise> $plan
      */
     public string $plan;
 
     /**
      * Current stage of organization
-     *
-     * @var string<trial|free|paid>
+     * @var string<trial|free|paid> $stage
      */
     public string $stage;
 

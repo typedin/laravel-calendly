@@ -26,15 +26,13 @@ class CalendlyWebhookSubscription
 
     /**
      * The date and time the webhook subscription is retried
-     *
-     * @var string|null
+     * @var string|null $retry_started_at
      */
     public string $retry_started_at;
 
     /**
      * Indicates if the webhook subscription is "active" or "disabled"
-     *
-     * @var string<active|disabled>
+     * @var string<active|disabled> $state
      */
     public string $state;
 
@@ -45,8 +43,7 @@ class CalendlyWebhookSubscription
 
     /**
      * The scope of the webhook subscription
-     *
-     * @var string<user|organization>
+     * @var string<user|organization> $scope
      */
     public string $scope;
 
@@ -57,15 +54,13 @@ class CalendlyWebhookSubscription
 
     /**
      * The URI of the user that's associated with the webhook subscription
-     *
-     * @var string|null
+     * @var string|null $user
      */
     public string $user;
 
     /**
      * The URI of the user who created the webhook subscription
-     *
-     * @var string|null
+     * @var string|null $creator
      */
     public string $creator;
 

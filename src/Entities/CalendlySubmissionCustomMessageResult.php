@@ -6,8 +6,7 @@ class CalendlySubmissionCustomMessageResult
 {
     /**
      * Indicates if the routing form submission resulted in a custom "thank you" message.
-     *
-     * @var string<custom_message>
+     * @var string<custom_message> $type
      */
     public string $type;
 

@@ -6,8 +6,7 @@ class CalendlySubmissionExternalUrlResult
 {
     /**
      * Indicates that the routing form submission resulted in a redirect to an external URL.
-     *
-     * @var string<external_url>
+     * @var string<external_url> $type
      */
     public string $type;
 

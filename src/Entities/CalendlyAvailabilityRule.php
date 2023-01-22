@@ -6,8 +6,7 @@ class CalendlyAvailabilityRule
 {
     /**
      * The type of this Availability Rule; can be "wday" or a specific "date".
-     *
-     * @var string<wday|date>
+     * @var string<wday|date> $type
      */
     public string $type;
 

@@ -16,8 +16,7 @@ class CalendlyQuestion
 
     /**
      * Question type: name, text input, email, phone, textarea input, dropdown list or radio button list.
-     *
-     * @var string<name|text|email|phone|textarea|select|radios>
+     * @var string<name|text|email|phone|textarea|select|radios> $type
      */
     public string $type;
 
@@ -28,8 +27,7 @@ class CalendlyQuestion
 
     /**
      * The respondent’s option(s) for "select" or "radios" types of questions.
-     *
-     * @var array|null
+     * @var array|null $answer_choices
      */
     public array $answer_choices;
 

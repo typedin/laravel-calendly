@@ -6,8 +6,7 @@ class CalendlyUserBusyTime
 {
     /**
      * Indicates whether the scheduled event is internal or external
-     *
-     * @var string<calendly|external>
+     * @var string<calendly|external> $type
      */
     public string $type;
 

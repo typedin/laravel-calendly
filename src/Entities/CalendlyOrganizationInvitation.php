@@ -21,8 +21,7 @@ class CalendlyOrganizationInvitation
 
     /**
      * The status of the invitation ("pending", "accepted", or "declined")
-     *
-     * @var string<pending|accepted|declined>
+     * @var string<pending|accepted|declined> $status
      */
     public string $status;
 
@@ -38,8 +37,7 @@ class CalendlyOrganizationInvitation
 
     /**
      * The moment the invitation was last sent (e.g. "2020-01-02T03:04:05.678123Z")
-     *
-     * @var string|null
+     * @var string|null $last_sent_at
      */
     public string $last_sent_at;
 
