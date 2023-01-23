@@ -8,9 +8,6 @@ use Typedin\LaravelCalendly\Contracts\CalendlyApiInterface;
 use Typedin\LaravelCalendly\Entities\CalendlyActivityLogEntry;
 use Typedin\LaravelCalendly\Http\Requests\IndexActivityLogEntriesRequest;
 
-/**
-* testing pipeline
-*/
 class CalendlyActivityLogEntriesController extends Controller
 {
     private readonly CalendlyApiInterface $api;
