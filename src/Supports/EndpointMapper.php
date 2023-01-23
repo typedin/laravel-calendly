@@ -5,6 +5,9 @@ namespace Typedin\LaravelCalendly\Supports;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Symfony\Component\Yaml\Yaml;
+use Typedin\LaravelCalendly\Supports\DTO\DeleteFormRequestDTO;
+use Typedin\LaravelCalendly\Supports\DTO\GetFormRequestDTO;
+use Typedin\LaravelCalendly\Supports\DTO\PostFormRequestDTO;
 
 class EndpointMapper
 {
@@ -57,18 +60,16 @@ class EndpointMapper
     {
         return $this->paths()
                    ->map(function ($value, $path) {
-                       $http_methods = collect($value)->keys()->filter(fn ($key): bool => in_array($key, ['get', 'post', 'delete']));
-
-                       return $http_methods->map(fn ($key) => [
-                           'name' => self::fullname($path),
-                           $path => [
-                               $key => [
-                                   'parameters' => $this->paths()[$path]['parameters'] ?? [],
-                                   ...$this->paths()[$path][$key],
-                               ],
-                           ],
-                       ]);
-                   })->flatten(1);
+                       if (isset($value['get'])) {
+                           return new GetFormRequestDTO(value: $value['get'], path: $path, name: self::fullname($path));
+                       }
+                       if (isset($value['post'])) {
+                           return new PostFormRequestDTO(value: $value['post'], path: $path, name: self::fullname($path));
+                       }
+                       if (isset($value['delete'])) {
+                           return new DeleteFormRequestDTO(value: $value['delete'], path: $path, name: self::fullname($path));
+                       }
+                   });
     }
 
     /**
