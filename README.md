@@ -11,7 +11,7 @@ This api follows [those specs](https://stoplight.io/api/v1/projects/calendly/api
 
 ![Testing](https://github.com/typedin/laravel-calendly/actions/workflows/main.yml/badge.svg?style=flat-square)
 
-!\[Building](https://github.com/typedin/laravel-calendly/actions/workflows/generate.yml/badge.svg?style=flat-square)
+![Building](https://github.com/typedin/laravel-calendly/actions/workflows/generate.yml/badge.svg?style=flat-square)
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/typedin/laravel-calendly.svg?style=flat-square)](https://packagist.org/packages/typedin/laravel-calendly)
 
