@@ -21,8 +21,7 @@ class CalendlyOrganizationMembershipsController extends Controller
 
     public function show(ShowOrganizationMembershipRequest $request): JsonResponse
     {
-        $uuid = null;
-        $response = $this->api->get("/organization_memberships/{$uuid}/", $request);
+        $response = $this->api->get("/organization_memberships/{$request->safe()->only(['uuid'])}/", $request);
 
         return response()->json([
             'organization_membership' => new CalendlyOrganizationMembership($response),
@@ -31,8 +30,7 @@ class CalendlyOrganizationMembershipsController extends Controller
 
     public function destroy(DestroyOrganizationMembershipRequest $request): JsonResponse
     {
-        $uuid = null;
-        $this->api->delete("/organization_memberships/{$uuid}/");
+        $this->api->delete("/organization_memberships/{$request->safe()->only(['uuid'])}/");
 
         return response()->noContent();
     }

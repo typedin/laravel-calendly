@@ -2,7 +2,9 @@
 
 namespace Typedin\LaravelCalendly\Http\Requests;
 
-class IndexActivityLogEntriesRequest
+use Illuminate\Foundation\Http\FormRequest;
+
+class IndexActivityLogEntriesRequest extends FormRequest
 {
     public function rules(): array
     {

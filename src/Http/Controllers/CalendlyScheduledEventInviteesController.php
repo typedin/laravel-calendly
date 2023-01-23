@@ -20,8 +20,7 @@ class CalendlyScheduledEventInviteesController extends Controller
 
     public function index(IndexScheduledEventInviteesRequest $request): JsonResponse
     {
-        $uuid = null;
-        $response = $this->api->get("/scheduled_events/{$uuid}/invitees/", $request);
+        $response = $this->api->get("/scheduled_events/{$request->safe()->only(['uuid'])}/invitees/", $request);
 
         $all = collect($response['collection'])
         ->mapInto(CalendlyScheduledEventInvitee::class)->all();
@@ -33,9 +32,7 @@ class CalendlyScheduledEventInviteesController extends Controller
 
     public function show(ShowScheduledEventInviteeRequest $request): JsonResponse
     {
-        $event_uuid = null;
-        $invitee_uuid = null;
-        $response = $this->api->get("/scheduled_events/{$event_uuid}/invitees/{$invitee_uuid}/", $request);
+        $response = $this->api->get("/scheduled_events/{$request->safe()->only(['event_uuid'])}/invitees/{$request->safe()->only(['invitee_uuid'])}/", $request);
 
         return response()->json([
             'scheduled_event_invitee' => new CalendlyScheduledEventInvitee($response),

@@ -32,8 +32,7 @@ class CalendlyUserAvailabilitySchedulesController extends Controller
 
     public function show(ShowUserAvailabilityScheduleRequest $request): JsonResponse
     {
-        $uuid = null;
-        $response = $this->api->get("/user_availability_schedules/{$uuid}/", $request);
+        $response = $this->api->get("/user_availability_schedules/{$request->safe()->only(['uuid'])}/", $request);
 
         return response()->json([
             'user_availability_schedule' => new CalendlyUserAvailabilitySchedule($response),

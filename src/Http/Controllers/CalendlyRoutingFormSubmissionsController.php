@@ -32,8 +32,7 @@ class CalendlyRoutingFormSubmissionsController extends Controller
 
     public function show(ShowRoutingFormSubmissionRequest $request): JsonResponse
     {
-        $uuid = null;
-        $response = $this->api->get("/routing_form_submissions/{$uuid}/", $request);
+        $response = $this->api->get("/routing_form_submissions/{$request->safe()->only(['uuid'])}/", $request);
 
         return response()->json([
             'routing_form_submission' => new CalendlyRoutingFormSubmission($response),

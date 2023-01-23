@@ -54,6 +54,7 @@ class FormRequestGeneratorFromParametersTest extends TestCase
     {
         $validator = ( new FormRequestGeneratorFromParameters('EventTypes', $this->path('/event_types')) )->validator;
 
+        $this->assertEquals('Illuminate\Foundation\Http\FormRequest', $validator->getExtends());
         $this->assertEquals('IndexEventTypesRequest', $validator->getName());
 
         $this->assertStringContainsString(sprintf("'%s' => '%s',", $property, $expected_rules), $validator->getMethod('rules')->getBody());
@@ -78,6 +79,7 @@ class FormRequestGeneratorFromParametersTest extends TestCase
     {
         $sut = ( new FormRequestGeneratorFromParameters('ScheduledEvents', $this->path('/scheduled_events/{event_uuid}/invitees/{invitee_uuid}')) );
 
+        $this->assertEquals('Illuminate\Foundation\Http\FormRequest', $sut->validator->getExtends());
         $this->assertEquals('ShowScheduledEventRequest', $sut->validator->getName());
         $rules = $sut->validator->getMethod('rules');
 
@@ -101,6 +103,7 @@ class FormRequestGeneratorFromParametersTest extends TestCase
         unset($path['get']);
 
         $sut = ( new FormRequestGeneratorFromParameters('OrganizationInviations', $path) );
+        $this->assertEquals('Illuminate\Foundation\Http\FormRequest', $sut->validator->getExtends());
 
         $this->assertEquals('StoreOrganizationInviationRequest', $sut->validator->getName());
         $rules = $sut->validator->getMethod('rules');
@@ -119,6 +122,7 @@ class FormRequestGeneratorFromParametersTest extends TestCase
         $path = $this->path('/organization_memberships/{uuid}');
         unset($path['get']);
         $sut = ( new FormRequestGeneratorFromParameters('OrganizationMemberships', $path) );
+        $this->assertEquals('Illuminate\Foundation\Http\FormRequest', $sut->validator->getExtends());
 
         $this->assertEquals('DestroyOrganizationMembershipRequest', $sut->validator->getName());
         $rules = $sut->validator->getMethod('rules');

@@ -2,7 +2,9 @@
 
 namespace Typedin\LaravelCalendly\Http\Requests;
 
-class IndexSchedulingLinksRequest
+use Illuminate\Foundation\Http\FormRequest;
+
+class IndexSchedulingLinksRequest extends FormRequest
 {
     public function rules(): array
     {

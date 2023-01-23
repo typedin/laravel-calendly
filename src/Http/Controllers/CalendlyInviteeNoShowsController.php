@@ -21,8 +21,7 @@ class CalendlyInviteeNoShowsController extends Controller
 
     public function show(ShowInviteeNoShowRequest $request): JsonResponse
     {
-        $uuid = null;
-        $response = $this->api->get("/invitee_no_shows/{$uuid}/", $request);
+        $response = $this->api->get("/invitee_no_shows/{$request->safe()->only(['uuid'])}/", $request);
 
         return response()->json([
             'invitee_no_show' => new CalendlyInviteeNoShow($response),
@@ -31,8 +30,7 @@ class CalendlyInviteeNoShowsController extends Controller
 
     public function destroy(DestroyInviteeNoShowRequest $request): JsonResponse
     {
-        $uuid = null;
-        $this->api->delete("/invitee_no_shows/{$uuid}/");
+        $this->api->delete("/invitee_no_shows/{$request->safe()->only(['uuid'])}/");
 
         return response()->noContent();
     }

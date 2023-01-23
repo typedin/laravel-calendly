@@ -32,8 +32,7 @@ class CalendlyEventTypesController extends Controller
 
     public function show(ShowEventTypeRequest $request): JsonResponse
     {
-        $uuid = null;
-        $response = $this->api->get("/event_types/{$uuid}/", $request);
+        $response = $this->api->get("/event_types/{$request->safe()->only(['uuid'])}/", $request);
 
         return response()->json([
             'event_type' => new CalendlyEventType($response),
