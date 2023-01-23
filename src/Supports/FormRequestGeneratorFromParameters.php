@@ -27,6 +27,7 @@ class FormRequestGeneratorFromParameters
 
         $this->validator = new ClassType(sprintf('%s%sRequest', $this->verb(), $this->wantsIndex() ? Str::plural($this->name) : Str::singular($this->name)));
 
+        $this->validator->setExtends('Illuminate\Foundation\Http\FormRequest');
         $this->validator->addMethod('rules')->addBody('return [');
 
         $this->fieldValidationPairs()->each(function ($value, $key) {

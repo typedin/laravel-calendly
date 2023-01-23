@@ -26,6 +26,7 @@ class FormRequestGeneratorFromParametersTest extends TestCase
     {
         $validator = ( new FormRequestGeneratorFromParameters('ScheduledEvents', $this->path('/scheduled_events')) )->validator;
 
+        $this->assertEquals('Illuminate\Foundation\Http\FormRequest', $validator->getExtends());
         $this->assertEquals('IndexScheduledEventsRequest', $validator->getName());
 
         $this->assertStringContainsString(sprintf("'%s' => '%s',", $property, $expected_rules), $validator->getMethod('rules')->getBody());
