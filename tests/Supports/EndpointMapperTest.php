@@ -27,7 +27,7 @@ class EndpointMapperTest extends TestCase
      */
     public function endpointProvider(): array
     {
-        $content = collect(json_decode(file_get_contents(__DIR__.'/__fixtures__/Endpoints.json'), null, 512, JSON_THROW_ON_ERROR));
+        $content = collect(json_decode(file_get_contents(__DIR__.'/../__fixtures__/Endpoints.json'), null, 512, JSON_THROW_ON_ERROR));
 
         return $content
             ->values()

@@ -14,7 +14,7 @@ class EntityGeneratorTest extends TestCase
      */
     private function schema($filter): array
     {
-        $content = file_get_contents(__DIR__.'/__fixtures__/api.json');
+        $content = file_get_contents(__DIR__.'/../__fixtures__/api.json');
 
         return collect(json_decode($content, true, 512, JSON_THROW_ON_ERROR)['components']['schemas'][$filter])->all();
     }
@@ -108,6 +108,7 @@ class EntityGeneratorTest extends TestCase
         // int ?
         // float ?
         // good luck...
+        // @see: https://github.com/typedin/laravel-calendly/issues/7
         new EntityGenerator('EventType', $this->schema('EventType'));
         $this->markTestIncomplete();
     }
@@ -130,7 +131,7 @@ class EntityGeneratorTest extends TestCase
     /** @test */
     public function it_works_for_every_key(): void
     {
-        $content = file_get_contents(__DIR__.'/__fixtures__/api.json');
+        $content = file_get_contents(__DIR__.'/../__fixtures__/api.json');
         $keys = collect(json_decode($content, true, 512, JSON_THROW_ON_ERROR)['components']['schemas'])->keys();
         $keys->each(function ($key) {
             $entity = ( new EntityGenerator($key, $this->schema($key)) )->entity;

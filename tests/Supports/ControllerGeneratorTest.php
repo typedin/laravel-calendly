@@ -155,7 +155,7 @@ class ControllerGeneratorTest extends TestCase
      */
     public function it_works_for_every_key(): void
     {
-        $content = file_get_contents(__DIR__.'/__fixtures__/api.json');
+        $content = file_get_contents(__DIR__.'/../__fixtures__/api.json');
 
         $keys = collect(json_decode($content, true, 512, JSON_THROW_ON_ERROR)['paths'])
                     ->keys()

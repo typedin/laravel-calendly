@@ -12,7 +12,7 @@ class FormRequestGeneratorFromParametersTest extends TestCase
      */
     private function path(mixed $filter): array
     {
-        $content = file_get_contents(__DIR__.'/__fixtures__/api.json');
+        $content = file_get_contents(__DIR__.'/../__fixtures__/api.json');
 
         return collect(json_decode($content, true, 512, JSON_THROW_ON_ERROR)['paths'][$filter])->all();
     }

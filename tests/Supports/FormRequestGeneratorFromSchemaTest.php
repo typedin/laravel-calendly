@@ -12,7 +12,7 @@ class FormRequestGeneratorFromSchemaTest extends TestCase
      */
     private function schema(mixed $filter): array
     {
-        $content = file_get_contents(__DIR__.'/__fixtures__/api.json');
+        $content = file_get_contents(__DIR__.'/../__fixtures__/api.json');
 
         return collect(json_decode($content, true, 512, JSON_THROW_ON_ERROR)['components']['schemas'][$filter])->all();
     }
