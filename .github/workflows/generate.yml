@@ -1,4 +1,4 @@
-name: PHP Composer
+name: Generate code from api spec
 
 on: [push]
 
@@ -30,6 +30,12 @@ jobs:
 
     - name: Run generate files
       run: composer run-script generate
+
+    - name: PHPUnit (php-actions)
+      uses: php-actions/phpunit@v9
+      with:
+        bootstrap: vendor/autoload.php
+        configuration: ./phpunit.xml.dist
 
     - name: Commit changes
       uses: stefanzweifel/git-auto-commit-action@v4

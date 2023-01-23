@@ -12,5 +12,5 @@ jobs:
             - name: PHPUnit (php-actions)
               uses: php-actions/phpunit@v9
               with:
-                        bootstrap: vendor/autoload.php
-                        configuration: ./phpunit.xml.dist
+                bootstrap: vendor/autoload.php
+                configuration: ./phpunit.xml.dist
