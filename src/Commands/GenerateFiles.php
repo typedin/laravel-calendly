@@ -2,11 +2,20 @@
 
 namespace Typedin\LaravelCalendly\Commands;
 
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Style\SymfonyStyle;
+use Typedin\LaravelCalendly\Actions\GeneratedFileManager;
+use Typedin\LaravelCalendly\Supports\EndpointMapper;
 
+#[AsCommand(
+    name: 'app:generate',
+    description: 'Generate all files from yaml files',
+    hidden: false,
+)]
 class GenerateFiles extends Command
 {
     /**
@@ -23,22 +32,25 @@ class GenerateFiles extends Command
      */
     protected static $defaultDescription = 'generate all files';
 
-    /**
-     * Execute the command
-     *
-     * @return int 0 if everything went fine, or an exit code.
-     */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        echo 'yep';
+        try {
+            (new GeneratedFileManager(new EndpointMapper(file_get_contents($input->getOption('source'))), $input->getOption('destination')))->writeAllFiles();
+        } catch(\Throwable $e) {
+            ( new SymfonyStyle($input, $output) )->error($e->getMessage());
+
+            return Command::FAILURE;
+        }
+
+        ( new SymfonyStyle($input, $output) )->success('All files have been written.');
 
         return Command::SUCCESS;
     }
 
-        protected function configure(): void
-        {
-            $this
-                ->addArgument('url', InputArgument::OPTIONAL, 'Who do you want to greet?')
-                ->addArgument('last_name', InputArgument::OPTIONAL, 'Your last name?');
-        }
+    protected function configure(): void
+    {
+        $this
+            ->addOption('source', 's', InputArgument::OPTIONAL, 'Yaml source from file or url', __DIR__.'/../../doc/openapi.yaml')
+            ->addOption('destination', null, InputArgument::OPTIONAL, 'Destination for the generated files', __DIR__.'/../../src/');
+    }
 }

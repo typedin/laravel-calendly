@@ -32,9 +32,9 @@ class GeneratedFileManager
 
     public function __construct(private readonly EndpointMapper $mapper, private readonly string $path)
     {
+        $this->controllers = new Collection();
         $this->entities = new Collection();
         $this->formRequests = new Collection();
-        $this->controllers = new Collection();
     }
 
     private static function write(string $path, ClassType $class, PhpNamespace $namespace): void
@@ -123,13 +123,14 @@ class GeneratedFileManager
 
     public function writeAllFiles(): void
     {
-        $this->entities->each(function ($entry) {
+        $this->createEntities()
+        ->entities->each(function ($entry) {
             self::write($this->path.'Entities/', $entry['entity'], $entry['namespace']);
         });
-        $this->controllers->each(function ($entry) {
+        $this->createControllers()->controllers->each(function ($entry) {
             self::write($this->path.'/Http/Controllers/', $entry['controller'], $entry['namespace']);
         });
-        $this->formRequests->each(function ($entry) {
+        $this->createFormRequests()->formRequests->each(function ($entry) {
             self::write($this->path.'/Http/Requests/', $entry['form_request'], $entry['namespace']);
         });
     }
