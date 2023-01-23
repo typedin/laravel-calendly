@@ -2,16 +2,16 @@ name: PHP Composer
 
 on: [push]
 
-permissions:
-  contents: read
-
 jobs:
   build:
 
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
+    - name: Checkout code
+      uses: actions/checkout@v3
+      with:
+        ref: ${{ github.head_ref }}
 
     - name: Validate composer.json and composer.lock
       run: composer validate --strict
