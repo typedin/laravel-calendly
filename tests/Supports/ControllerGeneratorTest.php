@@ -72,7 +72,7 @@ class ControllerGeneratorTest extends TestCase
 
         $this->assertEquals(ShowInviteeNoShowRequest::class, $method->getParameters()['request']->getType());
 
-        $this->assertStringContainsString('$response = $this->api->get("/invitee_no_shows/{$uuid}/", $request);', $method->getBody());
+        $this->assertStringContainsString('$response = $this->api->get("/invitee_no_shows/{$request->safe()->only(["uuid"])}/", $request);', $method->getBody());
         $this->assertStringContainsString('return response()->json([', $method->getBody());
         $this->assertStringContainsString('"invitee_no_show" => new \Typedin\LaravelCalendly\Entities\CalendlyInviteeNoShow($response),', $method->getBody());
         $this->assertStringContainsString(']);', $method->getBody());
@@ -101,7 +101,7 @@ class ControllerGeneratorTest extends TestCase
         $method = ( new ControllerGenerator('OrganizationInvitations', $this->endpoints('OrganizationInvitations')) )->controller->getMethod('create');
 
         $this->assertEquals('\Typedin\LaravelCalendly\Http\Requests\StoreOrganizationInvitationRequest', $method->getParameters()['request']->getType());
-        $this->assertStringContainsString('$this->api->post("/organizations/{$uuid}/invitations/", $request);', $method->getBody());
+        $this->assertStringContainsString('$this->api->post("/organizations/{$request->safe()->only(["uuid"])}/invitations/", $request);', $method->getBody());
 
         $this->assertStringContainsString('return response()->json([', $method->getBody());
         $this->assertStringContainsString('"organization_invitation" => new \Typedin\LaravelCalendly\Entities\CalendlyOrganizationInvitation($response),', $method->getBody());
@@ -116,7 +116,7 @@ class ControllerGeneratorTest extends TestCase
         $method = ( new ControllerGenerator('InviteeNoShows', $this->endpoints('InviteeNoShows')) )->controller->getMethods()['destroy'];
 
         $this->assertEquals('\\'.DestroyInviteeNoShowRequest::class, $method->getParameters()['request']->getType());
-        $this->assertStringContainsString('$this->api->delete("/invitee_no_shows/{$uuid}/");', $method->getBody());
+        $this->assertStringContainsString('$this->api->delete("/invitee_no_shows/{$request->safe()->only(["uuid"])}/");', $method->getBody());
 
         $this->assertStringContainsString('return response()->noContent();', $method->getBody());
     }
@@ -129,7 +129,7 @@ class ControllerGeneratorTest extends TestCase
         $method = ( new ControllerGenerator('OrganizationInvitations', $this->endpoints('OrganizationInvitations')) )->controller->getMethods()['destroy'];
 
         $this->assertEquals('\\'.DestroyOrganizationInvitationRequest::class, $method->getParameters()['request']->getType());
-        $this->assertStringContainsString('$this->api->delete("/organizations/{$org_uuid}/invitations/{$uuid}/");', $method->getBody());
+        $this->assertStringContainsString('$this->api->delete("/organizations/{$request->safe()->only(["org_uuid"])}/invitations/{$request->safe()->only(["uuid"])}/");', $method->getBody());
 
         $this->assertStringContainsString('return response()->noContent();', $method->getBody());
     }
