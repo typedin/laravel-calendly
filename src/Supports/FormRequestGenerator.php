@@ -7,8 +7,8 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Nette\PhpGenerator\ClassType;
 use Throwable;
-use Typedin\LaravelCalendly\Supports\DTO\FormRequestDTO;
-use Typedin\LaravelCalendly\Supports\DTO\IndexFormRequestDTO;
+use Typedin\LaravelCalendly\Supports\Configuration\FormRequestProvider;
+use Typedin\LaravelCalendly\Supports\Configuration\IndexFormRequestProvider;
 use Typedin\LaravelCalendly\traits\UseCrudVerbs;
 
 class FormRequestGenerator
@@ -23,7 +23,7 @@ class FormRequestGenerator
      * @param  array<int,mixed>  $path
      * @param  array<int,mixed>  $parameters
      */
-    public function __construct(private readonly FormRequestDTO $dto)
+    public function __construct(private readonly FormRequestProvider $dto)
     {
         $this->http_method = $this->dto->httpMethod();
         $this->validator = new ClassType(sprintf('%s%sRequest', $this->verb(), $this->wantsIndex() ? Str::plural($this->dto->name) : Str::singular($this->dto->name)));
@@ -49,7 +49,7 @@ class FormRequestGenerator
 
     private function wantsIndex(): bool
     {
-        return  $this->dto instanceof IndexFormRequestDTO;
+        return  $this->dto instanceof IndexFormRequestProvider;
     }
 
     private function fieldValidationPairs(): Collection

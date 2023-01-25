@@ -1,8 +1,8 @@
 <?php
 
-namespace Typedin\LaravelCalendly\Supports\DTO;
+namespace Typedin\LaravelCalendly\Supports\Configuration;
 
-class DestroyFormRequestDTO extends FormRequestDTO
+class DestroyFormRequestProvider extends FormRequestProvider
 {
     public function httpMethod(): string
     {

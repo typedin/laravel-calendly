@@ -1,8 +1,8 @@
 <?php
 
-namespace Typedin\LaravelCalendly\Supports\DTO;
+namespace Typedin\LaravelCalendly\Supports\Configuration;
 
-class StoreFormRequestDTO extends FormRequestDTO
+class StoreFormRequestProvider extends FormRequestProvider
 {
     public function httpMethod(): string
     {

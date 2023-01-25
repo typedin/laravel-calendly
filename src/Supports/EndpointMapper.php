@@ -5,10 +5,10 @@ namespace Typedin\LaravelCalendly\Supports;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Symfony\Component\Yaml\Yaml;
-use Typedin\LaravelCalendly\Supports\DTO\DestroyFormRequestDTO;
-use Typedin\LaravelCalendly\Supports\DTO\IndexFormRequestDTO;
-use Typedin\LaravelCalendly\Supports\DTO\ShowFormRequestDTO;
-use Typedin\LaravelCalendly\Supports\DTO\StoreFormRequestDTO;
+use Typedin\LaravelCalendly\Supports\Configuration\DestroyFormRequestProvider;
+use Typedin\LaravelCalendly\Supports\Configuration\IndexFormRequestProvider;
+use Typedin\LaravelCalendly\Supports\Configuration\ShowFormRequestProvider;
+use Typedin\LaravelCalendly\Supports\Configuration\StoreFormRequestProvider;
 
 class EndpointMapper
 {
@@ -63,16 +63,16 @@ class EndpointMapper
                    ->map(function ($value, $path) {
                        if (isset($value['get'])) {
                            if (! (isset($value['parameters']) && ! empty($value['parameters']))) {
-                               return new IndexFormRequestDTO(value: $value, path: $path, name: self::fullname($path));
+                               return new IndexFormRequestProvider(value: $value, path: $path, name: self::fullname($path));
                            }
 
-                           return new ShowFormRequestDTO(value: $value, path: $path, name: self::fullname($path));
+                           return new ShowFormRequestProvider(value: $value, path: $path, name: self::fullname($path));
                        }
                        if (isset($value['post'])) {
-                           return new StoreFormRequestDTO(value: $value, path: $path, name: self::fullname($path));
+                           return new StoreFormRequestProvider(value: $value, path: $path, name: self::fullname($path));
                        }
                        if (isset($value['delete'])) {
-                           return new DestroyFormRequestDTO(value: $value, path: $path, name: self::fullname($path));
+                           return new DestroyFormRequestProvider(value: $value, path: $path, name: self::fullname($path));
                        }
 
                        throw new \Exception('Error Processing Data to buld a FormRequestDTO');

@@ -1,8 +1,8 @@
 <?php
 
-namespace Typedin\LaravelCalendly\Supports\DTO;
+namespace Typedin\LaravelCalendly\Supports\Configuration;
 
-class IndexFormRequestDTO extends FormRequestDTO
+class IndexFormRequestProvider extends FormRequestProvider
 {
     public function httpMethod(): string
     {
