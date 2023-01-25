@@ -74,6 +74,7 @@ class EndpointMapper
                        if (isset($value['delete'])) {
                            return new DestroyFormRequestDTO(value: $value, path: $path, name: self::fullname($path));
                        }
+
                        throw new \Exception('Error Processing Data to buld a FormRequestDTO');
                    });
     }
