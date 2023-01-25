@@ -63,16 +63,16 @@ class EndpointMapper
                    ->map(function ($value, $path) {
                        if (isset($value['get'])) {
                            if (! (isset($value['parameters']) && ! empty($value['parameters']))) {
-                               return new IndexFormRequestDTO(value: $value['get'], path: $path, name: self::fullname($path));
+                               return new IndexFormRequestDTO(value: $value, path: $path, name: self::fullname($path));
                            }
 
-                           return new ShowFormRequestDTO(value: $value['get'], path: $path, name: self::fullname($path));
+                           return new ShowFormRequestDTO(value: $value, path: $path, name: self::fullname($path));
                        }
                        if (isset($value['post'])) {
-                           return new StoreFormRequestDTO(value: $value['post'], path: $path, name: self::fullname($path));
+                           return new StoreFormRequestDTO(value: $value, path: $path, name: self::fullname($path));
                        }
                        if (isset($value['delete'])) {
-                           return new DestroyFormRequestDTO(value: $value['delete'], path: $path, name: self::fullname($path));
+                           return new DestroyFormRequestDTO(value: $value, path: $path, name: self::fullname($path));
                        }
                        throw new \Exception('Error Processing Data to buld a FormRequestDTO');
                    });

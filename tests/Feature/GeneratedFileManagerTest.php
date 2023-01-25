@@ -55,6 +55,6 @@ class GeneratedFileManagerTest extends TestCase
         $mapper = (new EndpointMapper($yaml));
         $form_requests = (new GeneratedFileManager($mapper, $this->destination))->createFormRequests()->formRequests;
 
-        $this->assertCount(34, $form_requests);
+        $this->assertCount(28, $form_requests);
     }
 }
