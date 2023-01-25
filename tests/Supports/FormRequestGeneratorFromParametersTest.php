@@ -3,6 +3,10 @@
 namespace Typedin\LaravelCalendly\Tests\Supports;
 
 use PHPUnit\Framework\TestCase;
+use Typedin\LaravelCalendly\Supports\DTO\DestroyFormRequestDTO;
+use Typedin\LaravelCalendly\Supports\DTO\IndexFormRequestDTO;
+use Typedin\LaravelCalendly\Supports\DTO\ShowFormRequestDTO;
+use Typedin\LaravelCalendly\Supports\DTO\StoreFormRequestDTO;
 use Typedin\LaravelCalendly\Supports\FormRequestGeneratorFromParameters;
 
 class FormRequestGeneratorFromParametersTest extends TestCase
@@ -24,7 +28,7 @@ class FormRequestGeneratorFromParametersTest extends TestCase
      */
     public function it_generates_rules_for_index_form_request($property, $expected_rules): void
     {
-        $validator = ( new FormRequestGeneratorFromParameters('ScheduledEvents', $this->path('/scheduled_events')) )->validator;
+        $validator = ( new FormRequestGeneratorFromParameters(new IndexFormRequestDTO(path: '/scheduled_events', name:'ScheduledEvents', value: $this->path('/scheduled_events'))) )->validator;
 
         $this->assertEquals('Illuminate\Foundation\Http\FormRequest', $validator->getExtends());
         $this->assertEquals('IndexScheduledEventsRequest', $validator->getName());
@@ -52,7 +56,7 @@ class FormRequestGeneratorFromParametersTest extends TestCase
      */
     public function it_generates_rules_for_event_types($property, $expected_rules): void
     {
-        $validator = ( new FormRequestGeneratorFromParameters('EventTypes', $this->path('/event_types')) )->validator;
+        $validator = ( new FormRequestGeneratorFromParameters(new IndexFormRequestDTO(path: '/event_types', name:'EventTypes', value: $this->path('/event_types'))) )->validator;
 
         $this->assertEquals('Illuminate\Foundation\Http\FormRequest', $validator->getExtends());
         $this->assertEquals('IndexEventTypesRequest', $validator->getName());
@@ -77,7 +81,8 @@ class FormRequestGeneratorFromParametersTest extends TestCase
      */
     public function it_generates_show_form_request($property, $expected_rules): void
     {
-        $sut = ( new FormRequestGeneratorFromParameters('ScheduledEvents', $this->path('/scheduled_events/{event_uuid}/invitees/{invitee_uuid}')) );
+        $dto = new ShowFormRequestDTO(path: '/scheduled_events/{event_uuid}/invitees/{invitee_uuid}', name: 'ScheduledEvents', value: $this->path('/scheduled_events/{event_uuid}/invitees/{invitee_uuid}'));
+        $sut = ( new FormRequestGeneratorFromParameters($dto) );
 
         $this->assertEquals('Illuminate\Foundation\Http\FormRequest', $sut->validator->getExtends());
         $this->assertEquals('ShowScheduledEventRequest', $sut->validator->getName());
@@ -99,10 +104,9 @@ class FormRequestGeneratorFromParametersTest extends TestCase
      */
     public function it_generates_post_form_request(): void
     {
-        $path = $this->path('/organizations/{uuid}/invitations');
-        unset($path['get']);
+        $dto = new StoreFormRequestDTO(path: '/organizations/{uuid}/invitations', name: 'OrganizationInviations', value: $this->path('/organizations/{uuid}/invitations'));
 
-        $sut = ( new FormRequestGeneratorFromParameters('OrganizationInviations', $path) );
+        $sut = ( new FormRequestGeneratorFromParameters($dto) );
         $this->assertEquals('Illuminate\Foundation\Http\FormRequest', $sut->validator->getExtends());
 
         $this->assertEquals('StoreOrganizationInviationRequest', $sut->validator->getName());
@@ -119,9 +123,8 @@ class FormRequestGeneratorFromParametersTest extends TestCase
      */
     public function it_generates_destroy_form_request($property, $expected_rules): void
     {
-        $path = $this->path('/organization_memberships/{uuid}');
-        unset($path['get']);
-        $sut = ( new FormRequestGeneratorFromParameters('OrganizationMemberships', $path) );
+        $dto = new DestroyFormRequestDTO(path: '/organization_memberships/{uuid}', name: 'OrganizationMemberships', value: $this->path('/organization_memberships/{uuid}'));
+        $sut = ( new FormRequestGeneratorFromParameters($dto) );
         $this->assertEquals('Illuminate\Foundation\Http\FormRequest', $sut->validator->getExtends());
 
         $this->assertEquals('DestroyOrganizationMembershipRequest', $sut->validator->getName());

@@ -5,9 +5,10 @@ namespace Typedin\LaravelCalendly\Supports;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Symfony\Component\Yaml\Yaml;
-use Typedin\LaravelCalendly\Supports\DTO\DeleteFormRequestDTO;
-use Typedin\LaravelCalendly\Supports\DTO\GetFormRequestDTO;
-use Typedin\LaravelCalendly\Supports\DTO\PostFormRequestDTO;
+use Typedin\LaravelCalendly\Supports\DTO\DestroyFormRequestDTO;
+use Typedin\LaravelCalendly\Supports\DTO\IndexFormRequestDTO;
+use Typedin\LaravelCalendly\Supports\DTO\ShowFormRequestDTO;
+use Typedin\LaravelCalendly\Supports\DTO\StoreFormRequestDTO;
 
 class EndpointMapper
 {
@@ -61,14 +62,19 @@ class EndpointMapper
         return $this->paths()
                    ->map(function ($value, $path) {
                        if (isset($value['get'])) {
-                           return new GetFormRequestDTO(value: $value['get'], path: $path, name: self::fullname($path));
+                           if (! (isset($value['parameters']) && ! empty($value['parameters']))) {
+                               return new IndexFormRequestDTO(value: $value['get'], path: $path, name: self::fullname($path));
+                           }
+
+                           return new ShowFormRequestDTO(value: $value['get'], path: $path, name: self::fullname($path));
                        }
                        if (isset($value['post'])) {
-                           return new PostFormRequestDTO(value: $value['post'], path: $path, name: self::fullname($path));
+                           return new StoreFormRequestDTO(value: $value['post'], path: $path, name: self::fullname($path));
                        }
                        if (isset($value['delete'])) {
-                           return new DeleteFormRequestDTO(value: $value['delete'], path: $path, name: self::fullname($path));
+                           return new DestroyFormRequestDTO(value: $value['delete'], path: $path, name: self::fullname($path));
                        }
+                       throw new \Exception('Error Processing Data to buld a FormRequestDTO');
                    });
     }
 

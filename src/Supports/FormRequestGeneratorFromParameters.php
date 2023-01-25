@@ -7,6 +7,8 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Nette\PhpGenerator\ClassType;
 use Throwable;
+use Typedin\LaravelCalendly\Supports\DTO\FormRequestDTO;
+use Typedin\LaravelCalendly\Supports\DTO\IndexFormRequestDTO;
 use Typedin\LaravelCalendly\traits\UseCrudVerbs;
 
 class FormRequestGeneratorFromParameters
@@ -15,17 +17,16 @@ class FormRequestGeneratorFromParameters
 
     public ClassType $validator;
 
-    private readonly string $http_method;
+    private string $http_method;
 
     /**
      * @param  array<int,mixed>  $path
      * @param  array<int,mixed>  $parameters
      */
-    public function __construct(private readonly string $name, private readonly array $path)
+    public function __construct(private readonly FormRequestDTO $dto)
     {
-        $this->http_method = collect($this->path)->keys()->reject(fn ($value) => $value == 'parameters')->first();
-
-        $this->validator = new ClassType(sprintf('%s%sRequest', $this->verb(), $this->wantsIndex() ? Str::plural($this->name) : Str::singular($this->name)));
+        $this->http_method = $this->dto->httpMethod();
+        $this->validator = new ClassType(sprintf('%s%sRequest', $this->verb(), $this->wantsIndex() ? Str::plural($this->dto->name) : Str::singular($this->dto->name)));
 
         $this->validator->setExtends('Illuminate\Foundation\Http\FormRequest');
         $this->validator->addMethod('rules')->addBody('return [');
@@ -48,36 +49,21 @@ class FormRequestGeneratorFromParameters
 
     private function wantsIndex(): bool
     {
-        // Index :
-        // get without parameters
-        // get + empty top level parameters
-        // Show :
-        // get + top level parameters
-        // Store :
-        // post + top level parameters
-        // Destroy
-        // delete + top level parameters
-        return ! (isset($this->path['parameters']) && ! empty($this->path['parameters']));
+        return  $this->dto instanceof IndexFormRequestDTO;
     }
 
     private function fieldValidationPairs(): Collection
     {
-        $nested_parameters = $this->path[$this->http_method]['requestBody']['content'] ?? [];
-        $rules_from_request_body = collect($nested_parameters)
+        $rules_from_request_body = collect($this->dto->requestBody())
                 ->map(fn ($value) => collect($value['schema']['properties']))
                 ->flatMap(fn ($property) => $property->flatMap(fn ($value, $key) => [$key => $this->buildValidation(
                     value: $value,
                     field: $key,
-                    requirements: $nested_parameters['application/json']['schema']['required'] ?? []
+                    requirements: $this->dto->requestBody()['application/json']['schema']['required'] ?? []
                 )]));
 
-        // TODO
-        // figure out this mess
-        $parameters = $this->path[$this->http_method]['parameters']
-            ?? $this->path['parameters']
-            ?? $this->path;
-        $rules_from_parameters = collect($parameters)
-                ->filter(fn ($value) => isset($value['name']))
+        $rules_from_parameters = collect($this->dto->parameters())
+        ->filter(fn ($value) => isset($value['name']))
                ->flatMap(function ($value) {
                    try {
                        if (isset($value['example'])) {
