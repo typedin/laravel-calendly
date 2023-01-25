@@ -11,11 +11,11 @@ class StoreFormRequestDTO extends FormRequestDTO
 
     public function parameters(): array
     {
-        return $this->value['parameters'];
+        return $this->value['parameters'] ?? [];
     }
 
     public function requestBody(): array
     {
-        return $this->value['post']['requestBody']['content'];
+        return $this->value['post']['requestBody']['content'] ?? [];
     }
 }

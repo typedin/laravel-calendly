@@ -11,7 +11,7 @@ use Typedin\LaravelCalendly\Supports\DTO\FormRequestDTO;
 use Typedin\LaravelCalendly\Supports\DTO\IndexFormRequestDTO;
 use Typedin\LaravelCalendly\traits\UseCrudVerbs;
 
-class FormRequestGeneratorFromParameters
+class FormRequestGenerator
 {
     use UseCrudVerbs;
 

@@ -14,6 +14,10 @@ class IndexFormRequestDTO extends FormRequestDTO
      */
     public function parameters(): array
     {
-        return $this->value[$this->httpMethod()]['parameters'];
+        /* if (! isset($this->value['get']['parameters'])) { */
+        /*     throw new  \Exception(sprintf('Error Processing %s', $this->name)); */
+        /* } */
+
+        return $this->value['get']['parameters'] ?? [];
     }
 }

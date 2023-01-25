@@ -11,6 +11,6 @@ class ShowFormRequestDTO extends FormRequestDTO
 
     public function parameters(): array
     {
-        return $this->value['parameters'];
+        return $this->value['parameters'] ?? [];
     }
 }

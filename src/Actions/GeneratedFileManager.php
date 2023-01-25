@@ -9,9 +9,10 @@ use Nette\PhpGenerator\PhpNamespace;
 use Nette\PhpGenerator\PsrPrinter;
 use Throwable;
 use Typedin\LaravelCalendly\Supports\ControllerGenerator;
+use Typedin\LaravelCalendly\Supports\DTO\FormRequestDTO;
 use Typedin\LaravelCalendly\Supports\EndpointMapper;
 use Typedin\LaravelCalendly\Supports\EntityGenerator;
-use Typedin\LaravelCalendly\Supports\FormRequestGeneratorFromParameters;
+use Typedin\LaravelCalendly\Supports\FormRequestGenerator;
 
 class GeneratedFileManager
 {
@@ -99,8 +100,8 @@ class GeneratedFileManager
 
     public function createFormRequests(): GeneratedFileManager
     {
-        $this->mapper->formRequestDTOS()->each(function ($value) {
-            $request = ( new FormRequestGeneratorFromParameters($value['name'], $value) )->validator;
+        $this->mapper->formRequestDTOS()->each(function (FormRequestDTO $value) {
+            $request = ( new FormRequestGenerator($value) )->validator;
 
             $namespace = $this->createNamespace($request, "Typedin\LaravelCalendly\Http\Requests");
             $this->formRequests->push(['form_request' => self::replaceQualifiersWithImport($request), 'namespace' => $namespace]);
