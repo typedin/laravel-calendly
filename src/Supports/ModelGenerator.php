@@ -4,25 +4,21 @@ namespace Typedin\LaravelCalendly\Supports;
 
 use Illuminate\Support\Str;
 use Nette\PhpGenerator\ClassType;
-use Typedin\LaravelCalendly\Supports\Configuration\FormRequestProvider;
+use Typedin\LaravelCalendly\Supports\Configuration\ModelGeneratorProvider;
 
 class ModelGenerator
 {
     public readonly ClassType $model;
 
-    /**
-     * @param  array<int,mixed>  $path
-     * @param  array<int,mixed>  $parameters
-     */
-    public function __construct(private readonly FormRequestProvider $dto)
+    public function __construct(private readonly ModelGeneratorProvider $provider)
     {
     }
 
-    public static function model(FormRequestProvider $dto): ClassType
+    public static function model(ModelGeneratorProvider $provider): ClassType
     {
-        $model_generator = new ModelGenerator($dto);
+        $model_generator = new ModelGenerator($provider);
 
-        $model = new ClassType(Str::singular($model_generator->dto->name));
+        $model = new ClassType(Str::singular($model_generator->provider->returnType()));
         $model->setExtends('Typedin\LaravelCalendly\Model');
         $model->validate();
 

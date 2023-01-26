@@ -2,7 +2,7 @@
 
 namespace Typedin\LaravelCalendly\Supports\Configuration;
 
-class IndexModelGeneratorProvider extends ModelGeneratorProvider
+class ShowModelGeneratorProvider extends ModelGeneratorProvider
 {
     /**
      * @param  array<int,mixed>  $value
@@ -27,7 +27,7 @@ class IndexModelGeneratorProvider extends ModelGeneratorProvider
 
     public function returnType(): string
     {
-        $lookup = explode('/', $this->value['get']['responses']['200']['content']['application/json']['schema']['properties']['collection']['items']['$ref']);
+        $lookup = explode('/', $this->value['get']['responses']['200']['content']['application/json']['schema']['properties']['resource']['$ref']);
 
         return $this->components['schemas'][end($lookup)]['title'];
     }
