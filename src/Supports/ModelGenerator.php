@@ -84,7 +84,7 @@ class ModelGenerator
             return 'bool';
         }
 
-        return $this->provider->schema()['properties'][$parameter_name]['type'] ?? '';
+        return $this->provider->schema()['properties'][$parameter_name]['type'];
     }
 
     private function generatePropertieDescription(string $property, array $applesauce): string
