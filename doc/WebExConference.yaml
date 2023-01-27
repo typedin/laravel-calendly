@@ -1,0 +1,93 @@
+description: Details about an Event that will take place using a WebEx conference
+type: object
+title: WebEx Conference
+x-examples:
+  Pushed status:
+    type: webex_conference
+    status: pushed
+    join_url: 'https://organization-slug.webex.com/organization-slug/j.php?MTID=m04be557baa4cc8b037b8ff0b59cc5cab'
+    data:
+      id: m04be557baa4cc8b037b8ff0b59cc5cab
+      telephony:
+        callInNumbers:
+          - label: US Toll
+            callInNumber: '14086380986'
+            tollType: toll
+      password: m8BgwrPQb93
+  Failed status:
+    type: webex_conference
+    status: failed
+    join_url: null
+    data: null
+  Processing status:
+    type: webex_conference
+    status: processing
+    join_url: null
+    data: null
+  Initiated status:
+    type: webex_conference
+    status: initiated
+    join_url: null
+    data: null
+properties:
+  type:
+    type: string
+    description: The event location is a WebEx conference
+    enum:
+      - webex_conference
+  status:
+    description: Indicates the current status of the WebEx conference
+    type: string
+    enum:
+      - initiated
+      - processing
+      - pushed
+      - failed
+  join_url:
+    type: string
+    description: WebEx conference meeting url
+    format: uri
+    nullable: true
+  data:
+    description: The conference metadata supplied by GoToMeeting
+    type: object
+    required:
+      - id
+      - telephony
+      - password
+    nullable: true
+    properties:
+      id:
+        type: string
+        description: Canonical reference (unique identifier) for the WebEx conference
+      telephony:
+        type: object
+        required:
+          - callInNumbers
+        properties:
+          callInNumbers:
+            type: array
+            items:
+              type: object
+              properties:
+                label:
+                  type: string
+                  example: US Toll
+                callInNumber:
+                  type: string
+                  example: '14086380986'
+                tollType:
+                  type: string
+                  example: toll
+              required:
+                - label
+                - callInNumber
+                - tollType
+      password:
+        type: string
+        example: m8BgwrPQb93
+required:
+  - type
+  - status
+  - join_url
+  - data

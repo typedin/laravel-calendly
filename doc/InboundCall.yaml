@@ -1,0 +1,15 @@
+description: Invitee will call meeting publisher at the specified phone number
+type: object
+title: Inbound Call
+properties:
+  type:
+    type: string
+    enum:
+      - inbound_call
+    description: "\t\nIndicates that the invitee will call the event host"
+  location:
+    description: The phone number the invitee will use to call the event host (publisher)
+    type: string
+required:
+  - type
+  - location

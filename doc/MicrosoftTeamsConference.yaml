@@ -1,0 +1,72 @@
+description: Meeting will take place in a Microsoft Teams conference
+type: object
+title: Microsoft Teams Conference
+x-examples:
+  Pushed status:
+    type: microsoft_teams_conference
+    join_url: 'https://teams.microsoft.com/l/meetup-join/123'
+    status: pushed
+    data:
+      id: '123456'
+      audioConferencing:
+        conferenceId: '123456'
+        dialinUrl: 'https://dialin.teams.microsoft.com/22f12fa0-499f-435b-bc69-b8de580ba330?id=2425999'
+        tollNumber: '+12525634478'
+  Failed status:
+    type: microsoft_teams_conference
+    join_url: null
+    status: failed
+    data: null
+  Processing status:
+    type: microsoft_teams_conference
+    join_url: null
+    status: processing
+    data: null
+  Initiated status:
+    type: microsoft_teams_conference
+    join_url: null
+    status: initiated
+    data: null
+properties:
+  type:
+    type: string
+    description: The event location is a Zoom conference
+    enum:
+      - microsoft_teams_conference
+  status:
+    type: string
+    description: Indicates the current status of the Microsoft Teams conference
+    enum:
+      - initiated
+      - processing
+      - pushed
+      - failed
+  join_url:
+    nullable: true
+    type: string
+    description: Microsoft Teams meeting url
+    format: uri
+  data:
+    description: The conference metadata supplied by Microsoft Teams
+    nullable: true
+    type: object
+    properties:
+      id:
+        description: The conference ID provided by Microsoft Teams
+        type: string
+      audioConferencing:
+        type: object
+        nullable: true
+        properties:
+          conferenceId:
+            type: string
+          dialinUrl:
+            type: string
+            format: uri
+          tollNumber:
+            type: string
+required:
+  - type
+  - status
+  - join_url
+  - data

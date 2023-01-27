@@ -1,0 +1,16 @@
+description: Use this to describe an existing Calendly-supported event location.
+type: object
+title: Custom Location
+properties:
+  type:
+    type: string
+    enum:
+      - custom
+    description: The event location doesn't fall into a standard category defined by the event host (publisher)
+  location:
+    nullable: true
+    description: The location description provided by the event host (publisher)
+    type: string
+required:
+  - type
+  - location

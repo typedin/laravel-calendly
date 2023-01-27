@@ -1,0 +1,18 @@
+description: Meeting publisher will call the Invitee
+type: object
+title: Outbound Call
+x-examples: {}
+properties:
+  type:
+    type: string
+    enum:
+      - outbound_call
+    description: Indicates that the event host (publisher) will call the invitee
+    example: outbound_call
+  location:
+    type: string
+    nullable: true
+    description: The phone number the event host (publisher) will use to call the invitee
+required:
+  - type
+  - location

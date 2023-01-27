@@ -1,0 +1,20 @@
+description: Information about the physical (in-person) event location
+type: object
+title: In-Person Meeting
+x-examples:
+  Example:
+    type: physical
+    location: Calendly Office
+properties:
+  type:
+    type: string
+    enum:
+      - physical
+    description: Indicates that the event will be an in-person meeting.
+  location:
+    type: string
+    description: The physical location specified by the event host (publisher)
+    example: Calendly Office
+required:
+  - type
+  - location

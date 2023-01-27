@@ -1,0 +1,19 @@
+description: The polymorphic base type for an event location that Calendly supports
+nullable: true
+oneOf:
+  - $ref: locations/InPersonMeeting.yaml
+  - $ref: locations/OutboundCall.yaml
+  - $ref: locations/InboundCall.yaml
+  - $ref: locations/GoogleConference.yaml
+  - $ref: locations/ZoomConference.yaml
+  - $ref: locations/GotoMeetingConference.yaml
+  - $ref: locations/MicrosoftTeamsConference.yaml
+  - $ref: locations/CustomLocation.yaml
+  - $ref: locations/InviteeSpecifiedLocation.yaml
+  - $ref: locations/WebExConference.yaml
+title: Location
+x-examples:
+  Example:
+    type: physical
+    location: string
+type: object

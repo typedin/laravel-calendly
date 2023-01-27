@@ -1,0 +1,100 @@
+description: Meeting will take place in a Zoom conference
+type: object
+title: Zoom Conference
+x-examples:
+  Pushed status:
+    type: zoom
+    join_url: 'https://zoom.us/123456'
+    status: pushed
+    data:
+      id: 123456789
+      settings:
+        global_dial_in_numbers:
+          - number: +1 1234567890
+            country: US
+            type: toll
+          - number: +1 0987654321
+            country: US
+            type: toll
+      extra:
+        intl_numbers_url: 'https://zoom.us/123456'
+      password: '123456'
+  Failed status:
+    type: zoom
+    join_url: null
+    status: failed
+    data: null
+  Processing status:
+    type: zoom
+    join_url: null
+    status: processing
+    data: null
+  Initiated status:
+    type: zoom
+    join_url: null
+    status: initiated
+    data: null
+properties:
+  type:
+    type: string
+    enum:
+      - zoom_conference
+    description: The event location is a Zoom conference
+  status:
+    type: string
+    description: Indicates the current status of the Zoom conference
+    enum:
+      - initiated
+      - processing
+      - pushed
+      - failed
+  join_url:
+    nullable: true
+    type: string
+    description: Zoom meeting url
+    format: uri
+  data:
+    description: The conference metadata supplied by Zoom
+    nullable: true
+    type: object
+    properties:
+      id:
+        description: The conference ID provided by Zoom
+        type: string
+      settings:
+        type: object
+        properties:
+          global_dial_in_numbers:
+            type: array
+            items:
+              type: object
+              properties:
+                number:
+                  type: string
+                  description: Phone number
+                country:
+                  type: string
+                  description: Country code
+                type:
+                  type: string
+                city:
+                  type: string
+                country_name:
+                  type: string
+      extra:
+        description: ''
+        type: object
+        properties:
+          intl_numbers_url:
+            type: string
+            description: Zoom International Dial-in Numbers URL
+            format: uri
+      password:
+        type: string
+        description: Zoom meeting password
+        format: password
+required:
+  - type
+  - status
+  - join_url
+  - data

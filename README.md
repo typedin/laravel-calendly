@@ -6,7 +6,19 @@ This code is not ment to be used. PLEASE don't use it in production.
 
 Initial url for the api is [here](https://stoplight.io/api/v1/projects/calendly/api-docs/nodes/reference/calendly-api/openapi.yaml).
 This api follows [those specs](https://stoplight.io/api/v1/projects/calendly/api-docs/nodes/reference/calendly-api/openapi.yaml).
-
+Further yaml can be get here:
+- https://stoplight.io/api/v1/projects/calendly/api-docs/nodes/reference/calendly-api/models/Location.yaml
+- https://stoplight.io/api/v1/projects/calendly/api-docs/nodes/reference/calendly-api/locations/InPersonMeeting.yaml
+- https://stoplight.io/api/v1/projects/calendly/api-docs/nodes/reference/calendly-api/locations/OutboundCall.yaml
+- https://stoplight.io/api/v1/projects/calendly/api-docs/nodes/reference/calendly-api/locations/InboundCall.yaml
+- https://stoplight.io/api/v1/projects/calendly/api-docs/nodes/reference/calendly-api/locations/GoogleConference.yaml
+- https://stoplight.io/api/v1/projects/calendly/api-docs/nodes/reference/calendly-api/locations/ZoomConference.yaml
+- https://stoplight.io/api/v1/projects/calendly/api-docs/nodes/reference/calendly-api/locations/GotoMeetingConference.yaml
+- https://stoplight.io/api/v1/projects/calendly/api-docs/nodes/reference/calendly-api/locations/MicrosoftTeamsConference.yaml
+- https://stoplight.io/api/v1/projects/calendly/api-docs/nodes/reference/calendly-api/locations/CustomLocation.yaml
+- https://stoplight.io/api/v1/projects/calendly/api-docs/nodes/reference/calendly-api/locations/InviteeSpecifiedLocation.yaml
+- https://stoplight.io/api/v1/projects/calendly/api-docs/nodes/reference/calendly-api/locations/WebExConference.yaml
+penapi.yaml
 # Interact with Calendly API with Laravel
 
 ![Testing](https://github.com/typedin/laravel-calendly/actions/workflows/main.yml/badge.svg?style=flat-square) ![Building](https://github.com/typedin/laravel-calendly/actions/workflows/generate.yml/badge.svg?style=flat-square) [![Latest Version on Packagist](https://img.shields.io/packagist/v/typedin/laravel-calendly.svg?style=flat-square)](https://packagist.org/packages/typedin/laravel-calendly) [![Total Downloads](https://img.shields.io/packagist/dt/typedin/laravel-calendly.svg?style=flat-square)](https://packagist.org/packages/typedin/laravel-calendly)

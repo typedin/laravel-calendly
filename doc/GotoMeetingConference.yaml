@@ -1,0 +1,62 @@
+description: Details about an Event that will take place using a GotoMeeting conference
+type: object
+title: GoToMeeting Conference
+x-examples:
+  Pushed status:
+    type: gotomeeting
+    status: pushed
+    join_url: 'https://www.gotomeeting.com/join/123456'
+    data:
+      uniqueMeetingId: 123456
+      conferenceCallInfo: |-
+        US: +1 (123) 456-789
+        Access Code: 123-456-789
+  Failed status:
+    type: gotomeeting
+    status: failed
+    join_url: null
+    data: null
+  Processing status:
+    type: gotomeeting
+    status: processing
+    join_url: null
+    data: null
+  Initiated status:
+    type: gotomeeting
+    status: initiated
+    join_url: null
+    data: null
+properties:
+  type:
+    type: string
+    description: The event location is a GoToMeeting conference
+    enum:
+      - gotomeeting
+  status:
+    description: Indicates the current status of the GoToMeeting conference
+    type: string
+    enum:
+      - initiated
+      - processing
+      - pushed
+      - failed
+  join_url:
+    nullable: true
+    type: string
+    description: GoToMeeting conference meeting url
+    format: uri
+  data:
+    nullable: true
+    description: The conference metadata supplied by GoToMeeting
+    type: object
+    properties:
+      uniqueMeetingId:
+        type: number
+        description: Canonical reference (unique identifier) for the GoToMeeting conference
+      conferenceCallInfo:
+        type: string
+required:
+  - type
+  - status
+  - join_url
+  - data

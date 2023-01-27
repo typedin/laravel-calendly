@@ -1,0 +1,19 @@
+description: Information about an event location that’s specified by the invitee.
+type: object
+title: Invitee Specified Location
+properties:
+  type:
+    type: string
+    enum:
+      - ask_invitee
+    description: The event location selected by the invitee
+  location:
+    description: The event location description provided by the invitee
+    type: string
+required:
+  - type
+  - location
+x-examples:
+  Example:
+    type: ask_invitee
+    location: string

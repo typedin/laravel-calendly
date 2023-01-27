@@ -1,0 +1,43 @@
+description: Details about an Event that will take place using a Google Meet / Hangout conference
+type: object
+title: Google Conference
+x-examples:
+  Pushed status:
+    type: google_conference
+    status: pushed
+    join_url: 'https://calendly.com/events/ABCDABCDABCDABCD/google_meet'
+  Processing status:
+    type: google_conference
+    status: processing
+    join_url: null
+  Failed status:
+    type: google_conference
+    status: failed
+    join_url: 'https://calendly.com/events/ABCDABCDABCDABCD/google_meet'
+  Initiated status:
+    type: google_conference
+    status: initiated
+    join_url: 'https://calendly.com/events/ABCDABCDABCDABCD/google_meet'
+properties:
+  type:
+    type: string
+    enum:
+      - google_conference
+    description: The event location is a Google Meet or Hangouts conference
+  status:
+    type: string
+    enum:
+      - initiated
+      - processing
+      - pushed
+      - failed
+    description: Indicates the current status of the Google conference
+  join_url:
+    type: string
+    nullable: true
+    description: Google conference meeting url
+    format: uri
+required:
+  - type
+  - status
+  - join_url
