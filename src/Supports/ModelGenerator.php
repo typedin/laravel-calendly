@@ -89,7 +89,7 @@ class ModelGenerator
 
     private function generatePropertieDescription(string $property, array $applesauce): string
     {
-        if (! isset($this->provider->schema()['properties'][$property]['type'])) {
+        if ($this->paramaterIsRef($property)) {
             if ($this->provider->schema()['properties'][$property]['$ref'] == 'models/Location.yaml') {
                 return '';
             }
