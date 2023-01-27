@@ -12,7 +12,7 @@ class EntityGeneratorTest extends TestCase
     /**
      * @return array<TKey,TValue>
      */
-    private function schema($filter): array
+    private function schema(string $filter): array
     {
         $content = file_get_contents(__DIR__.'/../__fixtures__/api.json');
 

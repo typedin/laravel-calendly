@@ -31,4 +31,14 @@ class IndexModelGeneratorProvider extends ModelGeneratorProvider
 
         return $this->components['schemas'][end($lookup)]['title'];
     }
+
+    public function schema(): array
+    {
+        return $this->components['schemas'][$this->returnType()];
+    }
+
+    public function schemas(): array
+    {
+        return $this->components['schemas'];
+    }
 }

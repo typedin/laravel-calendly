@@ -48,8 +48,14 @@ class ModelGeneratorTest extends TestCase
 
         $model = ModelGenerator::model($provider);
         // in the controller handle responses
-        $this->assertEquals('Typedin\LaravelCalendly\Model', $model->getExtends());
+
         $this->assertEquals('Event', $model->getName());
+        $this->assertEquals('Typedin\LaravelCalendly\Models', $model->getNamespace()->getName());
+
+        $cancellation = $model->getProperties()['cancellation'];
+        $this->assertEquals('Cancellation', $cancellation->getType());
+        $this->assertStringContainsString('@var Typedin\LaravelCalendly\Models\Cancellation $cancellation', $cancellation->getComment());
+        $this->assertStringContainsString('Provides data pertaining to the cancellation of the Event', $cancellation->getComment());
     }
 
     /** @test */
@@ -64,7 +70,13 @@ class ModelGeneratorTest extends TestCase
 
         $model = ModelGenerator::model($provider);
         // in the controller handle responses
-        $this->assertEquals('Typedin\LaravelCalendly\Model', $model->getExtends());
         $this->assertEquals('User', $model->getName());
+
+        $this->assertCount(10, $model->getProperties());
+
+        $uri = $model->getProperties()['uri'];
+        $this->assertEquals('string', $uri->getType());
+        $this->assertStringContainsString('Canonical reference (unique identifier) for the user', $uri->getComment());
+        $this->assertStringContainsString('@var string $uri', $uri->getComment());
     }
 }
