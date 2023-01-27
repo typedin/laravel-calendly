@@ -33,12 +33,12 @@ class ModelGenerator
     private function generateConstructor(): ModelGenerator
     {
         $this->model->addMethod('__construct');
-        collect($this->provider->schema()['properties'])->each(function ($property, $property_name) {
+        collect($this->provider->schema()['properties'])->each(function ($property_value, $property_name) {
             $this->model
                     ->getMethod('__construct')
                     ->addParameter($property_name)
-                    ->setNullable($this->isNullable($property_name, $property))
-                    ->setType($this->getParameterType($property_name, $property));
+                    ->setNullable($this->isNullable($property_name, $property_value))
+                    ->setType($this->getParameterType($property_name, $property_value));
 
             $this->model->getMethod('__construct')->addBody(sprintf('$this->%s = $%s;', $property_name, $property_name));
         });
@@ -48,25 +48,15 @@ class ModelGenerator
 
     private function generateProperties(): ModelGenerator
     {
-        collect($this->provider->schema()['properties'])->each(function ($property, $property_name) {
+        collect($this->provider->schema()['properties'])->each(function ($property_value, $property_name) {
             $this->model
                     ->addProperty($property_name)
-                    ->setType($this->getParameterType($property_name, $property))
-                    ->addComment($this->generatePropertieDescription($property_name, $property))
-                    ->addComment($this->generateVarComment($property_name, $property));
+                    ->setType($this->getParameterType($property_name, $property_value))
+                    ->addComment($this->generatePropertieDescription($property_name, $property_value))
+                    ->addComment($this->generateVarComment($property_name, $property_value));
         });
 
         return $this;
-    }
-
-    private function isNullable(string $parameter_name): bool
-    {
-        return ! in_array($parameter_name, $this->provider->schema()['required']);
-    }
-
-    private function paramaterIsRef(string $parameter_name): bool
-    {
-        return isset($this->provider->schema()['properties'][$parameter_name]['$ref']);
     }
 
     private function getParameterType(string $parameter_name): string
@@ -87,14 +77,13 @@ class ModelGenerator
         return $this->provider->schema()['properties'][$parameter_name]['type'];
     }
 
-    private function generatePropertieDescription(string $property, array $applesauce): string
+    private function generatePropertieDescription(string $property): string
     {
         if ($this->paramaterIsRef($property)) {
-            if ($this->provider->schema()['properties'][$property]['$ref'] == 'models/Location.yaml') {
+            if ($this->provider->getRef($property) == 'models/Location.yaml') {
                 return '';
             }
-
-            $lookup = explode('/', $applesauce['$ref']);
+            $lookup = explode('/', $this->provider->getRef($property));
 
             return $this->provider->schemas()[Str::ucfirst(end($lookup))]['description'];
         }
@@ -104,22 +93,36 @@ class ModelGenerator
 
     private function generateVarComment(string $property): string
     {
-        if (isset($this->provider->schema()['properties'][$property]['enum'])) {
+        $local_type = $this->provider->schema()['properties'][$property]['type'] ?? '';
+
+        if ($this->isEnum($property)) {
             $enum = '<'.implode('|', $this->provider->schema()['properties'][$property]['enum']).'>';
-
-            return sprintf('@var %s $%s', $this->provider->schema()['properties'][$property]['type'].$enum, $property);
+            $local_type = $local_type.$enum;
         }
-        if ($this->isNullable($property)) {
-            if (! isset($this->provider->schema()['properties'][$property]['type'])) {
-                return sprintf('@var Typedin\LaravelCalendly\Models\%s $%s', Str::ucfirst($property), $property);
-            }
-
-            return sprintf('@var %s $%s', $this->provider->schema()['properties'][$property]['type'].'|null', $property);
-        }
-        if (isset($this->provider->schema()['properties'][$property]['type'])) {
-            return sprintf('@var %s $%s', $this->provider->schema()['properties'][$property]['type'], $property);
+        if ($this->isReference($property)) {
+            $local_type = 'Typedin\LaravelCalendly\Models\\'.Str::ucfirst($property);
         }
 
-        return '';
+        return sprintf('@var %s $%s', $local_type, $property);
+    }
+
+    private function isNullable(string $parameter_name): bool
+    {
+        return ! in_array($parameter_name, $this->provider->schema()['required']);
+    }
+
+    private function paramaterIsRef(string $parameter_name): bool
+    {
+        return (bool) $this->provider->getRef($parameter_name);
+    }
+
+    private function isReference(string $property): bool
+    {
+        return $this->isNullable($property) && ! isset($this->provider->schema()['properties'][$property]['type']);
+    }
+
+    private function isEnum(string $property): bool
+    {
+        return isset($this->provider->schema()['properties'][$property]['enum']);
     }
 }

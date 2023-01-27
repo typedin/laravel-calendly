@@ -17,4 +17,15 @@ abstract class ModelGeneratorProvider
     abstract public function returnType(): string;
 
     abstract public function schema(): array;
+
+    abstract public function schemas(): array;
+
+    public function getRef(string $property): string
+    {
+        if (! isset($this->schema()['properties'][$property]['$ref'])) {
+            return '';
+        }
+
+        return $this->schema()['properties'][$property]['$ref'];
+    }
 }
