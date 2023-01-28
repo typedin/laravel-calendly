@@ -10,82 +10,82 @@ class Event
 {
     /**
      * Canonical reference (unique identifier) for the resource
-     * @var string $uri
+     * @var string
      */
     public string $uri;
 
     /**
      * The event name
-     * @var string $name
+     * @var string
      */
     public ?string $name;
 
     /**
      * Indicates if the event is "active" or "canceled"
-     * @var string<active|canceled> $status
+     * @var string<active|canceled>
      */
     public string $status;
 
     /**
      * The moment the event was scheduled to start in UTC time (e.g. "2020-01-02T03:04:05.678123Z").
-     * @var string $start_time
+     * @var string
      */
     public string $start_time;
 
     /**
      * The moment the event was scheduled to end in UTC time (e.g. "2020-01-02T03:04:05.678123Z")
-     * @var string $end_time
+     * @var string
      */
     public string $end_time;
 
     /**
      * The event type associated with this event
-     * @var string $event_type
+     * @var string
      */
     public string $event_type;
 
     /**
      * The polymorphic base type for an event location that Calendly supports
-     * @var  $location
+     * @var 
      */
     public Location $location;
 
-    /** @var object $invitees_counter */
+    /** @var object */
     public object $invitees_counter;
 
     /**
      * The moment when the event was created (e.g. "2020-01-02T03:04:05.678123Z")
-     * @var string $created_at
+     * @var string
      */
     public string $created_at;
 
     /**
      * The moment when the event was last updated (e.g. "2020-01-02T03:04:05.678123Z")
-     * @var string $updated_at
+     * @var string
      */
     public string $updated_at;
 
     /**
      * Event membership list
-     * @var array $event_memberships
+     * @var array
      */
     public array $event_memberships;
 
     /**
      * Additional people added to an event by an invitee
-     * @var array $event_guests
+     * @var array
      */
     public array $event_guests;
 
     /**
      * Provides data pertaining to the cancellation of the Event
-     * @var Typedin\LaravelCalendly\Models\Cancellation $cancellation
+     * @var Typedin\LaravelCalendly\Models\Cancellation
      */
     public ?Cancellation $cancellation;
 
     /**
      * Information about the calendar event from the calendar provider.
-     * @var  $calendar_event
+     * @var 
      */
     public CalendarEvent $calendar_event;
 

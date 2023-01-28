@@ -6,19 +6,19 @@ class InviteeNoShow
 {
     /**
      * Canonical reference (unique identifier) for the no show
-     * @var string $uri
+     * @var string
      */
     public string $uri;
 
     /**
      * Canonical reference (unique identifier) for the associated Invitee
-     * @var string $invitee
+     * @var string
      */
     public string $invitee;
 
     /**
      * The moment when the no show was created
-     * @var string $created_at
+     * @var string
      */
     public string $created_at;
 
