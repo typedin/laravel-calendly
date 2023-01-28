@@ -43,7 +43,7 @@ class Event
     /**
      * The polymorphic base type for an event location that Calendly supports
      *
-     * @var
+     * @var 
      */
     public Location $location;
 
@@ -77,7 +77,7 @@ class Event
     /**
      * Information about the calendar event from the calendar provider.
      *
-     * @var
+     * @var 
      */
     public CalendarEvent $calendar_event;
 
