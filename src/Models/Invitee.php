@@ -67,7 +67,7 @@ class Invitee
     /**
      * The UTM and Salesforce tracking parameters associated with an Invitee
      *
-     * @var 
+     * @var
      */
     public InviteeTracking $tracking;
 
