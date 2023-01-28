@@ -6,18 +6,13 @@ on:
       - main
 jobs:
   build:
-
-    runs-on: ubuntu-latest
     name: Build and Push
+    runs-on: ubuntu-latest
     steps:
     - name: Checkout code
       uses: actions/checkout@v3
-      with:
-        ref: ${{ github.head_ref }}
-
     - name: Validate composer.json and composer.lock
       run: composer validate --strict
-
     - name: Cache Composer packages
       id: composer-cache
       uses: actions/cache@v3
@@ -26,24 +21,19 @@ jobs:
         key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
         restore-keys: |
           ${{ runner.os }}-php-
-
     - name: Install dependencies
       run: composer install --prefer-dist --no-progress
-
     - name: Run generate files
       run: composer run-script generate
-
     - name: PHPUnit (php-actions)
       uses: php-actions/phpunit@v9
       with:
         bootstrap: vendor/autoload.php
         configuration: ./phpunit.xml.dist
-
     - name: Push
       uses: s0/git-publish-subdir-action@develop
       env:
         REPO: self
         BRANCH: build # The branch name where you want to push the assets
-        FOLDER: build # The directory where your assets are generated
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # GitHub will automatically add this - you don't need to bother getting a token
         MESSAGE: "Build: ({sha}) {msg}" # The commit message
