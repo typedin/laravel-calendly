@@ -52,6 +52,7 @@ class ModelGenerator
             $this->model
                     ->addProperty($property_name)
                     ->setType($this->getParameterType($property_name, $property_value))
+                    ->setNullable($this->isNullable($property_name, $property_value))
                     ->addComment($this->generatePropertieDescription($property_name, $property_value))
                     ->addComment($this->generateVarComment($property_name, $property_value));
         });
@@ -108,6 +109,16 @@ class ModelGenerator
 
     private function isNullable(string $parameter_name): bool
     {
+        if (isset($this->provider->schema()['properties'][$parameter_name]['nullable'])) {
+            if ($parameter_name == 'avatar_url') {
+                return $this->provider->schema()['properties'][$parameter_name]['nullable'];
+
+                return  true;
+            }
+
+            return $this->provider->schema()['properties'][$parameter_name]['nullable'];
+        }
+
         return ! in_array($parameter_name, $this->provider->schema()['required']);
     }
 

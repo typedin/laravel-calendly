@@ -6,6 +6,7 @@ use PHPUnit\Framework\TestCase;
 use TValue;
 use Typedin\LaravelCalendly\Supports\Configuration\IndexModelGeneratorProvider;
 use Typedin\LaravelCalendly\Supports\Configuration\ShowModelGeneratorProvider;
+use Typedin\LaravelCalendly\Supports\Configuration\StoreModelGeneratorProvider;
 use Typedin\LaravelCalendly\Supports\ModelGenerator;
 
 class ModelGeneratorTest extends TestCase
@@ -58,8 +59,17 @@ class ModelGeneratorTest extends TestCase
         $this->assertStringContainsString('Provides data pertaining to the cancellation of the Event', $cancellation->getComment());
     }
 
-    /** @test */
-    public function it_generates_models_for_show(): void
+    /**
+     * @dataProvider showProvider
+     *
+     * @test
+     *
+     * @param  string  $parameterName
+     * @param  string  $type
+     * @param  bool  $isNullable
+     * @param  array<int,string>  $comments
+     */
+    public function it_generates_models_for_show($parameterName, $isNullable, $type, $comments = []): void
     {
         $provider = new ShowModelGeneratorProvider(
             path: '/users/{uuid}',
@@ -69,14 +79,125 @@ class ModelGeneratorTest extends TestCase
         );
 
         $model = ModelGenerator::model($provider);
-        // in the controller handle responses
+
         $this->assertEquals('User', $model->getName());
 
-        $this->assertCount(10, $model->getProperties());
+        $this->assertEquals($type, $model->getProperty($parameterName)->getType());
+        $this->assertEquals($type, $model->getMethod('__construct')->getParameters()[$parameterName]->getType());
+        $this->assertEquals($isNullable, $model->getProperty($parameterName)->isNullable());
+        $this->assertEquals($isNullable, $model->getMethod('__construct')->getParameters()[$parameterName]->isNullable());
 
-        $uri = $model->getProperties()['uri'];
-        $this->assertEquals('string', $uri->getType());
-        $this->assertStringContainsString('Canonical reference (unique identifier) for the user', $uri->getComment());
-        $this->assertStringContainsString('@var string $uri', $uri->getComment());
+        collect($comments)->each(
+            fn ($comment) => $this->assertStringContainsString($comment, $model->getProperty($parameterName)->getComment())
+        );
+    }
+
+    /**
+     * @return array<int,array<int,mixed>>
+     */
+    private function showProvider(): array
+    {
+        return [
+            [
+                'uri',  false, 'string', ['Canonical reference (unique identifier) for the user', '@var string $uri'],
+            ],
+            [
+                'name',  false, 'string', ["The user's name (human-readable format)",  '@var string $name',
+                ],
+            ],
+            [
+                'slug',  false, 'string', ["The portion of URL for the user's scheduling page (where invitees book sessions), rendered in a human-readable format"],
+            ],
+            [
+                'email',  false, 'string',
+            ],
+            [
+                'scheduling_url',  false, 'string',
+            ],
+            [
+                'timezone',  false, 'string',
+            ],
+            [
+                'avatar_url',  true, 'string',
+            ],
+            [
+                'created_at',  false, 'string',
+            ],
+            [
+                'updated_at',  false, 'string',
+            ],
+            [
+                'current_organization',  false, 'string',
+            ],
+        ];
+    }
+
+    /**
+     * @dataProvider storeProvider
+     *
+     *  @test
+     */
+    public function it_generates_models_for_store(string $parameterName, bool $isNullable, string $type, array $comments = []): void
+    {
+        $provider = new StoreModelGeneratorProvider(
+            path: '/webhook_subscriptions',
+            name:'WebhookSubscriptions',
+            value: $this->path('/webhook_subscriptions'),
+            components: $this->components()
+        );
+
+        $model = ModelGenerator::model($provider);
+        $this->assertEquals('WebhookSubscription', $model->getName());
+
+        $this->assertEquals($type, $model->getProperty($parameterName)->getType());
+        $this->assertEquals($type, $model->getMethod('__construct')->getParameters()[$parameterName]->getType());
+        $this->assertEquals($isNullable, $model->getProperty($parameterName)->isNullable());
+        $this->assertEquals($isNullable, $model->getMethod('__construct')->getParameters()[$parameterName]->isNullable());
+
+        collect($comments)->each(
+            fn ($comment) => $this->assertStringContainsString($comment, $model->getProperty($parameterName)->getComment())
+        );
+    }
+
+    /**
+     * @return array<int,array<int,mixed>>
+     */
+    private function storeProvider(): array
+    {
+        return [
+            [
+                'uri',  false, 'string',
+            ],
+            [
+                'callback_url',  false, 'string',
+            ],
+            [
+                'created_at',  false, 'string',
+            ],
+            [
+                'updated_at',  false, 'string',
+            ],
+            [
+                'retry_started_at',  true, 'string',
+            ],
+            [
+                'state',  false, 'string',
+            ],
+            [
+                'events',  false, 'array',
+            ],
+            [
+                'scope',  false, 'string',
+            ],
+            [
+                'organization',  false, 'string',
+            ],
+            [
+                'user',  true, 'string',
+            ],
+            [
+                'creator',  true, 'string',
+            ],
+        ];
     }
 }

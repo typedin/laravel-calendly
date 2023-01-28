@@ -4,14 +4,6 @@ namespace Typedin\LaravelCalendly\Supports\Configuration;
 
 class ShowModelGeneratorProvider extends ModelGeneratorProvider
 {
-    /**
-     * @param  array<int,mixed>  $value
-     * @param  array<int,mixed>  $components
-     */
-    public function __construct(public string $path, public string $name, public array $value, public array $components)
-    {
-    }
-
     public function httpMethod(): string
     {
         return 'get';
