@@ -2,11 +2,11 @@
 
 namespace Typedin\LaravelCalendly\Http\Controllers;
 
-use CalendlyApiInterface;
-use Controller;
-use JsonResponse;
-use StoreScheduledEventCancellationRequest;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Routing\Controller;
+use Typedin\LaravelCalendly\Contracts\CalendlyApiInterface;
 use Typedin\LaravelCalendly\Entities\CalendlyScheduledEventCancellation;
+use Typedin\LaravelCalendly\Http\Requests\StoreScheduledEventCancellationRequest;
 
 class CalendlyScheduledEventCancellationsController extends Controller
 {

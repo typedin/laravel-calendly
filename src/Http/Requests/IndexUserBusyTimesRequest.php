@@ -2,9 +2,7 @@
 
 namespace Typedin\LaravelCalendly\Http\Requests;
 
-use FormRequest;
-
-class IndexUserBusyTimesRequest extends FormRequest
+class IndexUserBusyTimesRequest extends Illuminate\Foundation\Http\FormRequest
 {
     public function rules(): array
     {

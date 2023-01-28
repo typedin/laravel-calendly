@@ -2,11 +2,11 @@
 
 namespace Typedin\LaravelCalendly\Http\Controllers;
 
-use CalendlyApiInterface;
-use Controller;
-use JsonResponse;
-use StoreSchedulingLinkRequest;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Routing\Controller;
+use Typedin\LaravelCalendly\Contracts\CalendlyApiInterface;
 use Typedin\LaravelCalendly\Entities\CalendlySchedulingLink;
+use Typedin\LaravelCalendly\Http\Requests\StoreSchedulingLinkRequest;
 
 class CalendlySchedulingLinksController extends Controller
 {

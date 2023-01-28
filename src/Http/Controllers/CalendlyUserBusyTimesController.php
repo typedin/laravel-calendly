@@ -2,11 +2,11 @@
 
 namespace Typedin\LaravelCalendly\Http\Controllers;
 
-use CalendlyApiInterface;
-use Controller;
-use IndexUserBusyTimesRequest;
-use JsonResponse;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Routing\Controller;
+use Typedin\LaravelCalendly\Contracts\CalendlyApiInterface;
 use Typedin\LaravelCalendly\Entities\CalendlyUserBusyTime;
+use Typedin\LaravelCalendly\Http\Requests\IndexUserBusyTimesRequest;
 
 class CalendlyUserBusyTimesController extends Controller
 {

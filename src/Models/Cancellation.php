@@ -6,19 +6,17 @@ class Cancellation
 {
     /**
      * Name of the person whom canceled
-     *
-     * @var string
+     * @var string $canceled_by
      */
     public string $canceled_by;
 
     /**
      * Reason that the cancellation occurred
-     *
-     * @var string
+     * @var string $reason
      */
     public ?string $reason;
 
-    /** @var string<host|invitee> */
+    /** @var string<host|invitee> $canceler_type */
     public string $canceler_type;
 
     public function __construct(string $canceled_by, ?string $reason, string $canceler_type)

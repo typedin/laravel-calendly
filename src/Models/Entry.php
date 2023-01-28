@@ -8,8 +8,7 @@ class Entry
 {
     /**
      * The date and time of the entry (format: "2020-01-02T03:04:05.678Z").
-     *
-     * @var string
+     * @var string $occurred_at
      */
     public string $occurred_at;
 
@@ -56,22 +55,22 @@ class Entry
      */
     public ?Actor $actor;
 
-    /** @var object */
+    /** @var object $details */
     public object $details;
 
-    /** @var string */
+    /** @var string $fully_qualified_name */
     public string $fully_qualified_name;
 
-    /** @var string */
+    /** @var string $uri */
     public string $uri;
 
-    /** @var string */
+    /** @var string $namespace */
     public string $namespace;
 
-    /** @var string */
+    /** @var string $action */
     public string $action;
 
-    /** @var string */
+    /** @var string $organization */
     public string $organization;
 
     public function __construct(

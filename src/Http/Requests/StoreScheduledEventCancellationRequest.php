@@ -2,9 +2,7 @@
 
 namespace Typedin\LaravelCalendly\Http\Requests;
 
-use FormRequest;
-
-class StoreScheduledEventCancellationRequest extends FormRequest
+class StoreScheduledEventCancellationRequest extends Illuminate\Foundation\Http\FormRequest
 {
     public function rules(): array
     {

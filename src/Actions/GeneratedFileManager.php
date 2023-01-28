@@ -43,7 +43,7 @@ class GeneratedFileManager
     {
         $this->mapper->modelProviders()->map(function (ModelGeneratorProvider $provider) {
             try {
-                return self::replaceQualifiersWithImport(ModelGenerator::model($provider));
+                return ModelGenerator::model($provider);
             } catch (\Throwable $th) {
                 // this returns null
             }
@@ -58,7 +58,7 @@ class GeneratedFileManager
     public function createFormRequests(): GeneratedFileManager
     {
         $this->mapper->formRequestProviders()->each(function (FormRequestProvider $provider) {
-            $request = self::replaceQualifiersWithImport(FormRequestGenerator::formRequest($provider));
+            $request = FormRequestGenerator::formRequest($provider);
             $this->formRequests->push([
                 'form_request' => $request,
                 'namespace' => $this->createNamespace($request, "Typedin\LaravelCalendly\Http\Requests"),
@@ -74,7 +74,7 @@ class GeneratedFileManager
             $controller = ControllerGenerator::controller($provider);
 
             $this->controllers->push([
-                'controller' => self::replaceQualifiersWithImport($controller),
+                'controller' => $controller,
                 'namespace' => $this->createNamespace($controller, "Typedin\LaravelCalendly\Http\Controllers"),
             ]);
         });
@@ -115,31 +115,22 @@ class GeneratedFileManager
         }
     }
 
-    private static function buildSimplifiedReturnType($input): mixed
-    {
-        if (! $input) {
-            return null;
-        }
-
-        return (string) collect(explode('\\', (string) $input))->last();
-    }
-
     private static function replaceQualifiersWithImport(ClassType $class): ClassType
     {
         if ($extends = $class->getExtends()) {
-            $class->setExtends(self::buildSimplifiedReturnType($extends));
+            $class->setExtends($extends);
         }
         collect($class->getMethods())->each(function ($method) {
             collect($method->getParameters())
                 ->each(function ($parameter) {
-                    $parameter->setType(self::buildSimplifiedReturnType($parameter->getType()));
+                    $parameter->setType($parameter->getType());
                 });
-            $method->setReturnType(self::buildSimplifiedReturnType($method->getReturnType()));
+            $method->setReturnType($method->getReturnType());
         });
 
         if (collect($class->getProperties())->count() !== 0) {
             collect($class->getProperties())->each(function ($property) {
-                $property->setType(self::buildSimplifiedReturnType($property->getType()));
+                $property->setType($property->getType());
             });
         }
 

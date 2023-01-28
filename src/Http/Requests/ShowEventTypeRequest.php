@@ -2,9 +2,7 @@
 
 namespace Typedin\LaravelCalendly\Http\Requests;
 
-use FormRequest;
-
-class ShowEventTypeRequest extends FormRequest
+class ShowEventTypeRequest extends Illuminate\Foundation\Http\FormRequest
 {
     public function rules(): array
     {

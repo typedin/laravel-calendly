@@ -2,13 +2,13 @@
 
 namespace Typedin\LaravelCalendly\Http\Controllers;
 
-use CalendlyApiInterface;
-use Controller;
-use DestroyWebhookSubscriptionRequest;
-use JsonResponse;
-use ShowWebhookSubscriptionRequest;
-use StoreWebhookSubscriptionRequest;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Routing\Controller;
+use Typedin\LaravelCalendly\Contracts\CalendlyApiInterface;
 use Typedin\LaravelCalendly\Entities\CalendlyWebhookSubscription;
+use Typedin\LaravelCalendly\Http\Requests\DestroyWebhookSubscriptionRequest;
+use Typedin\LaravelCalendly\Http\Requests\ShowWebhookSubscriptionRequest;
+use Typedin\LaravelCalendly\Http\Requests\StoreWebhookSubscriptionRequest;
 
 class CalendlyWebhookSubscriptionsController extends Controller
 {

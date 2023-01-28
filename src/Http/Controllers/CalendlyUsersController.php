@@ -2,11 +2,11 @@
 
 namespace Typedin\LaravelCalendly\Http\Controllers;
 
-use CalendlyApiInterface;
-use Controller;
-use JsonResponse;
-use ShowUserRequest;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Routing\Controller;
+use Typedin\LaravelCalendly\Contracts\CalendlyApiInterface;
 use Typedin\LaravelCalendly\Entities\CalendlyUser;
+use Typedin\LaravelCalendly\Http\Requests\ShowUserRequest;
 
 class CalendlyUsersController extends Controller
 {

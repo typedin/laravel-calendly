@@ -6,43 +6,37 @@ class AvailabilitySchedule
 {
     /**
      * A URI reference to this Availability Schedule.
-     *
-     * @var string
+     * @var string $uri
      */
     public string $uri;
 
     /**
      * This is the default Availability Schedule in use.
-     *
-     * @var bool
+     * @var boolean $default
      */
     public bool $default;
 
     /**
      * The name of this Availability Schedule.
-     *
-     * @var string
+     * @var string $name
      */
     public string $name;
 
     /**
      * A URI reference to a User.
-     *
-     * @var string
+     * @var string $user
      */
     public string $user;
 
     /**
      * The timezone for which this Availability Schedule is originated in.
-     *
-     * @var string
+     * @var string $timezone
      */
     public string $timezone;
 
     /**
      * The rules of this Availability Schedule.
-     *
-     * @var array
+     * @var array $rules
      */
     public array $rules;
 

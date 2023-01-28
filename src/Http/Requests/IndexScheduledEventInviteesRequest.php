@@ -2,9 +2,7 @@
 
 namespace Typedin\LaravelCalendly\Http\Requests;
 
-use FormRequest;
-
-class IndexScheduledEventInviteesRequest extends FormRequest
+class IndexScheduledEventInviteesRequest extends Illuminate\Foundation\Http\FormRequest
 {
     public function rules(): array
     {
