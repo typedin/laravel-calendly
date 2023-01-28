@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Nette\PhpGenerator\ClassType;
+use Nette\PhpGenerator\PhpNamespace;
 use Throwable;
 use Typedin\LaravelCalendly\Supports\Configuration\FormRequestProvider;
 use Typedin\LaravelCalendly\Supports\Configuration\IndexFormRequestProvider;
@@ -15,27 +16,44 @@ class FormRequestGenerator
 {
     use UseCrudVerbs;
 
-    public ClassType $validator;
+    public readonly ClassType $validator;
 
-    private string $http_method;
-
-    /**
-     * @param  array<int,mixed>  $path
-     * @param  array<int,mixed>  $parameters
-     */
-    public function __construct(private readonly FormRequestProvider $dto)
+    private function __construct(private readonly FormRequestProvider $provider)
     {
-        $this->http_method = $this->dto->httpMethod();
-        $this->validator = new ClassType(sprintf('%s%sRequest', $this->verb(), $this->wantsIndex() ? Str::plural($this->dto->name) : Str::singular($this->dto->name)));
+    }
 
+    public static function formRequest(FormRequestProvider $provider): ClassType
+    {
+        $generator = new FormRequestGenerator($provider);
+
+        $generator->validator = new ClassType(
+            name: sprintf('%s%sRequest', $generator->verb(), $generator->wantsIndex() ? Str::plural($generator->provider->name) : Str::singular($generator->provider->name)),
+            namespace: new PhpNamespace('Typedin\LaravelCalendly\Models')
+        );
+
+        $generator->generateConstructor()->generateProperties();
+        $generator->validator->validate();
+
+        return $generator->validator;
+    }
+
+    private function generateConstructor(): FormRequestGenerator
+    {
         $this->validator->setExtends('Illuminate\Foundation\Http\FormRequest');
+
+        return $this;
+    }
+
+    private function generateProperties(): FormRequestGenerator
+    {
         $this->validator->addMethod('rules')->addBody('return [');
 
         $this->fieldValidationPairs()->each(function ($value, $key) {
             $this->validator->getMethod('rules')->addBody(sprintf("'%s' => '%s',", $key, implode(',', $value)));
         });
         $this->validator->getMethod('rules')->addBody('];')->setReturnType(type: 'array');
-        $this->validator->validate();
+
+        return $this;
     }
 
     private function verb(): string
@@ -44,25 +62,25 @@ class FormRequestGenerator
             return $this->CRUD_OPERATIONS['index'];
         }
 
-        return $this->CRUD_OPERATIONS[$this->http_method];
+        return $this->CRUD_OPERATIONS[$this->provider->httpMethod()];
     }
 
     private function wantsIndex(): bool
     {
-        return  $this->dto instanceof IndexFormRequestProvider;
+        return  $this->provider instanceof IndexFormRequestProvider;
     }
 
     private function fieldValidationPairs(): Collection
     {
-        $rules_from_request_body = collect($this->dto->requestBody())
+        $rules_from_request_body = collect($this->provider->requestBody())
                 ->map(fn ($value) => collect($value['schema']['properties']))
                 ->flatMap(fn ($property) => $property->flatMap(fn ($value, $key) => [$key => $this->buildValidation(
                     value: $value,
                     field: $key,
-                    requirements: $this->dto->requestBody()['application/json']['schema']['required'] ?? []
+                    requirements: $this->provider->requestBody()['application/json']['schema']['required'] ?? []
                 )]));
 
-        $rules_from_parameters = collect($this->dto->parameters())
+        $rules_from_parameters = collect($this->provider->parameters())
         ->filter(fn ($value) => isset($value['name']))
                ->flatMap(function ($value) {
                    try {

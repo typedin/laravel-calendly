@@ -15,7 +15,7 @@ class GeneratedFileManagerTest extends TestCase
 
     protected static $yaml;
 
-    private EndpointMapper $mapper;
+    private GeneratedFileManager $file_manager;
 
     public static function setUpBeforeClass(): void
     {
@@ -39,8 +39,8 @@ class GeneratedFileManagerTest extends TestCase
 
     protected function setUp(): void
     {
-        parent::tearDown();
-        $this->mapper = (new EndpointMapper(self::$yaml));
+        parent::setUp();
+        $this->file_manager = new GeneratedFileManager(new EndpointMapper(self::$yaml), $this->destination);
     }
 
     protected function tearDown(): void
@@ -52,7 +52,7 @@ class GeneratedFileManagerTest extends TestCase
     /** @test */
     public function it_creates_all_models(): void
     {
-        $models = (new GeneratedFileManager($this->mapper, $this->destination))->createModels()->models;
+        $models = $this->file_manager->createModels()->models;
 
         $this->assertCount(15, $models);
     }
@@ -60,7 +60,7 @@ class GeneratedFileManagerTest extends TestCase
     /** @test */
     public function it_creates_all_controllers(): void
     {
-        $controllers = (new GeneratedFileManager($this->mapper, $this->destination))->createControllers()->controllers;
+        $controllers = $this->file_manager->createControllers()->controllers;
 
         $this->assertCount(17, $controllers);
     }
@@ -68,7 +68,7 @@ class GeneratedFileManagerTest extends TestCase
     /** @test */
     public function it_creates_all_form_requests(): void
     {
-        $form_requests = (new GeneratedFileManager($this->mapper, $this->destination))->createFormRequests()->formRequests;
+        $form_requests = $this->file_manager->createFormRequests()->formRequests;
 
         $this->assertCount(28, $form_requests);
     }

@@ -11,11 +11,19 @@ use Typedin\LaravelCalendly\Supports\FormRequestGenerator;
 
 class FormRequestGeneratorTest extends TestCase
 {
+    private array $json;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $content = file_get_contents(__DIR__.'/../__fixtures__/api.json');
+        $this->json = json_decode($content, true, 512, JSON_THROW_ON_ERROR);
+    }
+
     private function path(string $filter): array
     {
-        $content = file_get_contents(__DIR__.'/../__fixtures__/api.json');
-
-        return collect(json_decode($content, true, 512, JSON_THROW_ON_ERROR)['paths'][$filter])->all();
+        return collect($this->json['paths'][$filter])->all();
     }
 
     /**
@@ -28,11 +36,15 @@ class FormRequestGeneratorTest extends TestCase
      */
     public function it_generates_rules_for_index_form_request($property, $expected_rules): void
     {
-        $dto = new IndexFormRequestProvider(path: '/scheduled_events', name:'ScheduledEvents', value: $this->path('/scheduled_events'));
-        $validator = ( new FormRequestGenerator($dto) )->validator;
+        $provider = new IndexFormRequestProvider(
+            path: '/scheduled_events',
+            name:'ScheduledEvents',
+            value: $this->path('/scheduled_events')
+        );
+        $validator = FormRequestGenerator::formRequest($provider);
 
-        $this->assertEquals('Illuminate\Foundation\Http\FormRequest', $validator->getExtends());
         $this->assertEquals('IndexScheduledEventsRequest', $validator->getName());
+        $this->assertEquals('Illuminate\Foundation\Http\FormRequest', $validator->getExtends());
 
         $this->assertStringContainsString(sprintf("'%s' => '%s',", $property, $expected_rules), $validator->getMethod('rules')->getBody());
     }
@@ -60,8 +72,8 @@ class FormRequestGeneratorTest extends TestCase
      */
     public function it_generates_rules_for_event_types($property, $expected_rules): void
     {
-        $dto = new IndexFormRequestProvider(path: '/event_types', name:'EventTypes', value: $this->path('/event_types'));
-        $validator = ( new FormRequestGenerator($dto) )->validator;
+        $provider = new IndexFormRequestProvider(path: '/event_types', name:'EventTypes', value: $this->path('/event_types'));
+        $validator = FormRequestGenerator::formRequest($provider);
 
         $this->assertEquals('Illuminate\Foundation\Http\FormRequest', $validator->getExtends());
         $this->assertEquals('IndexEventTypesRequest', $validator->getName());
@@ -89,16 +101,17 @@ class FormRequestGeneratorTest extends TestCase
      */
     public function it_generates_show_form_request($property, $expected_rules): void
     {
-        $dto = new ShowFormRequestProvider(
+        $provider = new ShowFormRequestProvider(
             path: '/scheduled_events/{event_uuid}/invitees/{invitee_uuid}',
             name: 'ScheduledEvents',
             value: $this->path('/scheduled_events/{event_uuid}/invitees/{invitee_uuid}')
         );
-        $sut = ( new FormRequestGenerator($dto) );
 
-        $this->assertEquals('Illuminate\Foundation\Http\FormRequest', $sut->validator->getExtends());
-        $this->assertEquals('ShowScheduledEventRequest', $sut->validator->getName());
-        $rules = $sut->validator->getMethod('rules');
+        $validator = FormRequestGenerator::formRequest($provider);
+
+        $this->assertEquals('Illuminate\Foundation\Http\FormRequest', $validator->getExtends());
+        $this->assertEquals('ShowScheduledEventRequest', $validator->getName());
+        $rules = $validator->getMethod('rules');
 
         $this->assertStringContainsString(sprintf("'%s' => '%s',", $property, $expected_rules), $rules->getBody());
     }
@@ -116,13 +129,14 @@ class FormRequestGeneratorTest extends TestCase
      */
     public function it_generates_store_form_request_from_post_path(): void
     {
-        $dto = new StoreFormRequestProvider(path: '/organizations/{uuid}/invitations', name: 'OrganizationInviations', value: $this->path('/organizations/{uuid}/invitations'));
+        $provider = new StoreFormRequestProvider(path: '/organizations/{uuid}/invitations', name: 'OrganizationInviations', value: $this->path('/organizations/{uuid}/invitations'));
 
-        $sut = ( new FormRequestGenerator($dto) );
-        $this->assertEquals('Illuminate\Foundation\Http\FormRequest', $sut->validator->getExtends());
+        $validator = FormRequestGenerator::formRequest($provider);
 
-        $this->assertEquals('StoreOrganizationInviationRequest', $sut->validator->getName());
-        $rules = $sut->validator->getMethod('rules');
+        $this->assertEquals('Illuminate\Foundation\Http\FormRequest', $validator->getExtends());
+
+        $this->assertEquals('StoreOrganizationInviationRequest', $validator->getName());
+        $rules = $validator->getMethod('rules');
 
         $this->assertStringContainsString("'uuid' => 'required,string", $rules);
         $this->assertStringContainsString("'email' => 'required,email", $rules);
@@ -138,12 +152,17 @@ class FormRequestGeneratorTest extends TestCase
      */
     public function it_generates_destroy_form_request($property, $expected_rules): void
     {
-        $dto = new DestroyFormRequestProvider(path: '/organization_memberships/{uuid}', name: 'OrganizationMemberships', value: $this->path('/organization_memberships/{uuid}'));
-        $sut = ( new FormRequestGenerator($dto) );
-        $this->assertEquals('Illuminate\Foundation\Http\FormRequest', $sut->validator->getExtends());
+        $provider = new DestroyFormRequestProvider(
+            path: '/organization_memberships/{uuid}',
+            name: 'OrganizationMemberships',
+            value: $this->path('/organization_memberships/{uuid}')
+        );
+        $validator = FormRequestGenerator::formRequest($provider);
 
-        $this->assertEquals('DestroyOrganizationMembershipRequest', $sut->validator->getName());
-        $rules = $sut->validator->getMethod('rules');
+        $this->assertEquals('Illuminate\Foundation\Http\FormRequest', $validator->getExtends());
+
+        $this->assertEquals('DestroyOrganizationMembershipRequest', $validator->getName());
+        $rules = $validator->getMethod('rules');
 
         $this->assertStringContainsString(sprintf("'%s' => '%s',", $property, $expected_rules), $rules->getBody());
     }

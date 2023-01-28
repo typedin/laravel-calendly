@@ -11,7 +11,7 @@ class ModelGenerator
 {
     public readonly ClassType $model;
 
-    public function __construct(private readonly ModelGeneratorProvider $provider)
+    private function __construct(private readonly ModelGeneratorProvider $provider)
     {
     }
 
