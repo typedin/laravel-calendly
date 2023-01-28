@@ -41,7 +41,7 @@ class GeneratedFileManager
 
     public function createModels(): GeneratedFileManager
     {
-        $this->mapper->modelConfigurators()->map(function (ModelGeneratorProvider $provider) {
+        $this->mapper->modelProviders()->map(function (ModelGeneratorProvider $provider) {
             try {
                 return self::replaceQualifiersWithImport(ModelGenerator::model($provider));
             } catch (\Throwable $th) {
@@ -57,7 +57,7 @@ class GeneratedFileManager
 
     public function createFormRequests(): GeneratedFileManager
     {
-        $this->mapper->formRequestDTOS()->each(function (FormRequestProvider $provider) {
+        $this->mapper->formRequestProviders()->each(function (FormRequestProvider $provider) {
             $request = self::replaceQualifiersWithImport(FormRequestGenerator::formRequest($provider));
             $this->formRequests->push([
                 'form_request' => $request,
@@ -70,8 +70,8 @@ class GeneratedFileManager
 
     public function createControllers(): GeneratedFileManager
     {
-        $this->mapper->controllerNames()->each(function ($key) {
-            $controller = ( new ControllerGenerator($key, $this->mapper->mapControllerNamesToEndpoints()->get($key)->all()) )->controller;
+        $this->mapper->controllerGeneratorProviders()->each(function ($provider) {
+            $controller = ControllerGenerator::controller($provider);
 
             $this->controllers->push([
                 'controller' => self::replaceQualifiersWithImport($controller),

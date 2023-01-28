@@ -63,7 +63,7 @@ class EndpointMapper
     /**
      * @return Collection<TKey,TValue>
      */
-    public function modelConfigurators(): Collection
+    public function modelProviders(): Collection
     {
         return $this->paths()
                    ->map(function ($value, $path) {
@@ -112,15 +112,10 @@ class EndpointMapper
      */
     public function controllerGeneratorProviders(): Collection
     {
-        return $this->paths()->keys()
-                   ->map(function ($key) {
-                       return new ControllerGeneratorProvider(self::fullname($key), $this->paths()->get($key));
-                   })
-                   /*  ->dd() */
-                   /* ->filter(fn ($key) => (bool) $key) */
-                   /* ->unique() */
-                   /* ->values()->dd() */
-;
+        return $this->mapControllerNamesToEndpoints()
+                   ->map(function ($value, $key) {
+                       return new ControllerGeneratorProvider($key, $value->all());
+                   });
     }
 
     /**
