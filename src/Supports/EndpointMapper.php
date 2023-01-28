@@ -7,6 +7,7 @@ use Illuminate\Support\Str;
 use Symfony\Component\Yaml\Yaml;
 use TKey;
 use TValue;
+use Typedin\LaravelCalendly\Supports\Configuration\ControllerGeneratorProvider;
 use Typedin\LaravelCalendly\Supports\Configuration\DestroyFormRequestProvider;
 use Typedin\LaravelCalendly\Supports\Configuration\IndexFormRequestProvider;
 use Typedin\LaravelCalendly\Supports\Configuration\IndexModelGeneratorProvider;
@@ -84,7 +85,7 @@ class EndpointMapper
     /**
      * @return Collection<TKey,TValue>
      */
-    public function formRequestDTOS(): Collection
+    public function formRequestProviders(): Collection
     {
         return $this->paths()
                    ->map(function ($value, $path) {
@@ -104,6 +105,22 @@ class EndpointMapper
 
                        throw new \Exception('Error Processing Data to buld a FormRequestDTO');
                    });
+    }
+
+    /**
+     * @return Collection<TKey,TValue>
+     */
+    public function controllerGeneratorProviders(): Collection
+    {
+        return $this->paths()->keys()
+                   ->map(function ($key) {
+                       return new ControllerGeneratorProvider(self::fullname($key), $this->paths()->get($key));
+                   })
+                   /*  ->dd() */
+                   /* ->filter(fn ($key) => (bool) $key) */
+                   /* ->unique() */
+                   /* ->values()->dd() */
+;
     }
 
     /**

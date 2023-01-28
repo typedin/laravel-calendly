@@ -8,6 +8,7 @@ use Illuminate\Support\Str;
 use Nette\PhpGenerator\ClassType;
 use Throwable;
 use Typedin\LaravelCalendly\Contracts\CalendlyApiInterface;
+use Typedin\LaravelCalendly\Supports\Configuration\ControllerGeneratorProvider;
 use Typedin\LaravelCalendly\traits\UseCrudVerbs;
 
 class ControllerGenerator
@@ -16,24 +17,32 @@ class ControllerGenerator
 
     public ClassType $controller;
 
-    /**
-     * @param  array<int,mixed>  $endpoints
-     */
-    public function __construct(private readonly string $name, private readonly array $endpoints)
+    private function __construct(private readonly ControllerGeneratorProvider $provider)
     {
-        $this->controller = new ClassType(
-            sprintf('Calendly%sController', $this->name),
+        /* $this->provider = $provider; */
+        /* $this->controller->setExtends('\\'.Controller::class); */
+        /**/
+        /* $this->generateConstructor()->generateMethods(); */
+        /**/
+    }
+
+    public static function controller(ControllerGeneratorProvider $provider): ClassType
+    {
+        $generator = new ControllerGenerator($provider);
+
+        $generator->controller = new ClassType(
+            name: sprintf('Calendly%sController', $provider->name),
         );
 
-        $this->controller->setExtends('\\'.Controller::class);
+        $generator->generateConstructor()->generateMethods();
+        $generator->controller->validate();
 
-        $this->generateConstructor()->generateMethods();
-
-        $this->controller->validate();
+        return $generator->controller;
     }
 
     private function generateConstructor(): ControllerGenerator
     {
+        $this->controller->setExtends('\\'.Controller::class);
         $this->controller
                 ->addMethod('__construct')
                 ->addBody('$this->api = $api;')
@@ -51,7 +60,7 @@ class ControllerGenerator
      */
     private function generateMethods(): ControllerGenerator
     {
-        collect($this->endpoints)
+        collect($this->provider->endpoints)
             ->each(function ($value, $key) {
                 if ($this->hasIndexRestVerb($value)) {
                     $this->addIndexMethod($key);
@@ -84,12 +93,12 @@ class ControllerGenerator
                     ->addBody(sprintf('$response = $this->api->get("/%s/", $request);', $this->buildUri($key)))
                     ->addBody('')
                     ->addBody('$all = collect($response["collection"])')
-                    ->addBody(sprintf('->mapInto(\Typedin\LaravelCalendly\Entities\Calendly%s::class)->all();', Str::singular($this->name)))
+                    ->addBody(sprintf('->mapInto(\Typedin\LaravelCalendly\Entities\Calendly%s::class)->all();', Str::singular($this->provider->name)))
                     ->addBody('return response()->json([')
-                    ->addBody(sprintf('"%s" => $all,', Str::snake($this->name)))
+                    ->addBody(sprintf('"%s" => $all,', Str::snake($this->provider->name)))
                     ->addBody(']);')
                     ->addParameter('request')
-                    ->setType(sprintf('Typedin\LaravelCalendly\Http\Requests\%s%sRequest', $this->verb('index'), Str::plural($this->name)));
+                    ->setType(sprintf('Typedin\LaravelCalendly\Http\Requests\%s%sRequest', $this->verb('index'), Str::plural($this->provider->name)));
         } catch (Throwable) {
             //throw $th;
         }
@@ -104,10 +113,10 @@ class ControllerGenerator
                     ->setReturnType(JsonResponse::class)
                     ->addBody(sprintf('$response = $this->api->get("/%s/", $request);', $this->buildUri($key)))
                     ->addBody('return response()->json([')
-                    ->addBody(sprintf('"%s" => new \Typedin\LaravelCalendly\Entities\Calendly%s($response),', Str::snake(Str::singular($this->name)), Str::singular($this->name)))
+                    ->addBody(sprintf('"%s" => new \Typedin\LaravelCalendly\Entities\Calendly%s($response),', Str::snake(Str::singular($this->provider->name)), Str::singular($this->provider->name)))
                     ->addBody(']);')
                     ->addParameter('request')
-                    ->setType(sprintf('Typedin\LaravelCalendly\Http\Requests\%s%sRequest', $this->verb('get'), Str::singular($this->name)));
+                    ->setType(sprintf('Typedin\LaravelCalendly\Http\Requests\%s%sRequest', $this->verb('get'), Str::singular($this->provider->name)));
         } catch (Throwable) {
             //throw $th;
         }
@@ -120,10 +129,10 @@ class ControllerGenerator
                 ->setReturnType(JsonResponse::class)
                 ->addBody(sprintf('$response = $this->api->post("/%s/", $request);', $this->buildUri($key)))
                 ->addBody('return response()->json([')
-                ->addBody(sprintf('"%s" => new \Typedin\LaravelCalendly\Entities\Calendly%s($response),', Str::snake(Str::singular($this->name)), Str::singular($this->name)))
+                ->addBody(sprintf('"%s" => new \Typedin\LaravelCalendly\Entities\Calendly%s($response),', Str::snake(Str::singular($this->provider->name)), Str::singular($this->provider->name)))
                 ->addBody(']);')
                 ->addParameter('request')
-                ->setType(sprintf('\Typedin\LaravelCalendly\Http\Requests\%s%sRequest', $this->verb('post'), Str::singular($this->name)));
+                ->setType(sprintf('\Typedin\LaravelCalendly\Http\Requests\%s%sRequest', $this->verb('post'), Str::singular($this->provider->name)));
     }
 
     private function addDestroyMethod(mixed $key): void
@@ -134,7 +143,7 @@ class ControllerGenerator
                 ->addBody(sprintf('$this->api->delete("/%s/");', $this->buildUri($key)))
                 ->addBody('return response()->noContent();')
                 ->addParameter('request')
-                ->setType(sprintf('\Typedin\LaravelCalendly\Http\Requests\%s%sRequest', $this->verb('delete'), Str::singular($this->name)));
+                ->setType(sprintf('\Typedin\LaravelCalendly\Http\Requests\%s%sRequest', $this->verb('delete'), Str::singular($this->provider->name)));
     }
 
     /**
