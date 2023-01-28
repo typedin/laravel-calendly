@@ -85,7 +85,7 @@ class ControllerGenerator
                     ->addBody(sprintf('$response = $this->api->get("/%s/", $request);', $this->buildUri($key)))
                     ->addBody('')
                     ->addBody('$all = collect($response["collection"])')
-                    ->addBody(sprintf('->mapInto(\Typedin\LaravelCalendly\Entities\Calendly%s::class)->all();', Str::singular($this->provider->name)))
+                    ->addBody(sprintf('->mapInto(\Typedin\LaravelCalendly\Models\%s::class)->all();', Str::singular($this->provider->name)))
                     ->addBody('return response()->json([')
                     ->addBody(sprintf('"%s" => $all,', Str::snake($this->provider->name)))
                     ->addBody(']);')
@@ -105,7 +105,7 @@ class ControllerGenerator
                     ->setReturnType('\Illuminate\Http\JsonResponse')
                     ->addBody(sprintf('$response = $this->api->get("/%s/", $request);', $this->buildUri($key)))
                     ->addBody('return response()->json([')
-                    ->addBody(sprintf('"%s" => new \Typedin\LaravelCalendly\Entities\Calendly%s($response),', Str::snake(Str::singular($this->provider->name)), Str::singular($this->provider->name)))
+                    ->addBody(sprintf('"%s" => new \Typedin\LaravelCalendly\Models\%s($response),', Str::snake(Str::singular($this->provider->name)), Str::singular($this->provider->name)))
                     ->addBody(']);')
                     ->addParameter('request')
                     ->setType(sprintf('\Typedin\LaravelCalendly\Http\Requests\%s%sRequest', $this->verb('get'), Str::singular($this->provider->name)));
@@ -121,7 +121,7 @@ class ControllerGenerator
                 ->setReturnType('\Illuminate\Http\JsonResponse')
                 ->addBody(sprintf('$response = $this->api->post("/%s/", $request);', $this->buildUri($key)))
                 ->addBody('return response()->json([')
-                ->addBody(sprintf('"%s" => new \Typedin\LaravelCalendly\Entities\Calendly%s($response),', Str::snake(Str::singular($this->provider->name)), Str::singular($this->provider->name)))
+                ->addBody(sprintf('"%s" => new \Typedin\LaravelCalendly\Models\%s($response),', Str::snake(Str::singular($this->provider->name)), Str::singular($this->provider->name)))
                 ->addBody(']);')
                 ->addParameter('request')
                 ->setType(sprintf('\Typedin\LaravelCalendly\Http\Requests\%s%sRequest', $this->verb('post'), Str::singular($this->provider->name)));

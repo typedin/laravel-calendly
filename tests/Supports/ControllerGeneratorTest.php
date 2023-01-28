@@ -67,7 +67,7 @@ class ControllerGeneratorTest extends TestCase
         $this->assertEquals('\Typedin\LaravelCalendly\Http\Requests\IndexEventTypesRequest', $method->getParameters()['request']->getType());
         $this->assertStringContainsString('$response = $this->api->get("/event_types/", $request);', $method->getBody());
         $this->assertStringContainsString('$all = collect($response["collection"])', $method->getBody());
-        $this->assertStringContainsString('->mapInto(\Typedin\LaravelCalendly\Entities\CalendlyEventType::class)->all();', $method->getBody());
+        $this->assertStringContainsString('->mapInto(\Typedin\LaravelCalendly\Models\EventType::class)->all();', $method->getBody());
 
         $this->assertStringContainsString('return response()->json([', $method->getBody());
         $this->assertStringContainsString('"event_types" => $all,', $method->getBody());
@@ -91,7 +91,7 @@ class ControllerGeneratorTest extends TestCase
         $this->assertEquals('\Typedin\LaravelCalendly\Http\Requests\ShowInviteeNoShowRequest', $method->getParameters()['request']->getType());
         $this->assertStringContainsString('$response = $this->api->get("/invitee_no_shows/{$request->safe()->only(["uuid"])}/", $request);', $method->getBody());
         $this->assertStringContainsString('return response()->json([', $method->getBody());
-        $this->assertStringContainsString('"invitee_no_show" => new \Typedin\LaravelCalendly\Entities\CalendlyInviteeNoShow($response),', $method->getBody());
+        $this->assertStringContainsString('"invitee_no_show" => new \Typedin\LaravelCalendly\Models\InviteeNoShow($response),', $method->getBody());
         $this->assertStringContainsString(']);', $method->getBody());
     }
 
@@ -111,7 +111,7 @@ class ControllerGeneratorTest extends TestCase
         $this->assertStringContainsString('$response = $this->api->post("/scheduling_links/", $request);', $method->getBody());
 
         $this->assertStringContainsString('return response()->json([', $method->getBody());
-        $this->assertStringContainsString('"scheduling_link" => new \Typedin\LaravelCalendly\Entities\CalendlySchedulingLink($response),', $method->getBody());
+        $this->assertStringContainsString('"scheduling_link" => new \Typedin\LaravelCalendly\Models\SchedulingLink($response),', $method->getBody());
         $this->assertStringContainsString(']);', $method->getBody());
     }
 
@@ -131,7 +131,7 @@ class ControllerGeneratorTest extends TestCase
         $this->assertStringContainsString('$this->api->post("/organizations/{$request->safe()->only(["uuid"])}/invitations/", $request);', $method->getBody());
 
         $this->assertStringContainsString('return response()->json([', $method->getBody());
-        $this->assertStringContainsString('"organization_invitation" => new \Typedin\LaravelCalendly\Entities\CalendlyOrganizationInvitation($response),', $method->getBody());
+        $this->assertStringContainsString('"organization_invitation" => new \Typedin\LaravelCalendly\Models\OrganizationInvitation($response),', $method->getBody());
         $this->assertStringContainsString(']);', $method->getBody());
     }
 
