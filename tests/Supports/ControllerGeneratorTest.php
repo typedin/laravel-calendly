@@ -4,8 +4,6 @@ namespace Typedin\LaravelCalendly\Tests\Supports;
 
 use Nette\PhpGenerator\ClassType;
 use PHPUnit\Framework\TestCase;
-use Typedin\LaravelCalendly\Http\Requests\IndexEventTypesRequest;
-use Typedin\LaravelCalendly\Http\Requests\ShowInviteeNoShowRequest;
 use Typedin\LaravelCalendly\Supports\Configuration\ControllerGeneratorProvider;
 use Typedin\LaravelCalendly\Supports\ControllerGenerator;
 use Typedin\LaravelCalendly\Supports\EndpointMapper;
@@ -66,7 +64,7 @@ class ControllerGeneratorTest extends TestCase
 
         $method = $controller->getMethod('index');
 
-        $this->assertEquals(IndexEventTypesRequest::class, $method->getParameters()['request']->getType());
+        $this->assertEquals('\Typedin\LaravelCalendly\Http\Requests\IndexEventTypesRequest', $method->getParameters()['request']->getType());
         $this->assertStringContainsString('$response = $this->api->get("/event_types/", $request);', $method->getBody());
         $this->assertStringContainsString('$all = collect($response["collection"])', $method->getBody());
         $this->assertStringContainsString('->mapInto(\Typedin\LaravelCalendly\Entities\CalendlyEventType::class)->all();', $method->getBody());
@@ -90,8 +88,7 @@ class ControllerGeneratorTest extends TestCase
         $controller = ControllerGenerator::controller($provider);
         $method = $controller->getMethod('show');
 
-        $this->assertEquals(ShowInviteeNoShowRequest::class, $method->getParameters()['request']->getType());
-
+        $this->assertEquals('\Typedin\LaravelCalendly\Http\Requests\ShowInviteeNoShowRequest', $method->getParameters()['request']->getType());
         $this->assertStringContainsString('$response = $this->api->get("/invitee_no_shows/{$request->safe()->only(["uuid"])}/", $request);', $method->getBody());
         $this->assertStringContainsString('return response()->json([', $method->getBody());
         $this->assertStringContainsString('"invitee_no_show" => new \Typedin\LaravelCalendly\Entities\CalendlyInviteeNoShow($response),', $method->getBody());

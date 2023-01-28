@@ -90,7 +90,7 @@ class ControllerGenerator
                     ->addBody(sprintf('"%s" => $all,', Str::snake($this->provider->name)))
                     ->addBody(']);')
                     ->addParameter('request')
-                    ->setType(sprintf('Typedin\LaravelCalendly\Http\Requests\%s%sRequest', $this->verb('index'), Str::plural($this->provider->name)));
+                    ->setType(sprintf('\Typedin\LaravelCalendly\Http\Requests\%s%sRequest', $this->verb('index'), Str::plural($this->provider->name)));
         } catch (Throwable) {
             //throw $th;
         }
@@ -108,7 +108,7 @@ class ControllerGenerator
                     ->addBody(sprintf('"%s" => new \Typedin\LaravelCalendly\Entities\Calendly%s($response),', Str::snake(Str::singular($this->provider->name)), Str::singular($this->provider->name)))
                     ->addBody(']);')
                     ->addParameter('request')
-                    ->setType(sprintf('Typedin\LaravelCalendly\Http\Requests\%s%sRequest', $this->verb('get'), Str::singular($this->provider->name)));
+                    ->setType(sprintf('\Typedin\LaravelCalendly\Http\Requests\%s%sRequest', $this->verb('get'), Str::singular($this->provider->name)));
         } catch (Throwable) {
             //throw $th;
         }
