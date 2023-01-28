@@ -2,11 +2,11 @@
 
 namespace Typedin\LaravelCalendly\Http\Controllers;
 
-use Illuminate\Http\JsonResponse;
-use Illuminate\Routing\Controller;
-use Typedin\LaravelCalendly\Contracts\CalendlyApiInterface;
+use CalendlyApiInterface;
+use Controller;
+use IndexActivityLogEntriesRequest;
+use JsonResponse;
 use Typedin\LaravelCalendly\Entities\CalendlyActivityLogEntry;
-use Typedin\LaravelCalendly\Http\Requests\IndexActivityLogEntriesRequest;
 
 class CalendlyActivityLogEntriesController extends Controller
 {

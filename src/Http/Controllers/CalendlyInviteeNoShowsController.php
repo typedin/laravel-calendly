@@ -2,13 +2,13 @@
 
 namespace Typedin\LaravelCalendly\Http\Controllers;
 
-use Illuminate\Http\JsonResponse;
-use Illuminate\Routing\Controller;
-use Typedin\LaravelCalendly\Contracts\CalendlyApiInterface;
+use CalendlyApiInterface;
+use Controller;
+use DestroyInviteeNoShowRequest;
+use JsonResponse;
+use ShowInviteeNoShowRequest;
+use StoreInviteeNoShowRequest;
 use Typedin\LaravelCalendly\Entities\CalendlyInviteeNoShow;
-use Typedin\LaravelCalendly\Http\Requests\DestroyInviteeNoShowRequest;
-use Typedin\LaravelCalendly\Http\Requests\ShowInviteeNoShowRequest;
-use Typedin\LaravelCalendly\Http\Requests\StoreInviteeNoShowRequest;
 
 class CalendlyInviteeNoShowsController extends Controller
 {

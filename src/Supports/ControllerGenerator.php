@@ -2,12 +2,9 @@
 
 namespace Typedin\LaravelCalendly\Supports;
 
-use Illuminate\Http\JsonResponse;
-use Illuminate\Routing\Controller;
 use Illuminate\Support\Str;
 use Nette\PhpGenerator\ClassType;
 use Throwable;
-use Typedin\LaravelCalendly\Contracts\CalendlyApiInterface;
 use Typedin\LaravelCalendly\Supports\Configuration\ControllerGeneratorProvider;
 use Typedin\LaravelCalendly\traits\UseCrudVerbs;
 
@@ -19,11 +16,6 @@ class ControllerGenerator
 
     private function __construct(private readonly ControllerGeneratorProvider $provider)
     {
-        /* $this->provider = $provider; */
-        /* $this->controller->setExtends('\\'.Controller::class); */
-        /**/
-        /* $this->generateConstructor()->generateMethods(); */
-        /**/
     }
 
     public static function controller(ControllerGeneratorProvider $provider): ClassType
@@ -42,15 +34,15 @@ class ControllerGenerator
 
     private function generateConstructor(): ControllerGenerator
     {
-        $this->controller->setExtends('\\'.Controller::class);
+        $this->controller->setExtends('\Illuminate\Routing\Controller');
         $this->controller
                 ->addMethod('__construct')
                 ->addBody('$this->api = $api;')
                 ->addParameter('api')
-                ->setType(CalendlyApiInterface::class);
+                ->setType('\Typedin\LaravelCalendly\Contracts\CalendlyApiInterface');
         $this->controller->addProperty('api')
                 ->setPrivate()
-                ->setType(CalendlyApiInterface::class);
+                ->setType('\Typedin\LaravelCalendly\Contracts\CalendlyApiInterface');
 
         return $this;
     }
@@ -89,7 +81,7 @@ class ControllerGenerator
         try {
             $this->controller
                     ->addMethod('index')
-                    ->setReturnType(JsonResponse::class)
+                    ->setReturnType('\Illuminate\Http\JsonResponse')
                     ->addBody(sprintf('$response = $this->api->get("/%s/", $request);', $this->buildUri($key)))
                     ->addBody('')
                     ->addBody('$all = collect($response["collection"])')
@@ -110,7 +102,7 @@ class ControllerGenerator
         try {
             $this->controller
                     ->addMethod('show')
-                    ->setReturnType(JsonResponse::class)
+                    ->setReturnType('\Illuminate\Http\JsonResponse')
                     ->addBody(sprintf('$response = $this->api->get("/%s/", $request);', $this->buildUri($key)))
                     ->addBody('return response()->json([')
                     ->addBody(sprintf('"%s" => new \Typedin\LaravelCalendly\Entities\Calendly%s($response),', Str::snake(Str::singular($this->provider->name)), Str::singular($this->provider->name)))
@@ -126,7 +118,7 @@ class ControllerGenerator
     {
         $this->controller
                 ->addMethod('create')
-                ->setReturnType(JsonResponse::class)
+                ->setReturnType('\Illuminate\Http\JsonResponse')
                 ->addBody(sprintf('$response = $this->api->post("/%s/", $request);', $this->buildUri($key)))
                 ->addBody('return response()->json([')
                 ->addBody(sprintf('"%s" => new \Typedin\LaravelCalendly\Entities\Calendly%s($response),', Str::snake(Str::singular($this->provider->name)), Str::singular($this->provider->name)))
@@ -139,7 +131,7 @@ class ControllerGenerator
     {
         $this->controller
                 ->addMethod('destroy')
-                ->setReturnType(JsonResponse::class)
+                ->setReturnType('\Illuminate\Http\JsonResponse')
                 ->addBody(sprintf('$this->api->delete("/%s/");', $this->buildUri($key)))
                 ->addBody('return response()->noContent();')
                 ->addParameter('request')

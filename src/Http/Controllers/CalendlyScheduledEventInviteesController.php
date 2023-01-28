@@ -2,12 +2,12 @@
 
 namespace Typedin\LaravelCalendly\Http\Controllers;
 
-use Illuminate\Http\JsonResponse;
-use Illuminate\Routing\Controller;
-use Typedin\LaravelCalendly\Contracts\CalendlyApiInterface;
+use CalendlyApiInterface;
+use Controller;
+use IndexScheduledEventInviteesRequest;
+use JsonResponse;
+use ShowScheduledEventInviteeRequest;
 use Typedin\LaravelCalendly\Entities\CalendlyScheduledEventInvitee;
-use Typedin\LaravelCalendly\Http\Requests\IndexScheduledEventInviteesRequest;
-use Typedin\LaravelCalendly\Http\Requests\ShowScheduledEventInviteeRequest;
 
 class CalendlyScheduledEventInviteesController extends Controller
 {

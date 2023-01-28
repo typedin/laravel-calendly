@@ -2,11 +2,11 @@
 
 namespace Typedin\LaravelCalendly\Http\Controllers;
 
-use Illuminate\Http\JsonResponse;
-use Illuminate\Routing\Controller;
-use Typedin\LaravelCalendly\Contracts\CalendlyApiInterface;
+use CalendlyApiInterface;
+use Controller;
+use JsonResponse;
+use StoreDataComplianceInviteeRequest;
 use Typedin\LaravelCalendly\Entities\CalendlyDataComplianceInvitee;
-use Typedin\LaravelCalendly\Http\Requests\StoreDataComplianceInviteeRequest;
 
 class CalendlyDataComplianceInviteesController extends Controller
 {

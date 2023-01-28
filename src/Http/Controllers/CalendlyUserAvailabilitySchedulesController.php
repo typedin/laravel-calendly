@@ -2,12 +2,12 @@
 
 namespace Typedin\LaravelCalendly\Http\Controllers;
 
-use Illuminate\Http\JsonResponse;
-use Illuminate\Routing\Controller;
-use Typedin\LaravelCalendly\Contracts\CalendlyApiInterface;
+use CalendlyApiInterface;
+use Controller;
+use IndexUserAvailabilitySchedulesRequest;
+use JsonResponse;
+use ShowUserAvailabilityScheduleRequest;
 use Typedin\LaravelCalendly\Entities\CalendlyUserAvailabilitySchedule;
-use Typedin\LaravelCalendly\Http\Requests\IndexUserAvailabilitySchedulesRequest;
-use Typedin\LaravelCalendly\Http\Requests\ShowUserAvailabilityScheduleRequest;
 
 class CalendlyUserAvailabilitySchedulesController extends Controller
 {

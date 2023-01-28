@@ -2,7 +2,6 @@
 
 namespace Typedin\LaravelCalendly\Tests\Supports;
 
-use Illuminate\Http\JsonResponse;
 use Nette\PhpGenerator\ClassType;
 use PHPUnit\Framework\TestCase;
 use Typedin\LaravelCalendly\Http\Requests\IndexEventTypesRequest;
@@ -34,6 +33,7 @@ class ControllerGeneratorTest extends TestCase
         );
         $controller = ControllerGenerator::controller($provider);
 
+        $this->assertEquals('\Illuminate\Routing\Controller', $controller->getExtends());
         $this->assertEquals('CalendlyUsersController', $controller->getName());
     }
 
@@ -191,7 +191,7 @@ class ControllerGeneratorTest extends TestCase
         $this->assertCount(3, $rest_methods);
 
         tap($rest_methods->each(function ($method) {
-            $this->assertEquals(JsonResponse::class, $method->getReturnType());
+            $this->assertEquals('\Illuminate\Http\JsonResponse', $method->getReturnType());
         }));
     }
 
