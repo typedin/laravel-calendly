@@ -2,6 +2,8 @@
 
 namespace Typedin\LaravelCalendly\Supports\Configuration;
 
+use Illuminate\Support\Str;
+
 class StoreModelGeneratorProvider extends ModelGeneratorProvider
 {
     public function httpMethod(): string
@@ -11,10 +13,13 @@ class StoreModelGeneratorProvider extends ModelGeneratorProvider
 
     public function returnType(): string
     {
+        if (isset($this->value['post']['responses']['202'])) {
+            throw new \TypeError(message: sprintf('Could get the return type for the path %s with post method. (%s)', $this->path, $this->name));
+        }
         $ref = $this->value['post']['responses']['201']['content']['application/json']['schema']['properties']['resource']['$ref'] ??
                 $this->value['post']['responses']['201']['content']['application/json']['schema']['properties']['resource'];
         if (is_array($ref)) {
-            throw new \TypeError(message: 'return type is not in references');
+            return 'Post'.Str::singular($this->name);
         }
         $lookup = explode('/', $ref);
 

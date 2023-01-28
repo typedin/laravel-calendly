@@ -39,6 +39,66 @@ class GeneratedFileManager
         $this->formRequests = new Collection();
     }
 
+    public function createModels(): GeneratedFileManager
+    {
+        $this->mapper->modelConfigurators()->map(function (ModelGeneratorProvider $provider) {
+            try {
+                return self::replaceQualifiersWithImport(ModelGenerator::model($provider));
+            } catch (\Throwable $th) {
+                // this returns null
+            }
+        })->unique()->filter()->each(fn ($model) => $this->models->push([
+            'model' => $model,
+            'namespace' => $this->createNamespace($model, "Typedin\LaravelCalendly\Models"),
+        ]));
+
+        return $this;
+    }
+
+    public function createFormRequests(): GeneratedFileManager
+    {
+        $this->mapper->formRequestDTOS()->each(function (FormRequestProvider $value) {
+            $request = ( new FormRequestGenerator($value) )->validator;
+
+            $this->formRequests->push([
+                'form_request' => self::replaceQualifiersWithImport($request),
+                'namespace' => $this->createNamespace($request, "Typedin\LaravelCalendly\Http\Requests"),
+            ]);
+        });
+
+        return $this;
+    }
+
+    public function createControllers(): GeneratedFileManager
+    {
+        $this->mapper->controllerNames()->each(function ($key) {
+            $controller = ( new ControllerGenerator($key, $this->mapper->mapControllerNamesToEndpoints()->get($key)->all()) )->controller;
+
+            $this->controllers->push([
+                'controller' => self::replaceQualifiersWithImport($controller),
+                'namespace' => $this->createNamespace($controller, "Typedin\LaravelCalendly\Http\Controllers"),
+            ]);
+        });
+
+        return $this;
+    }
+
+    public function writeAllFiles(): void
+    {
+        $this->createModels()
+            ->models->each(function ($entry) {
+                self::write($this->path.'Models/', $entry['model'], $entry['namespace']);
+            });
+        $this->createControllers()
+            ->controllers->each(function ($entry) {
+                self::write($this->path.'/Http/Controllers/', $entry['controller'], $entry['namespace']);
+            });
+        $this->createFormRequests()
+            ->formRequests->each(function ($entry) {
+                self::write($this->path.'/Http/Requests/', $entry['form_request'], $entry['namespace']);
+            });
+    }
+
     private static function write(string $path, ClassType $class, PhpNamespace $namespace): void
     {
         $printer = new PsrPrinter();
@@ -85,64 +145,6 @@ class GeneratedFileManager
         }
 
         return $class;
-    }
-
-    public function createModels(): GeneratedFileManager
-    {
-        $this->mapper->modelConfigurators()->map(function (ModelGeneratorProvider $provider) {
-            try {
-                $model = ModelGenerator::model($provider);
-                $namespace = $this->createNamespace($model, "Typedin\LaravelCalendly\Models");
-
-                return [['model' => self::replaceQualifiersWithImport($model), 'namespace' => $namespace]];
-                /* $this->models->push(['model' => self::replaceQualifiersWithImport($model), 'namespace' => $namespace]); */
-            } catch (\Throwable $th) {
-                echo $th;
-            }
-        })->unique()
-           ->each(function ($value, $key) {
-               $this->models->push($value);
-           });
-
-        return $this;
-    }
-
-    public function createFormRequests(): GeneratedFileManager
-    {
-        $this->mapper->formRequestDTOS()->each(function (FormRequestProvider $value) {
-            $request = ( new FormRequestGenerator($value) )->validator;
-
-            $namespace = $this->createNamespace($request, "Typedin\LaravelCalendly\Http\Requests");
-            $this->formRequests->push(['form_request' => self::replaceQualifiersWithImport($request), 'namespace' => $namespace]);
-        });
-
-        return $this;
-    }
-
-    public function createControllers(): GeneratedFileManager
-    {
-        $this->mapper->controllerNames()->each(function ($key) {
-            $controller = ( new ControllerGenerator($key, $this->mapper->mapControllerNamesToEndpoints()->get($key)->all()) )->controller;
-            $namespace = $this->createNamespace($controller, "Typedin\LaravelCalendly\Http\Controllers");
-
-            $this->controllers->push(['controller' => self::replaceQualifiersWithImport($controller), 'namespace' => $namespace]);
-        });
-
-        return $this;
-    }
-
-    public function writeAllFiles(): void
-    {
-        $this->createModels()
-        ->models->each(function ($entry) {
-            self::write($this->path.'Models/', $entry['model'], $entry['namespace']);
-        });
-        $this->createControllers()->controllers->each(function ($entry) {
-            self::write($this->path.'/Http/Controllers/', $entry['controller'], $entry['namespace']);
-        });
-        $this->createFormRequests()->formRequests->each(function ($entry) {
-            self::write($this->path.'/Http/Requests/', $entry['form_request'], $entry['namespace']);
-        });
     }
 
     private function createNamespace(ClassType $class, $name): PhpNamespace

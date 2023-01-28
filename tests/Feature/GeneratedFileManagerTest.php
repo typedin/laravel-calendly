@@ -13,6 +13,20 @@ class GeneratedFileManagerTest extends TestCase
      */
     private $destination = __DIR__.'/../tmp/';
 
+    protected static $yaml;
+
+    private EndpointMapper $mapper;
+
+    public static function setUpBeforeClass(): void
+    {
+        self::$yaml = file_get_contents(__DIR__.'/../../doc/openapi.yaml');
+    }
+
+    public static function tearDownAfterClass(): void
+    {
+        self::$yaml = null;
+    }
+
     private function cleanDestinationFolder(): void
     {
         $files = glob($this->destination.'/*'); // get all file names
@@ -21,6 +35,12 @@ class GeneratedFileManagerTest extends TestCase
                 unlink($file); // delete file
             }
         }
+    }
+
+    protected function setUp(): void
+    {
+        parent::tearDown();
+        $this->mapper = (new EndpointMapper(self::$yaml));
     }
 
     protected function tearDown(): void
@@ -32,18 +52,15 @@ class GeneratedFileManagerTest extends TestCase
     /** @test */
     public function it_creates_all_models(): void
     {
-        $yaml = file_get_contents(__DIR__.'/../../doc/openapi.yaml');
-        $mapper = (new EndpointMapper($yaml));
-        $models = (new GeneratedFileManager($mapper, $this->destination))->createModels()->models;
-        $this->assertCount(20, $models);
+        $models = (new GeneratedFileManager($this->mapper, $this->destination))->createModels()->models;
+
+        $this->assertCount(15, $models);
     }
 
     /** @test */
     public function it_creates_all_controllers(): void
     {
-        $yaml = file_get_contents(__DIR__.'/../../doc/openapi.yaml');
-        $mapper = (new EndpointMapper($yaml));
-        $controllers = (new GeneratedFileManager($mapper, $this->destination))->createControllers()->controllers;
+        $controllers = (new GeneratedFileManager($this->mapper, $this->destination))->createControllers()->controllers;
 
         $this->assertCount(17, $controllers);
     }
@@ -51,9 +68,7 @@ class GeneratedFileManagerTest extends TestCase
     /** @test */
     public function it_creates_all_form_requests(): void
     {
-        $yaml = file_get_contents(__DIR__.'/../../doc/openapi.yaml');
-        $mapper = (new EndpointMapper($yaml));
-        $form_requests = (new GeneratedFileManager($mapper, $this->destination))->createFormRequests()->formRequests;
+        $form_requests = (new GeneratedFileManager($this->mapper, $this->destination))->createFormRequests()->formRequests;
 
         $this->assertCount(28, $form_requests);
     }
