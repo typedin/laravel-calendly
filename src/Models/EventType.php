@@ -91,7 +91,7 @@ class EventType
     /**
      * The publicly visible profile of a User or a Team that's associated with the Event Type (note: some Event Types don't have profiles)
      *
-     * @var 
+     * @var
      */
     public Profile $profile;
 
