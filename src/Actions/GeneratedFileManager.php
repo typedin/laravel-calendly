@@ -9,17 +9,18 @@ use Nette\PhpGenerator\PhpNamespace;
 use Nette\PhpGenerator\PsrPrinter;
 use Throwable;
 use Typedin\LaravelCalendly\Supports\Configuration\FormRequestProvider;
+use Typedin\LaravelCalendly\Supports\Configuration\ModelGeneratorProvider;
 use Typedin\LaravelCalendly\Supports\ControllerGenerator;
 use Typedin\LaravelCalendly\Supports\EndpointMapper;
-use Typedin\LaravelCalendly\Supports\EntityGenerator;
 use Typedin\LaravelCalendly\Supports\FormRequestGenerator;
+use Typedin\LaravelCalendly\Supports\ModelGenerator;
 
 class GeneratedFileManager
 {
     /**
      * @var Collection<array-key,<missing>>
      */
-    public readonly Collection $entities;
+    public readonly Collection $models;
 
     /**
      * @var Collection<array-key,<missing>>
@@ -34,7 +35,7 @@ class GeneratedFileManager
     public function __construct(private readonly EndpointMapper $mapper, private readonly string $path)
     {
         $this->controllers = new Collection();
-        $this->entities = new Collection();
+        $this->models = new Collection();
         $this->formRequests = new Collection();
     }
 
@@ -86,14 +87,22 @@ class GeneratedFileManager
         return $class;
     }
 
-    public function createEntities(): GeneratedFileManager
+    public function createModels(): GeneratedFileManager
     {
-        $this->mapper->entityNames()->each(function ($key) {
-            $entity = ( new EntityGenerator($key, $this->mapper->schemas()->get($key)) )->entity;
+        $this->mapper->modelConfigurators()->map(function (ModelGeneratorProvider $provider) {
+            try {
+                $model = ModelGenerator::model($provider);
+                $namespace = $this->createNamespace($model, "Typedin\LaravelCalendly\Models");
 
-            $namespace = $this->createNamespace($entity, "Typedin\LaravelCalendly\Entities");
-            $this->entities->push(['entity' => self::replaceQualifiersWithImport($entity), 'namespace' => $namespace]);
-        });
+                return [['model' => self::replaceQualifiersWithImport($model), 'namespace' => $namespace]];
+                /* $this->models->push(['model' => self::replaceQualifiersWithImport($model), 'namespace' => $namespace]); */
+            } catch (\Throwable $th) {
+                echo $th;
+            }
+        })->unique()
+           ->each(function ($value, $key) {
+               $this->models->push($value);
+           });
 
         return $this;
     }
@@ -124,9 +133,9 @@ class GeneratedFileManager
 
     public function writeAllFiles(): void
     {
-        $this->createEntities()
-        ->entities->each(function ($entry) {
-            self::write($this->path.'Entities/', $entry['entity'], $entry['namespace']);
+        $this->createModels()
+        ->models->each(function ($entry) {
+            self::write($this->path.'Models/', $entry['model'], $entry['namespace']);
         });
         $this->createControllers()->controllers->each(function ($entry) {
             self::write($this->path.'/Http/Controllers/', $entry['controller'], $entry['namespace']);

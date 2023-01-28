@@ -19,9 +19,11 @@ class ShowModelGeneratorProvider extends ModelGeneratorProvider
 
     public function returnType(): string
     {
-        $lookup = explode('/', $this->value['get']['responses']['200']['content']['application/json']['schema']['properties']['resource']['$ref']);
+        $ref = $this->value['get']['responses']['200']['content']['application/json']['schema']['properties']['resource']['$ref'] ??
+                $this->value['get']['responses']['200']['content']['application/json']['schema']['properties']['collection']['items']['$ref'];
+        $lookup = explode('/', $ref);
 
-        return $this->components['schemas'][end($lookup)]['title'];
+        return end($lookup);
     }
 
     public function schema(): array

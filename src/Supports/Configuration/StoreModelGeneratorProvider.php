@@ -11,7 +11,12 @@ class StoreModelGeneratorProvider extends ModelGeneratorProvider
 
     public function returnType(): string
     {
-        $lookup = explode('/', $this->value['post']['responses']['201']['content']['application/json']['schema']['properties']['resource']['$ref']);
+        $ref = $this->value['post']['responses']['201']['content']['application/json']['schema']['properties']['resource']['$ref'] ??
+                $this->value['post']['responses']['201']['content']['application/json']['schema']['properties']['resource'];
+        if (is_array($ref)) {
+            throw new \TypeError(message: 'return type is not in references');
+        }
+        $lookup = explode('/', $ref);
 
         return end($lookup);
     }

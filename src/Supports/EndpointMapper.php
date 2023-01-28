@@ -5,10 +5,15 @@ namespace Typedin\LaravelCalendly\Supports;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Symfony\Component\Yaml\Yaml;
+use TKey;
+use TValue;
 use Typedin\LaravelCalendly\Supports\Configuration\DestroyFormRequestProvider;
 use Typedin\LaravelCalendly\Supports\Configuration\IndexFormRequestProvider;
+use Typedin\LaravelCalendly\Supports\Configuration\IndexModelGeneratorProvider;
 use Typedin\LaravelCalendly\Supports\Configuration\ShowFormRequestProvider;
+use Typedin\LaravelCalendly\Supports\Configuration\ShowModelGeneratorProvider;
 use Typedin\LaravelCalendly\Supports\Configuration\StoreFormRequestProvider;
+use Typedin\LaravelCalendly\Supports\Configuration\StoreModelGeneratorProvider;
 
 class EndpointMapper
 {
@@ -52,6 +57,28 @@ class EndpointMapper
     public function formRequestNames(): Collection
     {
         return collect($this->schemas()->keys());
+    }
+
+    /**
+     * @return Collection<TKey,TValue>
+     */
+    public function modelConfigurators(): Collection
+    {
+        return $this->paths()
+                   ->map(function ($value, $path) {
+                       if (isset($value['get'])) {
+                           if (! (isset($value['parameters']) && ! empty($value['parameters']))) {
+                               return new IndexModelGeneratorProvider(value: $value, path: $path, name: self::fullname($path), components: $this->parsed['components']);
+                           }
+
+                           return new ShowModelGeneratorProvider(value: $value, path: $path, name: self::fullname($path), components: $this->parsed['components']);
+                       }
+                       if (isset($value['post'])) {
+                           return new StoreModelGeneratorProvider(value: $value, path: $path, name: self::fullname($path), components: $this->parsed['components']);
+                       }
+
+                       throw new \Exception('Error Processing Data to buld a FormRequestDTO');
+                   });
     }
 
     /**

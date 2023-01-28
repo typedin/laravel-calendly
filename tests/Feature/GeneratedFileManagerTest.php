@@ -30,12 +30,12 @@ class GeneratedFileManagerTest extends TestCase
     }
 
     /** @test */
-    public function it_creates_all_entities(): void
+    public function it_creates_all_models(): void
     {
         $yaml = file_get_contents(__DIR__.'/../../doc/openapi.yaml');
         $mapper = (new EndpointMapper($yaml));
-        $entities = (new GeneratedFileManager($mapper, $this->destination))->createEntities()->entities;
-        $this->assertCount(45, $entities);
+        $models = (new GeneratedFileManager($mapper, $this->destination))->createModels()->models;
+        $this->assertCount(20, $models);
     }
 
     /** @test */
