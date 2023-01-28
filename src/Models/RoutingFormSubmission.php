@@ -25,7 +25,7 @@ class RoutingFormSubmission
     /**
      * The UTM and Salesforce tracking parameters associated with a Routing Form Submission.
      *
-     * @var
+     * @var 
      */
     public SubmissionTracking $tracking;
 
