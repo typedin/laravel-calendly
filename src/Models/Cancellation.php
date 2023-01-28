@@ -6,13 +6,11 @@ class Cancellation
 {
     /**
      * Name of the person whom canceled
-     * @var string
      */
     public string $canceled_by;
 
     /**
      * Reason that the cancellation occurred
-     * @var string
      */
     public ?string $reason;
 

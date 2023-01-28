@@ -9,139 +9,120 @@ class Invitee
 {
     /**
      * Canonical reference (unique identifier) for the invitee
-     * @var string
      */
     public string $uri;
 
     /**
      * The invitee’s email address
-     * @var string
      */
     public string $email;
 
     /**
      * The first name of the invitee who booked the event when the event type is configured to use separate fields for first name and last name. Null when event type is configured to use a single field for name.
-     * @var string
      */
     public ?string $first_name;
 
     /**
      * The last name of the invitee who booked the event when the event type is configured to use separate fields for first name and last name. Null when event type is configured to use a single field for name.
-     * @var string
      */
     public ?string $last_name;
 
     /**
      * The invitee’s name (in human-readable format)
-     * @var string
      */
     public string $name;
 
     /**
      * Indicates if the invitee is "active" or "canceled"
+     *
      * @var string<active|canceled>
      */
     public string $status;
 
     /**
      * A collection of the invitee's responses to questions on the event booking confirmation form
-     * @var array
      */
     public array $questions_and_answers;
 
     /**
      * Time zone to use when displaying time to the invitee
-     * @var string
      */
     public ?string $timezone;
 
     /**
      * A reference to the event
-     * @var string
      */
     public string $event;
 
     /**
      * The moment when the event was created (e.g. "2020-01-02T03:04:05.678123Z")
-     * @var string
      */
     public string $created_at;
 
     /**
      * The moment when the event was last updated (e.g. "2020-01-02T03:04:05.678123Z")
-     * @var string
      */
     public string $updated_at;
 
     /**
      * The UTM and Salesforce tracking parameters associated with an Invitee
+     *
      * @var 
      */
     public InviteeTracking $tracking;
 
     /**
      * The phone number to use when sending text (SMS) reminders
-     * @var string
      */
     public ?string $text_reminder_number;
 
     /**
      * Indicates if this invitee has rescheduled. If `true`, a reference to the new Invitee instance is provided in the `new_invitee` field.
-     * @var bool
      */
     public bool $rescheduled;
 
     /**
      * Reference to old Invitee instance that got rescheduled
-     * @var string
      */
     public ?string $old_invitee;
 
     /**
      * Link to new invitee, after reschedule
-     * @var string
      */
     public ?string $new_invitee;
 
     /**
      * Link to cancelling the event for the invitee
-     * @var string
      */
     public string $cancel_url;
 
     /**
      * Link to rescheduling the event for the invitee
-     * @var string
      */
     public string $reschedule_url;
 
     /**
      * Reference to a routing form submission that redirected the invitee to a booking page.
-     * @var string
      */
     public ?string $routing_form_submission;
 
     /**
      * Provides data pertaining to the cancellation of the Event
-     * @var Typedin\LaravelCalendly\Models\Cancellation
      */
     public ?Cancellation $cancellation;
 
     /**
      * Invitee payment
-     * @var object
      */
     public ?object $payment;
 
     /**
      * Provides data pertaining to the associated no show for the Invitee
-     * @var object
      */
     public ?object $no_show;
 
     /**
      * Assuming reconfirmation is enabled for the event type, when reconfirmation is requested this object is present with a `created_at` that reflects when the reconfirmation notification was sent. Once the invitee has reconfirmed the `confirmed_at` attribute will change from `null` to a timestamp that reflects when they took action.
-     * @var object
      */
     public ?object $reconfirmation;
 
