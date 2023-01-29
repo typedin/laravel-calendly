@@ -19,7 +19,8 @@ class CalendlyUsersController extends Controller
 
     public function show(ShowUserRequest $request): JsonResponse
     {
-        $response = $this->api->get("/users/{$request->safe()->only(['uuid'])}/", $request);
+        [$uuid] = $request->safe()->only(['uuid']);
+        $response = $this->api->get("/users/{$uuid}/", $request);
         if ($response->ok()) {
             return response()->json([
                 'user' => new User(...$response->json('resource')),
