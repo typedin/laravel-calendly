@@ -21,15 +21,15 @@ class BaseApiClient implements CalendlyApiInterface
 
     public function __construct()
     {
-        if (! config('calendly.api.key')) {
+        if (! config('laravel-calendly.api.key')) {
             throw ApiClientException::ApiKeyNotFound();
         }
-        $this->apiKey = config('calendly.api.key');
+        $this->apiKey = config('laravel-calendly.api.key');
 
-        if (! config('calendly.api.endpoint')) {
+        if (! config('laravel-calendly.api.endpoint')) {
             throw ApiClientException::ApiEndpointNotFound();
         }
-        $this->endpoint = config('calendly.api.endpoint');
+        $this->endpoint = config('laravel-calendly.api.endpoint');
     }
 
     /**

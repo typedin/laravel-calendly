@@ -13,6 +13,9 @@ class LaravelCalendlyServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        $this->publishes([
+            __DIR__.'/../config/laravel-calendly.php' => config_path('laravel-calendly.php'),
+        ]);
     }
 
     /**
