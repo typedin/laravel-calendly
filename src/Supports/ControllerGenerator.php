@@ -84,11 +84,13 @@ class ControllerGenerator
                     ->setReturnType('\Illuminate\Http\JsonResponse')
                     ->addBody(sprintf('$response = $this->api->get("/%s/", $request);', $this->buildUri($key)))
                     ->addBody('')
-                    ->addBody('$all = collect($response["collection"])')
+                    ->addBody('if($response->ok()) {')
+                    ->addBody('$all = collect($response->collect("collection"))')
                     ->addBody(sprintf('->mapInto(\Typedin\LaravelCalendly\Models\%s::class)->all();', $this->getReturnType($key, http_method: 'get', is_index: true)))
                     ->addBody('return response()->json([')
                     ->addBody(sprintf('"%s" => $all,', Str::snake($this->provider->name)))
                     ->addBody(']);')
+                    ->addBody('}')
                     ->addParameter('request')
                     ->setType(sprintf('\Typedin\LaravelCalendly\Http\Requests\%s%sRequest', $this->verb('index'), Str::plural($this->provider->name)));
         } catch (Throwable) {
@@ -104,9 +106,11 @@ class ControllerGenerator
                     ->addMethod('show')
                     ->setReturnType('\Illuminate\Http\JsonResponse')
                     ->addBody(sprintf('$response = $this->api->get("/%s/", $request);', $this->buildUri($key)))
+                    ->addBody('if($response->ok()) {')
                     ->addBody('return response()->json([')
-                    ->addBody(sprintf('"%s" => new \Typedin\LaravelCalendly\Models\%s($response),', Str::snake($this->getReturnType($key, http_method: 'get', is_index: false)), $this->getReturnType($key, http_method: 'get', is_index: false)))
+                    ->addBody(sprintf('"%s" => new \Typedin\LaravelCalendly\Models\%s(...$response->json("resource")),', Str::snake($this->getReturnType($key, http_method: 'get', is_index: false)), $this->getReturnType($key, http_method: 'get', is_index: false)))
                     ->addBody(']);')
+                    ->addBody('}')
                     ->addParameter('request')
                     ->setType(sprintf('\Typedin\LaravelCalendly\Http\Requests\%s%sRequest', $this->verb('get'), Str::singular($this->provider->name)));
         } catch (Throwable) {
@@ -120,9 +124,11 @@ class ControllerGenerator
                 ->addMethod('create')
                 ->setReturnType('\Illuminate\Http\JsonResponse')
                 ->addBody(sprintf('$response = $this->api->post("/%s/", $request);', $this->buildUri($key)))
+                    ->addBody('if($response->ok()) {')
                 ->addBody('return response()->json([')
-                ->addBody(sprintf('"%s" => new \Typedin\LaravelCalendly\Models\%s($response),', Str::snake($this->getReturnType($key, http_method: 'post', is_index: false)), $this->getReturnType($key, http_method: 'post', is_index: false)))
+                ->addBody(sprintf('"%s" => new \Typedin\LaravelCalendly\Models\%s(...$response->json("resource")),', Str::snake($this->getReturnType($key, http_method: 'post', is_index: false)), $this->getReturnType($key, http_method: 'post', is_index: false)))
                 ->addBody(']);')
+                ->addBody('}')
                 ->addParameter('request')
                 ->setType(sprintf('\Typedin\LaravelCalendly\Http\Requests\%s%sRequest', $this->verb('post'), Str::singular($this->provider->name)));
     }
@@ -132,8 +138,10 @@ class ControllerGenerator
         $this->controller
                 ->addMethod('destroy')
                 ->setReturnType('\Illuminate\Http\JsonResponse')
-                ->addBody(sprintf('$this->api->delete("/%s/");', $this->buildUri($key)))
+                ->addBody(sprintf('$response = $this->api->delete("/%s/");', $this->buildUri($key)))
+                    ->addBody('if($response->ok()) {')
                 ->addBody('return response()->noContent();')
+                ->addBody('}')
                 ->addParameter('request')
                 ->setType(sprintf('\Typedin\LaravelCalendly\Http\Requests\%s%sRequest', $this->verb('delete'), Str::singular($this->provider->name)));
     }
