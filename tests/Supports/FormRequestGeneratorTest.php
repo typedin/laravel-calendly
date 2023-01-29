@@ -125,6 +125,37 @@ class FormRequestGeneratorTest extends TestCase
     }
 
     /**
+     * @dataProvider userProvider
+     *
+     * @test
+     *
+     * @param  mixed  $property
+     * @param  mixed  $expected_rules
+     */
+    public function it_generates_show_form_request_for_user($property, $expected_rules): void
+    {
+            path: '/users/{uuid}',
+            name: 'Users',
+            value: $this->path('/users/{uuid}')
+        );
+
+        $validator = FormRequestGenerator::formRequest($provider);
+
+        $this->assertEquals('\Illuminate\Foundation\Http\FormRequest', $validator->getExtends());
+        $this->assertEquals('ShowUserRequest', $validator->getName());
+        $rules = $validator->getMethod('rules');
+
+        $this->assertStringContainsString(sprintf("'%s' => '%s',", $property, $expected_rules), $rules->getBody());
+    }
+
+    public function userProvider(): array
+    {
+        return [
+            ['uuid', 'required,string'],
+        ];
+    }
+
+    /**
      * @test
      */
     public function it_generates_store_form_request_from_post_path(): void

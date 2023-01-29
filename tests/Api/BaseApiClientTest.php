@@ -54,7 +54,6 @@ class BaseApiClientTest extends TestCase
      */
     public function it_throws_without_api_endpoin(): void
     {
-        Config::set('laravel-calendly.api.endpoint', null);
 
         $this->expectException(ApiClientException::class);
         $this->expectErrorMessage('Expect an API endpoint. None found.');
