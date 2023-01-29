@@ -85,7 +85,7 @@ class ControllerGenerator
                     ->addBody(sprintf('$response = $this->api->get("/%s/", $request);', $this->buildUri($key)))
                     ->addBody('')
                     ->addBody('$all = collect($response["collection"])')
-                    ->addBody(sprintf('->mapInto(\Typedin\LaravelCalendly\Models\%s::class)->all();', Str::singular($this->provider->name)))
+                    ->addBody(sprintf('->mapInto(\Typedin\LaravelCalendly\Models\%s::class)->all();', $this->getReturnType($key, http_method: 'get', is_index: true)))
                     ->addBody('return response()->json([')
                     ->addBody(sprintf('"%s" => $all,', Str::snake($this->provider->name)))
                     ->addBody(']);')
@@ -105,7 +105,7 @@ class ControllerGenerator
                     ->setReturnType('\Illuminate\Http\JsonResponse')
                     ->addBody(sprintf('$response = $this->api->get("/%s/", $request);', $this->buildUri($key)))
                     ->addBody('return response()->json([')
-                    ->addBody(sprintf('"%s" => new \Typedin\LaravelCalendly\Models\%s($response),', Str::snake(Str::singular($this->provider->name)), Str::singular($this->provider->name)))
+                    ->addBody(sprintf('"%s" => new \Typedin\LaravelCalendly\Models\%s($response),', Str::snake($this->getReturnType($key, http_method: 'get', is_index: false)), $this->getReturnType($key, http_method: 'get', is_index: false)))
                     ->addBody(']);')
                     ->addParameter('request')
                     ->setType(sprintf('\Typedin\LaravelCalendly\Http\Requests\%s%sRequest', $this->verb('get'), Str::singular($this->provider->name)));
@@ -121,7 +121,7 @@ class ControllerGenerator
                 ->setReturnType('\Illuminate\Http\JsonResponse')
                 ->addBody(sprintf('$response = $this->api->post("/%s/", $request);', $this->buildUri($key)))
                 ->addBody('return response()->json([')
-                ->addBody(sprintf('"%s" => new \Typedin\LaravelCalendly\Models\%s($response),', Str::snake(Str::singular($this->provider->name)), Str::singular($this->provider->name)))
+                ->addBody(sprintf('"%s" => new \Typedin\LaravelCalendly\Models\%s($response),', Str::snake($this->getReturnType($key, http_method: 'post', is_index: false)), $this->getReturnType($key, http_method: 'post', is_index: false)))
                 ->addBody(']);')
                 ->addParameter('request')
                 ->setType(sprintf('\Typedin\LaravelCalendly\Http\Requests\%s%sRequest', $this->verb('post'), Str::singular($this->provider->name)));
@@ -186,5 +186,22 @@ class ControllerGenerator
 
             return $value;
         })->implode('/');
+    }
+
+    private function getReturnType(string $path, string $http_method = 'get', bool $is_index = true): string
+    {
+        // booking_url is an edge case because it's not in the schemas
+        $lookup = ['BookingUrl'];
+        if ($is_index && $http_method == 'get') {
+            $lookup = explode('/', $this->provider->endpoints[$path][$http_method]['responses']['200']['content']['application/json']['schema']['properties']['collection']['items']['$ref']);
+        }
+        if (! $is_index && $http_method == 'get') {
+            $lookup = explode('/', $this->provider->endpoints[$path][$http_method]['responses']['200']['content']['application/json']['schema']['properties']['resource']['$ref']);
+        }
+        if ($http_method == 'post' && isset($this->provider->endpoints[$path][$http_method]['responses']['201']['content']['application/json']['schema']['properties']['resource']['$ref'])) {
+            $lookup = explode('/', $this->provider->endpoints[$path][$http_method]['responses']['201']['content']['application/json']['schema']['properties']['resource']['$ref']);
+        }
+
+        return end($lookup);
     }
 }

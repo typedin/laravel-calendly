@@ -111,7 +111,7 @@ class ControllerGeneratorTest extends TestCase
         $this->assertStringContainsString('$response = $this->api->post("/scheduling_links/", $request);', $method->getBody());
 
         $this->assertStringContainsString('return response()->json([', $method->getBody());
-        $this->assertStringContainsString('"scheduling_link" => new \Typedin\LaravelCalendly\Models\SchedulingLink($response),', $method->getBody());
+        $this->assertStringContainsString('"booking_url" => new \Typedin\LaravelCalendly\Models\BookingUrl($response),', $method->getBody());
         $this->assertStringContainsString(']);', $method->getBody());
     }
 
