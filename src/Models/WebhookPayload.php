@@ -24,7 +24,7 @@ class WebhookPayload
      *
      * For example, an `invitee.*` event produces an `Invitee` object in the payload.
      *
-     * @var 
+     * @var
      */
     public $payload;
 
