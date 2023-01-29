@@ -10,11 +10,9 @@ use TValue;
 use Typedin\LaravelCalendly\Supports\Configuration\ControllerGeneratorProvider;
 use Typedin\LaravelCalendly\Supports\Configuration\DestroyFormRequestProvider;
 use Typedin\LaravelCalendly\Supports\Configuration\IndexFormRequestProvider;
-use Typedin\LaravelCalendly\Supports\Configuration\IndexModelGeneratorProvider;
+use Typedin\LaravelCalendly\Supports\Configuration\ModelGeneratorProvider;
 use Typedin\LaravelCalendly\Supports\Configuration\ShowFormRequestProvider;
-use Typedin\LaravelCalendly\Supports\Configuration\ShowModelGeneratorProvider;
 use Typedin\LaravelCalendly\Supports\Configuration\StoreFormRequestProvider;
-use Typedin\LaravelCalendly\Supports\Configuration\StoreModelGeneratorProvider;
 
 class EndpointMapper
 {
@@ -65,20 +63,13 @@ class EndpointMapper
      */
     public function modelProviders(): Collection
     {
-        return $this->paths()
-                   ->map(function ($value, $path) {
-                       if (isset($value['get'])) {
-                           if (! (isset($value['parameters']) && ! empty($value['parameters']))) {
-                               return new IndexModelGeneratorProvider(value: $value, path: $path, name: self::fullname($path), components: $this->parsed['components']);
-                           }
-
-                           return new ShowModelGeneratorProvider(value: $value, path: $path, name: self::fullname($path), components: $this->parsed['components']);
+        return $this->schemas()
+                   ->map(function ($schema, $name) {
+                       try {
+                           return new ModelGeneratorProvider(name: $name, schema: $schema);
+                       } catch (\Throwable $th) {
+                           throw new \Exception('Error Processing Data to buld a ModelGeneratorProvider');
                        }
-                       if (isset($value['post'])) {
-                           return new StoreModelGeneratorProvider(value: $value, path: $path, name: self::fullname($path), components: $this->parsed['components']);
-                       }
-
-                       throw new \Exception('Error Processing Data to buld a FormRequestDTO');
                    });
     }
 

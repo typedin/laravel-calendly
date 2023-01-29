@@ -2,11 +2,10 @@
 
 namespace Typedin\LaravelCalendly\Tests\Supports;
 
+use Illuminate\Support\Collection;
 use PHPUnit\Framework\TestCase;
 use TValue;
-use Typedin\LaravelCalendly\Supports\Configuration\IndexModelGeneratorProvider;
-use Typedin\LaravelCalendly\Supports\Configuration\ShowModelGeneratorProvider;
-use Typedin\LaravelCalendly\Supports\Configuration\StoreModelGeneratorProvider;
+use Typedin\LaravelCalendly\Supports\Configuration\ModelGeneratorProvider;
 use Typedin\LaravelCalendly\Supports\ModelGenerator;
 
 class ModelGeneratorTest extends TestCase
@@ -32,53 +31,32 @@ class ModelGeneratorTest extends TestCase
     /**
      * @return array<TKey,TValue>
      */
+    private function shemas(): Collection
+    {
+        return collect($this->json['components']['schemas']);
+    }
+
+    /**
+     * @return array<TKey,TValue>
+     */
     private function path(string $filter): array
     {
         return collect($this->json['paths'][$filter])->all();
     }
 
-    /** @test */
-    public function it_generates_models_for_index(): void
+    /**
+     * @dataProvider userSchemaProvider
+     *
+     * @test */
+    public function it_generates_models_for_index($parameterName, $isNullable, $type, $comments = []): void
     {
-        $provider = new IndexModelGeneratorProvider(
-            path: '/scheduled_events',
-            name:'ScheduledEvents',
-            value: $this->path('/scheduled_events'),
-            components: $this->components()
+        $provider = new ModelGeneratorProvider(
+            name:'User',
+            schema: $this->shemas()->get('User')
         );
 
         $model = ModelGenerator::model($provider);
         // in the controller handle responses
-
-        $this->assertEquals('Event', $model->getName());
-        $this->assertEquals('Typedin\LaravelCalendly\Models', $model->getNamespace()->getName());
-
-        $cancellation = $model->getProperties()['cancellation'];
-        $this->assertEquals('Cancellation', $cancellation->getType());
-        $this->assertStringContainsString('@var Typedin\LaravelCalendly\Models\Cancellation $cancellation', $cancellation->getComment());
-        $this->assertStringContainsString('Provides data pertaining to the cancellation of the Event', $cancellation->getComment());
-    }
-
-    /**
-     * @dataProvider showProvider
-     *
-     * @test
-     *
-     * @param  string  $parameterName
-     * @param  string  $type
-     * @param  bool  $isNullable
-     * @param  array<int,string>  $comments
-     */
-    public function it_generates_models_for_show($parameterName, $isNullable, $type, $comments = []): void
-    {
-        $provider = new ShowModelGeneratorProvider(
-            path: '/users/{uuid}',
-            name:'Users',
-            value: $this->path('/users/{uuid}'),
-            components: $this->components()
-        );
-
-        $model = ModelGenerator::model($provider);
 
         $this->assertEquals('User', $model->getName());
 
@@ -95,7 +73,7 @@ class ModelGeneratorTest extends TestCase
     /**
      * @return array<int,array<int,mixed>>
      */
-    private function showProvider(): array
+    private function userSchemaProvider(): array
     {
         return [
             [
@@ -139,11 +117,10 @@ class ModelGeneratorTest extends TestCase
      */
     public function it_generates_models_for_store(string $parameterName, bool $isNullable, string $type, array $comments = []): void
     {
-        $provider = new StoreModelGeneratorProvider(
-            path: '/webhook_subscriptions',
-            name:'WebhookSubscriptions',
-            value: $this->path('/webhook_subscriptions'),
-            components: $this->components()
+        $key = 'WebhookSubscription';
+        $provider = new ModelGeneratorProvider(
+            name: $key,
+            schema: $this->shemas()->get($key)
         );
 
         $model = ModelGenerator::model($provider);

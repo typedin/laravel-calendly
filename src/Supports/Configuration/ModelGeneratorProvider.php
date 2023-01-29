@@ -2,23 +2,14 @@
 
 namespace Typedin\LaravelCalendly\Supports\Configuration;
 
-abstract class ModelGeneratorProvider
+class ModelGeneratorProvider
 {
     /**
-     * @param  array<int,mixed>  $value
-     * @param  array<int,mixed>  $components
+     * @param  array<int,mixed>  $schema
      */
-    public function __construct(public string $path, public string $name, public array $value, public array $components)
+    public function __construct(public readonly string $name, public readonly array $schema)
     {
     }
-
-    abstract public function httpMethod(): string;
-
-    abstract public function returnType(): string;
-
-    abstract public function schema(): array;
-
-    abstract public function schemas(): array;
 
     public function getRef(string $property): string
     {
@@ -27,5 +18,20 @@ abstract class ModelGeneratorProvider
         }
 
         return $this->schema()['properties'][$property]['$ref'];
+    }
+
+    public function returnType(): string
+    {
+        return $this->name;
+    }
+
+    public function schema(): array
+    {
+        return $this->schema;
+    }
+
+    public function properties(): array
+    {
+        return $this->schema()['properties'] ?? [];
     }
 }

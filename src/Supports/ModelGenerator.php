@@ -33,7 +33,7 @@ class ModelGenerator
     private function generateConstructor(): ModelGenerator
     {
         $this->model->addMethod('__construct');
-        collect($this->provider->schema()['properties'])->each(function ($property_value, $property_name) {
+        collect($this->provider->properties())->each(function ($property_value, $property_name) {
             $this->model
                     ->getMethod('__construct')
                     ->addParameter($property_name)
@@ -48,7 +48,7 @@ class ModelGenerator
 
     private function generateProperties(): ModelGenerator
     {
-        collect($this->provider->schema()['properties'])->each(function ($property_value, $property_name) {
+        collect($this->provider->properties())->each(function ($property_value, $property_name) {
             $this->model
                     ->addProperty($property_name)
                     ->setType($this->getParameterType($property_name, $property_value))
@@ -62,46 +62,28 @@ class ModelGenerator
 
     private function getParameterType(string $parameter_name): string
     {
-        if ($this->paramaterIsRef($parameter_name)) {
-            if ($this->provider->schema()['properties'][$parameter_name]['$ref'] == 'models/Location.yaml') {
-                return '';
-            }
-
-            $lookup = explode('/', $this->provider->schema()['properties'][$parameter_name]['$ref']);
-
-            return end($lookup);
+        if (! isset($this->provider->properties()[$parameter_name]['type'])) {
+            return '';
         }
-        if (str_contains((string) $this->provider->schema()['properties'][$parameter_name]['type'], 'bool')) {
+        if (str_contains((string) $this->provider->properties()[$parameter_name]['type'], 'bool')) {
             return 'bool';
         }
 
-        return $this->provider->schema()['properties'][$parameter_name]['type'];
+        return $this->provider->properties()[$parameter_name]['type'];
     }
 
     private function generatePropertieDescription(string $property): string
     {
-        if ($this->paramaterIsRef($property)) {
-            if ($this->provider->getRef($property) == 'models/Location.yaml') {
-                return '';
-            }
-            $lookup = explode('/', $this->provider->getRef($property));
-
-            return $this->provider->schemas()[Str::ucfirst(end($lookup))]['description'];
-        }
-
-        return $this->provider->schema()['properties'][$property]['description'] ?? '';
+        return $this->provider->properties()[$property]['description'] ?? '';
     }
 
     private function generateVarComment(string $property): string
     {
-        $local_type = $this->provider->schema()['properties'][$property]['type'] ?? '';
+        $local_type = $this->provider->properties()[$property]['type'] ?? '';
 
         if ($this->isEnum($property)) {
-            $enum = '<'.implode('|', $this->provider->schema()['properties'][$property]['enum']).'>';
+            $enum = '<'.implode('|', $this->provider->properties()[$property]['enum']).'>';
             $local_type = $local_type.$enum;
-        }
-        if ($this->isReference($property)) {
-            $local_type = 'Typedin\LaravelCalendly\Models\\'.Str::ucfirst($property);
         }
 
         return sprintf('@var %s $%s', $local_type, $property);
@@ -109,31 +91,15 @@ class ModelGenerator
 
     private function isNullable(string $parameter_name): bool
     {
-        if (isset($this->provider->schema()['properties'][$parameter_name]['nullable'])) {
-            if ($parameter_name == 'avatar_url') {
-                return $this->provider->schema()['properties'][$parameter_name]['nullable'];
-
-                return  true;
-            }
-
-            return $this->provider->schema()['properties'][$parameter_name]['nullable'];
+        if (isset($this->provider->properties()[$parameter_name]['nullable'])) {
+            return $this->provider->properties()[$parameter_name]['nullable'];
         }
 
         return ! in_array($parameter_name, $this->provider->schema()['required']);
     }
 
-    private function paramaterIsRef(string $parameter_name): bool
-    {
-        return (bool) $this->provider->getRef($parameter_name);
-    }
-
-    private function isReference(string $property): bool
-    {
-        return $this->isNullable($property) && ! isset($this->provider->schema()['properties'][$property]['type']);
-    }
-
     private function isEnum(string $property): bool
     {
-        return isset($this->provider->schema()['properties'][$property]['enum']);
+        return isset($this->provider->properties()[$property]['enum']);
     }
 }

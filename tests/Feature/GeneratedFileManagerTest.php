@@ -54,7 +54,7 @@ class GeneratedFileManagerTest extends TestCase
     {
         $models = $this->file_manager->createModels()->models;
 
-        $this->assertCount(15, $models);
+        $this->assertCount(45, $models);
     }
 
     /** @test */
