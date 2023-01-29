@@ -15,6 +15,9 @@ class AppleSauce
         if (str_contains((string) $argument['type'], 'bool')) {
             return 'bool';
         }
+        if (str_contains((string) $argument['type'], 'number')) {
+            return 'float';
+        }
 
         return $argument['type'];
     }
