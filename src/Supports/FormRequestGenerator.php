@@ -39,7 +39,7 @@ class FormRequestGenerator
 
     private function generateConstructor(): FormRequestGenerator
     {
-        $this->validator->setExtends('Illuminate\Foundation\Http\FormRequest');
+        $this->validator->setExtends('\Illuminate\Foundation\Http\FormRequest');
 
         return $this;
     }
