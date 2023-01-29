@@ -17,8 +17,8 @@ class BaseApiClientTest extends TestCase
     {
         parent::setUp();
 
-        Config::set('calendly.api.key', 'fake-api-key');
-        Config::set('calendly.api.endpoint', 'fake/api/endpoint');
+        Config::set('laravel-calendly.api.key', 'fake-api-key');
+        Config::set('laravel-calendly.api.endpoint', 'fake/api/endpoint');
     }
 
     protected function getEnvironmentSetUp($app): void
@@ -41,7 +41,7 @@ class BaseApiClientTest extends TestCase
      */
     public function it_throws_without_api_key(): void
     {
-        Config::set('calendly.api.key', null);
+        Config::set('laravel-calendly.api.key', null);
 
         $this->expectException(ApiClientException::class);
         $this->expectErrorMessage('Expect an API key. None found.');
@@ -54,7 +54,7 @@ class BaseApiClientTest extends TestCase
      */
     public function it_throws_without_api_endpoin(): void
     {
-        Config::set('calendly.api.endpoint', null);
+        Config::set('laravel-calendly.api.endpoint', null);
 
         $this->expectException(ApiClientException::class);
         $this->expectErrorMessage('Expect an API endpoint. None found.');
