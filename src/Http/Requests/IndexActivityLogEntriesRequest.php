@@ -9,7 +9,7 @@ class IndexActivityLogEntriesRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'organization' => 'required,url',
+            'organization' => 'required|url',
             'search_term' => 'string',
             'actor' => 'array',
             'sort' => 'array',

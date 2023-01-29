@@ -9,8 +9,8 @@ class ShowScheduledEventInviteeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'event_uuid' => 'required,string',
-            'invitee_uuid' => 'required,string',
+            'event_uuid' => 'required|string',
+            'invitee_uuid' => 'required|string',
         ];
     }
 }

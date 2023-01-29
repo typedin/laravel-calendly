@@ -9,7 +9,7 @@ class IndexRoutingFormsRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'organization' => 'required,url',
+            'organization' => 'required|url',
             'sort' => 'string',
         ];
     }
