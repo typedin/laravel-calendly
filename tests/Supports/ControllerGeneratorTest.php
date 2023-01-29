@@ -70,12 +70,12 @@ class ControllerGeneratorTest extends TestCase
         $this->assertStringContainsString('$all = collect($response->collect("collection"))', $method->getBody());
         $this->assertStringContainsString('->mapInto(\Typedin\LaravelCalendly\Models\EventType::class)->all();', $method->getBody());
 
+        $this->assertStringContainsString('$pagination = new \Typedin\LaravelCalendly\Models\Pagination(...$response->collect("pagination")->all());', $method->getBody());
         $this->assertStringContainsString('return response()->json([', $method->getBody());
         $this->assertStringContainsString('"event_types" => $all,', $method->getBody());
+        $this->assertStringContainsString('"pagination" => $pagination,', $method->getBody());
         $this->assertStringContainsString(']);', $method->getBody());
         $this->assertStringContainsString('}', $method->getBody());
-
-        // TODO pagination
     }
 
     /**
