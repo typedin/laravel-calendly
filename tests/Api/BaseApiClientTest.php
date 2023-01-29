@@ -54,6 +54,7 @@ class BaseApiClientTest extends TestCase
      */
     public function it_throws_without_api_endpoin(): void
     {
+        Config::set('laravel-calendly.api.endpoint', null);
 
         $this->expectException(ApiClientException::class);
         $this->expectErrorMessage('Expect an API endpoint. None found.');
@@ -72,6 +73,6 @@ class BaseApiClientTest extends TestCase
 
         Http::assertSent(fn (Request $request) => $request->header('Authorization')[0] == 'Bearer fake-api-key'
         &&
-        $request->url() == 'https://fake/api/endpoint/users/me');
+        $request->url() == 'fake/api/endpoint/users/me');
     }
 }

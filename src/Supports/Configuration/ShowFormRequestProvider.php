@@ -11,6 +11,6 @@ class ShowFormRequestProvider extends FormRequestProvider
 
     public function parameters(): array
     {
-        return $this->value['parameters'] ?? [];
+        return $this->value['parameters'] ?? $this->value['get']['parameters'] ?? [];
     }
 }

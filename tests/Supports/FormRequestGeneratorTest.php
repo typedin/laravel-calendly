@@ -134,6 +134,7 @@ class FormRequestGeneratorTest extends TestCase
      */
     public function it_generates_show_form_request_for_user($property, $expected_rules): void
     {
+        $provider = new ShowFormRequestProvider(
             path: '/users/{uuid}',
             name: 'Users',
             value: $this->path('/users/{uuid}')

@@ -5,8 +5,6 @@ namespace Typedin\LaravelCalendly\Supports;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Symfony\Component\Yaml\Yaml;
-use TKey;
-use TValue;
 use Typedin\LaravelCalendly\Supports\Configuration\ControllerGeneratorProvider;
 use Typedin\LaravelCalendly\Supports\Configuration\DestroyFormRequestProvider;
 use Typedin\LaravelCalendly\Supports\Configuration\ErrorResponseGeneratorProvider;
@@ -81,6 +79,11 @@ class EndpointMapper
     {
         return $this->paths()
                    ->map(function ($value, $path) {
+                       if ($path == '/users/{uuid}') {
+                       }
+                       if ($path == '/users/me') {
+                           return new ShowFormRequestProvider(value: $value, path: $path, name: self::fullname($path));
+                       }
                        if (isset($value['get'])) {
                            if (! (isset($value['parameters']) && ! empty($value['parameters']))) {
                                return new IndexFormRequestProvider(value: $value, path: $path, name: self::fullname($path));

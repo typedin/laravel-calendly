@@ -24,6 +24,7 @@ class LaravelCalendlyServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->mergeConfigFrom(
+            __DIR__.'/../config/laravel-calendly.php',
             'laravel-calendly',
         );
 
