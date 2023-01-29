@@ -43,6 +43,7 @@ class GeneratedFileManager
     {
         $this->mapper->modelProviders()->map(function (ModelGeneratorProvider $provider) {
             return ModelGenerator::model($provider);
+
             try {
             } catch (\Throwable $th) {
                 // this returns null
