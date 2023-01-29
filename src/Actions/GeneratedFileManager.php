@@ -12,6 +12,7 @@ use Typedin\LaravelCalendly\Supports\Configuration\FormRequestProvider;
 use Typedin\LaravelCalendly\Supports\Configuration\ModelGeneratorProvider;
 use Typedin\LaravelCalendly\Supports\ControllerGenerator;
 use Typedin\LaravelCalendly\Supports\EndpointMapper;
+use Typedin\LaravelCalendly\Supports\ErrorResponseGenerator;
 use Typedin\LaravelCalendly\Supports\FormRequestGenerator;
 use Typedin\LaravelCalendly\Supports\ModelGenerator;
 
@@ -21,6 +22,11 @@ class GeneratedFileManager
      * @var Collection<array-key,<missing>>
      */
     public readonly Collection $models;
+
+    /**
+     * @var Collection<array-key,<missing>>
+     */
+    public readonly Collection $errorResponses;
 
     /**
      * @var Collection<array-key,<missing>>
@@ -37,6 +43,7 @@ class GeneratedFileManager
         $this->controllers = new Collection();
         $this->models = new Collection();
         $this->formRequests = new Collection();
+        $this->errorResponses = new Collection();
     }
 
     public function createModels(): GeneratedFileManager
@@ -83,6 +90,20 @@ class GeneratedFileManager
         return $this;
     }
 
+    public function createErrorResponses(): GeneratedFileManager
+    {
+        $this->mapper->errorResponseProviders()->each(function ($provider) {
+            $error_response = ErrorResponseGenerator::errorResponse($provider);
+
+            $this->errorResponses->push([
+                'error_response' => $error_response,
+                'namespace' => $this->createNamespace($error_response, "Typedin\LaravelCalendly\Http\Errors"),
+            ]);
+        });
+
+        return $this;
+    }
+
     public function writeAllFiles(): void
     {
         $this->createModels()
@@ -96,6 +117,10 @@ class GeneratedFileManager
         $this->createFormRequests()
             ->formRequests->each(function ($entry) {
                 self::write($this->path.'/Http/Requests/', $entry['form_request'], $entry['namespace']);
+            });
+        $this->createErrorResponses()
+            ->errorResponses->each(function ($entry) {
+                self::write($this->path.'/Http/Errors/', $entry['error_response'], $entry['namespace']);
             });
     }
 

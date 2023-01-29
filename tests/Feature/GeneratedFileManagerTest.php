@@ -72,4 +72,12 @@ class GeneratedFileManagerTest extends TestCase
 
         $this->assertCount(28, $form_requests);
     }
+
+    /** @test */
+    public function it_creates_all_error_responses(): void
+    {
+        $error_responses = $this->file_manager->createErrorResponses()->errorResponses;
+
+        $this->assertCount(6, $error_responses);
+    }
 }

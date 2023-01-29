@@ -9,6 +9,7 @@ use TKey;
 use TValue;
 use Typedin\LaravelCalendly\Supports\Configuration\ControllerGeneratorProvider;
 use Typedin\LaravelCalendly\Supports\Configuration\DestroyFormRequestProvider;
+use Typedin\LaravelCalendly\Supports\Configuration\ErrorResponseGeneratorProvider;
 use Typedin\LaravelCalendly\Supports\Configuration\IndexFormRequestProvider;
 use Typedin\LaravelCalendly\Supports\Configuration\ModelGeneratorProvider;
 use Typedin\LaravelCalendly\Supports\Configuration\ShowFormRequestProvider;
@@ -121,6 +122,13 @@ class EndpointMapper
                    ->values();
     }
 
+    public function errorResponseProviders(): Collection
+    {
+        return collect($this->components()->get('responses'))->map(function ($value, $key) {
+            return new ErrorResponseGeneratorProvider(name: $key, schema: $value);
+        });
+    }
+
     /**
      * @return Collection<TKey,TValue>
      */
@@ -147,5 +155,10 @@ class EndpointMapper
 
             return Str::plural($part);
         })->implode('');
+    }
+
+    private function components(): Collection
+    {
+        return collect($this->parsed['components']);
     }
 }

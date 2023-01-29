@@ -83,7 +83,7 @@ class ErrorResponseGeneratorTest extends TestCase
 
         $this->assertEquals('InvalidArgumentError', $error_response->getName());
         $this->assertEquals('Typedin\LaravelCalendly\Errors', $error_response->getNamespace()->getName());
-        $this->assertEquals('Typedin\LaravelCalendly\Errors\BaseError', $error_response->getExtends());
+        $this->assertEquals('\Typedin\LaravelCalendly\Models\ErrorResponse', $error_response->getExtends());
 
         $this->assertEquals($type, $error_response->getProperty($parameterName)->getType());
         $this->assertEquals($type, $error_response->getMethod('__construct')->getParameters()[$parameterName]->getType());

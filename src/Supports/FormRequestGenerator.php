@@ -20,16 +20,15 @@ class FormRequestGenerator
 
     private function __construct(private readonly FormRequestProvider $provider)
     {
+        $this->validator = new ClassType(
+            name: sprintf('%s%sRequest', $this->verb(), $this->wantsIndex() ? Str::plural($this->provider->name) : Str::singular($this->provider->name)),
+            namespace: new PhpNamespace('Typedin\LaravelCalendly\Models')
+        );
     }
 
     public static function formRequest(FormRequestProvider $provider): ClassType
     {
         $generator = new FormRequestGenerator($provider);
-
-        $generator->validator = new ClassType(
-            name: sprintf('%s%sRequest', $generator->verb(), $generator->wantsIndex() ? Str::plural($generator->provider->name) : Str::singular($generator->provider->name)),
-            namespace: new PhpNamespace('Typedin\LaravelCalendly\Models')
-        );
 
         $generator->generateConstructor()->generateProperties();
         $generator->validator->validate();

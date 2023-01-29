@@ -12,18 +12,18 @@ class ErrorResponseGenerator
 
     private function __construct(private readonly BaseErrorResponseGeneratorProvider $provider)
     {
+        $this->error_response = new ClassType(
+            name: $this->errorResponseClassName(),
+            namespace: new PhpNamespace('Typedin\LaravelCalendly\Errors')
+        );
     }
 
     public static function errorResponse(BaseErrorResponseGeneratorProvider $provider): ClassType
     {
         $error_response_generator = new ErrorResponseGenerator($provider);
 
-        $error_response_generator->error_response = new ClassType(
-            name: $error_response_generator->errorResponseClassName(),
-            namespace: new PhpNamespace('Typedin\LaravelCalendly\Errors')
-        );
         if (! $error_response_generator->isBaseClass()) {
-            $error_response_generator->error_response->setExtends('Typedin\LaravelCalendly\Errors\BaseError');
+            $error_response_generator->error_response->setExtends('\Typedin\LaravelCalendly\Models\ErrorResponse');
         }
 
         $error_response_generator->generateConstructor()->generateProperties();
@@ -65,8 +65,8 @@ class ErrorResponseGenerator
                     ->addProperty($property_name)
                     ->setType(AppleSauce::getType($this->provider->properties()[$property_name]))
                     ->setNullable($this->provider->isNullable($property_name, $property_value))
-                    ->addComment($this->generatePropertieDescription($property_name, $property_value))
-                    ->addComment($this->generateVarComment($property_name, $property_value));
+                    ->addComment($this->generatePropertieDescription($property_name))
+                    ->addComment($this->generateVarComment($property_name));
         });
 
         return $this;

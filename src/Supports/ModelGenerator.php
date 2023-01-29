@@ -13,16 +13,15 @@ class ModelGenerator
 
     private function __construct(private readonly ModelGeneratorProvider $provider)
     {
+        $this->model = new ClassType(
+            name: Str::singular($this->provider->returnType()),
+            namespace: new PhpNamespace('Typedin\LaravelCalendly\Models')
+        );
     }
 
     public static function model(ModelGeneratorProvider $provider): ClassType
     {
         $model_generator = new ModelGenerator($provider);
-
-        $model_generator->model = new ClassType(
-            name: Str::singular($model_generator->provider->returnType()),
-            namespace: new PhpNamespace('Typedin\LaravelCalendly\Models')
-        );
 
         $model_generator->generateConstructor()->generateProperties();
         $model_generator->model->validate();
@@ -53,8 +52,8 @@ class ModelGenerator
                     ->addProperty($property_name)
                     ->setType(AppleSauce::getType($this->provider->properties()[$property_name]))
                     ->setNullable(AppleSauce::isNullable(property_name: $property_name, property: $property_value, required_lookup:$this->provider->schema()))
-                    ->addComment($this->generatePropertieDescription($property_name, $property_value))
-                    ->addComment($this->generateVarComment($property_name, $property_value));
+                    ->addComment($this->generatePropertieDescription($property_name))
+                    ->addComment($this->generateVarComment($property_name));
         });
 
         return $this;
