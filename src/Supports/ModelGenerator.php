@@ -37,8 +37,8 @@ class ModelGenerator
             $this->model
                     ->getMethod('__construct')
                     ->addParameter($property_name)
-                    ->setNullable($this->isNullable($property_name, $property_value))
-                    ->setType($this->getParameterType($property_name, $property_value));
+                    ->setNullable(AppleSauce::isNullable(property_name: $property_name, property: $property_value, required_lookup:$this->provider->schema()))
+                    ->setType(AppleSauce::getType($this->provider->properties()[$property_name]));
 
             $this->model->getMethod('__construct')->addBody(sprintf('$this->%s = $%s;', $property_name, $property_name));
         });
@@ -51,25 +51,13 @@ class ModelGenerator
         collect($this->provider->properties())->each(function ($property_value, $property_name) {
             $this->model
                     ->addProperty($property_name)
-                    ->setType($this->getParameterType($property_name, $property_value))
-                    ->setNullable($this->isNullable($property_name, $property_value))
+                    ->setType(AppleSauce::getType($this->provider->properties()[$property_name]))
+                    ->setNullable(AppleSauce::isNullable(property_name: $property_name, property: $property_value, required_lookup:$this->provider->schema()))
                     ->addComment($this->generatePropertieDescription($property_name, $property_value))
                     ->addComment($this->generateVarComment($property_name, $property_value));
         });
 
         return $this;
-    }
-
-    private function getParameterType(string $parameter_name): string
-    {
-        if (! isset($this->provider->properties()[$parameter_name]['type'])) {
-            return '';
-        }
-        if (str_contains((string) $this->provider->properties()[$parameter_name]['type'], 'bool')) {
-            return 'bool';
-        }
-
-        return $this->provider->properties()[$parameter_name]['type'];
     }
 
     private function generatePropertieDescription(string $property): string
@@ -81,25 +69,11 @@ class ModelGenerator
     {
         $local_type = $this->provider->properties()[$property]['type'] ?? '';
 
-        if ($this->isEnum($property)) {
+        if (AppleSauce::isEnum($property)) {
             $enum = '<'.implode('|', $this->provider->properties()[$property]['enum']).'>';
             $local_type = $local_type.$enum;
         }
 
         return sprintf('@var %s $%s', $local_type, $property);
-    }
-
-    private function isNullable(string $parameter_name): bool
-    {
-        if (isset($this->provider->properties()[$parameter_name]['nullable'])) {
-            return $this->provider->properties()[$parameter_name]['nullable'];
-        }
-
-        return ! in_array($parameter_name, $this->provider->schema()['required']);
-    }
-
-    private function isEnum(string $property): bool
-    {
-        return isset($this->provider->properties()[$property]['enum']);
     }
 }

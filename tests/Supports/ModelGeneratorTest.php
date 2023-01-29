@@ -37,14 +37,6 @@ class ModelGeneratorTest extends TestCase
     }
 
     /**
-     * @return array<TKey,TValue>
-     */
-    private function path(string $filter): array
-    {
-        return collect($this->json['paths'][$filter])->all();
-    }
-
-    /**
      * @dataProvider userSchemaProvider
      *
      * @test */
