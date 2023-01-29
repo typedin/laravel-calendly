@@ -47,9 +47,6 @@ class ControllerGenerator
         return $this;
     }
 
-    /**
-     * Index Show Create Store Edit Update Destroy
-     */
     private function generateMethods(): ControllerGenerator
     {
         collect($this->provider->endpoints)
