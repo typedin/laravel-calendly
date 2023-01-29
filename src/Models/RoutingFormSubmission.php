@@ -2,9 +2,6 @@
 
 namespace Typedin\LaravelCalendly\Models;
 
-use SubmissionResult;
-use SubmissionTracking;
-
 class RoutingFormSubmission
 {
     /**
@@ -22,17 +19,11 @@ class RoutingFormSubmission
      */
     public array $questions_and_answers;
 
-    /**
-     * The UTM and Salesforce tracking parameters associated with a Routing Form Submission.
-     *
-     * @var
-     */
-    public SubmissionTracking $tracking;
+    /** @var  */
+    public $tracking;
 
-    /**
-     * The polymorphic base type for a Routing Form Submission result.
-     */
-    public ?SubmissionResult $result;
+    /** @var  */
+    public $result;
 
     /**
      * The reference to the Invitee resource when routing form submission results in a scheduled meeting.
@@ -41,8 +32,6 @@ class RoutingFormSubmission
 
     /**
      * Type of the respondent resource that submitted the form and scheduled a meeting.
-     *
-     * @var string<Invitee>
      */
     public ?string $submitter_type;
 
@@ -60,8 +49,8 @@ class RoutingFormSubmission
         string $uri,
         string $routing_form,
         array $questions_and_answers,
-        SubmissionTracking $tracking,
-        ?SubmissionResult $result,
+        $tracking,
+        $result,
         ?string $submitter,
         ?string $submitter_type,
         string $created_at,

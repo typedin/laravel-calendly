@@ -5,9 +5,9 @@ namespace Typedin\LaravelCalendly\Http\Controllers;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Routing\Controller;
 use Typedin\LaravelCalendly\Contracts\CalendlyApiInterface;
-use Typedin\LaravelCalendly\Entities\CalendlyRoutingFormSubmission;
 use Typedin\LaravelCalendly\Http\Requests\IndexRoutingFormSubmissionsRequest;
 use Typedin\LaravelCalendly\Http\Requests\ShowRoutingFormSubmissionRequest;
+use Typedin\LaravelCalendly\Models\RoutingFormSubmission;
 
 class CalendlyRoutingFormSubmissionsController extends Controller
 {
@@ -22,20 +22,23 @@ class CalendlyRoutingFormSubmissionsController extends Controller
     {
         $response = $this->api->get('/routing_form_submissions/', $request);
 
-        $all = collect($response['collection'])
-        ->mapInto(CalendlyRoutingFormSubmission::class)->all();
+        if ($response->ok()) {
+            $all = collect($response->collect('collection'))
+            ->mapInto(RoutingFormSubmission::class)->all();
 
-        return response()->json([
-            'routing_form_submissions' => $all,
-        ]);
+            return response()->json([
+                'routing_form_submissions' => $all,
+            ]);
+        }
     }
 
     public function show(ShowRoutingFormSubmissionRequest $request): JsonResponse
     {
         $response = $this->api->get("/routing_form_submissions/{$request->safe()->only(['uuid'])}/", $request);
-
-        return response()->json([
-            'routing_form_submission' => new CalendlyRoutingFormSubmission($response),
-        ]);
+        if ($response->ok()) {
+            return response()->json([
+                'routing_form_submission' => new RoutingFormSubmission(...$response->json('resource')),
+            ]);
+        }
     }
 }

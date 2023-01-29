@@ -31,8 +31,6 @@ class WebhookSubscription
 
     /**
      * Indicates if the webhook subscription is "active" or "disabled"
-     *
-     * @var string<active|disabled>
      */
     public string $state;
 
@@ -43,8 +41,6 @@ class WebhookSubscription
 
     /**
      * The scope of the webhook subscription
-     *
-     * @var string<user|organization>
      */
     public string $scope;
 

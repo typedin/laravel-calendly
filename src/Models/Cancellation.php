@@ -14,7 +14,6 @@ class Cancellation
      */
     public ?string $reason;
 
-    /** @var string<host|invitee> */
     public string $canceler_type;
 
     public function __construct(string $canceled_by, ?string $reason, string $canceler_type)

@@ -2,7 +2,9 @@
 
 namespace Typedin\LaravelCalendly\Http\Requests;
 
-class IndexWebhookSubscriptionsRequest extends Illuminate\Foundation\Http\FormRequest
+use Illuminate\Foundation\Http\FormRequest;
+
+class IndexWebhookSubscriptionsRequest extends FormRequest
 {
     public function rules(): array
     {
