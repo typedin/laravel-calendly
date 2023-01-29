@@ -2,9 +2,6 @@
 
 namespace Typedin\LaravelCalendly\Models;
 
-use Cancellation;
-use InviteeTracking;
-
 class Invitee
 {
     /**
@@ -34,8 +31,6 @@ class Invitee
 
     /**
      * Indicates if the invitee is "active" or "canceled"
-     *
-     * @var string<active|canceled>
      */
     public string $status;
 
@@ -64,12 +59,8 @@ class Invitee
      */
     public string $updated_at;
 
-    /**
-     * The UTM and Salesforce tracking parameters associated with an Invitee
-     *
-     * @var
-     */
-    public InviteeTracking $tracking;
+    /** @var  */
+    public $tracking;
 
     /**
      * The phone number to use when sending text (SMS) reminders
@@ -106,10 +97,8 @@ class Invitee
      */
     public ?string $routing_form_submission;
 
-    /**
-     * Provides data pertaining to the cancellation of the Event
-     */
-    public ?Cancellation $cancellation;
+    /** @var  */
+    public $cancellation;
 
     /**
      * Invitee payment
@@ -138,7 +127,7 @@ class Invitee
         string $event,
         string $created_at,
         string $updated_at,
-        InviteeTracking $tracking,
+        $tracking,
         ?string $text_reminder_number,
         bool $rescheduled,
         ?string $old_invitee,
@@ -146,7 +135,7 @@ class Invitee
         string $cancel_url,
         string $reschedule_url,
         ?string $routing_form_submission,
-        ?Cancellation $cancellation,
+        $cancellation,
         ?object $payment,
         ?object $no_show,
         ?object $reconfirmation,

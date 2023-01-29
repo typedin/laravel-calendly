@@ -2,9 +2,6 @@
 
 namespace Typedin\LaravelCalendly\Models;
 
-use number;
-use Profile;
-
 class EventType
 {
     /**
@@ -34,27 +31,23 @@ class EventType
 
     /**
      * The length of sessions booked with this event type
+     *
+     * @var number
      */
-    public number $duration;
+    public float $duration;
 
     /**
      * Indicates if the event type is "solo" (belongs to an individual user) or "group"
-     *
-     * @var string<solo|group>
      */
     public string $kind;
 
     /**
      * Indicates if the event type is "round robin" (alternates between hosts) or "collective" (invitees pick a time when all participants are available) or "null" (the event type doesn’t consider the availability of a group participants)
-     *
-     * @var string<round_robin|collective>
      */
     public ?string $pooling_type;
 
     /**
      * Indicates if the event type is "AdhocEventType" (ad hoc event) or "StandardEventType" (standard event type)
-     *
-     * @var string<StandardEventType|AdhocEventType>
      */
     public string $type;
 
@@ -88,12 +81,8 @@ class EventType
      */
     public ?string $description_html;
 
-    /**
-     * The publicly visible profile of a User or a Team that's associated with the Event Type (note: some Event Types don't have profiles)
-     *
-     * @var
-     */
-    public Profile $profile;
+    /** @var  */
+    public $profile;
 
     /**
      * Indicates if the event type is hidden on the owner's main scheduling page
@@ -102,8 +91,6 @@ class EventType
 
     /**
      * Indicates if the event type is for a poll or an instant booking
-     *
-     * @var string<instant|poll>
      */
     public string $booking_method;
 
@@ -116,8 +103,6 @@ class EventType
 
     /**
      * A formatted description of the kind of event type.
-     *
-     * @var string<Collective|Group|One-on-One|Round Robin>
      */
     public string $kind_description;
 
@@ -132,7 +117,7 @@ class EventType
         bool $active,
         ?string $slug,
         string $scheduling_url,
-        number $duration,
+        float $duration,
         string $kind,
         ?string $pooling_type,
         string $type,
@@ -142,7 +127,7 @@ class EventType
         ?string $internal_note,
         ?string $description_plain,
         ?string $description_html,
-        Profile $profile,
+        $profile,
         bool $secret,
         string $booking_method,
         array $custom_questions,
