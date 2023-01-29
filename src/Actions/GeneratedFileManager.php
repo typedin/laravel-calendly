@@ -42,8 +42,8 @@ class GeneratedFileManager
     public function createModels(): GeneratedFileManager
     {
         $this->mapper->modelProviders()->map(function (ModelGeneratorProvider $provider) {
+            return ModelGenerator::model($provider);
             try {
-                return ModelGenerator::model($provider);
             } catch (\Throwable $th) {
                 // this returns null
             }
