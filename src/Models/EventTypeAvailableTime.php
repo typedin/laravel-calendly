@@ -2,8 +2,6 @@
 
 namespace Typedin\LaravelCalendly\Models;
 
-use number;
-
 class EventTypeAvailableTime
 {
     /**
@@ -13,8 +11,10 @@ class EventTypeAvailableTime
 
     /**
      * Total remaining invitees for this available time. For Group Event Type, more than one invitee can book in this available time. For all other Event Types, only one invitee can book in this available time.
+     *
+     * @var number
      */
-    public number $invitees_remaining;
+    public float $invitees_remaining;
 
     /**
      * The moment the event was scheduled to start in UTC time
@@ -26,7 +26,7 @@ class EventTypeAvailableTime
      */
     public string $scheduling_url;
 
-    public function __construct(string $status, number $invitees_remaining, string $start_time, string $scheduling_url)
+    public function __construct(string $status, float $invitees_remaining, string $start_time, string $scheduling_url)
     {
         $this->status = $status;
         $this->invitees_remaining = $invitees_remaining;

@@ -2,10 +2,6 @@
 
 namespace Typedin\LaravelCalendly\Models;
 
-use CalendarEvent;
-use Cancellation;
-use Location;
-
 class Event
 {
     /**
@@ -20,8 +16,6 @@ class Event
 
     /**
      * Indicates if the event is "active" or "canceled"
-     *
-     * @var string<active|canceled>
      */
     public string $status;
 
@@ -40,12 +34,8 @@ class Event
      */
     public string $event_type;
 
-    /**
-     * The polymorphic base type for an event location that Calendly supports
-     *
-     * @var
-     */
-    public Location $location;
+    /** @var  */
+    public $location;
 
     public object $invitees_counter;
 
@@ -69,17 +59,11 @@ class Event
      */
     public array $event_guests;
 
-    /**
-     * Provides data pertaining to the cancellation of the Event
-     */
-    public ?Cancellation $cancellation;
+    /** @var  */
+    public $cancellation;
 
-    /**
-     * Information about the calendar event from the calendar provider.
-     *
-     * @var
-     */
-    public CalendarEvent $calendar_event;
+    /** @var  */
+    public $calendar_event;
 
     public function __construct(
         string $uri,
@@ -88,14 +72,14 @@ class Event
         string $start_time,
         string $end_time,
         string $event_type,
-        Location $location,
+        $location,
         object $invitees_counter,
         string $created_at,
         string $updated_at,
         array $event_memberships,
         array $event_guests,
-        ?Cancellation $cancellation,
-        CalendarEvent $calendar_event,
+        $cancellation,
+        $calendar_event,
     ) {
         $this->uri = $uri;
         $this->name = $name;

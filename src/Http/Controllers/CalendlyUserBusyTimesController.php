@@ -5,8 +5,9 @@ namespace Typedin\LaravelCalendly\Http\Controllers;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Routing\Controller;
 use Typedin\LaravelCalendly\Contracts\CalendlyApiInterface;
-use Typedin\LaravelCalendly\Entities\CalendlyUserBusyTime;
 use Typedin\LaravelCalendly\Http\Requests\IndexUserBusyTimesRequest;
+use Typedin\LaravelCalendly\Models\Pagination;
+use Typedin\LaravelCalendly\Models\UserBusyTime;
 
 class CalendlyUserBusyTimesController extends Controller
 {
@@ -21,11 +22,15 @@ class CalendlyUserBusyTimesController extends Controller
     {
         $response = $this->api->get('/user_busy_times/', $request);
 
-        $all = collect($response['collection'])
-        ->mapInto(CalendlyUserBusyTime::class)->all();
+        if ($response->ok()) {
+            $all = collect($response->collect('collection'))
+            ->mapInto(UserBusyTime::class)->all();
+            $pagination = new Pagination(...$response->collect('pagination')->all());
 
-        return response()->json([
-            'user_busy_times' => $all,
-        ]);
+            return response()->json([
+                'user_busy_times' => $all,
+                'pagination' => $pagination,
+            ]);
+        }
     }
 }

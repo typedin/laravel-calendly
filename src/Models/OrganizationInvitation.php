@@ -21,8 +21,6 @@ class OrganizationInvitation
 
     /**
      * The status of the invitation ("pending", "accepted", or "declined")
-     *
-     * @var string<pending|accepted|declined>
      */
     public string $status;
 

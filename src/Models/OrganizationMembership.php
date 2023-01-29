@@ -11,8 +11,6 @@ class OrganizationMembership
 
     /**
      * The user's role in the organization
-     *
-     * @var string<user|admin|owner>
      */
     public string $role;
 
