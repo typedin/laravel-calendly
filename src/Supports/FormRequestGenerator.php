@@ -48,7 +48,7 @@ class FormRequestGenerator
         $this->validator->addMethod('rules')->addBody('return [');
 
         $this->fieldValidationPairs()->each(function ($value, $key) {
-            $this->validator->getMethod('rules')->addBody(sprintf("'%s' => '%s',", $key, implode(',', $value)));
+            $this->validator->getMethod('rules')->addBody(sprintf("'%s' => '%s',", $key, implode('|', $value)));
         });
         $this->validator->getMethod('rules')->addBody('];')->setReturnType(type: 'array');
 

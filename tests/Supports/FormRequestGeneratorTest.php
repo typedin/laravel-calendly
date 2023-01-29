@@ -119,8 +119,8 @@ class FormRequestGeneratorTest extends TestCase
     public function ScheduledEventInviteesProvider(): array
     {
         return [
-            ['event_uuid', 'required,string'],
-            ['invitee_uuid', 'required,string'],
+            ['event_uuid', 'required|string'],
+            ['invitee_uuid', 'required|string'],
         ];
     }
 
@@ -152,7 +152,7 @@ class FormRequestGeneratorTest extends TestCase
     public function userProvider(): array
     {
         return [
-            ['uuid', 'required,string'],
+            ['uuid', 'required|string'],
         ];
     }
 
@@ -170,8 +170,8 @@ class FormRequestGeneratorTest extends TestCase
         $this->assertEquals('StoreOrganizationInviationRequest', $validator->getName());
         $rules = $validator->getMethod('rules');
 
-        $this->assertStringContainsString("'uuid' => 'required,string", $rules);
-        $this->assertStringContainsString("'email' => 'required,email", $rules);
+        $this->assertStringContainsString("'uuid' => 'required|string", $rules);
+        $this->assertStringContainsString("'email' => 'required|email", $rules);
     }
 
     /**
@@ -202,7 +202,7 @@ class FormRequestGeneratorTest extends TestCase
     public function DestroyOrganizationMembershipRequestsProvider(): array
     {
         return [
-            ['uuid', 'required,string'],
+            ['uuid', 'required|string'],
         ];
     }
 }
