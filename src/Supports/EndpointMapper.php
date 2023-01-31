@@ -80,8 +80,6 @@ class EndpointMapper
         return $this->paths()
                    ->map(function ($value, $path) {
                        if ($path == '/users/{uuid}') {
-                       }
-                       if ($path == '/users/me') {
                            return new ShowFormRequestProvider(value: $value, path: $path, name: self::fullname($path));
                        }
                        if (isset($value['get'])) {

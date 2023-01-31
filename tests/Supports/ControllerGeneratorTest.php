@@ -134,7 +134,7 @@ class ControllerGeneratorTest extends TestCase
         $method = $controller->getMethod('create');
 
         $this->assertEquals('\Typedin\LaravelCalendly\Http\Requests\StoreOrganizationInvitationRequest', $method->getParameters()['request']->getType());
-        $this->assertStringContainsString('$response = $this->api->post("/organizations/{$request->safe()->only(["uuid"])}/invitations/", $request);', $method->getBody());
+        $this->assertStringContainsString('$response = $this->api->post("/organizations/{$request->validated("uuid")}/invitations/", $request);', $method->getBody());
 
         $this->assertStringContainsString('if($response->ok()) {', $method->getBody());
         $this->assertStringContainsString('return response()->json([', $method->getBody());
@@ -156,7 +156,7 @@ class ControllerGeneratorTest extends TestCase
         $method = $controller->getMethod('destroy');
 
         $this->assertEquals('\Typedin\LaravelCalendly\Http\Requests\DestroyInviteeNoShowRequest', $method->getParameters()['request']->getType());
-        $this->assertStringContainsString('$response = $this->api->delete("/invitee_no_shows/{$request->safe()->only(["uuid"])}/");', $method->getBody());
+        $this->assertStringContainsString('$response = $this->api->delete("/invitee_no_shows/{$request->validated("uuid")}/");', $method->getBody());
 
         $this->assertStringContainsString('if($response->ok()) {', $method->getBody());
         $this->assertStringContainsString('return response()->noContent();', $method->getBody());
@@ -176,7 +176,7 @@ class ControllerGeneratorTest extends TestCase
         $method = $controller->getMethod('destroy');
 
         $this->assertEquals('\Typedin\LaravelCalendly\Http\Requests\DestroyOrganizationInvitationRequest', $method->getParameters()['request']->getType());
-        $this->assertStringContainsString('$this->api->delete("/organizations/{$request->safe()->only(["org_uuid"])}/invitations/{$request->safe()->only(["uuid"])}/");', $method->getBody());
+        $this->assertStringContainsString('$this->api->delete("/organizations/{$request->validated("org_uuid")}/invitations/{$request->validated("uuid")}/");', $method->getBody());
 
         $this->assertStringContainsString('if($response->ok()) {', $method->getBody());
         $this->assertStringContainsString('return response()->noContent();', $method->getBody());
