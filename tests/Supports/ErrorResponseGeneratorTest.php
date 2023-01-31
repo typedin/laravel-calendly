@@ -60,6 +60,9 @@ class ErrorResponseGeneratorTest extends TestCase
         collect($comments)->each(
             fn ($comment) => $this->assertStringContainsString($comment, $error_response->getProperty($parameterName)->getComment())
         );
+
+        $this->assertEquals('\Illuminate\Http\JsonResponse', $error_response->getMethod('toJson')->getReturnType());
+        $this->assertStringContainsString('return response()->json(["message" => $this->message, "title" => $this->title], $this->error_code);', $error_response->getMethod('toJson')->getBody());
     }
 
     public function baseErrorResponseGeneratorProvider()
@@ -76,7 +79,8 @@ class ErrorResponseGeneratorTest extends TestCase
     {
         $provider = new ErrorResponseGeneratorProvider(
             name:'INVALID_ARGUMENT',
-            schema: $this->responses()->get('INVALID_ARGUMENT')
+            schema: $this->responses()->get('INVALID_ARGUMENT'),
+            error_code: 400
         );
 
         $error_response = ErrorResponseGenerator::errorResponse($provider);
@@ -93,10 +97,12 @@ class ErrorResponseGeneratorTest extends TestCase
         collect($comments)->each(
             fn ($comment) => $this->assertStringContainsString($comment, $error_response->getProperty($parameterName)->getComment())
         );
+        $this->assertEquals('\Illuminate\Http\JsonResponse', $error_response->getMethod('toJson')->getReturnType());
+        $this->assertStringContainsString('return response()->json(["message" => $this->message, "title" => $this->title], $this->error_code);', $error_response->getMethod('toJson')->getBody());
     }
 
     public function invalidArgumentProvider()
     {
-        return [['title', false, 'string'], ['message', false, 'string']];
+        return [['title', false, 'string'], ['message', false, 'string'], ['error_code', false, 'int']];
     }
 }

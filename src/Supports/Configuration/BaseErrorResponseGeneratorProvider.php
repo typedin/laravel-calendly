@@ -18,7 +18,7 @@ class BaseErrorResponseGeneratorProvider
 
     public function properties(): array
     {
-        return $this->schema['properties'];
+        return  $this->schema['properties'];
     }
 
     public function isNullable(string $property_name): bool

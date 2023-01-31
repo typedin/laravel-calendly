@@ -26,7 +26,7 @@ class ErrorResponseGenerator
             $error_response_generator->error_response->setExtends('\Typedin\LaravelCalendly\Models\ErrorResponse');
         }
 
-        $error_response_generator->generateConstructor()->generateProperties();
+        $error_response_generator->generateConstructor()->generateProperties()->generateToJson();
         $error_response_generator->error_response->validate();
 
         return $error_response_generator->error_response;
@@ -54,6 +54,18 @@ class ErrorResponseGenerator
 
             $this->error_response->getMethod('__construct')->addBody(sprintf('$this->%s = $%s;', $property_name, $property_name));
         });
+
+        return $this;
+    }
+
+    private function generateToJson(): ErrorResponseGenerator
+    {
+        $this->error_response->addMethod('toJson');
+        $this->error_response
+                ->getMethod('toJson')
+                ->setReturnType("\Illuminate\Http\JsonResponse")
+
+            ->addBody('return response()->json(["message" => $this->message, "title" => $this->title], $this->error_code);');
 
         return $this;
     }

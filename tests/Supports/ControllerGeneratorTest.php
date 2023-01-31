@@ -136,11 +136,11 @@ class ControllerGeneratorTest extends TestCase
         $this->assertEquals('\Typedin\LaravelCalendly\Http\Requests\StoreOrganizationInvitationRequest', $method->getParameters()['request']->getType());
         $this->assertStringContainsString('$response = $this->api->post("/organizations/{$request->validated("uuid")}/invitations/", $request);', $method->getBody());
 
-        $this->assertStringContainsString('if($response->ok()) {', $method->getBody());
+        $this->assertStringContainsString('if(!$response->ok()) {', $method->getBody());
+        $this->assertStringContainsString('}', $method->getBody());
         $this->assertStringContainsString('return response()->json([', $method->getBody());
         $this->assertStringContainsString('"organization_invitation" => new \Typedin\LaravelCalendly\Models\OrganizationInvitation(...$response->json("resource")),', $method->getBody());
         $this->assertStringContainsString(']);', $method->getBody());
-        $this->assertStringContainsString('}', $method->getBody());
     }
 
     /**

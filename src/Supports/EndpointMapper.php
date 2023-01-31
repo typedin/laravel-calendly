@@ -126,7 +126,15 @@ class EndpointMapper
     public function errorResponseProviders(): Collection
     {
         return collect($this->components()->get('responses'))->map(function ($value, $key) {
-            return new ErrorResponseGeneratorProvider(name: $key, schema: $value);
+            $codes = collect($this->paths()->first()['get']['responses'])->filter(function ($value, $key) {
+                return $key !== 200 && isset($value['$ref']);
+            })->map(function ($value) {
+                $local = explode('/', $value['$ref']);
+
+                return end($local);
+            })->flip();
+
+            return new ErrorResponseGeneratorProvider(name: $key, schema: $value, error_code: $codes->get($key) ?? 500);
         });
     }
 

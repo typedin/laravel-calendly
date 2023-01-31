@@ -6,7 +6,7 @@ use Illuminate\Support\Str;
 
 class ErrorResponseGeneratorProvider extends BaseErrorResponseGeneratorProvider
 {
-    public function __construct(public readonly string $name, public readonly array $schema)
+    public function __construct(public readonly string $name, public readonly array $schema, public readonly int $error_code)
     {
     }
 
@@ -22,7 +22,11 @@ class ErrorResponseGeneratorProvider extends BaseErrorResponseGeneratorProvider
                         return array_key_exists('properties', $value);
                     })->flatMap(function ($value) {
                         return collect($value['properties']);
-                    })->all();
+                    })->merge([
+                        'error_code' => [
+                            'type' => 'int',
+                        ],
+                    ])->all();
     }
 
     public function isNullable(string $property_name): bool
