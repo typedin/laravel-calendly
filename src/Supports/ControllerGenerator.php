@@ -80,8 +80,7 @@ class ControllerGenerator
                     ->addMethod('index')
                     ->setReturnType('\Illuminate\Http\JsonResponse')
                     ->addBody(sprintf('$response = $this->api->get("/%s/", $request);', $this->buildUri($key)))
-                    ->addBody('')
-                    ->addBody('if($response->ok()) {')
+                    ->addBody($this->createErrorBody())
                     ->addBody('$all = collect($response->collect("collection"))')
                     ->addBody(sprintf('->mapInto(\Typedin\LaravelCalendly\Models\%s::class)->all();', $this->getReturnType($key, http_method: 'get', is_index: true)))
                     ->addBody('$pagination = new \Typedin\LaravelCalendly\Models\Pagination(...$response->collect("pagination")->all());')
@@ -89,7 +88,6 @@ class ControllerGenerator
                     ->addBody(sprintf('"%s" => $all,', Str::snake($this->provider->name)))
                     ->addBody('"pagination" => $pagination,')
                     ->addBody(']);')
-                    ->addBody('}')
                     ->addParameter('request')
                     ->setType(sprintf('\Typedin\LaravelCalendly\Http\Requests\%s%sRequest', $this->verb('index'), Str::plural($this->provider->name)));
         } catch (Throwable) {
@@ -105,11 +103,10 @@ class ControllerGenerator
                     ->addMethod('show')
                     ->setReturnType('\Illuminate\Http\JsonResponse')
                     ->addBody(sprintf('$response = $this->api->get("/%s/", $request);', $this->buildUri($key)))
-                    ->addBody('if($response->ok()) {')
+                    ->addBody($this->createErrorBody())
                     ->addBody('return response()->json([')
                     ->addBody(sprintf('"%s" => new \Typedin\LaravelCalendly\Models\%s(...$response->json("resource")),', Str::snake($this->getReturnType($key, http_method: 'get', is_index: false)), $this->getReturnType($key, http_method: 'get', is_index: false)))
                     ->addBody(']);')
-                    ->addBody('}')
                     ->addParameter('request')
                     ->setType(sprintf('\Typedin\LaravelCalendly\Http\Requests\%s%sRequest', $this->verb('get'), Str::singular($this->provider->name)));
         } catch (Throwable) {
@@ -123,11 +120,10 @@ class ControllerGenerator
                 ->addMethod('create')
                 ->setReturnType('\Illuminate\Http\JsonResponse')
                 ->addBody(sprintf('$response = $this->api->post("/%s/", $request);', $this->buildUri($key)))
-                    ->addBody('if($response->ok()) {')
+                    ->addBody($this->createErrorBody())
                 ->addBody('return response()->json([')
                 ->addBody(sprintf('"%s" => new \Typedin\LaravelCalendly\Models\%s(...$response->json("resource")),', Str::snake($this->getReturnType($key, http_method: 'post', is_index: false)), $this->getReturnType($key, http_method: 'post', is_index: false)))
                 ->addBody(']);')
-                ->addBody('}')
                 ->addParameter('request')
                 ->setType(sprintf('\Typedin\LaravelCalendly\Http\Requests\%s%sRequest', $this->verb('post'), Str::singular($this->provider->name)));
     }
@@ -138,9 +134,8 @@ class ControllerGenerator
                 ->addMethod('destroy')
                 ->setReturnType('\Illuminate\Http\JsonResponse')
                 ->addBody(sprintf('$response = $this->api->delete("/%s/");', $this->buildUri($key)))
-                    ->addBody('if($response->ok()) {')
+                    ->addBody($this->createErrorBody())
                 ->addBody('return response()->noContent();')
-                ->addBody('}')
                 ->addParameter('request')
                 ->setType(sprintf('\Typedin\LaravelCalendly\Http\Requests\%s%sRequest', $this->verb('delete'), Str::singular($this->provider->name)));
     }
@@ -197,18 +192,24 @@ class ControllerGenerator
 
     private function getReturnType(string $path, string $http_method = 'get', bool $is_index = true): string
     {
+        $responses = $this->provider->endpoints[$path][$http_method]['responses'];
         // booking_url is an edge case because it's not in the schemas
         $lookup = ['BookingUrl'];
         if ($is_index && $http_method == 'get') {
-            $lookup = explode('/', $this->provider->endpoints[$path][$http_method]['responses']['200']['content']['application/json']['schema']['properties']['collection']['items']['$ref']);
+            $lookup = explode('/', $responses['200']['content']['application/json']['schema']['properties']['collection']['items']['$ref']);
         }
         if (! $is_index && $http_method == 'get') {
-            $lookup = explode('/', $this->provider->endpoints[$path][$http_method]['responses']['200']['content']['application/json']['schema']['properties']['resource']['$ref']);
+            $lookup = explode('/', $responses['200']['content']['application/json']['schema']['properties']['resource']['$ref']);
         }
-        if ($http_method == 'post' && isset($this->provider->endpoints[$path][$http_method]['responses']['201']['content']['application/json']['schema']['properties']['resource']['$ref'])) {
-            $lookup = explode('/', $this->provider->endpoints[$path][$http_method]['responses']['201']['content']['application/json']['schema']['properties']['resource']['$ref']);
+        if ($http_method == 'post' && isset($responses['201']['content']['application/json']['schema']['properties']['resource']['$ref'])) {
+            $lookup = explode('/', $responses['201']['content']['application/json']['schema']['properties']['resource']['$ref']);
         }
 
         return end($lookup);
+    }
+
+    private function createErrorBody(): string
+    {
+        return 'if(!$response->ok()) {'.'}';
     }
 }

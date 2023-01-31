@@ -10,14 +10,20 @@ use Typedin\LaravelCalendly\Supports\EndpointMapper;
 
 class ControllerGeneratorTest extends TestCase
 {
+    private EndpointMapper $mapper;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->mapper = new EndpointMapper(file_get_contents(__DIR__.'/../../doc/openapi.yaml'));
+    }
+
     /**
      * @return array<TKey,TValue>
      */
     private function endpoints(mixed $filter): array
     {
-        $mapper = new EndpointMapper(file_get_contents(__DIR__.'/../../doc/openapi.yaml'));
-
-        return $mapper->mapControllerNamesToEndpoints()->get($filter)->all();
+        return $this->mapper->mapControllerNamesToEndpoints()->get($filter)->all();
     }
 
     /**
@@ -27,7 +33,8 @@ class ControllerGeneratorTest extends TestCase
     {
         $provider = new ControllerGeneratorProvider(
             name:'Users',
-            endpoints: $this->endpoints('Users')
+            endpoints: $this->endpoints('Users'),
+            mapper: $this->mapper
         );
         $controller = ControllerGenerator::controller($provider);
 
@@ -42,7 +49,8 @@ class ControllerGeneratorTest extends TestCase
     {
         $provider = new ControllerGeneratorProvider(
             name:'Users',
-            endpoints: $this->endpoints('Users')
+            endpoints: $this->endpoints('Users'),
+            mapper: $this->mapper
         );
         $controller = ControllerGenerator::controller($provider);
 
@@ -58,7 +66,8 @@ class ControllerGeneratorTest extends TestCase
     {
         $provider = new ControllerGeneratorProvider(
             name:'EventTypes',
-            endpoints: $this->endpoints('EventTypes')
+            endpoints: $this->endpoints('EventTypes'),
+            mapper: $this->mapper
         );
         $controller = ControllerGenerator::controller($provider);
 
@@ -66,7 +75,6 @@ class ControllerGeneratorTest extends TestCase
 
         $this->assertEquals('\Typedin\LaravelCalendly\Http\Requests\IndexEventTypesRequest', $method->getParameters()['request']->getType());
         $this->assertStringContainsString('$response = $this->api->get("/event_types/", $request);', $method->getBody());
-        $this->assertStringContainsString('if($response->ok()) {', $method->getBody());
         $this->assertStringContainsString('$all = collect($response->collect("collection"))', $method->getBody());
         $this->assertStringContainsString('->mapInto(\Typedin\LaravelCalendly\Models\EventType::class)->all();', $method->getBody());
 
@@ -75,6 +83,7 @@ class ControllerGeneratorTest extends TestCase
         $this->assertStringContainsString('"event_types" => $all,', $method->getBody());
         $this->assertStringContainsString('"pagination" => $pagination,', $method->getBody());
         $this->assertStringContainsString(']);', $method->getBody());
+        $this->assertStringContainsString('if(!$response->ok()) {', $method->getBody());
         $this->assertStringContainsString('}', $method->getBody());
     }
 
@@ -85,17 +94,18 @@ class ControllerGeneratorTest extends TestCase
     {
         $provider = new ControllerGeneratorProvider(
             name:'InviteeNoShows',
-            endpoints: $this->endpoints('InviteeNoShows')
+            endpoints: $this->endpoints('InviteeNoShows'),
+            mapper: $this->mapper
         );
         $controller = ControllerGenerator::controller($provider);
         $method = $controller->getMethod('show');
 
         $this->assertEquals('\Typedin\LaravelCalendly\Http\Requests\ShowInviteeNoShowRequest', $method->getParameters()['request']->getType());
         $this->assertStringContainsString('$response = $this->api->get("/invitee_no_shows/{$request->validated("uuid")}/", $request);', $method->getBody());
-        $this->assertStringContainsString('if($response->ok()) {', $method->getBody());
         $this->assertStringContainsString('return response()->json([', $method->getBody());
         $this->assertStringContainsString('"invitee_no_show" => new \Typedin\LaravelCalendly\Models\InviteeNoShow(...$response->json("resource")),', $method->getBody());
         $this->assertStringContainsString(']);', $method->getBody());
+        $this->assertStringContainsString('if(!$response->ok()) {', $method->getBody());
         $this->assertStringContainsString('}', $method->getBody());
     }
 
@@ -106,18 +116,19 @@ class ControllerGeneratorTest extends TestCase
     {
         $provider = new ControllerGeneratorProvider(
             name:'SchedulingLinks',
-            endpoints: $this->endpoints('SchedulingLinks')
+            endpoints: $this->endpoints('SchedulingLinks'),
+            mapper: $this->mapper
         );
         $controller = ControllerGenerator::controller($provider);
         $method = $controller->getMethod('create');
 
         $this->assertEquals('\Typedin\LaravelCalendly\Http\Requests\StoreSchedulingLinkRequest', $method->getParameters()['request']->getType());
         $this->assertStringContainsString('$response = $this->api->post("/scheduling_links/", $request);', $method->getBody());
-        $this->assertStringContainsString('if($response->ok()) {', $method->getBody());
 
         $this->assertStringContainsString('return response()->json([', $method->getBody());
         $this->assertStringContainsString('"booking_url" => new \Typedin\LaravelCalendly\Models\BookingUrl(...$response->json("resource")),', $method->getBody());
         $this->assertStringContainsString(']);', $method->getBody());
+        $this->assertStringContainsString('if(!$response->ok()) {', $method->getBody());
         $this->assertStringContainsString('}', $method->getBody());
     }
 
@@ -128,7 +139,8 @@ class ControllerGeneratorTest extends TestCase
     {
         $provider = new ControllerGeneratorProvider(
             name:'OrganizationInvitations',
-            endpoints: $this->endpoints('OrganizationInvitations')
+            endpoints: $this->endpoints('OrganizationInvitations'),
+            mapper: $this->mapper
         );
         $controller = ControllerGenerator::controller($provider);
         $method = $controller->getMethod('create');
@@ -136,11 +148,11 @@ class ControllerGeneratorTest extends TestCase
         $this->assertEquals('\Typedin\LaravelCalendly\Http\Requests\StoreOrganizationInvitationRequest', $method->getParameters()['request']->getType());
         $this->assertStringContainsString('$response = $this->api->post("/organizations/{$request->validated("uuid")}/invitations/", $request);', $method->getBody());
 
-        $this->assertStringContainsString('if(!$response->ok()) {', $method->getBody());
-        $this->assertStringContainsString('}', $method->getBody());
         $this->assertStringContainsString('return response()->json([', $method->getBody());
         $this->assertStringContainsString('"organization_invitation" => new \Typedin\LaravelCalendly\Models\OrganizationInvitation(...$response->json("resource")),', $method->getBody());
         $this->assertStringContainsString(']);', $method->getBody());
+        $this->assertStringContainsString('if(!$response->ok()) {', $method->getBody());
+        $this->assertStringContainsString('}', $method->getBody());
     }
 
     /**
@@ -150,7 +162,8 @@ class ControllerGeneratorTest extends TestCase
     {
         $provider = new ControllerGeneratorProvider(
             name:'InviteeNoShows',
-            endpoints: $this->endpoints('InviteeNoShows')
+            endpoints: $this->endpoints('InviteeNoShows'),
+            mapper: $this->mapper
         );
         $controller = ControllerGenerator::controller($provider);
         $method = $controller->getMethod('destroy');
@@ -158,8 +171,8 @@ class ControllerGeneratorTest extends TestCase
         $this->assertEquals('\Typedin\LaravelCalendly\Http\Requests\DestroyInviteeNoShowRequest', $method->getParameters()['request']->getType());
         $this->assertStringContainsString('$response = $this->api->delete("/invitee_no_shows/{$request->validated("uuid")}/");', $method->getBody());
 
-        $this->assertStringContainsString('if($response->ok()) {', $method->getBody());
         $this->assertStringContainsString('return response()->noContent();', $method->getBody());
+        $this->assertStringContainsString('if(!$response->ok()) {', $method->getBody());
         $this->assertStringContainsString('}', $method->getBody());
     }
 
@@ -170,7 +183,8 @@ class ControllerGeneratorTest extends TestCase
     {
         $provider = new ControllerGeneratorProvider(
             name:'OrganizationInvitations',
-            endpoints: $this->endpoints('OrganizationInvitations')
+            endpoints: $this->endpoints('OrganizationInvitations'),
+            mapper: $this->mapper
         );
         $controller = ControllerGenerator::controller($provider);
         $method = $controller->getMethod('destroy');
@@ -178,8 +192,8 @@ class ControllerGeneratorTest extends TestCase
         $this->assertEquals('\Typedin\LaravelCalendly\Http\Requests\DestroyOrganizationInvitationRequest', $method->getParameters()['request']->getType());
         $this->assertStringContainsString('$this->api->delete("/organizations/{$request->validated("org_uuid")}/invitations/{$request->validated("uuid")}/");', $method->getBody());
 
-        $this->assertStringContainsString('if($response->ok()) {', $method->getBody());
         $this->assertStringContainsString('return response()->noContent();', $method->getBody());
+        $this->assertStringContainsString('if(!$response->ok()) {', $method->getBody());
         $this->assertStringContainsString('}', $method->getBody());
     }
 
@@ -190,7 +204,8 @@ class ControllerGeneratorTest extends TestCase
     {
         $provider = new ControllerGeneratorProvider(
             name:'OrganizationInvitations',
-            endpoints: $this->endpoints('OrganizationInvitations')
+            endpoints: $this->endpoints('OrganizationInvitations'),
+            mapper: $this->mapper
         );
         $controller = ControllerGenerator::controller($provider);
         $rest_methods = collect($controller->getMethods())
@@ -221,7 +236,8 @@ class ControllerGeneratorTest extends TestCase
         $keys->each(function ($key) {
             $provider = new ControllerGeneratorProvider(
                 name: $key,
-                endpoints: $this->endpoints($key)
+                endpoints: $this->endpoints($key),
+                mapper: $this->mapper
             );
             $controller = ControllerGenerator::controller($provider);
             $this->assertInstanceOf(ClassType::class, $controller);
