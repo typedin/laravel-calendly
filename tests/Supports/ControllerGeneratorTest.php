@@ -91,7 +91,7 @@ class ControllerGeneratorTest extends TestCase
         $method = $controller->getMethod('show');
 
         $this->assertEquals('\Typedin\LaravelCalendly\Http\Requests\ShowInviteeNoShowRequest', $method->getParameters()['request']->getType());
-        $this->assertStringContainsString('$response = $this->api->get("/invitee_no_shows/{$request->safe()->only(["uuid"])}/", $request);', $method->getBody());
+        $this->assertStringContainsString('$response = $this->api->get("/invitee_no_shows/{$request->validated("uuid")}/", $request);', $method->getBody());
         $this->assertStringContainsString('if($response->ok()) {', $method->getBody());
         $this->assertStringContainsString('return response()->json([', $method->getBody());
         $this->assertStringContainsString('"invitee_no_show" => new \Typedin\LaravelCalendly\Models\InviteeNoShow(...$response->json("resource")),', $method->getBody());

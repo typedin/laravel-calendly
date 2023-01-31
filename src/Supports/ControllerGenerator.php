@@ -188,7 +188,7 @@ class ControllerGenerator
                 $value = str_replace_first('{', '', $value);
                 $value = str_replace_first('}', '', $value);
 
-                return sprintf('{$request->safe()->only(["%s"])}', $value);
+                return sprintf('{$request->validated("%s")}', $value);
             }
 
             return $value;
