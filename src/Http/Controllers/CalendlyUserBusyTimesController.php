@@ -21,16 +21,15 @@ class CalendlyUserBusyTimesController extends Controller
     public function index(IndexUserBusyTimesRequest $request): JsonResponse
     {
         $response = $this->api->get('/user_busy_times/', $request);
-
-        if ($response->ok()) {
-            $all = collect($response->collect('collection'))
-            ->mapInto(UserBusyTime::class)->all();
-            $pagination = new Pagination(...$response->collect('pagination')->all());
-
-            return response()->json([
-                'user_busy_times' => $all,
-                'pagination' => $pagination,
-            ]);
+        if (! $response->ok()) {
         }
+        $all = collect($response->collect('collection'))
+        ->mapInto(UserBusyTime::class)->all();
+        $pagination = new Pagination(...$response->collect('pagination')->all());
+
+        return response()->json([
+            'user_busy_times' => $all,
+            'pagination' => $pagination,
+        ]);
     }
 }

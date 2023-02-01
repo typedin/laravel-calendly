@@ -21,29 +21,26 @@ class CalendlyOrganizationInvitationsController extends Controller
 
     public function create(StoreOrganizationInvitationRequest $request): JsonResponse
     {
-        $response = $this->api->post("/organizations/{$request->safe()->only(['uuid'])}/invitations/", $request);
-        if ($response->ok()) {
-            return response()->json([
-                'organization_invitation' => new OrganizationInvitation(...$response->json('resource')),
-            ]);
-        }
+        $response = $this->api->post("/organizations/{$request->validated('uuid')}/invitations/", $request);
+
+        return response()->json([
+            'organization_invitation' => new OrganizationInvitation(...$response->json('resource')),
+        ]);
     }
 
     public function show(ShowOrganizationInvitationRequest $request): JsonResponse
     {
-        $response = $this->api->get("/organizations/{$request->safe()->only(['org_uuid'])}/invitations/{$request->safe()->only(['uuid'])}/", $request);
-        if ($response->ok()) {
-            return response()->json([
-                'organization_invitation' => new OrganizationInvitation(...$response->json('resource')),
-            ]);
-        }
+        $response = $this->api->get("/organizations/{$request->validated('org_uuid')}/invitations/{$request->validated('uuid')}/", $request);
+
+        return response()->json([
+            'organization_invitation' => new OrganizationInvitation(...$response->json('resource')),
+        ]);
     }
 
     public function destroy(DestroyOrganizationInvitationRequest $request): JsonResponse
     {
-        $response = $this->api->delete("/organizations/{$request->safe()->only(['org_uuid'])}/invitations/{$request->safe()->only(['uuid'])}/");
-        if ($response->ok()) {
-            return response()->noContent();
-        }
+        $response = $this->api->delete("/organizations/{$request->validated('org_uuid')}/invitations/{$request->validated('uuid')}/");
+
+        return response()->noContent();
     }
 }

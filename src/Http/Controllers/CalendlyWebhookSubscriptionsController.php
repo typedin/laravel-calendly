@@ -22,28 +22,25 @@ class CalendlyWebhookSubscriptionsController extends Controller
     public function create(StoreWebhookSubscriptionRequest $request): JsonResponse
     {
         $response = $this->api->post('/webhook_subscriptions/', $request);
-        if ($response->ok()) {
-            return response()->json([
-                'webhook_subscription' => new WebhookSubscription(...$response->json('resource')),
-            ]);
-        }
+
+        return response()->json([
+            'webhook_subscription' => new WebhookSubscription(...$response->json('resource')),
+        ]);
     }
 
     public function show(ShowWebhookSubscriptionRequest $request): JsonResponse
     {
-        $response = $this->api->get("/webhook_subscriptions/{$request->safe()->only(['webhook_uuid'])}/", $request);
-        if ($response->ok()) {
-            return response()->json([
-                'webhook_subscription' => new WebhookSubscription(...$response->json('resource')),
-            ]);
-        }
+        $response = $this->api->get("/webhook_subscriptions/{$request->validated('webhook_uuid')}/", $request);
+
+        return response()->json([
+            'webhook_subscription' => new WebhookSubscription(...$response->json('resource')),
+        ]);
     }
 
     public function destroy(DestroyWebhookSubscriptionRequest $request): JsonResponse
     {
-        $response = $this->api->delete("/webhook_subscriptions/{$request->safe()->only(['webhook_uuid'])}/");
-        if ($response->ok()) {
-            return response()->noContent();
-        }
+        $response = $this->api->delete("/webhook_subscriptions/{$request->validated('webhook_uuid')}/");
+
+        return response()->noContent();
     }
 }

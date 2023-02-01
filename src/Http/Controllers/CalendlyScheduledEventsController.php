@@ -22,26 +22,24 @@ class CalendlyScheduledEventsController extends Controller
     public function index(IndexScheduledEventsRequest $request): JsonResponse
     {
         $response = $this->api->get('/scheduled_events/', $request);
-
-        if ($response->ok()) {
-            $all = collect($response->collect('collection'))
-            ->mapInto(Event::class)->all();
-            $pagination = new Pagination(...$response->collect('pagination')->all());
-
-            return response()->json([
-                'scheduled_events' => $all,
-                'pagination' => $pagination,
-            ]);
+        if (! $response->ok()) {
         }
+        $all = collect($response->collect('collection'))
+        ->mapInto(Event::class)->all();
+        $pagination = new Pagination(...$response->collect('pagination')->all());
+
+        return response()->json([
+            'scheduled_events' => $all,
+            'pagination' => $pagination,
+        ]);
     }
 
     public function show(ShowScheduledEventRequest $request): JsonResponse
     {
-        $response = $this->api->get("/scheduled_events/{$request->safe()->only(['uuid'])}/", $request);
-        if ($response->ok()) {
-            return response()->json([
-                'event' => new Event(...$response->json('resource')),
-            ]);
-        }
+        $response = $this->api->get("/scheduled_events/{$request->validated('uuid')}/", $request);
+
+        return response()->json([
+            'event' => new Event(...$response->json('resource')),
+        ]);
     }
 }

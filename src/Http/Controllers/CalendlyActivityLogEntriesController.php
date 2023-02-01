@@ -21,16 +21,15 @@ class CalendlyActivityLogEntriesController extends Controller
     public function index(IndexActivityLogEntriesRequest $request): JsonResponse
     {
         $response = $this->api->get('/activity_log_entries/', $request);
-
-        if ($response->ok()) {
-            $all = collect($response->collect('collection'))
-            ->mapInto(Entry::class)->all();
-            $pagination = new Pagination(...$response->collect('pagination')->all());
-
-            return response()->json([
-                'activity_log_entries' => $all,
-                'pagination' => $pagination,
-            ]);
+        if (! $response->ok()) {
         }
+        $all = collect($response->collect('collection'))
+        ->mapInto(Entry::class)->all();
+        $pagination = new Pagination(...$response->collect('pagination')->all());
+
+        return response()->json([
+            'activity_log_entries' => $all,
+            'pagination' => $pagination,
+        ]);
     }
 }

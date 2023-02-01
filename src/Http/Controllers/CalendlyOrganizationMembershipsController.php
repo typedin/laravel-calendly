@@ -22,35 +22,32 @@ class CalendlyOrganizationMembershipsController extends Controller
 
     public function show(ShowOrganizationMembershipRequest $request): JsonResponse
     {
-        $response = $this->api->get("/organization_memberships/{$request->safe()->only(['uuid'])}/", $request);
-        if ($response->ok()) {
-            return response()->json([
-                'organization_membership' => new OrganizationMembership(...$response->json('resource')),
-            ]);
-        }
+        $response = $this->api->get("/organization_memberships/{$request->validated('uuid')}/", $request);
+
+        return response()->json([
+            'organization_membership' => new OrganizationMembership(...$response->json('resource')),
+        ]);
     }
 
     public function destroy(DestroyOrganizationMembershipRequest $request): JsonResponse
     {
-        $response = $this->api->delete("/organization_memberships/{$request->safe()->only(['uuid'])}/");
-        if ($response->ok()) {
-            return response()->noContent();
-        }
+        $response = $this->api->delete("/organization_memberships/{$request->validated('uuid')}/");
+
+        return response()->noContent();
     }
 
     public function index(IndexOrganizationMembershipsRequest $request): JsonResponse
     {
         $response = $this->api->get('/organization_memberships/', $request);
-
-        if ($response->ok()) {
-            $all = collect($response->collect('collection'))
-            ->mapInto(OrganizationMembership::class)->all();
-            $pagination = new Pagination(...$response->collect('pagination')->all());
-
-            return response()->json([
-                'organization_memberships' => $all,
-                'pagination' => $pagination,
-            ]);
+        if (! $response->ok()) {
         }
+        $all = collect($response->collect('collection'))
+        ->mapInto(OrganizationMembership::class)->all();
+        $pagination = new Pagination(...$response->collect('pagination')->all());
+
+        return response()->json([
+            'organization_memberships' => $all,
+            'pagination' => $pagination,
+        ]);
     }
 }

@@ -21,16 +21,15 @@ class CalendlyEventTypeAvailableTimesController extends Controller
     public function index(IndexEventTypeAvailableTimesRequest $request): JsonResponse
     {
         $response = $this->api->get('/event_type_available_times/', $request);
-
-        if ($response->ok()) {
-            $all = collect($response->collect('collection'))
-            ->mapInto(EventTypeAvailableTime::class)->all();
-            $pagination = new Pagination(...$response->collect('pagination')->all());
-
-            return response()->json([
-                'event_type_available_times' => $all,
-                'pagination' => $pagination,
-            ]);
+        if (! $response->ok()) {
         }
+        $all = collect($response->collect('collection'))
+        ->mapInto(EventTypeAvailableTime::class)->all();
+        $pagination = new Pagination(...$response->collect('pagination')->all());
+
+        return response()->json([
+            'event_type_available_times' => $all,
+            'pagination' => $pagination,
+        ]);
     }
 }
