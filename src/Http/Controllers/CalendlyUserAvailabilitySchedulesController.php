@@ -22,26 +22,24 @@ class CalendlyUserAvailabilitySchedulesController extends Controller
     public function index(IndexUserAvailabilitySchedulesRequest $request): JsonResponse
     {
         $response = $this->api->get('/user_availability_schedules/', $request);
-
-        if ($response->ok()) {
-            $all = collect($response->collect('collection'))
-            ->mapInto(AvailabilitySchedule::class)->all();
-            $pagination = new Pagination(...$response->collect('pagination')->all());
-
-            return response()->json([
-                'user_availability_schedules' => $all,
-                'pagination' => $pagination,
-            ]);
+        if (! $response->ok()) {
         }
+        $all = collect($response->collect('collection'))
+        ->mapInto(AvailabilitySchedule::class)->all();
+        $pagination = new Pagination(...$response->collect('pagination')->all());
+
+        return response()->json([
+            'user_availability_schedules' => $all,
+            'pagination' => $pagination,
+        ]);
     }
 
     public function show(ShowUserAvailabilityScheduleRequest $request): JsonResponse
     {
-        $response = $this->api->get("/user_availability_schedules/{$request->safe()->only(['uuid'])}/", $request);
-        if ($response->ok()) {
-            return response()->json([
-                'availability_schedule' => new AvailabilitySchedule(...$response->json('resource')),
-            ]);
-        }
+        $response = $this->api->get("/user_availability_schedules/{$request->validated('uuid')}/", $request);
+
+        return response()->json([
+            'availability_schedule' => new AvailabilitySchedule(...$response->json('resource')),
+        ]);
     }
 }

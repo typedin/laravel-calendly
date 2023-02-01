@@ -19,11 +19,10 @@ class CalendlyScheduledEventCancellationsController extends Controller
 
     public function create(StoreScheduledEventCancellationRequest $request): JsonResponse
     {
-        $response = $this->api->post("/scheduled_events/{$request->safe()->only(['uuid'])}/cancellation/", $request);
-        if ($response->ok()) {
-            return response()->json([
-                'cancellation' => new Cancellation(...$response->json('resource')),
-            ]);
-        }
+        $response = $this->api->post("/scheduled_events/{$request->validated('uuid')}/cancellation/", $request);
+
+        return response()->json([
+            'cancellation' => new Cancellation(...$response->json('resource')),
+        ]);
     }
 }

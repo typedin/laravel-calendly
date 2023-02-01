@@ -21,29 +21,26 @@ class CalendlyInviteeNoShowsController extends Controller
 
     public function show(ShowInviteeNoShowRequest $request): JsonResponse
     {
-        $response = $this->api->get("/invitee_no_shows/{$request->safe()->only(['uuid'])}/", $request);
-        if ($response->ok()) {
-            return response()->json([
-                'invitee_no_show' => new InviteeNoShow(...$response->json('resource')),
-            ]);
-        }
+        $response = $this->api->get("/invitee_no_shows/{$request->validated('uuid')}/", $request);
+
+        return response()->json([
+            'invitee_no_show' => new InviteeNoShow(...$response->json('resource')),
+        ]);
     }
 
     public function destroy(DestroyInviteeNoShowRequest $request): JsonResponse
     {
-        $response = $this->api->delete("/invitee_no_shows/{$request->safe()->only(['uuid'])}/");
-        if ($response->ok()) {
-            return response()->noContent();
-        }
+        $response = $this->api->delete("/invitee_no_shows/{$request->validated('uuid')}/");
+
+        return response()->noContent();
     }
 
     public function create(StoreInviteeNoShowRequest $request): JsonResponse
     {
         $response = $this->api->post('/invitee_no_shows/', $request);
-        if ($response->ok()) {
-            return response()->json([
-                'invitee_no_show' => new InviteeNoShow(...$response->json('resource')),
-            ]);
-        }
+
+        return response()->json([
+            'invitee_no_show' => new InviteeNoShow(...$response->json('resource')),
+        ]);
     }
 }

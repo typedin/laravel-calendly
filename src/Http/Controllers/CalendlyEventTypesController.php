@@ -22,26 +22,24 @@ class CalendlyEventTypesController extends Controller
     public function index(IndexEventTypesRequest $request): JsonResponse
     {
         $response = $this->api->get('/event_types/', $request);
-
-        if ($response->ok()) {
-            $all = collect($response->collect('collection'))
-            ->mapInto(EventType::class)->all();
-            $pagination = new Pagination(...$response->collect('pagination')->all());
-
-            return response()->json([
-                'event_types' => $all,
-                'pagination' => $pagination,
-            ]);
+        if (! $response->ok()) {
         }
+        $all = collect($response->collect('collection'))
+        ->mapInto(EventType::class)->all();
+        $pagination = new Pagination(...$response->collect('pagination')->all());
+
+        return response()->json([
+            'event_types' => $all,
+            'pagination' => $pagination,
+        ]);
     }
 
     public function show(ShowEventTypeRequest $request): JsonResponse
     {
-        $response = $this->api->get("/event_types/{$request->safe()->only(['uuid'])}/", $request);
-        if ($response->ok()) {
-            return response()->json([
-                'event_type' => new EventType(...$response->json('resource')),
-            ]);
-        }
+        $response = $this->api->get("/event_types/{$request->validated('uuid')}/", $request);
+
+        return response()->json([
+            'event_type' => new EventType(...$response->json('resource')),
+        ]);
     }
 }

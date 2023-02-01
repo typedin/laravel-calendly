@@ -20,10 +20,9 @@ class CalendlySchedulingLinksController extends Controller
     public function create(StoreSchedulingLinkRequest $request): JsonResponse
     {
         $response = $this->api->post('/scheduling_links/', $request);
-        if ($response->ok()) {
-            return response()->json([
-                'booking_url' => new BookingUrl(...$response->json('resource')),
-            ]);
-        }
+
+        return response()->json([
+            'booking_url' => new BookingUrl(...$response->json('resource')),
+        ]);
     }
 }
