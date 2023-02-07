@@ -210,6 +210,6 @@ class ControllerGenerator
 
     private function createErrorBody(): string
     {
-        return 'if(!$response->ok()) {'.'return \Typedin\Services\ErrorResponseFactory::getJson($response);'.'}';
+        return 'if(!$response->ok()) {'.'return \Typedin\LaravelCalendly\Services\ErrorResponseFactory::getJson($response);'.'}';
     }
 }

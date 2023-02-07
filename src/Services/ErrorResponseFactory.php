@@ -3,6 +3,7 @@
 namespace Typedin\LaravelCalendly\Services;
 
 use Illuminate\Http\Client\Response;
+use Illuminate\Http\JsonResponse;
 use Typedin\LaravelCalendly\Http\Errors\ErrorResponse;
 use Typedin\LaravelCalendly\Http\Errors\NotFoundError;
 use Typedin\LaravelCalendly\Http\Errors\PermissionDeniedError;
@@ -64,5 +65,12 @@ class ErrorResponseFactory
             details:$body['details'] ?? [],
             error_code:$status_code
         );
+    }
+
+    public static function getJson($response): JsonResponse
+    {
+        $applesauce = new ErrorResponseFactory($response);
+
+        return $applesauce->errorResponse->toJson();
     }
 }

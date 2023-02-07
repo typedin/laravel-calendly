@@ -84,7 +84,7 @@ class ControllerGeneratorTest extends TestCase
         $this->assertStringContainsString('"pagination" => $pagination,', $method->getBody());
         $this->assertStringContainsString(']);', $method->getBody());
         $this->assertStringContainsString('if(!$response->ok()) {', $method->getBody());
-        $this->assertStringContainsString('return \Typedin\Services\ErrorResponseFactory::getJson($response);', $method->getBody());
+        $this->assertStringContainsString('return \Typedin\LaravelCalendly\Services\ErrorResponseFactory::getJson($response);', $method->getBody());
         $this->assertStringContainsString('}', $method->getBody());
     }
 
