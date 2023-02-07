@@ -81,25 +81,34 @@ class EndpointMapper
     public function formRequestProviders(): Collection
     {
         return $this->paths()
-                   ->map(function ($value, $path) {
+                   ->flatMap(function ($value, $path) {
+                       $local = collect([]);
                        if ($path == '/users/{uuid}') {
-                           return new ShowFormRequestProvider(value: $value, path: $path, name: self::fullname($path));
+                           $local->push(new ShowFormRequestProvider(value: $value, path: $path, name: self::fullname($path)));
+
+                           return $local;
                        }
                        if (isset($value['get'])) {
                            if (! (isset($value['parameters']) && ! empty($value['parameters']))) {
-                               return new IndexFormRequestProvider(value: $value, path: $path, name: self::fullname($path));
-                           }
+                               $local->push(new IndexFormRequestProvider(value: $value, path: $path, name: self::fullname($path)));
 
-                           return new ShowFormRequestProvider(value: $value, path: $path, name: self::fullname($path));
+                               /* return new IndexFormRequestProvider(value: $value, path: $path, name: self::fullname($path)); */
+                           } else {
+                               $local->push(new ShowFormRequestProvider(value: $value, path: $path, name: self::fullname($path)));
+                           }
                        }
                        if (isset($value['post'])) {
-                           return new StoreFormRequestProvider(value: $value, path: $path, name: self::fullname($path));
+                           $local->push(new StoreFormRequestProvider(value: $value, path: $path, name: self::fullname($path)));
+
+                           /* return new StoreFormRequestProvider(value: $value, path: $path, name: self::fullname($path)); */
                        }
                        if (isset($value['delete'])) {
-                           return new DestroyFormRequestProvider(value: $value, path: $path, name: self::fullname($path));
+                           $local->push(new DestroyFormRequestProvider(value: $value, path: $path, name: self::fullname($path)));
+
+                           /* return new DestroyFormRequestProvider(value: $value, path: $path, name: self::fullname($path)); */
                        }
 
-                       throw new \Exception('Error Processing Data to buld a FormRequestDTO');
+                       return $local;
                    });
     }
 

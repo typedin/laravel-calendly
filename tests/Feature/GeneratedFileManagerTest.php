@@ -71,7 +71,7 @@ class GeneratedFileManagerTest extends TestCase
     {
         $form_requests = $this->file_manager->createFormRequests()->formRequests;
 
-        $this->assertCount(28, $form_requests);
+        $this->assertCount(34, $form_requests);
     }
 
     /** @test */

@@ -3,6 +3,7 @@
 namespace Typedin\LaravelCalendly\Tests\Supports;
 
 use PHPUnit\Framework\TestCase;
+use TValue;
 use Typedin\LaravelCalendly\Supports\Configuration\DestroyFormRequestProvider;
 use Typedin\LaravelCalendly\Supports\Configuration\IndexFormRequestProvider;
 use Typedin\LaravelCalendly\Supports\Configuration\ShowFormRequestProvider;
@@ -21,6 +22,9 @@ class FormRequestGeneratorTest extends TestCase
         $this->json = json_decode($content, true, 512, JSON_THROW_ON_ERROR);
     }
 
+    /**
+     * @return array<TKey,TValue>
+     */
     private function path(string $filter): array
     {
         return collect($this->json['paths'][$filter])->all();
@@ -41,6 +45,7 @@ class FormRequestGeneratorTest extends TestCase
             name:'ScheduledEvents',
             value: $this->path('/scheduled_events')
         );
+
         $validator = FormRequestGenerator::formRequest($provider);
 
         $this->assertEquals('IndexScheduledEventsRequest', $validator->getName());
@@ -49,6 +54,9 @@ class FormRequestGeneratorTest extends TestCase
         $this->assertStringContainsString(sprintf("'%s' => '%s',", $property, $expected_rules), $validator->getMethod('rules')->getBody());
     }
 
+    /**
+     * @return array<int,array<int,string>>
+     */
     public function ScheduledEventsProvider(): array
     {
         return [
@@ -81,6 +89,9 @@ class FormRequestGeneratorTest extends TestCase
         $this->assertStringContainsString(sprintf("'%s' => '%s',", $property, $expected_rules), $validator->getMethod('rules')->getBody());
     }
 
+    /**
+     * @return array<int,array<int,string>>
+     */
     public function EventTypesProvider(): array
     {
         return [
@@ -116,6 +127,9 @@ class FormRequestGeneratorTest extends TestCase
         $this->assertStringContainsString(sprintf("'%s' => '%s',", $property, $expected_rules), $rules->getBody());
     }
 
+    /**
+     * @return array<int,array<int,string>>
+     */
     public function ScheduledEventInviteesProvider(): array
     {
         return [
@@ -149,6 +163,9 @@ class FormRequestGeneratorTest extends TestCase
         $this->assertStringContainsString(sprintf("'%s' => '%s',", $property, $expected_rules), $rules->getBody());
     }
 
+    /**
+     * @return array<int,array<int,string>>
+     */
     public function userProvider(): array
     {
         return [
@@ -199,6 +216,9 @@ class FormRequestGeneratorTest extends TestCase
         $this->assertStringContainsString(sprintf("'%s' => '%s',", $property, $expected_rules), $rules->getBody());
     }
 
+    /**
+     * @return array<int,array<int,string>>
+     */
     public function DestroyOrganizationMembershipRequestsProvider(): array
     {
         return [

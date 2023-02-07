@@ -52,7 +52,7 @@ class ErrorResponseGenerator
                     ->getMethod('__construct')
                     ->addParameter($property_name)
                     ->setNullable($this->provider->isNullable($property_name, $property_value))
-                    ->setType(AppleSauce::getType($this->provider->properties()[$property_name]));
+                    ->setType(TypeHandler::getType($this->provider->properties()[$property_name]));
 
             $this->error_response->getMethod('__construct')->addBody(sprintf('$this->%s = $%s;', $property_name, $property_name));
         });
@@ -84,7 +84,7 @@ class ErrorResponseGenerator
         collect($this->provider->properties())->each(function ($property_value, $property_name) {
             $this->error_response
                     ->addProperty($property_name)
-                    ->setType(AppleSauce::getType($this->provider->properties()[$property_name]))
+                    ->setType(TypeHandler::getType($this->provider->properties()[$property_name]))
                     ->setNullable($this->provider->isNullable($property_name, $property_value))
                     ->addComment($this->generatePropertieDescription($property_name))
                     ->addComment($this->generateVarComment($property_name));
@@ -107,7 +107,7 @@ class ErrorResponseGenerator
     {
         $local_type = $this->provider->properties()[$property]['type'] ?? '';
 
-        if (AppleSauce::isEnum($this->provider->properties()[$property]['type'])) {
+        if (TypeHandler::isEnum($this->provider->properties()[$property]['type'])) {
             $enum = '<'.implode('|', $this->provider->properties()[$property]['enum']).'>';
             $local_type = $local_type.$enum;
         }

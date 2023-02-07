@@ -36,8 +36,8 @@ class ModelGenerator
             $this->model
                     ->getMethod('__construct')
                     ->addParameter($property_name)
-                    ->setNullable(AppleSauce::isNullable(property_name: $property_name, property: $property_value, required_lookup:$this->provider->schema()))
-                    ->setType(AppleSauce::getType($this->provider->properties()[$property_name]));
+                    ->setNullable(TypeHandler::isNullable(property_name: $property_name, property: $property_value, required_lookup:$this->provider->schema()))
+                    ->setType(TypeHandler::getType($this->provider->properties()[$property_name]));
 
             $this->model->getMethod('__construct')->addBody(sprintf('$this->%s = $%s;', $property_name, $property_name));
         });
@@ -50,8 +50,8 @@ class ModelGenerator
         collect($this->provider->properties())->each(function ($property_value, $property_name) {
             $this->model
                     ->addProperty($property_name)
-                    ->setType(AppleSauce::getType($this->provider->properties()[$property_name]))
-                    ->setNullable(AppleSauce::isNullable(property_name: $property_name, property: $property_value, required_lookup:$this->provider->schema()))
+                    ->setType(TypeHandler::getType($this->provider->properties()[$property_name]))
+                    ->setNullable(TypeHandler::isNullable(property_name: $property_name, property: $property_value, required_lookup:$this->provider->schema()))
                     ->addComment($this->generatePropertieDescription($property_name))
                     ->addComment($this->generateVarComment($property_name));
         });
@@ -68,7 +68,7 @@ class ModelGenerator
     {
         $local_type = $this->provider->properties()[$property]['type'] ?? '';
 
-        if (AppleSauce::isEnum($property)) {
+        if (TypeHandler::isEnum($property)) {
             $enum = '<'.implode('|', $this->provider->properties()[$property]['enum']).'>';
             $local_type = $local_type.$enum;
         }
