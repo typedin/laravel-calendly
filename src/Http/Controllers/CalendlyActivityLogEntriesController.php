@@ -3,12 +3,16 @@
 namespace Typedin\LaravelCalendly\Http\Controllers;
 
 use Illuminate\Http\JsonResponse;
+use Illuminate\Routing\Controller;
 use Typedin\LaravelCalendly\Contracts\CalendlyApiInterface;
 use Typedin\LaravelCalendly\Http\Requests\IndexActivityLogEntriesRequest;
+use Typedin\LaravelCalendly\Models\Entry;
+use Typedin\LaravelCalendly\Models\Pagination;
+use Typedin\Services\ErrorResponseFactory;
 
-class CalendlyActivityLogEntriesController extends \Illuminate\Routing\Controller
+class CalendlyActivityLogEntriesController extends Controller
 {
-    private \Typedin\LaravelCalendly\Contracts\CalendlyApiInterface $api;
+    private readonly CalendlyApiInterface $api;
 
     public function __construct(CalendlyApiInterface $api)
     {
@@ -19,11 +23,11 @@ class CalendlyActivityLogEntriesController extends \Illuminate\Routing\Controlle
     {
         $response = $this->api->get('/activity_log_entries/', $request);
         if (! $response->ok()) {
-            return \Typedin\Services\ErrorResponseFactory::getJson($response);
+            return ErrorResponseFactory::getJson($response);
         }
         $all = collect($response->collect('collection'))
-        ->mapInto(\Typedin\LaravelCalendly\Models\Entry::class)->all();
-        $pagination = new \Typedin\LaravelCalendly\Models\Pagination(...$response->collect('pagination')->all());
+        ->mapInto(Entry::class)->all();
+        $pagination = new Pagination(...$response->collect('pagination')->all());
 
         return response()->json([
             'activity_log_entries' => $all,

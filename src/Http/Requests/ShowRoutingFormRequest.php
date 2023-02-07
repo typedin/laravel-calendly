@@ -2,7 +2,9 @@
 
 namespace Typedin\LaravelCalendly\Http\Requests;
 
-class ShowRoutingFormRequest extends \Illuminate\Foundation\Http\FormRequest
+use Illuminate\Foundation\Http\FormRequest;
+
+class ShowRoutingFormRequest extends FormRequest
 {
     public function rules(): array
     {
