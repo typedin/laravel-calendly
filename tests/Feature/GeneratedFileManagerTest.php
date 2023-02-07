@@ -54,7 +54,8 @@ class GeneratedFileManagerTest extends TestCase
     {
         $models = $this->file_manager->createModels()->models;
 
-        $this->assertCount(45, $models);
+        // error is not considered to be a model
+        $this->assertCount(44, $models);
     }
 
     /** @test */
@@ -78,6 +79,7 @@ class GeneratedFileManagerTest extends TestCase
     {
         $error_responses = $this->file_manager->createErrorResponses()->errorResponses;
 
-        $this->assertCount(6, $error_responses);
+        // one error in schema
+        $this->assertCount(7, $error_responses);
     }
 }

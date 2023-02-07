@@ -17,7 +17,7 @@ class EndpointMapperTest extends TestCase
      *
      * @test
      */
-    public function it_creates_cruddy_controller_names_for_endpoints($result, $input): void
+    public function it_creates_cruddy_controller_names_for_endpoints(string $result, string $input): void
     {
         $this->assertEquals($result, EndpointMapper::fullname($input));
     }
@@ -42,7 +42,7 @@ class EndpointMapperTest extends TestCase
      */
     public function it_creates_entity_names(): void
     {
-        $this->assertCount(45, (new EndpointMapper($this->yaml()))->entityNames());
+        $this->assertCount(44, (new EndpointMapper($this->yaml()))->entityNames());
     }
 
     /**
@@ -67,6 +67,8 @@ class EndpointMapperTest extends TestCase
      */
     public function it_creates_form_request_provider(): void
     {
+        $output = (new EndpointMapper($this->yaml()))->formRequestProviders();
+        $this->assertCount(28, $output);
     }
 
     /**
@@ -78,5 +80,15 @@ class EndpointMapperTest extends TestCase
 
         $this->assertArrayHasKey('/scheduled_events', $output->get('ScheduledEvents'));
         $this->assertArrayHasKey('get', $output->get('ScheduledEvents')['/scheduled_events']);
+    }
+
+    /**
+     * @test
+     */
+    public function it_maps_to_error_response_providers(): void
+    {
+        $output = (new EndpointMapper($this->yaml()))->errorResponseProviders();
+
+        $this->assertCount(7, $output);
     }
 }

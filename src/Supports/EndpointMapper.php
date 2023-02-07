@@ -46,7 +46,7 @@ class EndpointMapper
      */
     public function entityNames(): Collection
     {
-        return collect($this->schemas())->keys();
+        return collect($this->schemas())->keys()->filter(fn ($key) => $key !== 'ErrorResponse');
     }
 
     /**
@@ -136,7 +136,13 @@ class EndpointMapper
 
     public function errorResponseProviders(): Collection
     {
-        return collect($this->components()->get('responses'))->map(function ($value, $key) {
+        $base_error = ['ErrorResponse' => $this->schemas()->get('ErrorResponse')];
+        /* dd($base_error); */
+        $merged = collect($this->components()->get('responses'))->merge(collect($base_error));
+
+        return $merged->map(function ($value, $key) {
+            /* dd($key); */
+
             return new ErrorResponseGeneratorProvider(name: $key, schema: $value, error_code: $this->errorCodes()->get($key) ?? 500);
         });
     }
