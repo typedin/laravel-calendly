@@ -6,56 +6,77 @@ class Event
 {
     /**
      * Canonical reference (unique identifier) for the resource
+     *
+     * @var string
      */
     public string $uri;
 
     /**
      * The event name
+     *
+     * @var string
      */
     public ?string $name;
 
     /**
      * Indicates if the event is "active" or "canceled"
+     *
+     * @var string
      */
     public string $status;
 
     /**
      * The moment the event was scheduled to start in UTC time (e.g. "2020-01-02T03:04:05.678123Z").
+     *
+     * @var string
      */
     public string $start_time;
 
     /**
      * The moment the event was scheduled to end in UTC time (e.g. "2020-01-02T03:04:05.678123Z")
+     *
+     * @var string
      */
     public string $end_time;
 
     /**
      * The event type associated with this event
+     *
+     * @var string
      */
     public string $event_type;
 
     /** @var  */
     public $location;
 
+    /** @var object */
     public object $invitees_counter;
 
     /**
      * The moment when the event was created (e.g. "2020-01-02T03:04:05.678123Z")
+     *
+     * @var string
      */
     public string $created_at;
 
     /**
      * The moment when the event was last updated (e.g. "2020-01-02T03:04:05.678123Z")
+     *
+     * @var string
      */
     public string $updated_at;
 
     /**
      * Event membership list
+     *
+     * @var array
      */
     public array $event_memberships;
 
     /**
      * Additional people added to an event by an invitee
+     *
+     * @var array
      */
     public array $event_guests;
 

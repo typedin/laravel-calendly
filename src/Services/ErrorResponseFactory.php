@@ -3,11 +3,11 @@
 namespace Typedin\LaravelCalendly\Services;
 
 use Illuminate\Http\Client\Response;
+use Typedin\LaravelCalendly\Http\Errors\ErrorResponse;
 use Typedin\LaravelCalendly\Http\Errors\NotFoundError;
 use Typedin\LaravelCalendly\Http\Errors\PermissionDeniedError;
 use Typedin\LaravelCalendly\Http\Errors\UnauthenticatedError;
 use Typedin\LaravelCalendly\Http\Errors\UnknownError;
-use Typedin\LaravelCalendly\Models\ErrorResponse;
 
 class ErrorResponseFactory
 {
@@ -58,7 +58,7 @@ class ErrorResponseFactory
             );
         }
 
-        return  new ErrorResponse(
+        return new ErrorResponse(
             title:$body['title'],
             message:$body['message'],
             details:$body['details'] ?? [],

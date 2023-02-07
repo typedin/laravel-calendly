@@ -67,7 +67,7 @@ class ErrorResponseGeneratorTest extends TestCase
 
     public function baseErrorResponseGeneratorProvider()
     {
-        return [['title', false, 'string'], ['message', false, 'string'], ['details', true, 'array']];
+        return [['title', false, 'string'], ['message', false, 'string'], ['details', true, 'array'], ['error_code', false, 'int']];
     }
 
     /**

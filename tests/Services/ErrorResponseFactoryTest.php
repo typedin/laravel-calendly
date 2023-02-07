@@ -4,11 +4,11 @@ namespace Typedin\LaravelCalendly\Tests\Services;
 
 use Illuminate\Support\Facades\Http;
 use Orchestra\Testbench\TestCase;
+use Typedin\LaravelCalendly\Http\Errors\ErrorResponse;
 use Typedin\LaravelCalendly\Http\Errors\NotFoundError;
 use Typedin\LaravelCalendly\Http\Errors\PermissionDeniedError;
 use Typedin\LaravelCalendly\Http\Errors\UnauthenticatedError;
 use Typedin\LaravelCalendly\Http\Errors\UnknownError;
-use Typedin\LaravelCalendly\Models\ErrorResponse;
 use Typedin\LaravelCalendly\Services\ErrorResponseFactory;
 
 class ErrorResponseFactoryTest extends TestCase

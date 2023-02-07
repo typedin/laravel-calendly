@@ -3,15 +3,12 @@
 namespace Typedin\LaravelCalendly\Http\Controllers;
 
 use Illuminate\Http\JsonResponse;
-use Illuminate\Routing\Controller;
 use Typedin\LaravelCalendly\Contracts\CalendlyApiInterface;
 use Typedin\LaravelCalendly\Http\Requests\IndexEventTypeAvailableTimesRequest;
-use Typedin\LaravelCalendly\Models\EventTypeAvailableTime;
-use Typedin\LaravelCalendly\Models\Pagination;
 
-class CalendlyEventTypeAvailableTimesController extends Controller
+class CalendlyEventTypeAvailableTimesController extends \Illuminate\Routing\Controller
 {
-    private readonly CalendlyApiInterface $api;
+    private \Typedin\LaravelCalendly\Contracts\CalendlyApiInterface $api;
 
     public function __construct(CalendlyApiInterface $api)
     {
@@ -22,10 +19,11 @@ class CalendlyEventTypeAvailableTimesController extends Controller
     {
         $response = $this->api->get('/event_type_available_times/', $request);
         if (! $response->ok()) {
+            return \Typedin\Services\ErrorResponseFactory::getJson($response);
         }
         $all = collect($response->collect('collection'))
-        ->mapInto(EventTypeAvailableTime::class)->all();
-        $pagination = new Pagination(...$response->collect('pagination')->all());
+        ->mapInto(\Typedin\LaravelCalendly\Models\EventTypeAvailableTime::class)->all();
+        $pagination = new \Typedin\LaravelCalendly\Models\Pagination(...$response->collect('pagination')->all());
 
         return response()->json([
             'event_type_available_times' => $all,

@@ -57,6 +57,13 @@ class ErrorResponseGenerator
             $this->error_response->getMethod('__construct')->addBody(sprintf('$this->%s = $%s;', $property_name, $property_name));
         });
 
+        $this->error_response
+                ->getMethod('__construct')
+                ->addParameter('error_code')
+                ->setNullable(false)
+                ->setType('int');
+        $this->error_response->getMethod('__construct')->addBody(sprintf('$this->%s = $%s;', 'error_code', 'error_code'));
+
         return $this;
     }
 
@@ -82,6 +89,11 @@ class ErrorResponseGenerator
                     ->addComment($this->generatePropertieDescription($property_name))
                     ->addComment($this->generateVarComment($property_name));
         });
+
+        $this->error_response
+                ->addProperty('error_code')
+                ->setNullable(false)
+                ->setType('int');
 
         return $this;
     }

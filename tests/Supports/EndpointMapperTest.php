@@ -88,7 +88,6 @@ class EndpointMapperTest extends TestCase
     public function it_maps_to_error_response_providers(): void
     {
         $output = (new EndpointMapper($this->yaml()))->errorResponseProviders();
-
         $this->assertCount(7, $output);
     }
 }

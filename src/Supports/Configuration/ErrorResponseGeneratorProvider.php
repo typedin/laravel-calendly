@@ -17,7 +17,7 @@ class ErrorResponseGeneratorProvider extends BaseErrorResponseGeneratorProvider
 
     public function properties(): array
     {
-        dd('ErrorResponseGeneratorProvider: line 20 this is not dead code.');
+        return $this->schema['properties'];
 
         return collect($this->schema['content']['application/json']['schema']['allOf'])
                     ->filter(function ($value) {

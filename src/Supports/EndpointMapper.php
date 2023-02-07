@@ -63,6 +63,9 @@ class EndpointMapper
     public function modelProviders(): Collection
     {
         return $this->schemas()
+                    ->filter(function ($value, $key) {
+                        return $key !== 'ErrorResponse';
+                    })
                    ->map(function ($schema, $name) {
                        try {
                            return new ModelGeneratorProvider(name: $name, schema: $schema);
@@ -136,13 +139,10 @@ class EndpointMapper
 
     public function errorResponseProviders(): Collection
     {
-        $base_error = ['ErrorResponse' => $this->schemas()->get('ErrorResponse')];
-        /* dd($base_error); */
+        $base_error = ['ERROR_RESPONSE' => $this->schemas()->get('ErrorResponse')];
         $merged = collect($this->components()->get('responses'))->merge(collect($base_error));
 
         return $merged->map(function ($value, $key) {
-            /* dd($key); */
-
             return new ErrorResponseGeneratorProvider(name: $key, schema: $value, error_code: $this->errorCodes()->get($key) ?? 500);
         });
     }
