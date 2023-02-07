@@ -1,0 +1,22 @@
+description: Manually created does not belong to the official documentation 
+type: object
+title: Single-Use Scheduling Link
+properties:
+  booking_url:
+    type: string
+    description: Scheduling link url
+    format: uri
+    example: 'https://calendly.com/d/abcd-brv8/15-minute-meeting'
+  owner:
+    type: string
+    description: 'A link to the resource that owns this Scheduling Link (currently, this is always an Event Type)'
+    format: uri
+    example: 'https://api.calendly.com/event_types/GBGBDCAADAEDCRZ2'
+  owner_type:
+    type: string
+    example: EventType
+    enum:
+      - EventType
+    description: 'Resource type (currently, this is always EventType)'
+required:
+  - booking_url

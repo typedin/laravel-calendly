@@ -50,11 +50,6 @@ class GeneratedFileManager
     {
         $this->mapper->modelProviders()->map(function (ModelGeneratorProvider $provider) {
             return ModelGenerator::model($provider);
-
-            try {
-            } catch (\Throwable $th) {
-                // this returns null
-            }
         })->unique()->filter()->each(fn ($model) => $this->models->push([
             'model' => $model,
             'namespace' => $this->createNamespace($model, "Typedin\LaravelCalendly\Models"),
