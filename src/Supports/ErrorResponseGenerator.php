@@ -14,7 +14,7 @@ class ErrorResponseGenerator
     {
         $this->error_response = new ClassType(
             name: $this->errorResponseClassName(),
-            namespace: new PhpNamespace('Typedin\LaravelCalendly\Errors')
+            namespace: new PhpNamespace('Typedin\LaravelCalendly\Http\Errors')
         );
     }
 
@@ -23,10 +23,12 @@ class ErrorResponseGenerator
         $error_response_generator = new ErrorResponseGenerator($provider);
 
         if (! $error_response_generator->isBaseClass()) {
-            $error_response_generator->error_response->setExtends('\Typedin\LaravelCalendly\Models\ErrorResponse');
+            $error_response_generator->error_response->setExtends('\Typedin\LaravelCalendly\Http\Errors\ErrorResponse');
+        }
+        if ($error_response_generator->isBaseClass()) {
+            $error_response_generator->generateConstructor()->generateProperties()->generateToJson();
         }
 
-        $error_response_generator->generateConstructor()->generateProperties()->generateToJson();
         $error_response_generator->error_response->validate();
 
         return $error_response_generator->error_response;
@@ -65,7 +67,7 @@ class ErrorResponseGenerator
                 ->getMethod('toJson')
                 ->setReturnType("\Illuminate\Http\JsonResponse")
 
-            ->addBody('return response()->json(["message" => $this->message, "title" => $this->title], $this->error_code);');
+            ->addBody('return response()->json(["message" => $this->message, "title" => $this->title, "details" => $this->details], $this->error_code);');
 
         return $this;
     }

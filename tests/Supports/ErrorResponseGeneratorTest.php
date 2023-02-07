@@ -41,7 +41,7 @@ class ErrorResponseGeneratorTest extends TestCase
      *
      * @test
      */
-    public function it_generates_base_error($parameterName, $isNullable, $type, $comments = []): void
+    public function it_generates_base_error(string $parameterName, bool $isNullable, string $type, array $comments = []): void
     {
         $provider = new BaseErrorResponseGeneratorProvider(
             schema: $this->schemas()->get('ErrorResponse')
@@ -50,7 +50,7 @@ class ErrorResponseGeneratorTest extends TestCase
         $error_response = ErrorResponseGenerator::errorResponse($provider);
 
         $this->assertEquals('ErrorResponse', $error_response->getName());
-        $this->assertEquals('Typedin\LaravelCalendly\Errors', $error_response->getNamespace()->getName());
+        $this->assertEquals('Typedin\LaravelCalendly\Http\Errors', $error_response->getNamespace()->getName());
         $this->assertNull($error_response->getExtends());
         $this->assertEquals($type, $error_response->getProperty($parameterName)->getType());
         $this->assertEquals($type, $error_response->getMethod('__construct')->getParameters()[$parameterName]->getType());
@@ -62,20 +62,18 @@ class ErrorResponseGeneratorTest extends TestCase
         );
 
         $this->assertEquals('\Illuminate\Http\JsonResponse', $error_response->getMethod('toJson')->getReturnType());
-        $this->assertStringContainsString('return response()->json(["message" => $this->message, "title" => $this->title], $this->error_code);', $error_response->getMethod('toJson')->getBody());
+        $this->assertStringContainsString('return response()->json(["message" => $this->message, "title" => $this->title, "details" => $this->details], $this->error_code);', $error_response->getMethod('toJson')->getBody());
     }
 
     public function baseErrorResponseGeneratorProvider()
     {
-        return [['title', false, 'string'], ['message', false, 'string'], ['details', false, 'array']];
+        return [['title', false, 'string'], ['message', false, 'string'], ['details', true, 'array']];
     }
 
     /**
-     * @dataProvider invalidArgumentProvider
-     *
      * @test
      */
-    public function it_generates_invalid_argument_response($parameterName, $isNullable, $type, $comments = []): void
+    public function it_generates_invalid_argument_response(): void
     {
         $provider = new ErrorResponseGeneratorProvider(
             name:'INVALID_ARGUMENT',
@@ -86,23 +84,27 @@ class ErrorResponseGeneratorTest extends TestCase
         $error_response = ErrorResponseGenerator::errorResponse($provider);
 
         $this->assertEquals('InvalidArgumentError', $error_response->getName());
-        $this->assertEquals('Typedin\LaravelCalendly\Errors', $error_response->getNamespace()->getName());
-        $this->assertEquals('\Typedin\LaravelCalendly\Models\ErrorResponse', $error_response->getExtends());
-
-        $this->assertEquals($type, $error_response->getProperty($parameterName)->getType());
-        $this->assertEquals($type, $error_response->getMethod('__construct')->getParameters()[$parameterName]->getType());
-        $this->assertEquals($isNullable, $error_response->getProperty($parameterName)->isNullable());
-        $this->assertEquals($isNullable, $error_response->getMethod('__construct')->getParameters()[$parameterName]->isNullable());
-
-        collect($comments)->each(
-            fn ($comment) => $this->assertStringContainsString($comment, $error_response->getProperty($parameterName)->getComment())
-        );
-        $this->assertEquals('\Illuminate\Http\JsonResponse', $error_response->getMethod('toJson')->getReturnType());
-        $this->assertStringContainsString('return response()->json(["message" => $this->message, "title" => $this->title], $this->error_code);', $error_response->getMethod('toJson')->getBody());
+        $this->assertEquals('Typedin\LaravelCalendly\Http\Errors', $error_response->getNamespace()->getName());
+        $this->assertEquals('\Typedin\LaravelCalendly\Http\Errors\ErrorResponse', $error_response->getExtends());
+        $this->assertCount(0, $error_response->getMethods());
     }
 
-    public function invalidArgumentProvider()
+    /**
+     * @test
+     */
+    public function it_generates_invalid_already_exists_error(): void
     {
-        return [['title', false, 'string'], ['message', false, 'string'], ['error_code', false, 'int']];
+        $provider = new ErrorResponseGeneratorProvider(
+            name:'ALREADY_EXISTS',
+            schema: $this->responses()->get('ALREADY_EXISTS'),
+            error_code: 400
+        );
+
+        $error_response = ErrorResponseGenerator::errorResponse($provider);
+
+        $this->assertEquals('AlreadyExistsError', $error_response->getName());
+        $this->assertEquals('Typedin\LaravelCalendly\Http\Errors', $error_response->getNamespace()->getName());
+        $this->assertEquals('\Typedin\LaravelCalendly\Http\Errors\ErrorResponse', $error_response->getExtends());
+        $this->assertCount(0, $error_response->getMethods());
     }
 }

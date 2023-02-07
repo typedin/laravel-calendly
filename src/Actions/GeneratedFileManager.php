@@ -94,7 +94,6 @@ class GeneratedFileManager
     {
         $this->mapper->errorResponseProviders()->each(function ($provider) {
             $error_response = ErrorResponseGenerator::errorResponse($provider);
-
             $this->errorResponses->push([
                 'error_response' => $error_response,
                 'namespace' => $this->createNamespace($error_response, "Typedin\LaravelCalendly\Http\Errors"),
@@ -163,7 +162,7 @@ class GeneratedFileManager
         return $class;
     }
 
-    private function createNamespace(ClassType $class, $name): PhpNamespace
+    private function createNamespace(ClassType $class, string $name): PhpNamespace
     {
         $namespace = new PhpNamespace($name);
         foreach ($class->getMethods() as $method) {
@@ -175,15 +174,17 @@ class GeneratedFileManager
         array_map(function ($param) use (&$types) {
             $types[] = $param->getType(true);
         }, $class->getProperties());
-        foreach (array_filter($types) as $type) {
-            foreach ($type->getTypes() as $subtype) {
-                if (! $subtype->isClass()) {
-                    continue;
+        if ($types) {
+            foreach (array_filter($types) as $type) {
+                foreach ($type->getTypes() as $subtype) {
+                    if (! $subtype->isClass()) {
+                        continue;
+                    }
+                    if ($subtype->isClassKeyword()) {
+                        continue;
+                    }
+                    $namespace->addUse((string) $subtype);
                 }
-                if ($subtype->isClassKeyword()) {
-                    continue;
-                }
-                $namespace->addUse((string) $subtype);
             }
         }
         foreach ($class->getImplements() as $implement) {
