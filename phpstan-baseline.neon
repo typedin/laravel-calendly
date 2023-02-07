@@ -1,0 +1,551 @@
+parameters:
+	ignoreErrors:
+		-
+			message: "#^If condition is always true\\.$#"
+			count: 1
+			path: src/Actions/GeneratedFileManager.php
+
+		-
+			message: "#^PHPDoc tag @var has invalid value \\(Collection\\<array\\-key,\\<missing\\>\\>\\)\\: Unexpected token \"\\<\", expected type at offset 37$#"
+			count: 4
+			path: src/Actions/GeneratedFileManager.php
+
+		-
+			message: "#^Parameter \\#1 \\$callback of method Illuminate\\\\Support\\\\Collection\\<Typedin\\\\LaravelCalendly\\\\Supports\\\\TKey,Typedin\\\\LaravelCalendly\\\\Supports\\\\TValue\\>\\:\\:each\\(\\) expects callable\\(Typedin\\\\LaravelCalendly\\\\Supports\\\\TValue, Typedin\\\\LaravelCalendly\\\\Supports\\\\TKey\\)\\: mixed, Closure\\(Typedin\\\\LaravelCalendly\\\\Supports\\\\Configuration\\\\FormRequestProvider\\)\\: void given\\.$#"
+			count: 1
+			path: src/Actions/GeneratedFileManager.php
+
+		-
+			message: "#^Parameter \\#1 \\$callback of method Illuminate\\\\Support\\\\Collection\\<Typedin\\\\LaravelCalendly\\\\Supports\\\\TKey,Typedin\\\\LaravelCalendly\\\\Supports\\\\TValue\\>\\:\\:map\\(\\) expects callable\\(Typedin\\\\LaravelCalendly\\\\Supports\\\\TValue, Typedin\\\\LaravelCalendly\\\\Supports\\\\TKey\\)\\: Nette\\\\PhpGenerator\\\\ClassType, Closure\\(Typedin\\\\LaravelCalendly\\\\Supports\\\\Configuration\\\\ModelGeneratorProvider\\)\\: Nette\\\\PhpGenerator\\\\ClassType given\\.$#"
+			count: 1
+			path: src/Actions/GeneratedFileManager.php
+
+		-
+			message: "#^Parameter \\#1 \\$provider of static method Typedin\\\\LaravelCalendly\\\\Supports\\\\ControllerGenerator\\:\\:controller\\(\\) expects Typedin\\\\LaravelCalendly\\\\Supports\\\\Configuration\\\\ControllerGeneratorProvider, Typedin\\\\LaravelCalendly\\\\Supports\\\\TValue given\\.$#"
+			count: 1
+			path: src/Actions/GeneratedFileManager.php
+
+		-
+			message: "#^Static method Typedin\\\\LaravelCalendly\\\\Actions\\\\GeneratedFileManager\\:\\:replaceQualifiersWithImport\\(\\) is unused\\.$#"
+			count: 1
+			path: src/Actions/GeneratedFileManager.php
+
+		-
+			message: "#^PHPDoc tag @return with type Typedin\\\\LaravelCalendly\\\\Exceptions\\\\ApiClientException is incompatible with native type \\*NEVER\\*\\.$#"
+			count: 2
+			path: src/Exceptions/ApiClientException.php
+
+		-
+			message: "#^PHPDoc tag @return with type Typedin\\\\LaravelCalendly\\\\Exceptions\\\\CalendlyCalendarEventException is incompatible with native type \\*NEVER\\*\\.$#"
+			count: 1
+			path: src/Exceptions/CalendlyCalendarEventException.php
+
+		-
+			message: "#^PHPDoc tag @return with type Typedin\\\\LaravelCalendly\\\\Exceptions\\\\CalendlyCancellationException is incompatible with native type \\*NEVER\\*\\.$#"
+			count: 1
+			path: src/Exceptions/CalendlyCancellationException.php
+
+		-
+			message: "#^PHPDoc tag @return with type Typedin\\\\LaravelCalendly\\\\Exceptions\\\\CalendlyEventGuestException is incompatible with native type \\*NEVER\\*\\.$#"
+			count: 1
+			path: src/Exceptions/CalendlyEventGuestException.php
+
+		-
+			message: "#^PHPDoc tag @return with type Typedin\\\\LaravelCalendly\\\\Exceptions\\\\CalendlyEventInviteesCounterException is incompatible with native type \\*NEVER\\*\\.$#"
+			count: 1
+			path: src/Exceptions/CalendlyEventInviteesCounterException.php
+
+		-
+			message: "#^PHPDoc tag @return with type Typedin\\\\LaravelCalendly\\\\Exceptions\\\\CalendlyEventLocationException is incompatible with native type \\*NEVER\\*\\.$#"
+			count: 1
+			path: src/Exceptions/CalendlyEventLocationException.php
+
+		-
+			message: "#^PHPDoc tag @return with type Typedin\\\\LaravelCalendly\\\\Exceptions\\\\CalendlyInviteesCounterException is incompatible with native type \\*NEVER\\*\\.$#"
+			count: 1
+			path: src/Exceptions/CalendlyInviteesCounterException.php
+
+		-
+			message: "#^PHPDoc tag @return with type Typedin\\\\LaravelCalendly\\\\Exceptions\\\\CalendlyOrganizationException is incompatible with native type \\*NEVER\\*\\.$#"
+			count: 1
+			path: src/Exceptions/CalendlyOrganizationException.php
+
+		-
+			message: "#^PHPDoc tag @return with type Typedin\\\\LaravelCalendly\\\\Exceptions\\\\CalendlyOrganizationMembershipException is incompatible with native type \\*NEVER\\*\\.$#"
+			count: 1
+			path: src/Exceptions/CalendlyOrganizationMembershipException.php
+
+		-
+			message: "#^PHPDoc tag @return with type string is incompatible with native type \\*NEVER\\*\\.$#"
+			count: 1
+			path: src/Exceptions/CalendlyScheduledEventException.php
+
+		-
+			message: "#^PHPDoc tag @return with type Typedin\\\\LaravelCalendly\\\\Exceptions\\\\CalendlyUserException is incompatible with native type \\*NEVER\\*\\.$#"
+			count: 1
+			path: src/Exceptions/CalendlyUserException.php
+
+		-
+			message: "#^Method Typedin\\\\LaravelCalendly\\\\Http\\\\Controllers\\\\CalendlyInviteeNoShowsController\\:\\:destroy\\(\\) should return Illuminate\\\\Http\\\\JsonResponse but returns Illuminate\\\\Http\\\\Response\\.$#"
+			count: 1
+			path: src/Http/Controllers/CalendlyInviteeNoShowsController.php
+
+		-
+			message: "#^Method Typedin\\\\LaravelCalendly\\\\Http\\\\Controllers\\\\CalendlyOrganizationInvitationsController\\:\\:destroy\\(\\) should return Illuminate\\\\Http\\\\JsonResponse but returns Illuminate\\\\Http\\\\Response\\.$#"
+			count: 1
+			path: src/Http/Controllers/CalendlyOrganizationInvitationsController.php
+
+		-
+			message: "#^Method Typedin\\\\LaravelCalendly\\\\Http\\\\Controllers\\\\CalendlyOrganizationMembershipsController\\:\\:destroy\\(\\) should return Illuminate\\\\Http\\\\JsonResponse but returns Illuminate\\\\Http\\\\Response\\.$#"
+			count: 1
+			path: src/Http/Controllers/CalendlyOrganizationMembershipsController.php
+
+		-
+			message: "#^Method Typedin\\\\LaravelCalendly\\\\Http\\\\Controllers\\\\CalendlyWebhookSubscriptionsController\\:\\:destroy\\(\\) should return Illuminate\\\\Http\\\\JsonResponse but returns Illuminate\\\\Http\\\\Response\\.$#"
+			count: 1
+			path: src/Http/Controllers/CalendlyWebhookSubscriptionsController.php
+
+		-
+			message: "#^PHPDoc tag @var has invalid value \\(\\)\\: Unexpected token \"\\*/\", expected type at offset 10$#"
+			count: 1
+			path: src/Models/Entry.php
+
+		-
+			message: "#^PHPDoc tag @var has invalid value \\(\\)\\: Unexpected token \"\\*/\", expected type at offset 10$#"
+			count: 3
+			path: src/Models/Event.php
+
+		-
+			message: "#^PHPDoc tag @var for property Typedin\\\\LaravelCalendly\\\\Models\\\\EventType\\:\\:\\$duration with type float\\|int is not subtype of native type float\\.$#"
+			count: 1
+			path: src/Models/EventType.php
+
+		-
+			message: "#^PHPDoc tag @var has invalid value \\(\\)\\: Unexpected token \"\\*/\", expected type at offset 10$#"
+			count: 1
+			path: src/Models/EventType.php
+
+		-
+			message: "#^PHPDoc tag @var for property Typedin\\\\LaravelCalendly\\\\Models\\\\EventTypeAvailableTime\\:\\:\\$invitees_remaining with type float\\|int is not subtype of native type float\\.$#"
+			count: 1
+			path: src/Models/EventTypeAvailableTime.php
+
+		-
+			message: "#^PHPDoc tag @var for property Typedin\\\\LaravelCalendly\\\\Models\\\\EventTypeCustomQuestion\\:\\:\\$position with type float\\|int is not subtype of native type float\\.$#"
+			count: 1
+			path: src/Models/EventTypeCustomQuestion.php
+
+		-
+			message: "#^PHPDoc tag @var has invalid value \\(\\)\\: Unexpected token \"\\*/\", expected type at offset 10$#"
+			count: 2
+			path: src/Models/Invitee.php
+
+		-
+			message: "#^PHPDoc tag @var for property Typedin\\\\LaravelCalendly\\\\Models\\\\InviteeQuestionAndAnswer\\:\\:\\$position with type float\\|int is not subtype of native type float\\.$#"
+			count: 1
+			path: src/Models/InviteeQuestionAndAnswer.php
+
+		-
+			message: "#^PHPDoc tag @var for property Typedin\\\\LaravelCalendly\\\\Models\\\\Pagination\\:\\:\\$count with type float\\|int is not subtype of native type float\\.$#"
+			count: 1
+			path: src/Models/Pagination.php
+
+		-
+			message: "#^PHPDoc tag @var has invalid value \\(\\)\\: Unexpected token \"\\*/\", expected type at offset 10$#"
+			count: 2
+			path: src/Models/RoutingFormSubmission.php
+
+		-
+			message: "#^PHPDoc tag @var has invalid value \\(\\)\\: Unexpected token \"\\\\n     \", expected type at offset 203$#"
+			count: 1
+			path: src/Models/WebhookPayload.php
+
+		-
+			message: "#^Offset 'details' does not exist on array\\<int, mixed\\>\\.$#"
+			count: 4
+			path: src/Services/ErrorResponseFactory.php
+
+		-
+			message: "#^Offset 'details' on array\\<int, mixed\\> on left side of \\?\\? does not exist\\.$#"
+			count: 1
+			path: src/Services/ErrorResponseFactory.php
+
+		-
+			message: "#^Offset 'message' does not exist on array\\<int, mixed\\>\\.$#"
+			count: 5
+			path: src/Services/ErrorResponseFactory.php
+
+		-
+			message: "#^Offset 'title' does not exist on array\\<int, mixed\\>\\.$#"
+			count: 5
+			path: src/Services/ErrorResponseFactory.php
+
+		-
+			message: "#^Offset 'properties' does not exist on array\\<int, mixed\\>\\.$#"
+			count: 1
+			path: src/Supports/Configuration/BaseErrorResponseGeneratorProvider.php
+
+		-
+			message: "#^Offset 'required' does not exist on array\\<int, mixed\\>\\.$#"
+			count: 1
+			path: src/Supports/Configuration/BaseErrorResponseGeneratorProvider.php
+
+		-
+			message: "#^PHPDoc tag @param for parameter \\$mapper with type mixed is not subtype of native type Typedin\\\\LaravelCalendly\\\\Supports\\\\EndpointMapper\\.$#"
+			count: 1
+			path: src/Supports/Configuration/ControllerGeneratorProvider.php
+
+		-
+			message: "#^PHPDoc type for property Typedin\\\\LaravelCalendly\\\\Supports\\\\Configuration\\\\ControllerGeneratorProvider\\:\\:\\$mapper with type mixed is not subtype of native type Typedin\\\\LaravelCalendly\\\\Supports\\\\EndpointMapper\\.$#"
+			count: 1
+			path: src/Supports/Configuration/ControllerGeneratorProvider.php
+
+		-
+			message: "#^Offset 'parameters' does not exist on array\\<int, mixed\\>\\.$#"
+			count: 1
+			path: src/Supports/Configuration/DestroyFormRequestProvider.php
+
+		-
+			message: "#^Offset 'properties' does not exist on array\\<int, mixed\\>\\.$#"
+			count: 1
+			path: src/Supports/Configuration/ErrorResponseGeneratorProvider.php
+
+		-
+			message: "#^Unreachable statement \\- code above always terminates\\.$#"
+			count: 1
+			path: src/Supports/Configuration/ErrorResponseGeneratorProvider.php
+
+		-
+			message: "#^Offset 'get' on array\\<int, mixed\\> on left side of \\?\\? does not exist\\.$#"
+			count: 1
+			path: src/Supports/Configuration/IndexFormRequestProvider.php
+
+		-
+			message: "#^Offset 'get' on array\\<int, mixed\\> on left side of \\?\\? does not exist\\.$#"
+			count: 1
+			path: src/Supports/Configuration/ShowFormRequestProvider.php
+
+		-
+			message: "#^Offset 'parameters' on array\\<int, mixed\\> on left side of \\?\\? does not exist\\.$#"
+			count: 1
+			path: src/Supports/Configuration/ShowFormRequestProvider.php
+
+		-
+			message: "#^Offset 'parameters' on array\\<int, mixed\\> on left side of \\?\\? does not exist\\.$#"
+			count: 1
+			path: src/Supports/Configuration/StoreFormRequestProvider.php
+
+		-
+			message: "#^Offset 'post' on array\\<int, mixed\\> on left side of \\?\\? does not exist\\.$#"
+			count: 1
+			path: src/Supports/Configuration/StoreFormRequestProvider.php
+
+		-
+			message: "#^Call to function array_key_exists\\(\\) with 'get' and array\\<int, mixed\\> will always evaluate to false\\.$#"
+			count: 1
+			path: src/Supports/ControllerGenerator.php
+
+		-
+			message: "#^Call to function array_key_exists\\(\\) with 'post' and array\\<int, mixed\\> will always evaluate to false\\.$#"
+			count: 1
+			path: src/Supports/ControllerGenerator.php
+
+		-
+			message: "#^Offset 'get' does not exist on array\\<int, mixed\\>\\.$#"
+			count: 1
+			path: src/Supports/ControllerGenerator.php
+
+		-
+			message: "#^Offset string does not exist on array\\<int, mixed\\>\\.$#"
+			count: 1
+			path: src/Supports/ControllerGenerator.php
+
+		-
+			message: "#^Result of && is always false\\.$#"
+			count: 1
+			path: src/Supports/ControllerGenerator.php
+
+		-
+			message: "#^Access to offset 'delete' on an unknown class Typedin\\\\LaravelCalendly\\\\Supports\\\\TValue\\.$#"
+			count: 1
+			path: src/Supports/EndpointMapper.php
+
+		-
+			message: "#^Access to offset 'get' on an unknown class Typedin\\\\LaravelCalendly\\\\Supports\\\\TValue\\.$#"
+			count: 2
+			path: src/Supports/EndpointMapper.php
+
+		-
+			message: "#^Access to offset 'parameters' on an unknown class Typedin\\\\LaravelCalendly\\\\Supports\\\\TValue\\.$#"
+			count: 2
+			path: src/Supports/EndpointMapper.php
+
+		-
+			message: "#^Access to offset 'post' on an unknown class Typedin\\\\LaravelCalendly\\\\Supports\\\\TValue\\.$#"
+			count: 1
+			path: src/Supports/EndpointMapper.php
+
+		-
+			message: "#^Call to method all\\(\\) on an unknown class Typedin\\\\LaravelCalendly\\\\Supports\\\\TValue\\.$#"
+			count: 1
+			path: src/Supports/EndpointMapper.php
+
+		-
+			message: "#^Invalid array key type Typedin\\\\LaravelCalendly\\\\Supports\\\\TValue\\.$#"
+			count: 1
+			path: src/Supports/EndpointMapper.php
+
+		-
+			message: "#^Method Typedin\\\\LaravelCalendly\\\\Supports\\\\EndpointMapper\\:\\:controllerGeneratorProviders\\(\\) has invalid return type Typedin\\\\LaravelCalendly\\\\Supports\\\\TKey\\.$#"
+			count: 1
+			path: src/Supports/EndpointMapper.php
+
+		-
+			message: "#^Method Typedin\\\\LaravelCalendly\\\\Supports\\\\EndpointMapper\\:\\:controllerGeneratorProviders\\(\\) has invalid return type Typedin\\\\LaravelCalendly\\\\Supports\\\\TValue\\.$#"
+			count: 1
+			path: src/Supports/EndpointMapper.php
+
+		-
+			message: "#^Method Typedin\\\\LaravelCalendly\\\\Supports\\\\EndpointMapper\\:\\:controllerGeneratorProviders\\(\\) should return Illuminate\\\\Support\\\\Collection\\<Typedin\\\\LaravelCalendly\\\\Supports\\\\TKey, Typedin\\\\LaravelCalendly\\\\Supports\\\\TValue\\> but returns Illuminate\\\\Support\\\\Collection\\<Typedin\\\\LaravelCalendly\\\\Supports\\\\TKey, Typedin\\\\LaravelCalendly\\\\Supports\\\\Configuration\\\\ControllerGeneratorProvider\\>\\.$#"
+			count: 1
+			path: src/Supports/EndpointMapper.php
+
+		-
+			message: "#^Method Typedin\\\\LaravelCalendly\\\\Supports\\\\EndpointMapper\\:\\:controllerNames\\(\\) has invalid return type Typedin\\\\LaravelCalendly\\\\Supports\\\\TKey\\.$#"
+			count: 1
+			path: src/Supports/EndpointMapper.php
+
+		-
+			message: "#^Method Typedin\\\\LaravelCalendly\\\\Supports\\\\EndpointMapper\\:\\:controllerNames\\(\\) has invalid return type Typedin\\\\LaravelCalendly\\\\Supports\\\\TValue\\.$#"
+			count: 1
+			path: src/Supports/EndpointMapper.php
+
+		-
+			message: "#^Method Typedin\\\\LaravelCalendly\\\\Supports\\\\EndpointMapper\\:\\:controllerNames\\(\\) should return Illuminate\\\\Support\\\\Collection\\<Typedin\\\\LaravelCalendly\\\\Supports\\\\TKey, Typedin\\\\LaravelCalendly\\\\Supports\\\\TValue\\> but returns Illuminate\\\\Support\\\\Collection\\<int, string\\>\\.$#"
+			count: 1
+			path: src/Supports/EndpointMapper.php
+
+		-
+			message: "#^Method Typedin\\\\LaravelCalendly\\\\Supports\\\\EndpointMapper\\:\\:entityNames\\(\\) has invalid return type Typedin\\\\LaravelCalendly\\\\Supports\\\\TKey\\.$#"
+			count: 1
+			path: src/Supports/EndpointMapper.php
+
+		-
+			message: "#^Method Typedin\\\\LaravelCalendly\\\\Supports\\\\EndpointMapper\\:\\:entityNames\\(\\) has invalid return type Typedin\\\\LaravelCalendly\\\\Supports\\\\TValue\\.$#"
+			count: 1
+			path: src/Supports/EndpointMapper.php
+
+		-
+			message: "#^Method Typedin\\\\LaravelCalendly\\\\Supports\\\\EndpointMapper\\:\\:entityNames\\(\\) should return Illuminate\\\\Support\\\\Collection\\<Typedin\\\\LaravelCalendly\\\\Supports\\\\TKey, Typedin\\\\LaravelCalendly\\\\Supports\\\\TValue\\> but returns Illuminate\\\\Support\\\\Collection\\<int, \\(int\\|string\\)\\>\\.$#"
+			count: 1
+			path: src/Supports/EndpointMapper.php
+
+		-
+			message: "#^Method Typedin\\\\LaravelCalendly\\\\Supports\\\\EndpointMapper\\:\\:formRequestNames\\(\\) has invalid return type Typedin\\\\LaravelCalendly\\\\Supports\\\\TKey\\.$#"
+			count: 1
+			path: src/Supports/EndpointMapper.php
+
+		-
+			message: "#^Method Typedin\\\\LaravelCalendly\\\\Supports\\\\EndpointMapper\\:\\:formRequestNames\\(\\) has invalid return type Typedin\\\\LaravelCalendly\\\\Supports\\\\TValue\\.$#"
+			count: 1
+			path: src/Supports/EndpointMapper.php
+
+		-
+			message: "#^Method Typedin\\\\LaravelCalendly\\\\Supports\\\\EndpointMapper\\:\\:formRequestNames\\(\\) should return Illuminate\\\\Support\\\\Collection\\<Typedin\\\\LaravelCalendly\\\\Supports\\\\TKey, Typedin\\\\LaravelCalendly\\\\Supports\\\\TValue\\> but returns Illuminate\\\\Support\\\\Collection\\<\\(int\\|string\\), mixed\\>\\.$#"
+			count: 1
+			path: src/Supports/EndpointMapper.php
+
+		-
+			message: "#^Method Typedin\\\\LaravelCalendly\\\\Supports\\\\EndpointMapper\\:\\:formRequestProviders\\(\\) has invalid return type Typedin\\\\LaravelCalendly\\\\Supports\\\\TKey\\.$#"
+			count: 1
+			path: src/Supports/EndpointMapper.php
+
+		-
+			message: "#^Method Typedin\\\\LaravelCalendly\\\\Supports\\\\EndpointMapper\\:\\:formRequestProviders\\(\\) has invalid return type Typedin\\\\LaravelCalendly\\\\Supports\\\\TValue\\.$#"
+			count: 1
+			path: src/Supports/EndpointMapper.php
+
+		-
+			message: "#^Method Typedin\\\\LaravelCalendly\\\\Supports\\\\EndpointMapper\\:\\:formRequestProviders\\(\\) should return Illuminate\\\\Support\\\\Collection\\<Typedin\\\\LaravelCalendly\\\\Supports\\\\TKey, Typedin\\\\LaravelCalendly\\\\Supports\\\\TValue\\> but returns Illuminate\\\\Support\\\\Collection\\<\\(int\\|string\\), mixed\\>\\.$#"
+			count: 1
+			path: src/Supports/EndpointMapper.php
+
+		-
+			message: "#^Method Typedin\\\\LaravelCalendly\\\\Supports\\\\EndpointMapper\\:\\:mapControllerNamesToEndpoints\\(\\) has invalid return type Typedin\\\\LaravelCalendly\\\\Supports\\\\TKey\\.$#"
+			count: 1
+			path: src/Supports/EndpointMapper.php
+
+		-
+			message: "#^Method Typedin\\\\LaravelCalendly\\\\Supports\\\\EndpointMapper\\:\\:mapControllerNamesToEndpoints\\(\\) has invalid return type Typedin\\\\LaravelCalendly\\\\Supports\\\\TValue\\.$#"
+			count: 1
+			path: src/Supports/EndpointMapper.php
+
+		-
+			message: "#^Method Typedin\\\\LaravelCalendly\\\\Supports\\\\EndpointMapper\\:\\:mapControllerNamesToEndpoints\\(\\) should return Illuminate\\\\Support\\\\Collection\\<Typedin\\\\LaravelCalendly\\\\Supports\\\\TKey, Typedin\\\\LaravelCalendly\\\\Supports\\\\TValue\\> but returns Illuminate\\\\Support\\\\Collection\\<int\\|string, Illuminate\\\\Support\\\\Collection\\<Typedin\\\\LaravelCalendly\\\\Supports\\\\TKey, Typedin\\\\LaravelCalendly\\\\Supports\\\\TValue\\>\\>\\.$#"
+			count: 1
+			path: src/Supports/EndpointMapper.php
+
+		-
+			message: "#^Method Typedin\\\\LaravelCalendly\\\\Supports\\\\EndpointMapper\\:\\:modelProviders\\(\\) has invalid return type Typedin\\\\LaravelCalendly\\\\Supports\\\\TKey\\.$#"
+			count: 1
+			path: src/Supports/EndpointMapper.php
+
+		-
+			message: "#^Method Typedin\\\\LaravelCalendly\\\\Supports\\\\EndpointMapper\\:\\:modelProviders\\(\\) has invalid return type Typedin\\\\LaravelCalendly\\\\Supports\\\\TValue\\.$#"
+			count: 1
+			path: src/Supports/EndpointMapper.php
+
+		-
+			message: "#^Method Typedin\\\\LaravelCalendly\\\\Supports\\\\EndpointMapper\\:\\:modelProviders\\(\\) should return Illuminate\\\\Support\\\\Collection\\<Typedin\\\\LaravelCalendly\\\\Supports\\\\TKey, Typedin\\\\LaravelCalendly\\\\Supports\\\\TValue\\> but returns Illuminate\\\\Support\\\\Collection\\<Typedin\\\\LaravelCalendly\\\\Supports\\\\TKey, Typedin\\\\LaravelCalendly\\\\Supports\\\\Configuration\\\\ModelGeneratorProvider\\>\\.$#"
+			count: 1
+			path: src/Supports/EndpointMapper.php
+
+		-
+			message: "#^Method Typedin\\\\LaravelCalendly\\\\Supports\\\\EndpointMapper\\:\\:paths\\(\\) has invalid return type Typedin\\\\LaravelCalendly\\\\Supports\\\\TKey\\.$#"
+			count: 1
+			path: src/Supports/EndpointMapper.php
+
+		-
+			message: "#^Method Typedin\\\\LaravelCalendly\\\\Supports\\\\EndpointMapper\\:\\:paths\\(\\) has invalid return type Typedin\\\\LaravelCalendly\\\\Supports\\\\TValue\\.$#"
+			count: 1
+			path: src/Supports/EndpointMapper.php
+
+		-
+			message: "#^Method Typedin\\\\LaravelCalendly\\\\Supports\\\\EndpointMapper\\:\\:paths\\(\\) should return Illuminate\\\\Support\\\\Collection\\<Typedin\\\\LaravelCalendly\\\\Supports\\\\TKey, Typedin\\\\LaravelCalendly\\\\Supports\\\\TValue\\> but returns Illuminate\\\\Support\\\\Collection\\<\\(int\\|string\\), mixed\\>\\.$#"
+			count: 1
+			path: src/Supports/EndpointMapper.php
+
+		-
+			message: "#^Method Typedin\\\\LaravelCalendly\\\\Supports\\\\EndpointMapper\\:\\:schemas\\(\\) has invalid return type Typedin\\\\LaravelCalendly\\\\Supports\\\\TKey\\.$#"
+			count: 1
+			path: src/Supports/EndpointMapper.php
+
+		-
+			message: "#^Method Typedin\\\\LaravelCalendly\\\\Supports\\\\EndpointMapper\\:\\:schemas\\(\\) has invalid return type Typedin\\\\LaravelCalendly\\\\Supports\\\\TValue\\.$#"
+			count: 1
+			path: src/Supports/EndpointMapper.php
+
+		-
+			message: "#^Method Typedin\\\\LaravelCalendly\\\\Supports\\\\EndpointMapper\\:\\:schemas\\(\\) should return Illuminate\\\\Support\\\\Collection\\<Typedin\\\\LaravelCalendly\\\\Supports\\\\TKey, Typedin\\\\LaravelCalendly\\\\Supports\\\\TValue\\> but returns Illuminate\\\\Support\\\\Collection\\<\\(int\\|string\\), mixed\\>\\.$#"
+			count: 1
+			path: src/Supports/EndpointMapper.php
+
+		-
+			message: "#^Parameter \\#1 \\$input of static method Typedin\\\\LaravelCalendly\\\\Supports\\\\EndpointMapper\\:\\:fullname\\(\\) expects string, Typedin\\\\LaravelCalendly\\\\Supports\\\\TKey given\\.$#"
+			count: 7
+			path: src/Supports/EndpointMapper.php
+
+		-
+			message: "#^Parameter \\#1 \\$key of method Illuminate\\\\Support\\\\Collection\\<Typedin\\\\LaravelCalendly\\\\Supports\\\\TKey,Typedin\\\\LaravelCalendly\\\\Supports\\\\TValue\\>\\:\\:get\\(\\) expects Typedin\\\\LaravelCalendly\\\\Supports\\\\TKey, string given\\.$#"
+			count: 1
+			path: src/Supports/EndpointMapper.php
+
+		-
+			message: "#^Parameter \\#1 \\$name of class Typedin\\\\LaravelCalendly\\\\Supports\\\\Configuration\\\\ControllerGeneratorProvider constructor expects string, Typedin\\\\LaravelCalendly\\\\Supports\\\\TKey given\\.$#"
+			count: 1
+			path: src/Supports/EndpointMapper.php
+
+		-
+			message: "#^Parameter \\$name of class Typedin\\\\LaravelCalendly\\\\Supports\\\\Configuration\\\\ModelGeneratorProvider constructor expects string, Typedin\\\\LaravelCalendly\\\\Supports\\\\TKey given\\.$#"
+			count: 1
+			path: src/Supports/EndpointMapper.php
+
+		-
+			message: "#^Parameter \\$path of class Typedin\\\\LaravelCalendly\\\\Supports\\\\Configuration\\\\DestroyFormRequestProvider constructor expects string, Typedin\\\\LaravelCalendly\\\\Supports\\\\TKey given\\.$#"
+			count: 1
+			path: src/Supports/EndpointMapper.php
+
+		-
+			message: "#^Parameter \\$path of class Typedin\\\\LaravelCalendly\\\\Supports\\\\Configuration\\\\IndexFormRequestProvider constructor expects string, Typedin\\\\LaravelCalendly\\\\Supports\\\\TKey given\\.$#"
+			count: 1
+			path: src/Supports/EndpointMapper.php
+
+		-
+			message: "#^Parameter \\$path of class Typedin\\\\LaravelCalendly\\\\Supports\\\\Configuration\\\\ShowFormRequestProvider constructor expects string, Typedin\\\\LaravelCalendly\\\\Supports\\\\TKey given\\.$#"
+			count: 2
+			path: src/Supports/EndpointMapper.php
+
+		-
+			message: "#^Parameter \\$path of class Typedin\\\\LaravelCalendly\\\\Supports\\\\Configuration\\\\StoreFormRequestProvider constructor expects string, Typedin\\\\LaravelCalendly\\\\Supports\\\\TKey given\\.$#"
+			count: 1
+			path: src/Supports/EndpointMapper.php
+
+		-
+			message: "#^Parameter \\$schema of class Typedin\\\\LaravelCalendly\\\\Supports\\\\Configuration\\\\ModelGeneratorProvider constructor expects array\\<int, mixed\\>, Typedin\\\\LaravelCalendly\\\\Supports\\\\TValue given\\.$#"
+			count: 1
+			path: src/Supports/EndpointMapper.php
+
+		-
+			message: "#^Parameter \\$value of class Typedin\\\\LaravelCalendly\\\\Supports\\\\Configuration\\\\DestroyFormRequestProvider constructor expects array\\<int, mixed\\>, Typedin\\\\LaravelCalendly\\\\Supports\\\\TValue given\\.$#"
+			count: 1
+			path: src/Supports/EndpointMapper.php
+
+		-
+			message: "#^Parameter \\$value of class Typedin\\\\LaravelCalendly\\\\Supports\\\\Configuration\\\\IndexFormRequestProvider constructor expects array\\<int, mixed\\>, Typedin\\\\LaravelCalendly\\\\Supports\\\\TValue given\\.$#"
+			count: 1
+			path: src/Supports/EndpointMapper.php
+
+		-
+			message: "#^Parameter \\$value of class Typedin\\\\LaravelCalendly\\\\Supports\\\\Configuration\\\\ShowFormRequestProvider constructor expects array\\<int, mixed\\>, Typedin\\\\LaravelCalendly\\\\Supports\\\\TValue given\\.$#"
+			count: 2
+			path: src/Supports/EndpointMapper.php
+
+		-
+			message: "#^Parameter \\$value of class Typedin\\\\LaravelCalendly\\\\Supports\\\\Configuration\\\\StoreFormRequestProvider constructor expects array\\<int, mixed\\>, Typedin\\\\LaravelCalendly\\\\Supports\\\\TValue given\\.$#"
+			count: 1
+			path: src/Supports/EndpointMapper.php
+
+		-
+			message: "#^Type Typedin\\\\LaravelCalendly\\\\Supports\\\\TKey in generic type Illuminate\\\\Support\\\\Collection\\<Typedin\\\\LaravelCalendly\\\\Supports\\\\TKey, Typedin\\\\LaravelCalendly\\\\Supports\\\\TValue\\> in PHPDoc tag @return is not subtype of template type TKey of \\(int\\|string\\) of class Illuminate\\\\Support\\\\Collection\\.$#"
+			count: 9
+			path: src/Supports/EndpointMapper.php
+
+		-
+			message: "#^Method Typedin\\\\LaravelCalendly\\\\Supports\\\\Configuration\\\\BaseErrorResponseGeneratorProvider\\:\\:isNullable\\(\\) invoked with 2 parameters, 1 required\\.$#"
+			count: 2
+			path: src/Supports/ErrorResponseGenerator.php
+
+		-
+			message: "#^Offset 'enum' on array\\<int, mixed\\> in isset\\(\\) does not exist\\.$#"
+			count: 1
+			path: src/Supports/FormRequestGenerator.php
+
+		-
+			message: "#^Offset 'format' on array\\<int, mixed\\> in isset\\(\\) does not exist\\.$#"
+			count: 1
+			path: src/Supports/FormRequestGenerator.php
+
+		-
+			message: "#^Offset 'nullable' on array\\<int, mixed\\> in isset\\(\\) does not exist\\.$#"
+			count: 1
+			path: src/Supports/FormRequestGenerator.php
+
+		-
+			message: "#^Offset 'pattern' on array\\<int, mixed\\> in isset\\(\\) does not exist\\.$#"
+			count: 1
+			path: src/Supports/FormRequestGenerator.php
+
+		-
+			message: "#^Offset 'type' on array\\<int, mixed\\> in isset\\(\\) does not exist\\.$#"
+			count: 1
+			path: src/Supports/FormRequestGenerator.php
+
+		-
+			message: "#^Result of && is always false\\.$#"
+			count: 1
+			path: src/Supports/FormRequestGenerator.php
+
+		-
+			message: "#^Offset 'nullable' on array\\<int, mixed\\> in isset\\(\\) does not exist\\.$#"
+			count: 1
+			path: src/Supports/TypeHandler.php
+
+		-
+			message: "#^Offset 'required' on array\\<int, mixed\\> in isset\\(\\) does not exist\\.$#"
+			count: 1
+			path: src/Supports/TypeHandler.php
+
+		-
+			message: "#^Unreachable statement \\- code above always terminates\\.$#"
+			count: 1
+			path: src/Supports/TypeHandler.php
