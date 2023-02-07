@@ -5,7 +5,7 @@ namespace Typedin\LaravelCalendly\Supports\Configuration;
 abstract class FormRequestProvider
 {
     /**
-     * @param  array<int,mixed>  $value
+     * @param  array  $value
      */
     public function __construct(public string $path, public string $name, public array $value)
     {

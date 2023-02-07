@@ -51,7 +51,7 @@ class ErrorResponseGenerator
             $this->error_response
                     ->getMethod('__construct')
                     ->addParameter($property_name)
-                    ->setNullable($this->provider->isNullable($property_name, $property_value))
+                    ->setNullable($this->provider->isNullable($property_name))
                     ->setType(TypeHandler::getType($this->provider->properties()[$property_name]));
 
             $this->error_response->getMethod('__construct')->addBody(sprintf('$this->%s = $%s;', $property_name, $property_name));
@@ -85,7 +85,7 @@ class ErrorResponseGenerator
             $this->error_response
                     ->addProperty($property_name)
                     ->setType(TypeHandler::getType($this->provider->properties()[$property_name]))
-                    ->setNullable($this->provider->isNullable($property_name, $property_value))
+                    ->setNullable($this->provider->isNullable($property_name))
                     ->addComment($this->generatePropertieDescription($property_name))
                     ->addComment($this->generateVarComment($property_name));
         });

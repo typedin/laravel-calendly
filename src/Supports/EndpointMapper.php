@@ -26,7 +26,7 @@ class EndpointMapper
     }
 
     /**
-     * @return Collection<TKey,TValue>
+     * @return Collection
      */
     public function schemas(): Collection
     {
@@ -34,7 +34,7 @@ class EndpointMapper
     }
 
     /**
-     * @return Collection<TKey,TValue>
+     * @return Collection
      */
     public function paths(): Collection
     {
@@ -42,7 +42,7 @@ class EndpointMapper
     }
 
     /**
-     * @return Collection<TKey,TValue>
+     * @return Collection
      */
     public function entityNames(): Collection
     {
@@ -50,7 +50,7 @@ class EndpointMapper
     }
 
     /**
-     * @return Collection<TKey,TValue>
+     * @return Collection
      */
     public function formRequestNames(): Collection
     {
@@ -58,7 +58,7 @@ class EndpointMapper
     }
 
     /**
-     * @return Collection<TKey,TValue>
+     * @return Collection
      */
     public function modelProviders(): Collection
     {
@@ -76,7 +76,7 @@ class EndpointMapper
     }
 
     /**
-     * @return Collection<TKey,TValue>
+     * @return Collection
      */
     public function formRequestProviders(): Collection
     {
@@ -113,7 +113,7 @@ class EndpointMapper
     }
 
     /**
-     * @return Collection<TKey,TValue>
+     * @return Collection
      */
     public function controllerGeneratorProviders(): Collection
     {
@@ -124,7 +124,7 @@ class EndpointMapper
     }
 
     /**
-     * @return Collection<TKey,TValue>
+     * @return Collection
      */
     public function controllerNames(): Collection
     {
@@ -157,7 +157,7 @@ class EndpointMapper
     }
 
     /**
-     * @return Collection<TKey,TValue>
+     * @return Collection
      */
     public function mapControllerNamesToEndpoints(): Collection
     {
