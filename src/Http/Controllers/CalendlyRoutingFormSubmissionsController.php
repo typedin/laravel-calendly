@@ -3,13 +3,17 @@
 namespace Typedin\LaravelCalendly\Http\Controllers;
 
 use Illuminate\Http\JsonResponse;
+use Illuminate\Routing\Controller;
 use Typedin\LaravelCalendly\Contracts\CalendlyApiInterface;
 use Typedin\LaravelCalendly\Http\Requests\IndexRoutingFormSubmissionsRequest;
 use Typedin\LaravelCalendly\Http\Requests\ShowRoutingFormSubmissionRequest;
+use Typedin\LaravelCalendly\Models\Pagination;
+use Typedin\LaravelCalendly\Models\RoutingFormSubmission;
+use Typedin\Services\ErrorResponseFactory;
 
-class CalendlyRoutingFormSubmissionsController extends \Illuminate\Routing\Controller
+class CalendlyRoutingFormSubmissionsController extends Controller
 {
-    private \Typedin\LaravelCalendly\Contracts\CalendlyApiInterface $api;
+    private readonly CalendlyApiInterface $api;
 
     public function __construct(CalendlyApiInterface $api)
     {
@@ -20,11 +24,11 @@ class CalendlyRoutingFormSubmissionsController extends \Illuminate\Routing\Contr
     {
         $response = $this->api->get('/routing_form_submissions/', $request);
         if (! $response->ok()) {
-            return \Typedin\Services\ErrorResponseFactory::getJson($response);
+            return ErrorResponseFactory::getJson($response);
         }
         $all = collect($response->collect('collection'))
-        ->mapInto(\Typedin\LaravelCalendly\Models\RoutingFormSubmission::class)->all();
-        $pagination = new \Typedin\LaravelCalendly\Models\Pagination(...$response->collect('pagination')->all());
+        ->mapInto(RoutingFormSubmission::class)->all();
+        $pagination = new Pagination(...$response->collect('pagination')->all());
 
         return response()->json([
             'routing_form_submissions' => $all,
@@ -36,11 +40,11 @@ class CalendlyRoutingFormSubmissionsController extends \Illuminate\Routing\Contr
     {
         $response = $this->api->get("/routing_form_submissions/{$request->validated('uuid')}/", $request);
         if (! $response->ok()) {
-            return \Typedin\Services\ErrorResponseFactory::getJson($response);
+            return ErrorResponseFactory::getJson($response);
         }
 
         return response()->json([
-            'routing_form_submission' => new \Typedin\LaravelCalendly\Models\RoutingFormSubmission(...$response->json('resource')),
+            'routing_form_submission' => new RoutingFormSubmission(...$response->json('resource')),
         ]);
     }
 }

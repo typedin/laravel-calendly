@@ -6,40 +6,29 @@ class UserBusyTime
 {
     /**
      * Indicates whether the scheduled event is internal or external
-     *
-     * @var string
      */
     public string $type;
 
     /**
      * The start time of the scheduled event in UTC time
-     *
-     * @var string
      */
     public string $start_time;
 
     /**
      * The end time of the scheduled event in UTC time
-     *
-     * @var string
      */
     public string $end_time;
 
     /**
      * The start time of the calendly event, as calculated by any "before" buffer set by the user
-     *
-     * @var string
      */
     public ?string $buffered_start_time;
 
     /**
      * The end time of the calendly event, as calculated by any "after" buffer set by the user
-     *
-     * @var string
      */
     public ?string $buffered_end_time;
 
-    /** @var object */
     public ?object $event;
 
     public function __construct(
