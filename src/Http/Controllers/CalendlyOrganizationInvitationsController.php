@@ -3,14 +3,17 @@
 namespace Typedin\LaravelCalendly\Http\Controllers;
 
 use Illuminate\Http\JsonResponse;
+use Illuminate\Routing\Controller;
 use Typedin\LaravelCalendly\Contracts\CalendlyApiInterface;
 use Typedin\LaravelCalendly\Http\Requests\DestroyOrganizationInvitationRequest;
 use Typedin\LaravelCalendly\Http\Requests\ShowOrganizationInvitationRequest;
 use Typedin\LaravelCalendly\Http\Requests\StoreOrganizationInvitationRequest;
+use Typedin\LaravelCalendly\Models\OrganizationInvitation;
+use Typedin\LaravelCalendly\Services\ErrorResponseFactory;
 
-class CalendlyOrganizationInvitationsController extends \Illuminate\Routing\Controller
+class CalendlyOrganizationInvitationsController extends Controller
 {
-    private \Typedin\LaravelCalendly\Contracts\CalendlyApiInterface $api;
+    private readonly CalendlyApiInterface $api;
 
     public function __construct(CalendlyApiInterface $api)
     {
@@ -21,11 +24,11 @@ class CalendlyOrganizationInvitationsController extends \Illuminate\Routing\Cont
     {
         $response = $this->api->post("/organizations/{$request->validated('uuid')}/invitations/", $request);
         if (! $response->ok()) {
-            return \Typedin\Services\ErrorResponseFactory::getJson($response);
+            return ErrorResponseFactory::getJson($response);
         }
 
         return response()->json([
-            'organization_invitation' => new \Typedin\LaravelCalendly\Models\OrganizationInvitation(...$response->json('resource')),
+            'organization_invitation' => new OrganizationInvitation(...$response->json('resource')),
         ]);
     }
 
@@ -33,11 +36,11 @@ class CalendlyOrganizationInvitationsController extends \Illuminate\Routing\Cont
     {
         $response = $this->api->get("/organizations/{$request->validated('org_uuid')}/invitations/{$request->validated('uuid')}/", $request);
         if (! $response->ok()) {
-            return \Typedin\Services\ErrorResponseFactory::getJson($response);
+            return ErrorResponseFactory::getJson($response);
         }
 
         return response()->json([
-            'organization_invitation' => new \Typedin\LaravelCalendly\Models\OrganizationInvitation(...$response->json('resource')),
+            'organization_invitation' => new OrganizationInvitation(...$response->json('resource')),
         ]);
     }
 
@@ -45,7 +48,7 @@ class CalendlyOrganizationInvitationsController extends \Illuminate\Routing\Cont
     {
         $response = $this->api->delete("/organizations/{$request->validated('org_uuid')}/invitations/{$request->validated('uuid')}/");
         if (! $response->ok()) {
-            return \Typedin\Services\ErrorResponseFactory::getJson($response);
+            return ErrorResponseFactory::getJson($response);
         }
 
         return response()->noContent();

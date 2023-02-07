@@ -3,12 +3,15 @@
 namespace Typedin\LaravelCalendly\Http\Controllers;
 
 use Illuminate\Http\JsonResponse;
+use Illuminate\Routing\Controller;
 use Typedin\LaravelCalendly\Contracts\CalendlyApiInterface;
 use Typedin\LaravelCalendly\Http\Requests\StoreSchedulingLinkRequest;
+use Typedin\LaravelCalendly\Models\BookingUrl;
+use Typedin\LaravelCalendly\Services\ErrorResponseFactory;
 
-class CalendlySchedulingLinksController extends \Illuminate\Routing\Controller
+class CalendlySchedulingLinksController extends Controller
 {
-    private \Typedin\LaravelCalendly\Contracts\CalendlyApiInterface $api;
+    private readonly CalendlyApiInterface $api;
 
     public function __construct(CalendlyApiInterface $api)
     {
@@ -19,11 +22,11 @@ class CalendlySchedulingLinksController extends \Illuminate\Routing\Controller
     {
         $response = $this->api->post('/scheduling_links/', $request);
         if (! $response->ok()) {
-            return \Typedin\Services\ErrorResponseFactory::getJson($response);
+            return ErrorResponseFactory::getJson($response);
         }
 
         return response()->json([
-            'booking_url' => new \Typedin\LaravelCalendly\Models\BookingUrl(...$response->json('resource')),
+            'booking_url' => new BookingUrl(...$response->json('resource')),
         ]);
     }
 }

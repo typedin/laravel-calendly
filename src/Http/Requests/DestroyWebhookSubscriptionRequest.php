@@ -4,12 +4,12 @@ namespace Typedin\LaravelCalendly\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ShowScheduledEventRequest extends FormRequest
+class DestroyWebhookSubscriptionRequest extends FormRequest
 {
     public function rules(): array
     {
         return [
-            'uuid' => 'required|string',
+            'webhook_uuid' => 'required|string',
         ];
     }
 }

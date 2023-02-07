@@ -6,15 +6,11 @@ class CustomLocation
 {
     /**
      * The event location doesn't fall into a standard category defined by the event host (publisher)
-     *
-     * @var string
      */
     public string $type;
 
     /**
      * The location description provided by the event host (publisher)
-     *
-     * @var string
      */
     public ?string $location;
 
