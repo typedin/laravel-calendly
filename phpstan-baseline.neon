@@ -1,56 +1,51 @@
 parameters:
 	ignoreErrors:
 		-
-			message: "#^Method Typedin\\\\LaravelCalendly\\\\Http\\\\Controllers\\\\CalendlyInviteeNoShowsController\\:\\:destroy\\(\\) should return Illuminate\\\\Http\\\\JsonResponse but returns Illuminate\\\\Http\\\\Response\\.$#"
+			message: "#^If condition is always true\\.$#"
 			count: 1
-			path: src/Http/Controllers/CalendlyInviteeNoShowsController.php
+			path: src/Actions/GeneratedFileManager.php
 
 		-
-			message: "#^Method Typedin\\\\LaravelCalendly\\\\Http\\\\Controllers\\\\CalendlyOrganizationInvitationsController\\:\\:destroy\\(\\) should return Illuminate\\\\Http\\\\JsonResponse but returns Illuminate\\\\Http\\\\Response\\.$#"
+			message: "#^Offset 'enum' on array\\<int, mixed\\> in isset\\(\\) does not exist\\.$#"
 			count: 1
-			path: src/Http/Controllers/CalendlyOrganizationInvitationsController.php
+			path: src/Supports/FormRequestGenerator.php
 
 		-
-			message: "#^Method Typedin\\\\LaravelCalendly\\\\Http\\\\Controllers\\\\CalendlyOrganizationMembershipsController\\:\\:destroy\\(\\) should return Illuminate\\\\Http\\\\JsonResponse but returns Illuminate\\\\Http\\\\Response\\.$#"
+			message: "#^Offset 'format' on array\\<int, mixed\\> in isset\\(\\) does not exist\\.$#"
 			count: 1
-			path: src/Http/Controllers/CalendlyOrganizationMembershipsController.php
+			path: src/Supports/FormRequestGenerator.php
 
 		-
-			message: "#^Method Typedin\\\\LaravelCalendly\\\\Http\\\\Controllers\\\\CalendlyWebhookSubscriptionsController\\:\\:destroy\\(\\) should return Illuminate\\\\Http\\\\JsonResponse but returns Illuminate\\\\Http\\\\Response\\.$#"
+			message: "#^Offset 'nullable' on array\\<int, mixed\\> in isset\\(\\) does not exist\\.$#"
 			count: 1
-			path: src/Http/Controllers/CalendlyWebhookSubscriptionsController.php
+			path: src/Supports/FormRequestGenerator.php
 
 		-
-			message: "#^Offset 'details' does not exist on array\\<int, mixed\\>\\.$#"
-			count: 4
-			path: src/Services/ErrorResponseFactory.php
-
-		-
-			message: "#^Offset 'message' does not exist on array\\<int, mixed\\>\\.$#"
-			count: 5
-			path: src/Services/ErrorResponseFactory.php
-
-		-
-			message: "#^Offset 'title' does not exist on array\\<int, mixed\\>\\.$#"
-			count: 5
-			path: src/Services/ErrorResponseFactory.php
-
-		-
-			message: "#^Offset 'properties' does not exist on array\\<int, mixed\\>\\.$#"
+			message: "#^Offset 'pattern' on array\\<int, mixed\\> in isset\\(\\) does not exist\\.$#"
 			count: 1
-			path: src/Supports/Configuration/BaseErrorResponseGeneratorProvider.php
+			path: src/Supports/FormRequestGenerator.php
 
 		-
-			message: "#^Offset 'required' does not exist on array\\<int, mixed\\>\\.$#"
+			message: "#^Offset 'type' on array\\<int, mixed\\> in isset\\(\\) does not exist\\.$#"
 			count: 1
-			path: src/Supports/Configuration/BaseErrorResponseGeneratorProvider.php
+			path: src/Supports/FormRequestGenerator.php
 
 		-
-			message: "#^Offset 'properties' does not exist on array\\<int, mixed\\>\\.$#"
+			message: "#^Result of && is always false\\.$#"
 			count: 1
-			path: src/Supports/Configuration/ErrorResponseGeneratorProvider.php
+			path: src/Supports/FormRequestGenerator.php
 
 		-
-			message: "#^Offset 'get' does not exist on array\\<int, mixed\\>\\.$#"
+			message: "#^Offset 'nullable' on array\\<int, mixed\\> in isset\\(\\) does not exist\\.$#"
 			count: 1
-			path: src/Supports/ControllerGenerator.php
+			path: src/Supports/TypeHandler.php
+
+		-
+			message: "#^Offset 'required' on array\\<int, mixed\\> in isset\\(\\) does not exist\\.$#"
+			count: 1
+			path: src/Supports/TypeHandler.php
+
+		-
+			message: "#^Unreachable statement \\- code above always terminates\\.$#"
+			count: 1
+			path: src/Supports/TypeHandler.php
