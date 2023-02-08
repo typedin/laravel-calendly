@@ -19,22 +19,22 @@ use Typedin\LaravelCalendly\Supports\ModelGenerator;
 class GeneratedFileManager
 {
     /**
-     * @var Collection<array-key,<missing>>
+     * @var Collection
      */
     public readonly Collection $models;
 
     /**
-     * @var Collection<array-key,<missing>>
+     * @var Collection
      */
     public readonly Collection $errorResponses;
 
     /**
-     * @var Collection<array-key,<missing>>
+     * @var Collection
      */
     public readonly Collection $controllers;
 
     /**
-     * @var Collection<array-key,<missing>>
+     * @var Collection
      */
     public readonly Collection $formRequests;
 
@@ -133,28 +133,6 @@ class GeneratedFileManager
         if (! $return_value) {
             throw new Exception(sprintf('Could not write file (%s) in folder: %s', $class->getName().'.php', $path));
         }
-    }
-
-    private static function replaceQualifiersWithImport(ClassType $class): ClassType
-    {
-        if ($extends = $class->getExtends()) {
-            $class->setExtends($extends);
-        }
-        collect($class->getMethods())->each(function ($method) {
-            collect($method->getParameters())
-                ->each(function ($parameter) {
-                    $parameter->setType($parameter->getType());
-                });
-            $method->setReturnType($method->getReturnType());
-        });
-
-        if (collect($class->getProperties())->count() !== 0) {
-            collect($class->getProperties())->each(function ($property) {
-                $property->setType($property->getType());
-            });
-        }
-
-        return $class;
     }
 
     private function createNamespace(ClassType $class, string $name): PhpNamespace

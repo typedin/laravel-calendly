@@ -6,10 +6,7 @@ use Exception;
 
 class CalendlyOrganizationException extends Exception
 {
-    /**
-     * @return self
-     */
-    public static function nestedKeyNotFound($key): never
+    public static function nestedKeyNotFound(string $key): never
     {
         throw new CalendlyOrganizationException('Expect argument with '.$key.' key.');
     }

@@ -6,10 +6,7 @@ use Exception;
 
 class CalendlyInviteesCounterException extends Exception
 {
-    /**
-     * @return self
-     */
-    public static function keyNotFound($key): never
+    public static function keyNotFound(string $key): never
     {
         throw new self('Expect argument with '.$key.' key.');
     }

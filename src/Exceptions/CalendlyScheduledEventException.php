@@ -6,10 +6,7 @@ use Exception;
 
 class CalendlyScheduledEventException extends Exception
 {
-    /**
-     * @return string
-     */
-    public static function keyNotFound($key): never
+    public static function keyNotFound(string $key): never
     {
         throw new CalendlyScheduledEventException('Expect argument with '.$key.' key.');
     }

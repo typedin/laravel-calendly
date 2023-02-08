@@ -29,7 +29,7 @@ class ModelGeneratorTest extends TestCase
     }
 
     /**
-     * @return array<TKey,TValue>
+     * @return Collection
      */
     private function shemas(): Collection
     {
@@ -40,7 +40,7 @@ class ModelGeneratorTest extends TestCase
      * @dataProvider userSchemaProvider
      *
      * @test */
-    public function it_generates_models_for_index($parameterName, $isNullable, $type, $comments = []): void
+    public function it_generates_models_for_index(string $parameterName, bool $isNullable, string $type, array $comments = []): void
     {
         $provider = new ModelGeneratorProvider(
             name:'User',
@@ -48,7 +48,6 @@ class ModelGeneratorTest extends TestCase
         );
 
         $model = ModelGenerator::model($provider);
-        // in the controller handle responses
 
         $this->assertEquals('User', $model->getName());
 
@@ -63,7 +62,7 @@ class ModelGeneratorTest extends TestCase
     }
 
     /**
-     * @return array<int,array<int,mixed>>
+     * @return array
      */
     private function userSchemaProvider(): array
     {
