@@ -210,7 +210,8 @@ class ControllerGeneratorTest extends TestCase
         );
         $controller = ControllerGenerator::controller($provider);
         $rest_methods = collect($controller->getMethods())
-                ->filter(fn ($method) => in_array($method->getName(), ['index', 'show', 'create', 'store', 'edit', 'update', 'destroy']));
+        ->filter(fn ($method) => in_array($method->getName(), ['index', 'show', 'create', 'store', 'edit', 'update', 'destroy'])
+        );
 
         // this includes the constructor
         $this->assertCount(3, $rest_methods);
@@ -225,17 +226,17 @@ class ControllerGeneratorTest extends TestCase
      */
     public function it_works_for_all_keys(): void
     {
-        $this->mapper->paths()->keys()
-               ->map(fn ($key) => EndpointMapper::fullname($key))
+        $this->mapper->paths()
+            ->keys()
             ->each(function ($key) {
+                $fullname = EndpointMapper::fullname($key);
                 $provider = new ControllerGeneratorProvider(
-                    name: $key,
-                    endpoints: $this->endpoints($key),
+                    name: $fullname,
+                    endpoints: $this->endpoints($fullname),
                     mapper: $this->mapper
                 );
-                $controller = ControllerGenerator::controller($provider);
 
-                $this->assertInstanceOf(ClassType::class, $controller);
+                $this->assertInstanceOf(ClassType::class, ControllerGenerator::controller($provider));
             });
     }
 }

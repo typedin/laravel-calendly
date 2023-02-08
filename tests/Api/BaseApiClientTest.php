@@ -52,7 +52,7 @@ class BaseApiClientTest extends TestCase
     /**
      * @test
      */
-    public function it_throws_without_api_endpoin(): void
+    public function it_throws_without_api_endpoint(): void
     {
         Config::set('laravel-calendly.api.endpoint', null);
 
