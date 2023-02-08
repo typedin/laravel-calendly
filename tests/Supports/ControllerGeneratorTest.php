@@ -210,7 +210,8 @@ class ControllerGeneratorTest extends TestCase
         );
         $controller = ControllerGenerator::controller($provider);
         $rest_methods = collect($controller->getMethods())
-        ->filter(fn ($method) => in_array($method->getName(), ['index', 'show', 'create', 'store', 'edit', 'update', 'destroy'])
+        ->filter(
+            fn ($method) => in_array($method->getName(), ['index', 'show', 'create', 'store', 'edit', 'update', 'destroy'])
         );
 
         // this includes the constructor
