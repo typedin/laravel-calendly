@@ -31,8 +31,6 @@ class EventType
 
     /**
      * The length of sessions booked with this event type
-     *
-     * @var number
      */
     public float $duration;
 
@@ -81,7 +79,6 @@ class EventType
      */
     public ?string $description_html;
 
-    /** @var  */
     public $profile;
 
     /**

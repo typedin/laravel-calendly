@@ -16,8 +16,6 @@ class EventTypeCustomQuestion
 
     /**
      * The numerical position of the question on the event booking page after the name and email address fields.
-     *
-     * @var number
      */
     public float $position;
 

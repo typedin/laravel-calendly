@@ -19,10 +19,8 @@ class RoutingFormSubmission
      */
     public array $questions_and_answers;
 
-    /** @var  */
     public $tracking;
 
-    /** @var  */
     public $result;
 
     /**

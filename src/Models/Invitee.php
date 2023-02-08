@@ -59,7 +59,6 @@ class Invitee
      */
     public string $updated_at;
 
-    /** @var  */
     public $tracking;
 
     /**
@@ -97,7 +96,6 @@ class Invitee
      */
     public ?string $routing_form_submission;
 
-    /** @var  */
     public $cancellation;
 
     /**

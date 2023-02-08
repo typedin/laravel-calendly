@@ -4,7 +4,7 @@ namespace Typedin\LaravelCalendly\Tests\Supports;
 
 use Illuminate\Support\Collection;
 use PHPUnit\Framework\TestCase;
-use TValue;
+use Symfony\Component\Yaml\Yaml;
 use Typedin\LaravelCalendly\Supports\Configuration\ModelGeneratorProvider;
 use Typedin\LaravelCalendly\Supports\ModelGenerator;
 
@@ -16,16 +16,7 @@ class ModelGeneratorTest extends TestCase
     {
         parent::setUp();
 
-        $content = file_get_contents(__DIR__.'/../__fixtures__/api.json');
-        $this->json = json_decode($content, true, 512, JSON_THROW_ON_ERROR);
-    }
-
-    /**
-     * @return array<TKey,TValue>
-     */
-    private function components(): array
-    {
-        return collect($this->json['components'])->all();
+        $this->json = Yaml::parse(file_get_contents(__DIR__.'/../../doc/openapi.yaml'));
     }
 
     /**
@@ -128,7 +119,7 @@ class ModelGeneratorTest extends TestCase
     }
 
     /**
-     * @return array<int,array<int,mixed>>
+     * @return array
      */
     private function storeProvider(): array
     {
@@ -165,6 +156,59 @@ class ModelGeneratorTest extends TestCase
             ],
             [
                 'creator',  true, 'string',
+            ],
+        ];
+    }
+
+    /**
+     * @dataProvider paginationProvider
+     *
+     * @test
+     */
+    public function it_generates_the_right_types_for_numbers(string $parameterName, bool $isNullable, string $type, array $comments = [])
+    {
+        $key = 'Pagination';
+        $provider = new ModelGeneratorProvider(
+            name: $key,
+            schema: $this->shemas()->get($key)
+        );
+
+        $model = ModelGenerator::model($provider);
+        $this->assertEquals('Pagination', $model->getName());
+
+        $this->assertEquals($type, $model->getProperty($parameterName)->getType());
+        $this->assertEquals($type, $model->getMethod('__construct')->getParameters()[$parameterName]->getType());
+        $this->assertEquals($isNullable, $model->getProperty($parameterName)->isNullable());
+        $this->assertEquals($isNullable, $model->getMethod('__construct')->getParameters()[$parameterName]->isNullable());
+
+        collect($comments)->each(
+            fn ($comment) => $this->assertStringContainsString($comment, $model->getProperty($parameterName)->getComment())
+        );
+    }
+
+    /**
+     * @return array
+     */
+    private function paginationProvider(): array
+    {
+        return [
+            [
+                'count',  false, 'float', [
+                    'The number of rows to return',
+                    '@var float $count',
+                ],
+            ],
+            [
+                'next_page',  true, 'string',
+            ],
+            [
+                'previous_page',  true, 'string',
+            ],
+            [
+                'next_page_token',  true, 'string',
+            ],
+            [
+                'previous_page_token',  true, 'string',
             ],
         ];
     }

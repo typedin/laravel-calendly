@@ -9,7 +9,6 @@ class Entry
      */
     public string $occurred_at;
 
-    /** @var  */
     public $actor;
 
     public object $details;

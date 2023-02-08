@@ -21,7 +21,7 @@ class ErrorResponseGeneratorTest extends TestCase
     }
 
     /**
-     * @return array<TKey,TValue>
+     * @return Collection
      */
     private function schemas(): Collection
     {
@@ -29,7 +29,7 @@ class ErrorResponseGeneratorTest extends TestCase
     }
 
     /**
-     * @return array<TKey,TValue>
+     * @return Collection
      */
     private function responses(): Collection
     {

@@ -23,8 +23,6 @@ class WebhookPayload
      * The payload for the webhook event. The data in the payload depends on the event.
      *
      * For example, an `invitee.*` event produces an `Invitee` object in the payload.
-     *
-     * @var
      */
     public $payload;
 

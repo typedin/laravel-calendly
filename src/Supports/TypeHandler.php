@@ -27,7 +27,7 @@ class TypeHandler
      */
     public static function isEnum($argument): bool
     {
-        return isset($argument['enum']);
+        return isset($argument['enum']) || $argument == 'enum';
     }
 
     /**

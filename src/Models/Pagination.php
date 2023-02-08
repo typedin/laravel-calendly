@@ -6,8 +6,6 @@ class Pagination
 {
     /**
      * The number of rows to return
-     *
-     * @var number
      */
     public float $count;
 

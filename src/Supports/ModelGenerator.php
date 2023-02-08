@@ -48,12 +48,13 @@ class ModelGenerator
     private function generateProperties(): ModelGenerator
     {
         collect($this->provider->properties())->each(function ($property_value, $property_name) {
+            $type = TypeHandler::getType($this->provider->properties()[$property_name]);
             $this->model
                     ->addProperty($property_name)
-                    ->setType(TypeHandler::getType($this->provider->properties()[$property_name]))
+                    ->setType($type)
                     ->setNullable(TypeHandler::isNullable(property_name: $property_name, property: $property_value, required_lookup:$this->provider->schema()))
                     ->addComment($this->generatePropertieDescription($property_name))
-                    ->addComment($this->generateVarComment($property_name));
+                    ->addComment($this->generateVarComment($property_name, $type));
         });
 
         return $this;
@@ -64,15 +65,18 @@ class ModelGenerator
         return $this->provider->properties()[$property]['description'] ?? '';
     }
 
-    private function generateVarComment(string $property): string
+    private function generateVarComment(string $property, string $type): string
     {
-        $local_type = $this->provider->properties()[$property]['type'] ?? '';
+        // don't generate doc for unknown types
+        if (! $type) {
+            return '';
+        }
 
         if (TypeHandler::isEnum($property)) {
             $enum = '<'.implode('|', $this->provider->properties()[$property]['enum']).'>';
-            $local_type = $local_type.$enum;
+            $type = $type.$enum;
         }
 
-        return sprintf('@var %s $%s', $local_type, $property);
+        return sprintf('@var %s $%s', $type, $property);
     }
 }

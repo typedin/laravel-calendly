@@ -11,8 +11,6 @@ class EventTypeAvailableTime
 
     /**
      * Total remaining invitees for this available time. For Group Event Type, more than one invitee can book in this available time. For all other Event Types, only one invitee can book in this available time.
-     *
-     * @var number
      */
     public float $invitees_remaining;
 

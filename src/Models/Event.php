@@ -34,7 +34,6 @@ class Event
      */
     public string $event_type;
 
-    /** @var  */
     public $location;
 
     public object $invitees_counter;
@@ -59,10 +58,8 @@ class Event
      */
     public array $event_guests;
 
-    /** @var  */
     public $cancellation;
 
-    /** @var  */
     public $calendar_event;
 
     public function __construct(

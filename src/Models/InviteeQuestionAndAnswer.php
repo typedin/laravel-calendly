@@ -16,8 +16,6 @@ class InviteeQuestionAndAnswer
 
     /**
      * The position of the question in relation to others on the booking form
-     *
-     * @var number
      */
     public float $position;
 
