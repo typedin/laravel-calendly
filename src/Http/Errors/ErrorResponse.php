@@ -6,10 +6,13 @@ use Illuminate\Http\JsonResponse;
 
 class ErrorResponse
 {
+    /** @var string */
     public string $title;
 
+    /** @var string */
     public string $message;
 
+    /** @var array */
     public array $details;
 
     public int $error_code;
