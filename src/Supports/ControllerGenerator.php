@@ -135,7 +135,7 @@ class ControllerGenerator
                 ->setReturnType('\Illuminate\Http\JsonResponse')
                 ->addBody(sprintf('$response = $this->api->delete("/%s/");', $this->buildUri($key)))
                     ->addBody($this->createErrorBody())
-                ->addBody('return response()->noContent();')
+                ->addBody('return \Illuminate\Support\Facades\Response::json([], 204);')
                 ->addParameter('request')
                 ->setType(sprintf('\Typedin\LaravelCalendly\Http\Requests\%s%sRequest', $this->verb('delete'), Str::singular($this->provider->name)));
     }

@@ -172,7 +172,7 @@ class ControllerGeneratorTest extends TestCase
         $this->assertEquals('\Typedin\LaravelCalendly\Http\Requests\DestroyInviteeNoShowRequest', $method->getParameters()['request']->getType());
         $this->assertStringContainsString('$response = $this->api->delete("/invitee_no_shows/{$request->validated("uuid")}/");', $method->getBody());
 
-        $this->assertStringContainsString('return response()->noContent();', $method->getBody());
+        $this->assertStringContainsString('return \Illuminate\Support\Facades\Response::json([], 204);', $method->getBody());
         $this->assertStringContainsString('if(!$response->ok()) {', $method->getBody());
         $this->assertStringContainsString('}', $method->getBody());
     }
@@ -193,7 +193,7 @@ class ControllerGeneratorTest extends TestCase
         $this->assertEquals('\Typedin\LaravelCalendly\Http\Requests\DestroyOrganizationInvitationRequest', $method->getParameters()['request']->getType());
         $this->assertStringContainsString('$this->api->delete("/organizations/{$request->validated("org_uuid")}/invitations/{$request->validated("uuid")}/");', $method->getBody());
 
-        $this->assertStringContainsString('return response()->noContent();', $method->getBody());
+        $this->assertStringContainsString('return \Illuminate\Support\Facades\Response::json([], 204);', $method->getBody());
         $this->assertStringContainsString('if(!$response->ok()) {', $method->getBody());
         $this->assertStringContainsString('}', $method->getBody());
     }
