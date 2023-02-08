@@ -135,8 +135,11 @@ class GeneratedFileManager
         }
     }
 
+    // TODO
+    // clean this mess...
     private function createNamespace(ClassType $class, string $name): PhpNamespace
     {
+        $types = [];
         $namespace = new PhpNamespace($name);
         foreach ($class->getMethods() as $method) {
             $types[] = $method->getReturnType(true);
@@ -147,7 +150,7 @@ class GeneratedFileManager
         array_map(function ($param) use (&$types) {
             $types[] = $param->getType(true);
         }, $class->getProperties());
-        if ($types) {
+        if (count($types)) {
             foreach (array_filter($types) as $type) {
                 foreach ($type->getTypes() as $subtype) {
                     if (! $subtype->isClass()) {
