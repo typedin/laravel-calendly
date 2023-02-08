@@ -18,17 +18,6 @@ class ErrorResponseGeneratorProvider extends BaseErrorResponseGeneratorProvider
     public function properties(): array
     {
         return $this->schema['properties'];
-
-        return collect($this->schema['content']['application/json']['schema']['allOf'])
-                    ->filter(function ($value) {
-                        return array_key_exists('properties', $value);
-                    })->flatMap(function ($value) {
-                        return collect($value['properties']);
-                    })->merge([
-                        'error_code' => [
-                            'type' => 'int',
-                        ],
-                    ])->all();
     }
 
     public function isNullable(string $property_name): bool

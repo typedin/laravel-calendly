@@ -5,7 +5,7 @@ namespace Typedin\LaravelCalendly\Supports\Configuration;
 class BaseErrorResponseGeneratorProvider
 {
     /**
-     * @param  array<int,mixed>  $schema
+     * @param  array  $schema
      */
     public function __construct(public readonly array $schema)
     {

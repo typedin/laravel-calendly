@@ -141,7 +141,7 @@ class ControllerGenerator
     }
 
     /**
-     * @param  array<int,mixed>  $value
+     * @param  array  $value
      */
     private function getResponseType(array $value): array
     {
@@ -154,7 +154,7 @@ class ControllerGenerator
     }
 
     /**
-     * @param  array<int,mixed>  $value
+     * @param  array  $value
      */
     private function hasGetRestVerb(array $value): bool
     {
@@ -162,7 +162,7 @@ class ControllerGenerator
     }
 
     /**
-     * @param  array<int,mixed>  $value
+     * @param  array  $value
      */
     private function hasPostRestVerb(array $value): bool
     {
