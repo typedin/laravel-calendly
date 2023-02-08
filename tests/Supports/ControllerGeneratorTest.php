@@ -223,25 +223,19 @@ class ControllerGeneratorTest extends TestCase
     /**
      * @test
      */
-    public function it_works_for_every_key(): void
+    public function it_works_for_all_keys(): void
     {
-        $content = file_get_contents(__DIR__.'/../__fixtures__/api.json');
+        $this->mapper->paths()->keys()
+               ->map(fn ($key) => EndpointMapper::fullname($key))
+            ->each(function ($key) {
+                $provider = new ControllerGeneratorProvider(
+                    name: $key,
+                    endpoints: $this->endpoints($key),
+                    mapper: $this->mapper
+                );
+                $controller = ControllerGenerator::controller($provider);
 
-        $keys = collect(json_decode($content, true, 512, JSON_THROW_ON_ERROR)['paths'])
-                    ->keys()
-                    ->map(fn ($key) => EndpointMapper::fullname($key))
-                    ->filter(fn ($value) => (bool) $value)
-                    ->unique()
-                    ->values();
-
-        $keys->each(function ($key) {
-            $provider = new ControllerGeneratorProvider(
-                name: $key,
-                endpoints: $this->endpoints($key),
-                mapper: $this->mapper
-            );
-            $controller = ControllerGenerator::controller($provider);
-            $this->assertInstanceOf(ClassType::class, $controller);
-        });
+                $this->assertInstanceOf(ClassType::class, $controller);
+            });
     }
 }
