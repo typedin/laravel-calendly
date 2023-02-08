@@ -20,7 +20,7 @@ class ErrorResponseFactory
     }
 
     /**
-     * @param  array<int,mixed>  $body
+     * @param  array  $body
      */
     private function createErrorResponseClass(array $body, int $status_code): ErrorResponse
     {
@@ -67,7 +67,7 @@ class ErrorResponseFactory
         );
     }
 
-    public static function getJson($response): JsonResponse
+    public static function getJson(Response $response): JsonResponse
     {
         $applesauce = new ErrorResponseFactory($response);
 
