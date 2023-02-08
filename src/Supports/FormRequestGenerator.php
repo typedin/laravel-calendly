@@ -102,8 +102,8 @@ class FormRequestGenerator
     }
 
     /**
-     * @param  array<int,mixed>  $value
-     * @param  array<int,mixed>  $requirements
+     * @param  array  $value
+     * @param  array  $requirements
      * @return string[]
      */
     private function buildValidation(array $value, string $field, array $requirements): array

@@ -31,8 +31,8 @@ class TypeHandler
     }
 
     /**
-     * @param  array<int,mixed>  $property
-     * @param  array<int,mixed>  $required_lookup
+     * @param  array  $property
+     * @param  array  $required_lookup
      */
     public static function isNullable(array $property, array $required_lookup, string $property_name): bool
     {
