@@ -13,4 +13,9 @@ class ControllerGeneratorProvider
     public function __construct(public string $name, public array $endpoints, public readonly EndpointMapper $mapper)
     {
     }
+
+    public function controllerName(): string
+    {
+        return sprintf('Calendly%sController', $this->name);
+    }
 }

@@ -22,9 +22,7 @@ class ControllerGenerator
     {
         $generator = new ControllerGenerator($provider);
 
-        $generator->controller = new ClassType(
-            name: sprintf('Calendly%sController', $provider->name),
-        );
+        $generator->controller = new ClassType(name: $provider->controllerName());
 
         $generator->generateConstructor()->generateMethods();
         $generator->controller->validate();
