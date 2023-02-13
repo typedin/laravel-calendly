@@ -2,9 +2,7 @@
 
 namespace Typedin\LaravelCalendly\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
-
-class StoreSchedulingLinkRequest extends FormRequest
+class StoreSchedulingLinkRequest extends \Illuminate\Foundation\Http\FormRequest
 {
     public function rules(): array
     {

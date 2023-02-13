@@ -3,15 +3,12 @@
 namespace Typedin\LaravelCalendly\Http\Controllers;
 
 use Illuminate\Http\JsonResponse;
-use Illuminate\Routing\Controller;
 use Typedin\LaravelCalendly\Contracts\CalendlyApiInterface;
 use Typedin\LaravelCalendly\Http\Requests\StoreDataComplianceInviteeRequest;
-use Typedin\LaravelCalendly\Models\BookingUrl;
-use Typedin\LaravelCalendly\Services\ErrorResponseFactory;
 
-class CalendlyDataComplianceInviteesController extends Controller
+class CalendlyDataComplianceInviteesController extends \Illuminate\Routing\Controller
 {
-    private readonly CalendlyApiInterface $api;
+    private \Typedin\LaravelCalendly\Contracts\CalendlyApiInterface $api;
 
     public function __construct(CalendlyApiInterface $api)
     {
@@ -22,11 +19,11 @@ class CalendlyDataComplianceInviteesController extends Controller
     {
         $response = $this->api->post('/data_compliance/deletion/invitees/', $request);
         if (! $response->ok()) {
-            return ErrorResponseFactory::getJson($response);
+            return \Typedin\LaravelCalendly\Services\ErrorResponseFactory::getJson($response);
         }
 
         return response()->json([
-            'booking_url' => new BookingUrl(...$response->json('resource')),
+            'booking_url' => new \Typedin\LaravelCalendly\Models\BookingUrl(...$response->json('resource')),
         ]);
     }
 }

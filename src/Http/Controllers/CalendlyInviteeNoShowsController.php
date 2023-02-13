@@ -3,17 +3,14 @@
 namespace Typedin\LaravelCalendly\Http\Controllers;
 
 use Illuminate\Http\JsonResponse;
-use Illuminate\Routing\Controller;
 use Typedin\LaravelCalendly\Contracts\CalendlyApiInterface;
 use Typedin\LaravelCalendly\Http\Requests\DestroyInviteeNoShowRequest;
 use Typedin\LaravelCalendly\Http\Requests\ShowInviteeNoShowRequest;
 use Typedin\LaravelCalendly\Http\Requests\StoreInviteeNoShowRequest;
-use Typedin\LaravelCalendly\Models\InviteeNoShow;
-use Typedin\LaravelCalendly\Services\ErrorResponseFactory;
 
-class CalendlyInviteeNoShowsController extends Controller
+class CalendlyInviteeNoShowsController extends \Illuminate\Routing\Controller
 {
-    private readonly CalendlyApiInterface $api;
+    private \Typedin\LaravelCalendly\Contracts\CalendlyApiInterface $api;
 
     public function __construct(CalendlyApiInterface $api)
     {
@@ -24,11 +21,11 @@ class CalendlyInviteeNoShowsController extends Controller
     {
         $response = $this->api->get("/invitee_no_shows/{$request->validated('uuid')}/", $request);
         if (! $response->ok()) {
-            return ErrorResponseFactory::getJson($response);
+            return \Typedin\LaravelCalendly\Services\ErrorResponseFactory::getJson($response);
         }
 
         return response()->json([
-            'invitee_no_show' => new InviteeNoShow(...$response->json('resource')),
+            'invitee_no_show' => new \Typedin\LaravelCalendly\Models\InviteeNoShow(...$response->json('resource')),
         ]);
     }
 
@@ -36,7 +33,7 @@ class CalendlyInviteeNoShowsController extends Controller
     {
         $response = $this->api->delete("/invitee_no_shows/{$request->validated('uuid')}/");
         if (! $response->ok()) {
-            return ErrorResponseFactory::getJson($response);
+            return \Typedin\LaravelCalendly\Services\ErrorResponseFactory::getJson($response);
         }
 
         return \Illuminate\Support\Facades\Response::json([], 204);
@@ -46,11 +43,11 @@ class CalendlyInviteeNoShowsController extends Controller
     {
         $response = $this->api->post('/invitee_no_shows/', $request);
         if (! $response->ok()) {
-            return ErrorResponseFactory::getJson($response);
+            return \Typedin\LaravelCalendly\Services\ErrorResponseFactory::getJson($response);
         }
 
         return response()->json([
-            'invitee_no_show' => new InviteeNoShow(...$response->json('resource')),
+            'invitee_no_show' => new \Typedin\LaravelCalendly\Models\InviteeNoShow(...$response->json('resource')),
         ]);
     }
 }

@@ -3,18 +3,14 @@
 namespace Typedin\LaravelCalendly\Http\Controllers;
 
 use Illuminate\Http\JsonResponse;
-use Illuminate\Routing\Controller;
 use Typedin\LaravelCalendly\Contracts\CalendlyApiInterface;
 use Typedin\LaravelCalendly\Http\Requests\DestroyOrganizationMembershipRequest;
 use Typedin\LaravelCalendly\Http\Requests\IndexOrganizationMembershipsRequest;
 use Typedin\LaravelCalendly\Http\Requests\ShowOrganizationMembershipRequest;
-use Typedin\LaravelCalendly\Models\OrganizationMembership;
-use Typedin\LaravelCalendly\Models\Pagination;
-use Typedin\LaravelCalendly\Services\ErrorResponseFactory;
 
-class CalendlyOrganizationMembershipsController extends Controller
+class CalendlyOrganizationMembershipsController extends \Illuminate\Routing\Controller
 {
-    private readonly CalendlyApiInterface $api;
+    private \Typedin\LaravelCalendly\Contracts\CalendlyApiInterface $api;
 
     public function __construct(CalendlyApiInterface $api)
     {
@@ -25,11 +21,11 @@ class CalendlyOrganizationMembershipsController extends Controller
     {
         $response = $this->api->get("/organization_memberships/{$request->validated('uuid')}/", $request);
         if (! $response->ok()) {
-            return ErrorResponseFactory::getJson($response);
+            return \Typedin\LaravelCalendly\Services\ErrorResponseFactory::getJson($response);
         }
 
         return response()->json([
-            'organization_membership' => new OrganizationMembership(...$response->json('resource')),
+            'organization_membership' => new \Typedin\LaravelCalendly\Models\OrganizationMembership(...$response->json('resource')),
         ]);
     }
 
@@ -37,7 +33,7 @@ class CalendlyOrganizationMembershipsController extends Controller
     {
         $response = $this->api->delete("/organization_memberships/{$request->validated('uuid')}/");
         if (! $response->ok()) {
-            return ErrorResponseFactory::getJson($response);
+            return \Typedin\LaravelCalendly\Services\ErrorResponseFactory::getJson($response);
         }
 
         return \Illuminate\Support\Facades\Response::json([], 204);
@@ -47,11 +43,11 @@ class CalendlyOrganizationMembershipsController extends Controller
     {
         $response = $this->api->get('/organization_memberships/', $request);
         if (! $response->ok()) {
-            return ErrorResponseFactory::getJson($response);
+            return \Typedin\LaravelCalendly\Services\ErrorResponseFactory::getJson($response);
         }
         $all = collect($response->collect('collection'))
-        ->mapInto(OrganizationMembership::class)->all();
-        $pagination = new Pagination(...$response->collect('pagination')->all());
+        ->mapInto(\Typedin\LaravelCalendly\Models\OrganizationMembership::class)->all();
+        $pagination = new \Typedin\LaravelCalendly\Models\Pagination(...$response->collect('pagination')->all());
 
         return response()->json([
             'organization_memberships' => $all,
