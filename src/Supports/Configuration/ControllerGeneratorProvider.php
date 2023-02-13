@@ -18,4 +18,9 @@ class ControllerGeneratorProvider
     {
         return sprintf('Calendly%sController', $this->name);
     }
+
+    public function controllerNameWithNamespace(): string
+    {
+        return sprintf('\Typedin\LaravelCalendly\Http\Controllers\%s', $this->controllerName());
+    }
 }

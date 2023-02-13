@@ -37,8 +37,8 @@ class RouteGenerator
             ->map(fn ($method) => $this->generateFunction($method, $provider));
     }
 
-    private function generateFunction(string $method, $provider): string
+    private function generateFunction(string $method, ControllerGeneratorProvider $provider): string
     {
-        return sprintf('Route::%s("%s", [%s::class, "%s"])', $method, $this->path, $provider->controllerName(), HttpMethod::getRestfulControllerMethod($provider->endpoints, $this->path, $method));
+        return sprintf('Route::%s("%s", [%s::class, "%s"])', $method, $this->path, $provider->controllerNameWithNamespace(), HttpMethod::getRestfulControllerMethod($provider->endpoints, $this->path, $method));
     }
 }

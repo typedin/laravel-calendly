@@ -204,7 +204,8 @@ class GeneratedFileManager
 
     private function writeRoutesToFile(): void
     {
-        file_put_contents(__DIR__.'/../../routes/web.php', "<?php\n", FILE_APPEND);
+        file_put_contents(__DIR__.'/../../routes/web.php', "<?php\n");
+        file_put_contents(__DIR__.'/../../routes/web.php', "\n", FILE_APPEND);
         file_put_contents(__DIR__.'/../../routes/web.php', "use Illuminate\Support\Facades\Route;\n", FILE_APPEND);
 
         $this->createRoutes()
