@@ -15,7 +15,8 @@ class RouteGenerator
     {
         $generator = new RouteGenerator($mapper, $path);
 
-        return $generator->controllerProviderForCurrentPath()->flatMap(fn (ControllerGeneratorProvider $provider) => $generator->buildRoutes($provider)
+        return $generator->controllerProviderForCurrentPath()->flatMap(
+            fn (ControllerGeneratorProvider $provider) => $generator->buildRoutes($provider)
         );
     }
 
