@@ -16,20 +16,12 @@ class RouteGeneratorTest extends TestCase
         $this->mapper = new EndpointMapper(file_get_contents(__DIR__.'/../../doc/openapi.yaml'));
     }
 
-    /**
-     * @return array<TKey,TValue>
-     */
-    private function endpoints(mixed $filter): array
-    {
-        return $this->mapper->mapControllerNamesToEndpoints()->get($filter)->all();
-    }
-
     /** @test */
     public function it_generates_a_route_for_a_single_show_method()
     {
         $path = '/users/{uuid}';
 
-        $this->assertContains('Route::get("/users/{uuid}", [CalendlyUsersController::class, "show"])', RouteGenerator::fromPath($this->mapper, $path));
+        $this->assertEquals('Route::get("/users/{uuid}", [CalendlyUsersController::class, "show"])', RouteGenerator::fromPath($this->mapper, $path)[0]);
     }
 
     /** @test */
@@ -37,8 +29,8 @@ class RouteGeneratorTest extends TestCase
     {
         $path = '/organizations/{org_uuid}/invitations/{uuid}';
 
-        $this->assertContains('Route::get("/organizations/{org_uuid}/invitations/{uuid}", [CalendlyOrganizationInvitationsController::class, "show"])', RouteGenerator::fromPath($this->mapper, $path));
-        $this->assertContains('Route::delete("/organizations/{org_uuid}/invitations/{uuid}", [CalendlyOrganizationInvitationsController::class, "destroy"])', RouteGenerator::fromPath($this->mapper, $path));
+        $this->assertEquals('Route::delete("/organizations/{org_uuid}/invitations/{uuid}", [CalendlyOrganizationInvitationsController::class, "destroy"])', RouteGenerator::fromPath($this->mapper, $path)[0]);
+        $this->assertEquals('Route::get("/organizations/{org_uuid}/invitations/{uuid}", [CalendlyOrganizationInvitationsController::class, "show"])', RouteGenerator::fromPath($this->mapper, $path)[1]);
     }
 
     /** @test */
@@ -46,15 +38,15 @@ class RouteGeneratorTest extends TestCase
     {
         $path = '/organizations/{uuid}/invitations';
 
-        $this->assertContains('Route::get("/organizations/{uuid}/invitations", [CalendlyOrganizationInvitationsController::class, "index"])', RouteGenerator::fromPath($this->mapper, $path));
-        $this->assertContains('Route::post("/organizations/{uuid}/invitations", [CalendlyOrganizationInvitationsController::class, "create"])', RouteGenerator::fromPath($this->mapper, $path));
+        $this->assertEquals('Route::get("/organizations/{uuid}/invitations", [CalendlyOrganizationInvitationsController::class, "index"])', RouteGenerator::fromPath($this->mapper, $path)[0]);
+        $this->assertEquals('Route::post("/organizations/{uuid}/invitations", [CalendlyOrganizationInvitationsController::class, "create"])', RouteGenerator::fromPath($this->mapper, $path)[1]);
     }
 
     /** @test */
-    public function it_throws_exceptions()
+    public function it_throws_exceptions_when_path_is_not_found()
     {
-        $this->expectExceptionMessage('Could not determine a method for the path:');
-        $path = '/not/a/route';
+        $path = '/not/a/path';
+        $this->expectExceptionMessage('The path ( /not/a/path ) was not found.');
 
         RouteGenerator::fromPath($this->mapper, $path);
     }

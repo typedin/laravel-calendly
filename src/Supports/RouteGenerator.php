@@ -21,34 +21,24 @@ class RouteGenerator
 
     private function controllerProviderForCurrentPath(): Collection
     {
-        return $this->mapper->controllerGeneratorProviders()->filter(fn (ControllerGeneratorProvider $provider) => in_array($this->path, array_keys($provider->endpoints)));
+        $local_controller_provider_for_path = $this->mapper->controllerGeneratorProviders()->filter(fn (ControllerGeneratorProvider $provider) => in_array($this->path, array_keys($provider->endpoints)));
+
+        if (! $local_controller_provider_for_path->count()) {
+            throw new \Exception("The path ( $this->path ) was not found.");
+        }
+
+        return $local_controller_provider_for_path;
     }
 
     private function buildRoutes($provider): Collection
     {
         return collect(array_keys($provider->endpoints[$this->path]))
             ->filter(fn ($method) => $method != 'parameters')
-            ->map(fn ($method) => sprintf('Route::%s("%s", [%s::class, "%s"])', $method, $this->path, $provider->controllerName(), $this->getControllerMethod($provider->endpoints, $method)));
+            ->map(fn ($method) => $this->generateFunction($method, $provider));
     }
 
-    private function getControllerMethod($endpoints, $method): string
+    private function generateFunction(string $method, $provider): string
     {
-        $responses = $endpoints[$this->path][$method]['responses'];
-        if (in_array(200, array_keys($responses))) {
-            if (array_key_exists('collection', $responses[200]['content']['application/json']['schema']['properties'])) {
-                return 'index';
-            }
-            if (array_key_exists('resource', $responses[200]['content']['application/json']['schema']['properties'])) {
-                return 'show';
-            }
-        }
-        if (in_array(201, array_keys($responses))) {
-            return 'create';
-        }
-        if (in_array(204, array_keys($responses))) {
-            return 'destroy';
-        }
-
-        throw new \Exception('Could not determine a method for the path:'.$this->path, 1);
+        return sprintf('Route::%s("%s", [%s::class, "%s"])', $method, $this->path, $provider->controllerName(), HttpMethod::getRestfulControllerMethod($provider->endpoints, $this->path, $method));
     }
 }

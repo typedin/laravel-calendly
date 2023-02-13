@@ -15,6 +15,7 @@ use Typedin\LaravelCalendly\Supports\EndpointMapper;
 use Typedin\LaravelCalendly\Supports\ErrorResponseGenerator;
 use Typedin\LaravelCalendly\Supports\FormRequestGenerator;
 use Typedin\LaravelCalendly\Supports\ModelGenerator;
+use Typedin\LaravelCalendly\Supports\RouteGenerator;
 
 class GeneratedFileManager
 {
@@ -36,12 +37,18 @@ class GeneratedFileManager
     /**
      * @var Collection
      */
+    public readonly Collection $routes;
+
+    /**
+     * @var Collection
+     */
     public readonly Collection $formRequests;
 
     public function __construct(private readonly EndpointMapper $mapper, private readonly string $path)
     {
         $this->controllers = new Collection();
         $this->models = new Collection();
+        $this->routes = new Collection();
         $this->formRequests = new Collection();
         $this->errorResponses = new Collection();
     }
@@ -85,6 +92,17 @@ class GeneratedFileManager
         return $this;
     }
 
+    public function createRoutes(): GeneratedFileManager
+    {
+        $this->mapper->paths()->keys()->sort()->each(function ($path) {
+            RouteGenerator::fromPath($this->mapper, $path)->flatten()->each(
+                fn ($path) => $this->routes->push($path)
+            );
+        });
+
+        return $this;
+    }
+
     public function createErrorResponses(): GeneratedFileManager
     {
         $this->mapper->errorResponseProviders()->each(function ($provider) {
@@ -102,23 +120,25 @@ class GeneratedFileManager
     {
         $this->createModels()
             ->models->each(function ($entry) {
-                self::write($this->path.'Models/', $entry['model'], $entry['namespace']);
+                self::writeClassType($this->path.'Models/', $entry['model'], $entry['namespace']);
             });
         $this->createControllers()
             ->controllers->each(function ($entry) {
-                self::write($this->path.'/Http/Controllers/', $entry['controller'], $entry['namespace']);
+                self::writeClassType($this->path.'/Http/Controllers/', $entry['controller'], $entry['namespace']);
             });
         $this->createFormRequests()
             ->formRequests->each(function ($entry) {
-                self::write($this->path.'/Http/Requests/', $entry['form_request'], $entry['namespace']);
+                self::writeClassType($this->path.'/Http/Requests/', $entry['form_request'], $entry['namespace']);
             });
         $this->createErrorResponses()
             ->errorResponses->each(function ($entry) {
-                self::write($this->path.'/Http/Errors/', $entry['error_response'], $entry['namespace']);
+                self::writeClassType($this->path.'/Http/Errors/', $entry['error_response'], $entry['namespace']);
             });
+
+        $this->writeRoutesToFile();
     }
 
-    private static function write(string $path, ClassType $class, PhpNamespace $namespace): void
+    private static function writeClassType(string $path, ClassType $class, PhpNamespace $namespace): void
     {
         $printer = new PsrPrinter();
 
@@ -180,5 +200,16 @@ class GeneratedFileManager
         }
 
         return $namespace;
+    }
+
+    private function writeRoutesToFile(): void
+    {
+        file_put_contents(__DIR__.'/../../routes/web.php', "<?php\n", FILE_APPEND);
+        file_put_contents(__DIR__.'/../../routes/web.php', "use Illuminate\Support\Facades\Route;\n", FILE_APPEND);
+
+        $this->createRoutes()
+                 ->routes->each(function ($route) {
+                     file_put_contents(__DIR__.'/../../routes/web.php', $route.";\n", FILE_APPEND);
+                 });
     }
 }

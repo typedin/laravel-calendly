@@ -75,6 +75,14 @@ class GeneratedFileManagerTest extends TestCase
     }
 
     /** @test */
+    public function it_creates_all_routes(): void
+    {
+        $routes = $this->file_manager->createRoutes()->routes;
+
+        $this->assertCount(34, $routes);
+    }
+
+    /** @test */
     public function it_creates_all_error_responses(): void
     {
         $error_responses = $this->file_manager->createErrorResponses()->errorResponses;
