@@ -6,39 +6,28 @@ class Actor
 {
     /**
      * Canonical reference (unique identifier) for the user
-     *
-     * @var string
      */
     public ?string $uri;
 
     /**
      * The type of actor
-     *
-     * @var string
      */
     public string $type;
 
-    /** @var object */
     public ?object $organization;
 
     /**
      * User group information about the actor
-     *
-     * @var object
      */
     public ?object $group;
 
     /**
      * The user's name (human-readable format)
-     *
-     * @var string
      */
     public ?string $display_name;
 
     /**
      * Username of the actor
-     *
-     * @var string
      */
     public ?string $alternative_identifier;
 

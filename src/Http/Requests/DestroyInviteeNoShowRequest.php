@@ -2,7 +2,9 @@
 
 namespace Typedin\LaravelCalendly\Http\Requests;
 
-class DestroyInviteeNoShowRequest extends \Illuminate\Foundation\Http\FormRequest
+use Illuminate\Foundation\Http\FormRequest;
+
+class DestroyInviteeNoShowRequest extends FormRequest
 {
     public function rules(): array
     {
