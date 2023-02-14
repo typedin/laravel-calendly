@@ -137,6 +137,26 @@ class ControllerGeneratorTest extends TestCase
     /**
      * @test
      */
+    public function it_generates_create_method_for_202_response(): void
+    {
+        $provider = new ControllerGeneratorProvider(
+            mapper: $this->mapper,
+            path: '/data_compliance/deletion/invitees'
+        );
+        $controller = ControllerGenerator::controller($provider);
+        $method = $controller->getMethod('create');
+
+        $this->assertEquals('\Typedin\LaravelCalendly\Http\Requests\StoreDataComplianceInviteeRequest', $method->getParameters()['request']->getType());
+        $this->assertStringContainsString('$response = $this->api->post("/data_compliance/deletion/invitees/", $request);', $method->getBody());
+
+        $this->assertStringContainsString('return \Illuminate\Support\Facades\Response::json([], 202);', $method->getBody());
+        $this->assertStringContainsString('if(!$response->ok()) {', $method->getBody());
+        $this->assertStringContainsString('}', $method->getBody());
+    }
+
+    /**
+     * @test
+     */
     public function it_generates_create_method_with_uuid(): void
     {
         $provider = new ControllerGeneratorProvider(

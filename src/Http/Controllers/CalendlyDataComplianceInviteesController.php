@@ -4,9 +4,9 @@ namespace Typedin\LaravelCalendly\Http\Controllers;
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Response;
 use Typedin\LaravelCalendly\Contracts\CalendlyApiInterface;
 use Typedin\LaravelCalendly\Http\Requests\StoreDataComplianceInviteeRequest;
-use Typedin\LaravelCalendly\Models\BookingUrl;
 use Typedin\LaravelCalendly\Services\ErrorResponseFactory;
 
 class CalendlyDataComplianceInviteesController extends Controller
@@ -25,8 +25,6 @@ class CalendlyDataComplianceInviteesController extends Controller
             return ErrorResponseFactory::getJson($response);
         }
 
-        return response()->json([
-            'booking_url' => new BookingUrl(...$response->json('resource')),
-        ]);
+        return Response::json([], 202);
     }
 }

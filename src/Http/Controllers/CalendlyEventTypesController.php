@@ -5,10 +5,8 @@ namespace Typedin\LaravelCalendly\Http\Controllers;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Routing\Controller;
 use Typedin\LaravelCalendly\Contracts\CalendlyApiInterface;
-use Typedin\LaravelCalendly\Http\Requests\IndexEventTypesRequest;
 use Typedin\LaravelCalendly\Http\Requests\ShowEventTypeRequest;
 use Typedin\LaravelCalendly\Models\EventType;
-use Typedin\LaravelCalendly\Models\Pagination;
 use Typedin\LaravelCalendly\Services\ErrorResponseFactory;
 
 class CalendlyEventTypesController extends Controller
@@ -18,22 +16,6 @@ class CalendlyEventTypesController extends Controller
     public function __construct(CalendlyApiInterface $api)
     {
         $this->api = $api;
-    }
-
-    public function index(IndexEventTypesRequest $request): JsonResponse
-    {
-        $response = $this->api->get('/event_types/', $request);
-        if (! $response->ok()) {
-            return ErrorResponseFactory::getJson($response);
-        }
-        $all = collect($response->collect('collection'))
-        ->mapInto(EventType::class)->all();
-        $pagination = new Pagination(...$response->collect('pagination')->all());
-
-        return response()->json([
-            'event_types' => $all,
-            'pagination' => $pagination,
-        ]);
     }
 
     public function show(ShowEventTypeRequest $request): JsonResponse

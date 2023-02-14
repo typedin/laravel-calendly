@@ -6,11 +6,15 @@ class SubmissionCustomMessageResult
 {
     /**
      * Indicates if the routing form submission resulted in a custom "thank you" message.
+     *
+     * @var string
      */
     public string $type;
 
     /**
      * Contains an object with custom message headline and body.
+     *
+     * @var object
      */
     public object $value;
 

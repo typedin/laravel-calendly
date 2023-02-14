@@ -72,6 +72,17 @@ class HttpMethod
         return in_array(201, array_keys($responses));
     }
 
+    public static function hasCreateWithNoContent(array $endpoints): bool
+    {
+        if (! isset($endpoints['post'])) {
+            return false;
+        }
+
+        $responses = $endpoints['post']['responses'];
+
+        return in_array(202, array_keys($responses));
+    }
+
     public static function hasDestroy(array $endpoints): bool
     {
         if (! isset($endpoints['delete'])) {

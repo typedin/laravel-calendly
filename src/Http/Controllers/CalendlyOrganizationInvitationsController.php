@@ -7,7 +7,6 @@ use Illuminate\Routing\Controller;
 use Typedin\LaravelCalendly\Contracts\CalendlyApiInterface;
 use Typedin\LaravelCalendly\Http\Requests\DestroyOrganizationInvitationRequest;
 use Typedin\LaravelCalendly\Http\Requests\ShowOrganizationInvitationRequest;
-use Typedin\LaravelCalendly\Http\Requests\StoreOrganizationInvitationRequest;
 use Typedin\LaravelCalendly\Models\OrganizationInvitation;
 use Typedin\LaravelCalendly\Services\ErrorResponseFactory;
 
@@ -18,18 +17,6 @@ class CalendlyOrganizationInvitationsController extends Controller
     public function __construct(CalendlyApiInterface $api)
     {
         $this->api = $api;
-    }
-
-    public function create(StoreOrganizationInvitationRequest $request): JsonResponse
-    {
-        $response = $this->api->post("/organizations/{$request->validated('uuid')}/invitations/", $request);
-        if (! $response->ok()) {
-            return ErrorResponseFactory::getJson($response);
-        }
-
-        return response()->json([
-            'organization_invitation' => new OrganizationInvitation(...$response->json('resource')),
-        ]);
     }
 
     public function show(ShowOrganizationInvitationRequest $request): JsonResponse

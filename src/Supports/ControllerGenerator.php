@@ -57,6 +57,9 @@ class ControllerGenerator
                     if (HttpMethod::hasCreate($this->provider->mapper->paths()->get($this->provider->path))) {
                         $this->addCreateMethod($value);
                     }
+                    if (HttpMethod::hasCreateWithNoContent($this->provider->mapper->paths()->get($this->provider->path))) {
+                        $this->addCreateMethodWithNoContent($value);
+                    }
                     if (HttpMethod::hasDestroy($this->provider->mapper->paths()->get($this->provider->path))) {
                         $this->addDestroyMethod($value);
                     }
@@ -101,7 +104,7 @@ class ControllerGenerator
             ->setType($this->provider->showFormRequest());
     }
 
-    private function addCreateMethod(mixed $key): void
+    private function addCreateMethod(string $key): void
     {
         // show method for /users/me would add twice the same method
         $this->controller
@@ -112,6 +115,18 @@ class ControllerGenerator
                 ->addBody('return response()->json([')
                 ->addBody(sprintf('"%s" => new \Typedin\LaravelCalendly\Models\%s(...$response->json("resource")),', Str::snake($this->provider->model()), $this->provider->model()))
                 ->addBody(']);')
+                ->addParameter('request')
+                ->setType($this->provider->createFormRequest());
+    }
+
+    private function addCreateMethodWithNoContent(string $key): void
+    {
+        $this->controller
+                ->addMethod('create')
+                ->setReturnType('\Illuminate\Http\JsonResponse')
+                ->addBody(sprintf('$response = $this->api->post("/%s/", $request);', $this->buildUri($key)))
+                ->addBody($this->createErrorBody())
+                ->addBody('return \Illuminate\Support\Facades\Response::json([], 202);')
                 ->addParameter('request')
                 ->setType($this->provider->createFormRequest());
     }

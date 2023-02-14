@@ -7,7 +7,6 @@ use Illuminate\Routing\Controller;
 use Typedin\LaravelCalendly\Contracts\CalendlyApiInterface;
 use Typedin\LaravelCalendly\Http\Requests\DestroyWebhookSubscriptionRequest;
 use Typedin\LaravelCalendly\Http\Requests\ShowWebhookSubscriptionRequest;
-use Typedin\LaravelCalendly\Http\Requests\StoreWebhookSubscriptionRequest;
 use Typedin\LaravelCalendly\Models\WebhookSubscription;
 use Typedin\LaravelCalendly\Services\ErrorResponseFactory;
 
@@ -18,18 +17,6 @@ class CalendlyWebhookSubscriptionsController extends Controller
     public function __construct(CalendlyApiInterface $api)
     {
         $this->api = $api;
-    }
-
-    public function create(StoreWebhookSubscriptionRequest $request): JsonResponse
-    {
-        $response = $this->api->post('/webhook_subscriptions/', $request);
-        if (! $response->ok()) {
-            return ErrorResponseFactory::getJson($response);
-        }
-
-        return response()->json([
-            'webhook_subscription' => new WebhookSubscription(...$response->json('resource')),
-        ]);
     }
 
     public function show(ShowWebhookSubscriptionRequest $request): JsonResponse
