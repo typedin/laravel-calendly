@@ -3,5 +3,6 @@ includes:
 
 parameters:
     paths:
+        - routes/
         - src/
     level: 6
