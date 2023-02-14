@@ -2,7 +2,9 @@
 
 namespace Typedin\LaravelCalendly\Http\Requests;
 
-class DestroyWebhookSubscriptionRequest extends \Illuminate\Foundation\Http\FormRequest
+use Illuminate\Foundation\Http\FormRequest;
+
+class DestroyWebhookSubscriptionRequest extends FormRequest
 {
     public function rules(): array
     {
