@@ -63,7 +63,7 @@ class GeneratedFileManagerTest extends TestCase
     {
         $controllers = $this->file_manager->createControllers()->controllers;
 
-        $this->assertCount(17, $controllers);
+        $this->assertCount(28, $controllers);
     }
 
     /** @test */

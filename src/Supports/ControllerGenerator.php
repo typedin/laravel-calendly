@@ -71,7 +71,7 @@ class ControllerGenerator
         return $this;
     }
 
-    private function addIndexMethod(mixed $key): void
+    private function addIndexMethod(string $key): void
     {
         $this->controller
             ->addMethod('index')
@@ -79,10 +79,10 @@ class ControllerGenerator
             ->addBody(sprintf('$response = $this->api->get("/%s/", $request);', $this->buildUri($key)))
             ->addBody($this->createErrorBody())
             ->addBody('$all = collect($response->collect("collection"))')
-            ->addBody(sprintf('->mapInto(\Typedin\LaravelCalendly\Models\%s::class)->all();', $this->provider->model()))
+            ->addBody(sprintf('->mapInto(\Typedin\LaravelCalendly\Models\%s::class)->all();', $this->provider->model('index')))
             ->addBody('$pagination = new \Typedin\LaravelCalendly\Models\Pagination(...$response->collect("pagination")->all());')
             ->addBody('return response()->json([')
-            ->addBody(sprintf('"%s" => $all,', Str::snake(Str::plural($this->provider->model()))))
+            ->addBody(sprintf('"%s" => $all,', Str::snake(Str::plural($this->provider->model('index')))))
             ->addBody('"pagination" => $pagination,')
             ->addBody(']);')
             ->addParameter('request')
@@ -98,7 +98,7 @@ class ControllerGenerator
             ->addBody(sprintf('$response = $this->api->get("/%s/", $request);', $this->buildUri($key)))
             ->addBody($this->createErrorBody())
             ->addBody('return response()->json([')
-            ->addBody(sprintf('"%s" => new \Typedin\LaravelCalendly\Models\%s(...$response->json("resource")),', Str::snake($this->provider->model()), $this->provider->model()))
+            ->addBody(sprintf('"%s" => new \Typedin\LaravelCalendly\Models\%s(...$response->json("resource")),', Str::snake($this->provider->model('show')), $this->provider->model('show')))
             ->addBody(']);')
             ->addParameter('request')
             ->setType($this->provider->showFormRequest());
@@ -113,7 +113,7 @@ class ControllerGenerator
                 ->addBody(sprintf('$response = $this->api->post("/%s/", $request);', $this->buildUri($key)))
                 ->addBody($this->createErrorBody())
                 ->addBody('return response()->json([')
-                ->addBody(sprintf('"%s" => new \Typedin\LaravelCalendly\Models\%s(...$response->json("resource")),', Str::snake($this->provider->model()), $this->provider->model()))
+                ->addBody(sprintf('"%s" => new \Typedin\LaravelCalendly\Models\%s(...$response->json("resource")),', Str::snake($this->provider->model('create')), $this->provider->model('create')))
                 ->addBody(']);')
                 ->addParameter('request')
                 ->setType($this->provider->createFormRequest());

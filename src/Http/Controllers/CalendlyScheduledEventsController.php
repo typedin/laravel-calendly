@@ -6,7 +6,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Routing\Controller;
 use Typedin\LaravelCalendly\Contracts\CalendlyApiInterface;
 use Typedin\LaravelCalendly\Http\Requests\ShowScheduledEventRequest;
-use Typedin\LaravelCalendly\Models\ScheduledEvent;
+use Typedin\LaravelCalendly\Models\Event;
 use Typedin\LaravelCalendly\Services\ErrorResponseFactory;
 
 class CalendlyScheduledEventsController extends Controller
@@ -26,7 +26,7 @@ class CalendlyScheduledEventsController extends Controller
         }
 
         return response()->json([
-            'scheduled_event' => new ScheduledEvent(...$response->json('resource')),
+            'event' => new Event(...$response->json('resource')),
         ]);
     }
 }

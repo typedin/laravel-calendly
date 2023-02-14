@@ -41,12 +41,32 @@ class ControllerGeneratorProvider
         return sprintf('\Typedin\LaravelCalendly\Http\Requests\Destroy%sRequest', Str::singular($this->mapper::fullname($this->path)));
     }
 
-    public function model(): string
+    public function model(string $method): string
     {
+        // edge case not covered by the doc
         if ($this->path == '/scheduling_links') {
             return 'BookingUrl';
         }
 
+        if ($method == 'index') {
+            $local = explode('/', $this->mapper->paths()->get($this->path)['get']['responses']['200']['content']['application/json']['schema']['properties']['collection']['items']['$ref']);
+
+            return end($local);
+        }
+
+        if ($method == 'show') {
+            $local = explode('/', $this->mapper->paths()->get($this->path)['get']['responses']['200']['content']['application/json']['schema']['properties']['resource']['$ref']);
+
+            return end($local);
+        }
+
+        if ($method == 'create') {
+            $local = explode('/', $this->mapper->paths()->get($this->path)['post']['responses']['201']['content']['application/json']['schema']['properties']['resource']['$ref']);
+
+            return end($local);
+        }
+
+        // default to a non existing Schema
         return Str::singular($this->mapper::fullname($this->path));
     }
 }

@@ -31,14 +31,6 @@ class HttpMethod
         throw new \Exception('Could not determine a method for the path: '.$path, 1);
     }
 
-    /**
-     * @param  array  $value
-     */
-    private function getResponseType(array $endpoints): array
-    {
-        return $endpoints['get']['responses']['200']['content']['application/json']['schema']['properties'];
-    }
-
     public static function hasIndex(array $endpoints): bool
     {
         if (! isset($endpoints['get'])) {

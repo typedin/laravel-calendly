@@ -6,7 +6,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Routing\Controller;
 use Typedin\LaravelCalendly\Contracts\CalendlyApiInterface;
 use Typedin\LaravelCalendly\Http\Requests\ShowUserAvailabilityScheduleRequest;
-use Typedin\LaravelCalendly\Models\UserAvailabilitySchedule;
+use Typedin\LaravelCalendly\Models\AvailabilitySchedule;
 use Typedin\LaravelCalendly\Services\ErrorResponseFactory;
 
 class CalendlyUserAvailabilitySchedulesController extends Controller
@@ -26,7 +26,7 @@ class CalendlyUserAvailabilitySchedulesController extends Controller
         }
 
         return response()->json([
-            'user_availability_schedule' => new UserAvailabilitySchedule(...$response->json('resource')),
+            'availability_schedule' => new AvailabilitySchedule(...$response->json('resource')),
         ]);
     }
 }
