@@ -10,11 +10,15 @@ use Nette\PhpGenerator\PhpNamespace;
 use Throwable;
 use Typedin\LaravelCalendly\Supports\Configuration\FormRequestProvider;
 use Typedin\LaravelCalendly\Supports\Configuration\IndexFormRequestProvider;
-use Typedin\LaravelCalendly\traits\UseCrudVerbs;
 
 class FormRequestGenerator
 {
-    use UseCrudVerbs;
+    public $CRUD_OPERATIONS = [
+        'index' => 'Index',
+        'get' => 'Show',
+        'post' => 'Store',
+        'delete' => 'Destroy',
+    ];
 
     public readonly ClassType $validator;
 
