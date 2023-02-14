@@ -91,21 +91,15 @@ class EndpointMapper
                        if (isset($value['get'])) {
                            if (! (isset($value['parameters']) && ! empty($value['parameters']))) {
                                $local->push(new IndexFormRequestProvider(value: $value, path: $path, name: self::fullname($path)));
-
-                               /* return new IndexFormRequestProvider(value: $value, path: $path, name: self::fullname($path)); */
                            } else {
                                $local->push(new ShowFormRequestProvider(value: $value, path: $path, name: self::fullname($path)));
                            }
                        }
                        if (isset($value['post'])) {
                            $local->push(new StoreFormRequestProvider(value: $value, path: $path, name: self::fullname($path)));
-
-                           /* return new StoreFormRequestProvider(value: $value, path: $path, name: self::fullname($path)); */
                        }
                        if (isset($value['delete'])) {
                            $local->push(new DestroyFormRequestProvider(value: $value, path: $path, name: self::fullname($path)));
-
-                           /* return new DestroyFormRequestProvider(value: $value, path: $path, name: self::fullname($path)); */
                        }
 
                        return $local;
@@ -117,9 +111,9 @@ class EndpointMapper
      */
     public function controllerGeneratorProviders(): Collection
     {
-        return $this->mapControllerNamesToEndpoints()
-                   ->map(function ($value, $key) {
-                       return new ControllerGeneratorProvider($key, $value->all(), $this);
+        return $this->paths()->keys()
+                   ->map(function ($key) {
+                       return new ControllerGeneratorProvider($this, $key);
                    });
     }
 

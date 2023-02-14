@@ -22,7 +22,7 @@ class RouteGenerator
 
     private function controllerProviderForCurrentPath(): Collection
     {
-        $local_controller_provider_for_path = $this->mapper->controllerGeneratorProviders()->filter(fn (ControllerGeneratorProvider $provider) => in_array($this->path, array_keys($provider->endpoints)));
+        $local_controller_provider_for_path = $this->mapper->controllerGeneratorProviders()->filter(fn (ControllerGeneratorProvider $provider) => $provider->path == $this->path);
 
         if (! $local_controller_provider_for_path->count()) {
             throw new \Exception("The path ( $this->path ) was not found.");
@@ -33,13 +33,13 @@ class RouteGenerator
 
     private function buildRoutes($provider): Collection
     {
-        return collect(array_keys($provider->endpoints[$this->path]))
+        return collect(array_keys($provider->mapper->paths()->get($this->path)))
             ->filter(fn ($method) => $method != 'parameters')
             ->map(fn ($method) => $this->generateFunction($method, $provider));
     }
 
     private function generateFunction(string $method, ControllerGeneratorProvider $provider): string
     {
-        return sprintf('Route::%s("%s", [%s::class, "%s"])', $method, $this->path, $provider->controllerNameWithNamespace(), HttpMethod::getRestfulControllerMethod($provider->endpoints, $this->path, $method));
+        return sprintf('Route::%s("%s", [%s::class, "%s"])', $method, $this->path, $provider->controllerNameWithNamespace(), HttpMethod::getRestfulControllerMethod($provider->mapper->paths()->all(), $this->path, $method));
     }
 }

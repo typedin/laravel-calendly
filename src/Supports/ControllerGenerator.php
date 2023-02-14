@@ -6,12 +6,9 @@ use Illuminate\Support\Str;
 use Nette\PhpGenerator\ClassType;
 use Throwable;
 use Typedin\LaravelCalendly\Supports\Configuration\ControllerGeneratorProvider;
-use Typedin\LaravelCalendly\traits\UseCrudVerbs;
 
 class ControllerGenerator
 {
-    use UseCrudVerbs;
-
     public ClassType $controller;
 
     private function __construct(private readonly ControllerGeneratorProvider $provider)
@@ -47,163 +44,106 @@ class ControllerGenerator
 
     private function generateMethods(): ControllerGenerator
     {
-        collect($this->provider->endpoints)
-            ->each(function ($value, $key) {
-                if ($this->hasIndexRestVerb($value)) {
-                    $this->addIndexMethod($key);
-                }
-                if ($this->hasGetRestVerb($value)) {
-                    $this->addShowMethod($key);
-                }
-                if ($this->hasPostRestVerb($value)) {
-                    $this->addCreateMethod($key);
-                }
-                if ($this->hasDeleteRestVerb($value)) {
-                    $this->addDestroyMethod($key);
-                }
-            });
+        try {
+            collect($this->provider->mapper->paths()->get($this->provider->path))
+                ->keys()
+                ->each(function ($value) {
+                    if (HttpMethod::hasIndex($this->provider->mapper->paths()->get($this->provider->path))) {
+                        $this->addIndexMethod($value);
+                    }
+                    if (HttpMethod::hasShow($this->provider->mapper->paths()->get($this->provider->path))) {
+                        $this->addShowMethod($value);
+                    }
+                    if (HttpMethod::hasCreate($this->provider->mapper->paths()->get($this->provider->path))) {
+                        $this->addCreateMethod($value);
+                    }
+                    if (HttpMethod::hasDestroy($this->provider->mapper->paths()->get($this->provider->path))) {
+                        $this->addDestroyMethod($value);
+                    }
+                });
+        } catch (Throwable) {
+            //throw $th;
+        }
 
         return $this;
     }
 
-    private function verb(string $http_method): string
-    {
-        return $this->CRUD_OPERATIONS[$http_method];
-    }
-
     private function addIndexMethod(mixed $key): void
     {
-        try {
-            $this->controller
-                    ->addMethod('index')
-                    ->setReturnType('\Illuminate\Http\JsonResponse')
-                    ->addBody(sprintf('$response = $this->api->get("/%s/", $request);', $this->buildUri($key)))
-                    ->addBody($this->createErrorBody())
-                    ->addBody('$all = collect($response->collect("collection"))')
-                    ->addBody(sprintf('->mapInto(\Typedin\LaravelCalendly\Models\%s::class)->all();', $this->getReturnType($key, http_method: 'get', is_index: true)))
-                    ->addBody('$pagination = new \Typedin\LaravelCalendly\Models\Pagination(...$response->collect("pagination")->all());')
-                    ->addBody('return response()->json([')
-                    ->addBody(sprintf('"%s" => $all,', Str::snake($this->provider->name)))
-                    ->addBody('"pagination" => $pagination,')
-                    ->addBody(']);')
-                    ->addParameter('request')
-                    ->setType(sprintf('\Typedin\LaravelCalendly\Http\Requests\%s%sRequest', $this->verb('index'), Str::plural($this->provider->name)));
-        } catch (Throwable) {
-            //throw $th;
-        }
+        $this->controller
+            ->addMethod('index')
+            ->setReturnType('\Illuminate\Http\JsonResponse')
+            ->addBody(sprintf('$response = $this->api->get("/%s/", $request);', $this->buildUri($key)))
+            ->addBody($this->createErrorBody())
+            ->addBody('$all = collect($response->collect("collection"))')
+            ->addBody(sprintf('->mapInto(\Typedin\LaravelCalendly\Models\%s::class)->all();', $this->provider->model()))
+            ->addBody('$pagination = new \Typedin\LaravelCalendly\Models\Pagination(...$response->collect("pagination")->all());')
+            ->addBody('return response()->json([')
+            ->addBody(sprintf('"%s" => $all,', Str::snake(Str::plural($this->provider->model()))))
+            ->addBody('"pagination" => $pagination,')
+            ->addBody(']);')
+            ->addParameter('request')
+            ->setType($this->provider->indexFormRequest());
     }
 
     private function addShowMethod(mixed $key): void
     {
         // show method for /users/me would add twice the same method
-        try {
-            $this->controller
-                    ->addMethod('show')
-                    ->setReturnType('\Illuminate\Http\JsonResponse')
-                    ->addBody(sprintf('$response = $this->api->get("/%s/", $request);', $this->buildUri($key)))
-                    ->addBody($this->createErrorBody())
-                    ->addBody('return response()->json([')
-                    ->addBody(sprintf('"%s" => new \Typedin\LaravelCalendly\Models\%s(...$response->json("resource")),', Str::snake($this->getReturnType($key, http_method: 'get', is_index: false)), $this->getReturnType($key, http_method: 'get', is_index: false)))
-                    ->addBody(']);')
-                    ->addParameter('request')
-                    ->setType(sprintf('\Typedin\LaravelCalendly\Http\Requests\%s%sRequest', $this->verb('get'), Str::singular($this->provider->name)));
-        } catch (Throwable) {
-            //throw $th;
-        }
+        $this->controller
+            ->addMethod('show')
+            ->setReturnType('\Illuminate\Http\JsonResponse')
+            ->addBody(sprintf('$response = $this->api->get("/%s/", $request);', $this->buildUri($key)))
+            ->addBody($this->createErrorBody())
+            ->addBody('return response()->json([')
+            ->addBody(sprintf('"%s" => new \Typedin\LaravelCalendly\Models\%s(...$response->json("resource")),', Str::snake($this->provider->model()), $this->provider->model()))
+            ->addBody(']);')
+            ->addParameter('request')
+            ->setType($this->provider->showFormRequest());
     }
 
     private function addCreateMethod(mixed $key): void
     {
+        // show method for /users/me would add twice the same method
         $this->controller
                 ->addMethod('create')
                 ->setReturnType('\Illuminate\Http\JsonResponse')
                 ->addBody(sprintf('$response = $this->api->post("/%s/", $request);', $this->buildUri($key)))
-                    ->addBody($this->createErrorBody())
+                ->addBody($this->createErrorBody())
                 ->addBody('return response()->json([')
-                ->addBody(sprintf('"%s" => new \Typedin\LaravelCalendly\Models\%s(...$response->json("resource")),', Str::snake($this->getReturnType($key, http_method: 'post', is_index: false)), $this->getReturnType($key, http_method: 'post', is_index: false)))
+                ->addBody(sprintf('"%s" => new \Typedin\LaravelCalendly\Models\%s(...$response->json("resource")),', Str::snake($this->provider->model()), $this->provider->model()))
                 ->addBody(']);')
                 ->addParameter('request')
-                ->setType(sprintf('\Typedin\LaravelCalendly\Http\Requests\%s%sRequest', $this->verb('post'), Str::singular($this->provider->name)));
+                ->setType($this->provider->createFormRequest());
     }
 
-    private function addDestroyMethod(mixed $key): void
+    private function addDestroyMethod(string $key): void
     {
+        // show method for /users/me would add twice the same method
         $this->controller
-                ->addMethod('destroy')
-                ->setReturnType('\Illuminate\Http\JsonResponse')
-                ->addBody(sprintf('$response = $this->api->delete("/%s/");', $this->buildUri($key)))
-                    ->addBody($this->createErrorBody())
-                ->addBody('return \Illuminate\Support\Facades\Response::json([], 204);')
-                ->addParameter('request')
-                ->setType(sprintf('\Typedin\LaravelCalendly\Http\Requests\%s%sRequest', $this->verb('delete'), Str::singular($this->provider->name)));
+            ->addMethod('destroy')
+            ->setReturnType('\Illuminate\Http\JsonResponse')
+            ->addBody(sprintf('$response = $this->api->delete("/%s/");', $this->buildUri($key)))
+            ->addBody($this->createErrorBody())
+            ->addBody('return \Illuminate\Support\Facades\Response::json([], 204);')
+            ->addParameter('request')
+            ->setType($this->provider->destroyFormRequest());
     }
 
-    /**
-     * @param  array  $value
-     */
-    private function getResponseType(array $value): array
+    private function buildUri(): string
     {
-        return $value['get']['responses']['200']['content']['application/json']['schema']['properties'];
-    }
+        return collect(explode('/', $this->provider->path))
+            // remove empty string
+            ->filter(fn ($value) => (bool) $value)
+            ->map(function ($value) {
+                if (strstr($value, 'uuid')) {
+                    $value = str_replace_first('{', '', $value);
+                    $value = str_replace_first('}', '', $value);
 
-    private function hasIndexRestVerb(mixed $value): bool
-    {
-        return  array_key_first($value) == 'get' && array_key_exists('collection', $this->getResponseType($value));
-    }
+                    return sprintf('{$request->validated("%s")}', $value);
+                }
 
-    /**
-     * @param  array  $value
-     */
-    private function hasGetRestVerb(array $value): bool
-    {
-        return  array_key_exists('get', $value) && array_key_exists('resource', $this->getResponseType($value));
-    }
-
-    /**
-     * @param  array  $value
-     */
-    private function hasPostRestVerb(array $value): bool
-    {
-        return  array_key_exists('post', $value);
-    }
-
-    private function hasDeleteRestVerb(mixed $value): bool
-    {
-        return  array_key_exists('delete', $value);
-    }
-
-    private function buildUri(mixed $key): string
-    {
-        return collect(explode('/', (string) $key))
-        // remove empty string
-        ->filter(fn ($value) => (bool) $value)->map(function ($value) {
-            if (strstr($value, 'uuid')) {
-                $value = str_replace_first('{', '', $value);
-                $value = str_replace_first('}', '', $value);
-
-                return sprintf('{$request->validated("%s")}', $value);
-            }
-
-            return $value;
-        })->implode('/');
-    }
-
-    private function getReturnType(string $path, string $http_method = 'get', bool $is_index = true): string
-    {
-        $responses = $this->provider->endpoints[$path][$http_method]['responses'];
-        // booking_url is an edge case because it's not in the schemas
-        $lookup = ['BookingUrl'];
-        if ($is_index && $http_method == 'get') {
-            $lookup = explode('/', $responses['200']['content']['application/json']['schema']['properties']['collection']['items']['$ref']);
-        }
-        if (! $is_index && $http_method == 'get') {
-            $lookup = explode('/', $responses['200']['content']['application/json']['schema']['properties']['resource']['$ref']);
-        }
-        if ($http_method == 'post' && isset($responses['201']['content']['application/json']['schema']['properties']['resource']['$ref'])) {
-            $lookup = explode('/', $responses['201']['content']['application/json']['schema']['properties']['resource']['$ref']);
-        }
-
-        return end($lookup);
+                return $value;
+            })->implode('/');
     }
 
     private function createErrorBody(): string

@@ -19,22 +19,13 @@ class ControllerGeneratorTest extends TestCase
     }
 
     /**
-     * @return array<TKey,TValue>
-     */
-    private function endpoints(mixed $filter): array
-    {
-        return $this->mapper->mapControllerNamesToEndpoints()->get($filter)->all();
-    }
-
-    /**
      * @test
      */
     public function it_generates_controller_name(): void
     {
         $provider = new ControllerGeneratorProvider(
-            name:'Users',
-            endpoints: $this->endpoints('Users'),
-            mapper: $this->mapper
+            mapper: $this->mapper,
+            path: '/users/{uuid}'
         );
         $controller = ControllerGenerator::controller($provider);
 
@@ -48,9 +39,8 @@ class ControllerGeneratorTest extends TestCase
     public function it_generates_constructor(): void
     {
         $provider = new ControllerGeneratorProvider(
-            name:'Users',
-            endpoints: $this->endpoints('Users'),
-            mapper: $this->mapper
+            mapper: $this->mapper,
+            path: '/users/{uuid}'
         );
         $controller = ControllerGenerator::controller($provider);
 
@@ -65,9 +55,8 @@ class ControllerGeneratorTest extends TestCase
     public function it_generates_index_method(): void
     {
         $provider = new ControllerGeneratorProvider(
-            name:'EventTypes',
-            endpoints: $this->endpoints('EventTypes'),
-            mapper: $this->mapper
+            mapper: $this->mapper,
+            path:   '/event_types'
         );
         $controller = ControllerGenerator::controller($provider);
 
@@ -91,12 +80,25 @@ class ControllerGeneratorTest extends TestCase
     /**
      * @test
      */
+    public function it_applesauce(): void
+    {
+        $provider = new ControllerGeneratorProvider(
+            mapper: $this->mapper,
+            path: '/organizations/{uuid}/invitations'
+        );
+        $controller = ControllerGenerator::controller($provider);
+
+        $method = $controller->getMethod('index');
+    }
+
+    /**
+     * @test
+     */
     public function it_generates_show_method(): void
     {
         $provider = new ControllerGeneratorProvider(
-            name:'InviteeNoShows',
-            endpoints: $this->endpoints('InviteeNoShows'),
-            mapper: $this->mapper
+            mapper: $this->mapper,
+            path:   '/invitee_no_shows/{uuid}'
         );
         $controller = ControllerGenerator::controller($provider);
         $method = $controller->getMethod('show');
@@ -116,9 +118,8 @@ class ControllerGeneratorTest extends TestCase
     public function it_generates_create_method(): void
     {
         $provider = new ControllerGeneratorProvider(
-            name:'SchedulingLinks',
-            endpoints: $this->endpoints('SchedulingLinks'),
-            mapper: $this->mapper
+            mapper: $this->mapper,
+            path: '/scheduling_links'
         );
         $controller = ControllerGenerator::controller($provider);
         $method = $controller->getMethod('create');
@@ -139,9 +140,8 @@ class ControllerGeneratorTest extends TestCase
     public function it_generates_create_method_with_uuid(): void
     {
         $provider = new ControllerGeneratorProvider(
-            name:'OrganizationInvitations',
-            endpoints: $this->endpoints('OrganizationInvitations'),
-            mapper: $this->mapper
+            mapper: $this->mapper,
+            path:   '/organizations/{uuid}/invitations'
         );
         $controller = ControllerGenerator::controller($provider);
         $method = $controller->getMethod('create');
@@ -162,9 +162,8 @@ class ControllerGeneratorTest extends TestCase
     public function it_generates_destroy_method(): void
     {
         $provider = new ControllerGeneratorProvider(
-            name:'InviteeNoShows',
-            endpoints: $this->endpoints('InviteeNoShows'),
-            mapper: $this->mapper
+            mapper: $this->mapper,
+            path: '/invitee_no_shows/{uuid}'
         );
         $controller = ControllerGenerator::controller($provider);
         $method = $controller->getMethod('destroy');
@@ -183,9 +182,8 @@ class ControllerGeneratorTest extends TestCase
     public function it_generates_destroy_method_with_many_uuids(): void
     {
         $provider = new ControllerGeneratorProvider(
-            name:'OrganizationInvitations',
-            endpoints: $this->endpoints('OrganizationInvitations'),
-            mapper: $this->mapper
+            mapper: $this->mapper,
+            path:   '/organizations/{org_uuid}/invitations/{uuid}'
         );
         $controller = ControllerGenerator::controller($provider);
         $method = $controller->getMethod('destroy');
@@ -204,9 +202,8 @@ class ControllerGeneratorTest extends TestCase
     public function it_generates_all_methods_with_json_return_type(): void
     {
         $provider = new ControllerGeneratorProvider(
-            name:'OrganizationInvitations',
-            endpoints: $this->endpoints('OrganizationInvitations'),
-            mapper: $this->mapper
+            mapper: $this->mapper,
+            path:   '/organizations/{uuid}/invitations'
         );
         $controller = ControllerGenerator::controller($provider);
         $rest_methods = collect($controller->getMethods())
@@ -214,8 +211,7 @@ class ControllerGeneratorTest extends TestCase
             fn ($method) => in_array($method->getName(), ['index', 'show', 'create', 'store', 'edit', 'update', 'destroy'])
         );
 
-        // this includes the constructor
-        $this->assertCount(3, $rest_methods);
+        $this->assertCount(2, $rest_methods);
 
         tap($rest_methods->each(function ($method) {
             $this->assertEquals('\Illuminate\Http\JsonResponse', $method->getReturnType());
@@ -230,11 +226,9 @@ class ControllerGeneratorTest extends TestCase
         $this->mapper->paths()
             ->keys()
             ->each(function ($key) {
-                $fullname = EndpointMapper::fullname($key);
                 $provider = new ControllerGeneratorProvider(
-                    name: $fullname,
-                    endpoints: $this->endpoints($fullname),
-                    mapper: $this->mapper
+                    mapper: $this->mapper,
+                    path: $key
                 );
 
                 $this->assertInstanceOf(ClassType::class, ControllerGenerator::controller($provider));
