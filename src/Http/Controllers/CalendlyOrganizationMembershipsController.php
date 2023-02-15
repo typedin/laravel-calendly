@@ -26,7 +26,7 @@ class CalendlyOrganizationMembershipsController extends Controller
             return ErrorResponseFactory::getJson($response);
         }
         $all = collect($response->collect('collection'))
-        ->mapInto(OrganizationMembership::class)->all();
+        ->map(fn ($args) => new OrganizationMembership(...$args));
         $pagination = new Pagination(...$response->collect('pagination')->all());
 
         return response()->json([

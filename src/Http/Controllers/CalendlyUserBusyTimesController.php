@@ -26,7 +26,7 @@ class CalendlyUserBusyTimesController extends Controller
             return ErrorResponseFactory::getJson($response);
         }
         $all = collect($response->collect('collection'))
-        ->mapInto(UserBusyTime::class)->all();
+        ->map(fn ($args) => new UserBusyTime(...$args));
         $pagination = new Pagination(...$response->collect('pagination')->all());
 
         return response()->json([

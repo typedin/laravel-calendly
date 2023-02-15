@@ -49,19 +49,19 @@ class ControllerGenerator
                 ->keys()
                 ->each(function ($value) {
                     if (HttpMethod::hasIndex($this->provider->mapper->paths()->get($this->provider->path))) {
-                        $this->addIndexMethod($value);
+                        $this->addIndexMethod();
                     }
                     if (HttpMethod::hasShow($this->provider->mapper->paths()->get($this->provider->path))) {
-                        $this->addShowMethod($value);
+                        $this->addShowMethod();
                     }
                     if (HttpMethod::hasCreate($this->provider->mapper->paths()->get($this->provider->path))) {
-                        $this->addCreateMethod($value);
+                        $this->addCreateMethod();
                     }
                     if (HttpMethod::hasCreateWithNoContent($this->provider->mapper->paths()->get($this->provider->path))) {
-                        $this->addCreateMethodWithNoContent($value);
+                        $this->addCreateMethodWithNoContent();
                     }
                     if (HttpMethod::hasDestroy($this->provider->mapper->paths()->get($this->provider->path))) {
-                        $this->addDestroyMethod($value);
+                        $this->addDestroyMethod();
                     }
                 });
         } catch (Throwable) {
@@ -71,15 +71,15 @@ class ControllerGenerator
         return $this;
     }
 
-    private function addIndexMethod(string $key): void
+    private function addIndexMethod(): void
     {
         $this->controller
             ->addMethod('index')
             ->setReturnType('\Illuminate\Http\JsonResponse')
-            ->addBody(sprintf('$response = $this->api->get("/%s/", $request);', $this->buildUri($key)))
+            ->addBody(sprintf('$response = $this->api->get("/%s/", $request);', $this->buildUri()))
             ->addBody($this->createErrorBody())
             ->addBody('$all = collect($response->collect("collection"))')
-            ->addBody(sprintf('->mapInto(\Typedin\LaravelCalendly\Models\%s::class)->all();', $this->provider->model('index')))
+            ->addBody(sprintf('->map(fn ($args) => new \Typedin\LaravelCalendly\Models\%s(...$args));', $this->provider->model('index')))
             ->addBody('$pagination = new \Typedin\LaravelCalendly\Models\Pagination(...$response->collect("pagination")->all());')
             ->addBody('return response()->json([')
             ->addBody(sprintf('"%s" => $all,', Str::snake(Str::plural($this->provider->model('index')))))
@@ -89,13 +89,13 @@ class ControllerGenerator
             ->setType($this->provider->indexFormRequest());
     }
 
-    private function addShowMethod(mixed $key): void
+    private function addShowMethod(): void
     {
         // show method for /users/me would add twice the same method
         $this->controller
             ->addMethod('show')
             ->setReturnType('\Illuminate\Http\JsonResponse')
-            ->addBody(sprintf('$response = $this->api->get("/%s/", $request);', $this->buildUri($key)))
+            ->addBody(sprintf('$response = $this->api->get("/%s/", $request);', $this->buildUri()))
             ->addBody($this->createErrorBody())
             ->addBody('return response()->json([')
             ->addBody(sprintf('"%s" => new \Typedin\LaravelCalendly\Models\%s(...$response->json("resource")),', Str::snake($this->provider->model('show')), $this->provider->model('show')))
@@ -104,13 +104,13 @@ class ControllerGenerator
             ->setType($this->provider->showFormRequest());
     }
 
-    private function addCreateMethod(string $key): void
+    private function addCreateMethod(): void
     {
         // show method for /users/me would add twice the same method
         $this->controller
                 ->addMethod('create')
                 ->setReturnType('\Illuminate\Http\JsonResponse')
-                ->addBody(sprintf('$response = $this->api->post("/%s/", $request);', $this->buildUri($key)))
+                ->addBody(sprintf('$response = $this->api->post("/%s/", $request);', $this->buildUri()))
                 ->addBody($this->createErrorBody())
                 ->addBody('return response()->json([')
                 ->addBody(sprintf('"%s" => new \Typedin\LaravelCalendly\Models\%s(...$response->json("resource")),', Str::snake($this->provider->model('create')), $this->provider->model('create')))
@@ -119,25 +119,25 @@ class ControllerGenerator
                 ->setType($this->provider->createFormRequest());
     }
 
-    private function addCreateMethodWithNoContent(string $key): void
+    private function addCreateMethodWithNoContent(): void
     {
         $this->controller
                 ->addMethod('create')
                 ->setReturnType('\Illuminate\Http\JsonResponse')
-                ->addBody(sprintf('$response = $this->api->post("/%s/", $request);', $this->buildUri($key)))
+                ->addBody(sprintf('$response = $this->api->post("/%s/", $request);', $this->buildUri()))
                 ->addBody($this->createErrorBody())
                 ->addBody('return \Illuminate\Support\Facades\Response::json([], 202);')
                 ->addParameter('request')
                 ->setType($this->provider->createFormRequest());
     }
 
-    private function addDestroyMethod(string $key): void
+    private function addDestroyMethod(): void
     {
         // show method for /users/me would add twice the same method
         $this->controller
             ->addMethod('destroy')
             ->setReturnType('\Illuminate\Http\JsonResponse')
-            ->addBody(sprintf('$response = $this->api->delete("/%s/");', $this->buildUri($key)))
+            ->addBody(sprintf('$response = $this->api->delete("/%s/");', $this->buildUri()))
             ->addBody($this->createErrorBody())
             ->addBody('return \Illuminate\Support\Facades\Response::json([], 204);')
             ->addParameter('request')

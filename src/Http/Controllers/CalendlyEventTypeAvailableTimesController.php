@@ -26,7 +26,7 @@ class CalendlyEventTypeAvailableTimesController extends Controller
             return ErrorResponseFactory::getJson($response);
         }
         $all = collect($response->collect('collection'))
-        ->mapInto(EventTypeAvailableTime::class)->all();
+        ->map(fn ($args) => new EventTypeAvailableTime(...$args));
         $pagination = new Pagination(...$response->collect('pagination')->all());
 
         return response()->json([

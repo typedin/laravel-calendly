@@ -26,7 +26,7 @@ class CalendlyActivityLogEntriesController extends Controller
             return ErrorResponseFactory::getJson($response);
         }
         $all = collect($response->collect('collection'))
-        ->mapInto(Entry::class)->all();
+        ->map(fn ($args) => new Entry(...$args));
         $pagination = new Pagination(...$response->collect('pagination')->all());
 
         return response()->json([
