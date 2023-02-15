@@ -11,20 +11,15 @@ class GeneratedFileManagerTest extends TestCase
     /**
      * url https://stoplight.io/api/v1/projects/calendly/api-docs/nodes/reference/calendly-api/openapi.yaml
      */
-    private $destination = __DIR__.'/../tmp/';
+    private string $destination = __DIR__.'/../tmp/';
 
-    protected static $yaml;
+    protected static string $yaml;
 
     private GeneratedFileManager $file_manager;
 
     public static function setUpBeforeClass(): void
     {
         self::$yaml = file_get_contents(__DIR__.'/../../doc/openapi.yaml');
-    }
-
-    public static function tearDownAfterClass(): void
-    {
-        self::$yaml = null;
     }
 
     private function cleanDestinationFolder(): void
@@ -39,13 +34,11 @@ class GeneratedFileManagerTest extends TestCase
 
     protected function setUp(): void
     {
-        parent::setUp();
         $this->file_manager = new GeneratedFileManager(new EndpointMapper(self::$yaml), $this->destination);
     }
 
     protected function tearDown(): void
     {
-        parent::tearDown();
         $this->cleanDestinationFolder();
     }
 
