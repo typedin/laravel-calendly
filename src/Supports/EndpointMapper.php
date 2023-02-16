@@ -57,7 +57,7 @@ class EndpointMapper
                        try {
                            return new ModelGeneratorProvider(name: $name, schema: $schema);
                        } catch (Throwable $th) {
-                           throw new Exception('Error Processing Data to buld a ModelGeneratorProvider', $th->getCode(), $th);
+                           throw new Exception('Error Processing Data to build a ModelGeneratorProvider', $th->getCode(), $th);
                        }
                    });
     }

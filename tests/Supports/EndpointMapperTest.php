@@ -80,6 +80,9 @@ class EndpointMapperTest extends TestCase
 
         $this->assertArrayHasKey('/scheduled_events', $output->get('ScheduledEvents'));
         $this->assertArrayHasKey('get', $output->get('ScheduledEvents')['/scheduled_events']);
+
+        $this->assertArrayHasKey('/routing_form_submissions', $output->get('RoutingFormSubmissions'));
+        $this->assertArrayHasKey('/routing_form_submissions/{uuid}', $output->get('RoutingFormSubmissions'));
     }
 
     /**
