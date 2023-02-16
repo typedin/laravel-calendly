@@ -2,33 +2,34 @@
 
 namespace Typedin\LaravelCalendly\Supports;
 
+use Exception;
 class HttpMethod
 {
     public static function getRestfulControllerMethod(array $endpoints, string $path, string $method): string
     {
         $responses = $endpoints[$path][$method]['responses'];
 
-        if (in_array(200, array_keys($responses)) && array_key_exists('collection', $responses[200]['content']['application/json']['schema']['properties'])) {
+        if (array_key_exists(200, $responses) && array_key_exists('collection', $responses[200]['content']['application/json']['schema']['properties'])) {
             return 'index';
         }
 
-        if (in_array(200, array_keys($responses)) && array_key_exists('resource', $responses[200]['content']['application/json']['schema']['properties'])) {
+        if (array_key_exists(200, $responses) && array_key_exists('resource', $responses[200]['content']['application/json']['schema']['properties'])) {
             return 'show';
         }
 
-        if (in_array(201, array_keys($responses))) {
+        if (array_key_exists(201, $responses)) {
             return 'create';
         }
 
-        if (in_array(204, array_keys($responses))) {
+        if (array_key_exists(204, $responses)) {
             return 'destroy';
         }
 
-        if ($method == 'post' && in_array(202, array_keys($responses))) {
+        if ($method == 'post' && array_key_exists(202, $responses)) {
             return 'create';
         }
 
-        throw new \Exception('Could not determine a method for the path: '.$path, 1);
+        throw new Exception('Could not determine a method for the path: '.$path, 1);
     }
 
     public static function hasIndex(array $endpoints): bool
@@ -39,7 +40,7 @@ class HttpMethod
 
         $responses = $endpoints['get']['responses'];
 
-        return   in_array(200, array_keys($responses)) && array_key_exists('collection', $responses[200]['content']['application/json']['schema']['properties']);
+        return   array_key_exists(200, $responses) && array_key_exists('collection', $responses[200]['content']['application/json']['schema']['properties']);
     }
 
     public static function hasShow(array $endpoints): bool
@@ -50,7 +51,7 @@ class HttpMethod
 
         $responses = $endpoints['get']['responses'];
 
-        return in_array(200, array_keys($responses)) && array_key_exists('resource', $responses[200]['content']['application/json']['schema']['properties']);
+        return array_key_exists(200, $responses) && array_key_exists('resource', $responses[200]['content']['application/json']['schema']['properties']);
     }
 
     public static function hasCreate(array $endpoints): bool
@@ -61,7 +62,7 @@ class HttpMethod
 
         $responses = $endpoints['post']['responses'];
 
-        return in_array(201, array_keys($responses));
+        return array_key_exists(201, $responses);
     }
 
     public static function hasCreateWithNoContent(array $endpoints): bool
@@ -72,7 +73,7 @@ class HttpMethod
 
         $responses = $endpoints['post']['responses'];
 
-        return in_array(202, array_keys($responses));
+        return array_key_exists(202, $responses);
     }
 
     public static function hasDestroy(array $endpoints): bool
@@ -82,6 +83,6 @@ class HttpMethod
         }
         $responses = $endpoints['delete']['responses'];
 
-        return  in_array(204, array_keys($responses));
+        return  array_key_exists(204, $responses);
     }
 }
