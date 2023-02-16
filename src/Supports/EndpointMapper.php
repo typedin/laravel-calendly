@@ -2,6 +2,8 @@
 
 namespace Typedin\LaravelCalendly\Supports;
 
+use Throwable;
+use Exception;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Symfony\Component\Yaml\Yaml;
@@ -25,59 +27,40 @@ class EndpointMapper
         $this->parsed = Yaml::parse($yaml);
     }
 
-    /**
-     * @return Collection
-     */
     public function schemas(): Collection
     {
         return collect($this->parsed['components']['schemas']);
     }
 
-    /**
-     * @return Collection
-     */
     public function paths(): Collection
     {
         return collect($this->parsed['paths']);
     }
 
-    /**
-     * @return Collection
-     */
     public function entityNames(): Collection
     {
         return collect($this->schemas())->keys()->filter(fn ($key) => $key !== 'ErrorResponse');
     }
 
-    /**
-     * @return Collection
-     */
     public function formRequestNames(): Collection
     {
         return collect($this->schemas()->keys());
     }
 
-    /**
-     * @return Collection
-     */
     public function modelProviders(): Collection
     {
         return $this->schemas()
-                    ->filter(function ($value, $key) {
-                        return $key !== 'ErrorResponse';
-                    })
+                    ->filter(fn($value, $key) => $key !== 'ErrorResponse')
                    ->map(function ($schema, $name) {
+                       $th = null;
                        try {
                            return new ModelGeneratorProvider(name: $name, schema: $schema);
-                       } catch (\Throwable $th) {
-                           throw new \Exception('Error Processing Data to buld a ModelGeneratorProvider');
+                       } catch (Throwable $th) {
+                           throw new Exception('Error Processing Data to buld a ModelGeneratorProvider', $th->getCode(), $th);
                        }
                    });
     }
 
-    /**
-     * @return Collection
-     */
     public function formRequestProviders(): Collection
     {
         return $this->paths()
@@ -106,20 +89,12 @@ class EndpointMapper
                    });
     }
 
-    /**
-     * @return Collection
-     */
     public function controllerGeneratorProviders(): Collection
     {
         return $this->paths()->keys()
-                   ->map(function ($key) {
-                       return new ControllerGeneratorProvider($this, $key);
-                   });
+                   ->map(fn($key) => new ControllerGeneratorProvider($this, $key));
     }
 
-    /**
-     * @return Collection
-     */
     public function controllerNames(): Collection
     {
         return $this->paths()->keys()
@@ -131,10 +106,8 @@ class EndpointMapper
 
   public function errorCodes(): Collection
   {
-      return  collect($this->paths()->first()['get']['responses'])->filter(function ($value, $key) {
-          return $key !== 200 && isset($value['$ref']);
-      })->map(function ($value) {
-          $local = explode('/', $value['$ref']);
+      return  collect($this->paths()->first()['get']['responses'])->filter(fn($value, $key) => $key !== 200 && isset($value['$ref']))->map(function ($value) {
+          $local = explode('/', (string) $value['$ref']);
 
           return end($local);
       })->flip();
@@ -145,14 +118,9 @@ class EndpointMapper
         $base_error = ['ERROR_RESPONSE' => $this->schemas()->get('ErrorResponse')];
         $merged = collect($this->components()->get('responses'))->merge(collect($base_error));
 
-        return $merged->map(function ($value, $key) {
-            return new ErrorResponseGeneratorProvider(name: $key, schema: $value, error_code: $this->errorCodes()->get($key) ?? 500);
-        });
+        return $merged->map(fn($value, $key) => new ErrorResponseGeneratorProvider(name: $key, schema: $value, error_code: $this->errorCodes()->get($key) ?? 500));
     }
 
-    /**
-     * @return Collection
-     */
     public function mapControllerNamesToEndpoints(): Collection
     {
         return $this->controllerNames()

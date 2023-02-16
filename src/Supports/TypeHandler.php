@@ -4,10 +4,7 @@ namespace Typedin\LaravelCalendly\Supports;
 
 class TypeHandler
 {
-    /**
-     * @param  mixed  $argument
-     */
-    public static function getType($argument): string
+    public static function getType(mixed $argument): string
     {
         if (! isset($argument['type'])) {
             return '';
@@ -22,18 +19,11 @@ class TypeHandler
         return $argument['type'];
     }
 
-    /**
-     * @param  mixed  $argument
-     */
-    public static function isEnum($argument): bool
+    public static function isEnum(mixed $argument): bool
     {
         return isset($argument['enum']) || $argument == 'enum';
     }
 
-    /**
-     * @param  array  $property
-     * @param  array  $required_lookup
-     */
     public static function isNullable(array $property, array $required_lookup, string $property_name): bool
     {
         if (isset($property['nullable'])) {

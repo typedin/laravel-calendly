@@ -2,6 +2,7 @@
 
 namespace Typedin\LaravelCalendly\Supports;
 
+use Illuminate\Foundation\Http\FormRequest;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
@@ -42,7 +43,7 @@ class FormRequestGenerator
 
     private function generateConstructor(): FormRequestGenerator
     {
-        $this->validator->setExtends('\Illuminate\Foundation\Http\FormRequest');
+        $this->validator->setExtends('\\' . FormRequest::class);
 
         return $this;
     }
@@ -106,8 +107,6 @@ class FormRequestGenerator
     }
 
     /**
-     * @param  array  $value
-     * @param  array  $requirements
      * @return string[]
      */
     private function buildValidation(array $value, string $field, array $requirements): array

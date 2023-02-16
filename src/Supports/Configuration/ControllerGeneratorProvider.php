@@ -49,19 +49,19 @@ class ControllerGeneratorProvider
         }
 
         if ($method == 'index') {
-            $local = explode('/', $this->mapper->paths()->get($this->path)['get']['responses']['200']['content']['application/json']['schema']['properties']['collection']['items']['$ref']);
+            $local = explode('/', (string) $this->mapper->paths()->get($this->path)['get']['responses']['200']['content']['application/json']['schema']['properties']['collection']['items']['$ref']);
 
             return end($local);
         }
 
         if ($method == 'show') {
-            $local = explode('/', $this->mapper->paths()->get($this->path)['get']['responses']['200']['content']['application/json']['schema']['properties']['resource']['$ref']);
+            $local = explode('/', (string) $this->mapper->paths()->get($this->path)['get']['responses']['200']['content']['application/json']['schema']['properties']['resource']['$ref']);
 
             return end($local);
         }
 
         if ($method == 'create') {
-            $local = explode('/', $this->mapper->paths()->get($this->path)['post']['responses']['201']['content']['application/json']['schema']['properties']['resource']['$ref']);
+            $local = explode('/', (string) $this->mapper->paths()->get($this->path)['post']['responses']['201']['content']['application/json']['schema']['properties']['resource']['$ref']);
 
             return end($local);
         }

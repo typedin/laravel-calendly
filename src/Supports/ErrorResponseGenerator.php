@@ -2,6 +2,8 @@
 
 namespace Typedin\LaravelCalendly\Supports;
 
+use Typedin\LaravelCalendly\Http\Errors\ErrorResponse;
+use Illuminate\Http\JsonResponse;
 use Nette\PhpGenerator\ClassType;
 use Nette\PhpGenerator\PhpNamespace;
 use Typedin\LaravelCalendly\Supports\Configuration\BaseErrorResponseGeneratorProvider;
@@ -23,7 +25,7 @@ class ErrorResponseGenerator
         $error_response_generator = new ErrorResponseGenerator($provider);
 
         if (! $error_response_generator->isBaseClass()) {
-            $error_response_generator->error_response->setExtends('\Typedin\LaravelCalendly\Http\Errors\ErrorResponse');
+            $error_response_generator->error_response->setExtends('\\' . ErrorResponse::class);
         }
         if ($error_response_generator->isBaseClass()) {
             $error_response_generator->generateConstructor()->generateProperties()->generateToJson();
@@ -72,7 +74,7 @@ class ErrorResponseGenerator
         $this->error_response->addMethod('toJson');
         $this->error_response
                 ->getMethod('toJson')
-                ->setReturnType("\Illuminate\Http\JsonResponse")
+                ->setReturnType('\\' . JsonResponse::class)
 
             ->addBody('return response()->json(["message" => $this->message, "title" => $this->title, "details" => $this->details], $this->error_code);');
 
@@ -109,7 +111,7 @@ class ErrorResponseGenerator
 
         if (TypeHandler::isEnum($this->provider->properties()[$property]['type'])) {
             $enum = '<'.implode('|', $this->provider->properties()[$property]['enum']).'>';
-            $local_type = $local_type.$enum;
+            $local_type .= $enum;
         }
 
         return sprintf('@var %s $%s', $local_type, $property);

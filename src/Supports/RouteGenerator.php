@@ -2,7 +2,9 @@
 
 namespace Typedin\LaravelCalendly\Supports;
 
+use Exception;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
 use Typedin\LaravelCalendly\Supports\Configuration\ControllerGeneratorProvider;
 
 class RouteGenerator
@@ -22,16 +24,16 @@ class RouteGenerator
 
     private function controllerProviderForCurrentPath(): Collection
     {
-        $local_controller_provider_for_path = $this->mapper->controllerGeneratorProviders()->filter(fn (ControllerGeneratorProvider $provider) => $provider->path == $this->path);
+        $local_controller_provider_for_path = $this->mapper->controllerGeneratorProviders()->filter(fn (ControllerGeneratorProvider $provider) => $provider->path === $this->path);
 
-        if (! $local_controller_provider_for_path->count()) {
-            throw new \Exception("The path ( $this->path ) was not found.");
+        if ($local_controller_provider_for_path->count() === 0) {
+            throw new Exception("The path ( $this->path ) was not found.");
         }
 
         return $local_controller_provider_for_path;
     }
 
-    private function buildRoutes($provider): Collection
+    private function buildRoutes(ControllerGeneratorProvider $provider): Collection
     {
         return collect(array_keys($provider->mapper->paths()->get($this->path)))
             ->filter(fn ($method) => $method != 'parameters')
@@ -40,6 +42,28 @@ class RouteGenerator
 
     private function generateFunction(string $method, ControllerGeneratorProvider $provider): string
     {
-        return sprintf('Route::%s("%s", [%s::class, "%s"])', $method, $this->path, $provider->controllerNameWithNamespace(), HttpMethod::getRestfulControllerMethod($provider->mapper->paths()->all(), $this->path, $method));
+        $restfull_method = HttpMethod::getRestfulControllerMethod($provider->mapper->paths()->all(), $this->path, $method);
+
+        return sprintf('Route::%s("%s", [%s::class, "%s"])', $method, $this->buildURI($restfull_method), $provider->controllerNameWithNamespace(), $restfull_method);
+    }
+
+    private function buildURI(string $restfull_method): string
+    {
+        $is_plural = $restfull_method == 'index';
+        $local = explode('/', $this->path);
+
+        $applesauce = collect();
+        foreach ($local as $i => $singleLocal) {
+            // trim UUID
+            if ((str_contains($singleLocal, '{') && str_contains($singleLocal, '{'))) {
+                continue;
+            }
+            // plural for last part of uri
+            $is_plural && $i == (count($local) - 1)
+                ? $applesauce->push(Str::plural($singleLocal))
+                : $applesauce->push(Str::singular($singleLocal));
+        }
+
+        return $applesauce->implode('/');
     }
 }

@@ -9,9 +9,6 @@ class IndexFormRequestProvider extends FormRequestProvider
         return 'get';
     }
 
-    /**
-     * @return array
-     */
     public function parameters(): array
     {
         return $this->value['get']['parameters'] ?? [];

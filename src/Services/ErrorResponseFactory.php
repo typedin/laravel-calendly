@@ -16,12 +16,9 @@ class ErrorResponseFactory
 
     public function __construct(Response $response)
     {
-        $this->errorResponse = $this->createErrorResponseClass(json_decode($response->body(), true), $response->status());
+        $this->errorResponse = $this->createErrorResponseClass(json_decode($response->body(), true, 512, JSON_THROW_ON_ERROR), $response->status());
     }
 
-    /**
-     * @param  array  $body
-     */
     private function createErrorResponseClass(array $body, int $status_code): ErrorResponse
     {
         if ($status_code == 401) {

@@ -2,6 +2,9 @@
 
 namespace Typedin\LaravelCalendly\Supports;
 
+use Illuminate\Routing\Controller;
+use Typedin\LaravelCalendly\Contracts\CalendlyApiInterface;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Str;
 use Nette\PhpGenerator\ClassType;
 use Throwable;
@@ -29,15 +32,15 @@ class ControllerGenerator
 
     private function generateConstructor(): ControllerGenerator
     {
-        $this->controller->setExtends('\Illuminate\Routing\Controller');
+        $this->controller->setExtends('\\' . Controller::class);
         $this->controller
                 ->addMethod('__construct')
                 ->addBody('$this->api = $api;')
                 ->addParameter('api')
-                ->setType('\Typedin\LaravelCalendly\Contracts\CalendlyApiInterface');
+                ->setType('\\' . CalendlyApiInterface::class);
         $this->controller->addProperty('api')
                 ->setPrivate()
-                ->setType('\Typedin\LaravelCalendly\Contracts\CalendlyApiInterface');
+                ->setType('\\' . CalendlyApiInterface::class);
 
         return $this;
     }
@@ -75,7 +78,7 @@ class ControllerGenerator
     {
         $this->controller
             ->addMethod('index')
-            ->setReturnType('\Illuminate\Http\JsonResponse')
+            ->setReturnType('\\' . JsonResponse::class)
             ->addBody(sprintf('$response = $this->api->get("/%s/", $request);', $this->buildUri()))
             ->addBody($this->createErrorBody())
             ->addBody('$all = collect($response->collect("collection"))')
@@ -94,7 +97,7 @@ class ControllerGenerator
         // show method for /users/me would add twice the same method
         $this->controller
             ->addMethod('show')
-            ->setReturnType('\Illuminate\Http\JsonResponse')
+            ->setReturnType('\\' . JsonResponse::class)
             ->addBody(sprintf('$response = $this->api->get("/%s/", $request);', $this->buildUri()))
             ->addBody($this->createErrorBody())
             ->addBody('return response()->json([')
@@ -109,7 +112,7 @@ class ControllerGenerator
         // show method for /users/me would add twice the same method
         $this->controller
                 ->addMethod('create')
-                ->setReturnType('\Illuminate\Http\JsonResponse')
+                ->setReturnType('\\' . JsonResponse::class)
                 ->addBody(sprintf('$response = $this->api->post("/%s/", $request);', $this->buildUri()))
                 ->addBody($this->createErrorBody())
                 ->addBody('return response()->json([')
@@ -123,7 +126,7 @@ class ControllerGenerator
     {
         $this->controller
                 ->addMethod('create')
-                ->setReturnType('\Illuminate\Http\JsonResponse')
+                ->setReturnType('\\' . JsonResponse::class)
                 ->addBody(sprintf('$response = $this->api->post("/%s/", $request);', $this->buildUri()))
                 ->addBody($this->createErrorBody())
                 ->addBody('return \Illuminate\Support\Facades\Response::json([], 202);')
@@ -136,7 +139,7 @@ class ControllerGenerator
         // show method for /users/me would add twice the same method
         $this->controller
             ->addMethod('destroy')
-            ->setReturnType('\Illuminate\Http\JsonResponse')
+            ->setReturnType('\\' . JsonResponse::class)
             ->addBody(sprintf('$response = $this->api->delete("/%s/");', $this->buildUri()))
             ->addBody($this->createErrorBody())
             ->addBody('return \Illuminate\Support\Facades\Response::json([], 204);')
