@@ -28,7 +28,7 @@ class ErrorResponseFactory
             return new UnauthenticatedError(
                 title:$body['title'],
                 message:$body['message'],
-                details:$body['details'],
+                details:$body['details'] ?? [],
                 error_code:$status_code
             );
         }
@@ -36,7 +36,7 @@ class ErrorResponseFactory
             return new PermissionDeniedError(
                 title:$body['title'],
                 message:$body['message'],
-                details:$body['details'],
+                details:$body['details'] ?? [],
                 error_code:$status_code
             );
         }
@@ -45,7 +45,7 @@ class ErrorResponseFactory
             return new NotFoundError(
                 title:$body['title'],
                 message:$body['message'],
-                details:$body['details'],
+                details:$body['details'] ?? [],
                 error_code:$status_code
             );
         }
@@ -54,7 +54,7 @@ class ErrorResponseFactory
             return new UnknownError(
                 title:$body['title'],
                 message:$body['message'],
-                details:$body['details'],
+                details:$body['details'] ?? [],
                 error_code:$status_code
             );
         }
