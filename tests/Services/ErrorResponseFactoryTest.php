@@ -31,9 +31,9 @@ class ErrorResponseFactoryTest extends TestCase
         $error_response = ( new ErrorResponseFactory($this->response($params, 401)) )->errorResponse;
 
         $this->assertInstanceOf(UnauthenticatedError::class, $error_response);
-        $this->assertArrayHasKey('title', json_decode($error_response->toJson()->getContent(), true));
-        $this->assertArrayHasKey('message', json_decode($error_response->toJson()->getContent(), true));
-        $this->assertArrayHasKey('details', json_decode($error_response->toJson()->getContent(), true));
+        $this->assertArrayHasKey('title', json_decode($error_response->toJson()->getContent(), true, 512, JSON_THROW_ON_ERROR));
+        $this->assertArrayHasKey('message', json_decode($error_response->toJson()->getContent(), true, 512, JSON_THROW_ON_ERROR));
+        $this->assertArrayHasKey('details', json_decode($error_response->toJson()->getContent(), true, 512, JSON_THROW_ON_ERROR));
     }
 
     /**
@@ -52,9 +52,9 @@ class ErrorResponseFactoryTest extends TestCase
         $error_response = ( new ErrorResponseFactory($this->response($params, 403)) )->errorResponse;
 
         $this->assertInstanceOf(PermissionDeniedError::class, $error_response);
-        $this->assertArrayHasKey('title', json_decode($error_response->toJson()->getContent(), true));
-        $this->assertArrayHasKey('message', json_decode($error_response->toJson()->getContent(), true));
-        $this->assertArrayHasKey('details', json_decode($error_response->toJson()->getContent(), true));
+        $this->assertArrayHasKey('title', json_decode($error_response->toJson()->getContent(), true, 512, JSON_THROW_ON_ERROR));
+        $this->assertArrayHasKey('message', json_decode($error_response->toJson()->getContent(), true, 512, JSON_THROW_ON_ERROR));
+        $this->assertArrayHasKey('details', json_decode($error_response->toJson()->getContent(), true, 512, JSON_THROW_ON_ERROR));
     }
 
     /**
@@ -73,9 +73,9 @@ class ErrorResponseFactoryTest extends TestCase
         $error_response = ( new ErrorResponseFactory($this->response($params, 404)) )->errorResponse;
 
         $this->assertInstanceOf(NotFoundError::class, $error_response);
-        $this->assertArrayHasKey('title', json_decode($error_response->toJson()->getContent(), true));
-        $this->assertArrayHasKey('message', json_decode($error_response->toJson()->getContent(), true));
-        $this->assertArrayHasKey('details', json_decode($error_response->toJson()->getContent(), true));
+        $this->assertArrayHasKey('title', json_decode($error_response->toJson()->getContent(), true, 512, JSON_THROW_ON_ERROR));
+        $this->assertArrayHasKey('message', json_decode($error_response->toJson()->getContent(), true, 512, JSON_THROW_ON_ERROR));
+        $this->assertArrayHasKey('details', json_decode($error_response->toJson()->getContent(), true, 512, JSON_THROW_ON_ERROR));
     }
 
     /**
@@ -95,9 +95,9 @@ class ErrorResponseFactoryTest extends TestCase
         $error_response = ( new ErrorResponseFactory($this->response($params, 500)) )->errorResponse;
 
         $this->assertInstanceOf(UnknownError::class, $error_response);
-        $this->assertArrayHasKey('title', json_decode($error_response->toJson()->getContent(), true));
-        $this->assertArrayHasKey('message', json_decode($error_response->toJson()->getContent(), true));
-        $this->assertArrayHasKey('details', json_decode($error_response->toJson()->getContent(), true));
+        $this->assertArrayHasKey('title', json_decode($error_response->toJson()->getContent(), true, 512, JSON_THROW_ON_ERROR));
+        $this->assertArrayHasKey('message', json_decode($error_response->toJson()->getContent(), true, 512, JSON_THROW_ON_ERROR));
+        $this->assertArrayHasKey('details', json_decode($error_response->toJson()->getContent(), true, 512, JSON_THROW_ON_ERROR));
     }
 
     /**
@@ -113,9 +113,9 @@ class ErrorResponseFactoryTest extends TestCase
         $error_response = ( new ErrorResponseFactory($this->response($params, 418)) )->errorResponse;
 
         $this->assertInstanceOf(ErrorResponse::class, $error_response);
-        $this->assertArrayHasKey('title', json_decode($error_response->toJson()->getContent(), true));
-        $this->assertArrayHasKey('message', json_decode($error_response->toJson()->getContent(), true));
-        $this->assertArrayHasKey('details', json_decode($error_response->toJson()->getContent(), true));
+        $this->assertArrayHasKey('title', json_decode($error_response->toJson()->getContent(), true, 512, JSON_THROW_ON_ERROR));
+        $this->assertArrayHasKey('message', json_decode($error_response->toJson()->getContent(), true, 512, JSON_THROW_ON_ERROR));
+        $this->assertArrayHasKey('details', json_decode($error_response->toJson()->getContent(), true, 512, JSON_THROW_ON_ERROR));
     }
 
     private function response($params, $code)
