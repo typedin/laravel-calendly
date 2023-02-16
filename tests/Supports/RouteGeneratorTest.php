@@ -21,7 +21,7 @@ class RouteGeneratorTest extends TestCase
     {
         $path = '/users/{uuid}';
 
-        $this->assertEquals('Route::get("/users/{uuid}", [\Typedin\LaravelCalendly\Http\Controllers\CalendlyUsersController::class, "show"])', RouteGenerator::fromPath($this->mapper, $path)[0]);
+        $this->assertEquals('Route::get("/user", [\Typedin\LaravelCalendly\Http\Controllers\CalendlyUsersController::class, "show"])', RouteGenerator::fromPath($this->mapper, $path)[0]);
     }
 
     /** @test */
@@ -29,8 +29,8 @@ class RouteGeneratorTest extends TestCase
     {
         $path = '/organizations/{org_uuid}/invitations/{uuid}';
 
-        $this->assertEquals('Route::delete("/organizations/{org_uuid}/invitations/{uuid}", [\Typedin\LaravelCalendly\Http\Controllers\CalendlyOrganizationInvitationsController::class, "destroy"])', RouteGenerator::fromPath($this->mapper, $path)[0]);
-        $this->assertEquals('Route::get("/organizations/{org_uuid}/invitations/{uuid}", [\Typedin\LaravelCalendly\Http\Controllers\CalendlyOrganizationInvitationsController::class, "show"])', RouteGenerator::fromPath($this->mapper, $path)[1]);
+        $this->assertEquals('Route::delete("/organization/invitation", [\Typedin\LaravelCalendly\Http\Controllers\CalendlyOrganizationInvitationsController::class, "destroy"])', RouteGenerator::fromPath($this->mapper, $path)[0]);
+        $this->assertEquals('Route::get("/organization/invitation", [\Typedin\LaravelCalendly\Http\Controllers\CalendlyOrganizationInvitationsController::class, "show"])', RouteGenerator::fromPath($this->mapper, $path)[1]);
     }
 
     /** @test */
@@ -38,8 +38,8 @@ class RouteGeneratorTest extends TestCase
     {
         $path = '/organizations/{uuid}/invitations';
 
-        $this->assertEquals('Route::get("/organizations/{uuid}/invitations", [\Typedin\LaravelCalendly\Http\Controllers\CalendlyOrganizationInvitationsController::class, "index"])', RouteGenerator::fromPath($this->mapper, $path)[0]);
-        $this->assertEquals('Route::post("/organizations/{uuid}/invitations", [\Typedin\LaravelCalendly\Http\Controllers\CalendlyOrganizationInvitationsController::class, "create"])', RouteGenerator::fromPath($this->mapper, $path)[1]);
+        $this->assertEquals('Route::post("/organization/invitation", [\Typedin\LaravelCalendly\Http\Controllers\CalendlyOrganizationInvitationsController::class, "create"])', RouteGenerator::fromPath($this->mapper, $path)[1]);
+        $this->assertEquals('Route::get("/organization/invitations", [\Typedin\LaravelCalendly\Http\Controllers\CalendlyOrganizationInvitationsController::class, "index"])', RouteGenerator::fromPath($this->mapper, $path)[0]);
     }
 
     /** @test */
