@@ -78,7 +78,6 @@ class EventType
      * The event type's description (formatted with HTML)
      */
     public ?string $description_html;
-
     public $profile;
 
     /**

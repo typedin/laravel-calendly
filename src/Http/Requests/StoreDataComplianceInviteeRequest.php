@@ -9,7 +9,7 @@ class StoreDataComplianceInviteeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'emails' => 'required|array',
+        'emails' => 'required|array',
         ];
     }
 }

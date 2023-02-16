@@ -2,12 +2,12 @@
 
 namespace Typedin\LaravelCalendly\Http\Controllers;
 
+use Typedin\LaravelCalendly\Services\ErrorResponseFactory;
+use Typedin\LaravelCalendly\Models\Cancellation;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Routing\Controller;
 use Typedin\LaravelCalendly\Contracts\CalendlyApiInterface;
 use Typedin\LaravelCalendly\Http\Requests\StoreScheduledEventCancellationRequest;
-use Typedin\LaravelCalendly\Models\Cancellation;
-use Typedin\LaravelCalendly\Services\ErrorResponseFactory;
 
 class CalendlyScheduledEventCancellationsController extends Controller
 {
@@ -20,13 +20,10 @@ class CalendlyScheduledEventCancellationsController extends Controller
 
     public function create(StoreScheduledEventCancellationRequest $request): JsonResponse
     {
-        $response = $this->api->post("/scheduled_events/{$request->validated('uuid')}/cancellation/", $request);
-        if (! $response->ok()) {
-            return ErrorResponseFactory::getJson($response);
-        }
-
+        $response = $this->api->post("/scheduled_events/{$request->validated("uuid")}/cancellation/", $request);
+        if(!$response->ok()) {return ErrorResponseFactory::getJson($response);}
         return response()->json([
-            'cancellation' => new Cancellation(...$response->json('resource')),
+        "cancellation" => new Cancellation(...$response->json("resource")),
         ]);
     }
 }

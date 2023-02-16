@@ -9,9 +9,9 @@ class IndexOrganizationMembershipsRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'email' => 'email',
-            'organization' => 'url',
-            'user' => 'url',
+        'email' => 'email',
+        'organization' => 'url',
+        'user' => 'url',
         ];
     }
 }

@@ -2,13 +2,13 @@
 
 namespace Typedin\LaravelCalendly\Http\Controllers;
 
+use Typedin\LaravelCalendly\Services\ErrorResponseFactory;
+use Typedin\LaravelCalendly\Models\OrganizationMembership;
+use Typedin\LaravelCalendly\Models\Pagination;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Routing\Controller;
 use Typedin\LaravelCalendly\Contracts\CalendlyApiInterface;
 use Typedin\LaravelCalendly\Http\Requests\IndexOrganizationMembershipsRequest;
-use Typedin\LaravelCalendly\Models\OrganizationMembership;
-use Typedin\LaravelCalendly\Models\Pagination;
-use Typedin\LaravelCalendly\Services\ErrorResponseFactory;
 
 class CalendlyOrganizationMembershipsController extends Controller
 {
@@ -21,17 +21,14 @@ class CalendlyOrganizationMembershipsController extends Controller
 
     public function index(IndexOrganizationMembershipsRequest $request): JsonResponse
     {
-        $response = $this->api->get('/organization_memberships/', $request);
-        if (! $response->ok()) {
-            return ErrorResponseFactory::getJson($response);
-        }
-        $all = collect($response->collect('collection'))
+        $response = $this->api->get("/organization_memberships/", $request);
+        if(!$response->ok()) {return ErrorResponseFactory::getJson($response);}
+        $all = collect($response->collect("collection"))
         ->map(fn ($args) => new OrganizationMembership(...$args));
-        $pagination = new Pagination(...$response->collect('pagination')->all());
-
+        $pagination = new Pagination(...$response->collect("pagination")->all());
         return response()->json([
-            'organization_memberships' => $all,
-            'pagination' => $pagination,
+        "organization_memberships" => $all,
+        "pagination" => $pagination,
         ]);
     }
 }

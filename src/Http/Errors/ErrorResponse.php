@@ -11,7 +11,6 @@ class ErrorResponse
     public string $message;
 
     public array $details;
-
     public int $error_code;
 
     public function __construct(string $title, string $message, array $details, int $error_code)
@@ -24,6 +23,6 @@ class ErrorResponse
 
     public function toJson(): JsonResponse
     {
-        return response()->json(['message' => $this->message, 'title' => $this->title, 'details' => $this->details], $this->error_code);
+        return response()->json(["message" => $this->message, "title" => $this->title, "details" => $this->details], $this->error_code);
     }
 }
