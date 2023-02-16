@@ -2,6 +2,7 @@
 
 namespace Typedin\LaravelCalendly\Tests\Supports;
 
+use Illuminate\Foundation\Http\FormRequest;
 use PHPUnit\Framework\TestCase;
 use TValue;
 use Typedin\LaravelCalendly\Supports\Configuration\DestroyFormRequestProvider;
@@ -49,7 +50,7 @@ class FormRequestGeneratorTest extends TestCase
         $validator = FormRequestGenerator::formRequest($provider);
 
         $this->assertEquals('IndexScheduledEventsRequest', $validator->getName());
-        $this->assertEquals('\Illuminate\Foundation\Http\FormRequest', $validator->getExtends());
+        $this->assertEquals('\\' . FormRequest::class, $validator->getExtends());
 
         $this->assertStringContainsString(sprintf("'%s' => '%s',", $property, $expected_rules), $validator->getMethod('rules')->getBody());
     }
@@ -74,16 +75,13 @@ class FormRequestGeneratorTest extends TestCase
      * @dataProvider EventTypesProvider
      *
      * @test
-     *
-     * @param  mixed  $property
-     * @param  mixed  $expected_rules
      */
-    public function it_generates_rules_for_event_types($property, $expected_rules): void
+    public function it_generates_rules_for_event_types(mixed $property, mixed $expected_rules): void
     {
         $provider = new IndexFormRequestProvider(path: '/event_types', name:'EventTypes', value: $this->path('/event_types'));
         $validator = FormRequestGenerator::formRequest($provider);
 
-        $this->assertEquals('\Illuminate\Foundation\Http\FormRequest', $validator->getExtends());
+        $this->assertEquals('\\' . FormRequest::class, $validator->getExtends());
         $this->assertEquals('IndexEventTypesRequest', $validator->getName());
 
         $this->assertStringContainsString(sprintf("'%s' => '%s',", $property, $expected_rules), $validator->getMethod('rules')->getBody());
@@ -106,11 +104,8 @@ class FormRequestGeneratorTest extends TestCase
      * @dataProvider ScheduledEventInviteesProvider
      *
      * @test
-     *
-     * @param  mixed  $property
-     * @param  mixed  $expected_rules
      */
-    public function it_generates_show_form_request($property, $expected_rules): void
+    public function it_generates_show_form_request(mixed $property, mixed $expected_rules): void
     {
         $provider = new ShowFormRequestProvider(
             path: '/scheduled_events/{event_uuid}/invitees/{invitee_uuid}',
@@ -120,7 +115,7 @@ class FormRequestGeneratorTest extends TestCase
 
         $validator = FormRequestGenerator::formRequest($provider);
 
-        $this->assertEquals('\Illuminate\Foundation\Http\FormRequest', $validator->getExtends());
+        $this->assertEquals('\\' . FormRequest::class, $validator->getExtends());
         $this->assertEquals('ShowScheduledEventRequest', $validator->getName());
         $rules = $validator->getMethod('rules');
 
@@ -142,11 +137,8 @@ class FormRequestGeneratorTest extends TestCase
      * @dataProvider userProvider
      *
      * @test
-     *
-     * @param  mixed  $property
-     * @param  mixed  $expected_rules
      */
-    public function it_generates_show_form_request_for_user($property, $expected_rules): void
+    public function it_generates_show_form_request_for_user(mixed $property, mixed $expected_rules): void
     {
         $provider = new ShowFormRequestProvider(
             path: '/users/{uuid}',
@@ -156,7 +148,7 @@ class FormRequestGeneratorTest extends TestCase
 
         $validator = FormRequestGenerator::formRequest($provider);
 
-        $this->assertEquals('\Illuminate\Foundation\Http\FormRequest', $validator->getExtends());
+        $this->assertEquals('\\' . FormRequest::class, $validator->getExtends());
         $this->assertEquals('ShowUserRequest', $validator->getName());
         $rules = $validator->getMethod('rules');
 
@@ -182,7 +174,7 @@ class FormRequestGeneratorTest extends TestCase
 
         $validator = FormRequestGenerator::formRequest($provider);
 
-        $this->assertEquals('\Illuminate\Foundation\Http\FormRequest', $validator->getExtends());
+        $this->assertEquals('\\' . FormRequest::class, $validator->getExtends());
 
         $this->assertEquals('StoreOrganizationInviationRequest', $validator->getName());
         $rules = $validator->getMethod('rules');
@@ -195,11 +187,8 @@ class FormRequestGeneratorTest extends TestCase
      * @dataProvider DestroyOrganizationMembershipRequestsProvider
      *
      * @test
-     *
-     * @param  mixed  $property
-     * @param  mixed  $expected_rules
      */
-    public function it_generates_destroy_form_request($property, $expected_rules): void
+    public function it_generates_destroy_form_request(mixed $property, mixed $expected_rules): void
     {
         $provider = new DestroyFormRequestProvider(
             path: '/organization_memberships/{uuid}',
@@ -208,7 +197,7 @@ class FormRequestGeneratorTest extends TestCase
         );
         $validator = FormRequestGenerator::formRequest($provider);
 
-        $this->assertEquals('\Illuminate\Foundation\Http\FormRequest', $validator->getExtends());
+        $this->assertEquals('\\' . FormRequest::class, $validator->getExtends());
 
         $this->assertEquals('DestroyOrganizationMembershipRequest', $validator->getName());
         $rules = $validator->getMethod('rules');
