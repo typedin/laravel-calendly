@@ -12,7 +12,6 @@ class RouteGeneratorTest extends TestCase
 
     protected function setUp(): void
     {
-        parent::setUp();
         $this->mapper = new EndpointMapper(file_get_contents(__DIR__.'/../../doc/openapi.yaml'));
     }
 

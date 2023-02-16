@@ -2,17 +2,17 @@
 
 namespace Typedin\LaravelCalendly\Tests\Supports;
 
-use Illuminate\Routing\Controller;
-use Typedin\LaravelCalendly\Http\Requests\IndexEventTypesRequest;
-use Typedin\LaravelCalendly\Http\Requests\ShowInviteeNoShowRequest;
-use Typedin\LaravelCalendly\Http\Requests\StoreSchedulingLinkRequest;
-use Typedin\LaravelCalendly\Http\Requests\StoreDataComplianceInviteeRequest;
-use Typedin\LaravelCalendly\Http\Requests\StoreOrganizationInvitationRequest;
-use Typedin\LaravelCalendly\Http\Requests\DestroyInviteeNoShowRequest;
-use Typedin\LaravelCalendly\Http\Requests\DestroyOrganizationInvitationRequest;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Routing\Controller;
 use Nette\PhpGenerator\ClassType;
 use PHPUnit\Framework\TestCase;
+use Typedin\LaravelCalendly\Http\Requests\DestroyInviteeNoShowRequest;
+use Typedin\LaravelCalendly\Http\Requests\DestroyOrganizationInvitationRequest;
+use Typedin\LaravelCalendly\Http\Requests\IndexEventTypesRequest;
+use Typedin\LaravelCalendly\Http\Requests\ShowInviteeNoShowRequest;
+use Typedin\LaravelCalendly\Http\Requests\StoreDataComplianceInviteeRequest;
+use Typedin\LaravelCalendly\Http\Requests\StoreOrganizationInvitationRequest;
+use Typedin\LaravelCalendly\Http\Requests\StoreSchedulingLinkRequest;
 use Typedin\LaravelCalendly\Supports\Configuration\ControllerGeneratorProvider;
 use Typedin\LaravelCalendly\Supports\ControllerGenerator;
 use Typedin\LaravelCalendly\Supports\EndpointMapper;
@@ -23,7 +23,6 @@ class ControllerGeneratorTest extends TestCase
 
     protected function setUp(): void
     {
-        parent::setUp();
         $this->mapper = new EndpointMapper(file_get_contents(__DIR__.'/../../doc/openapi.yaml'));
     }
 
@@ -38,7 +37,7 @@ class ControllerGeneratorTest extends TestCase
         );
         $controller = ControllerGenerator::controller($provider);
 
-        $this->assertEquals('\\' . Controller::class, $controller->getExtends());
+        $this->assertEquals('\\'.Controller::class, $controller->getExtends());
         $this->assertEquals('CalendlyUsersController', $controller->getName());
     }
 
@@ -70,7 +69,7 @@ class ControllerGeneratorTest extends TestCase
         $controller = ControllerGenerator::controller($provider);
 
         $method = $controller->getMethod('index');
-        $this->assertEquals('\\' . IndexEventTypesRequest::class, $method->getParameters()['request']->getType());
+        $this->assertEquals('\\'.IndexEventTypesRequest::class, $method->getParameters()['request']->getType());
         $this->assertStringContainsString('$response = $this->api->get("/event_types/", $request);', $method->getBody());
         $this->assertStringContainsString('$all = collect($response->collect("collection"))', $method->getBody());
         $this->assertStringContainsString('->map(fn ($args) => new \Typedin\LaravelCalendly\Models\EventType(...$args));', $method->getBody());
@@ -111,7 +110,7 @@ class ControllerGeneratorTest extends TestCase
         $controller = ControllerGenerator::controller($provider);
         $method = $controller->getMethod('show');
 
-        $this->assertEquals('\\' . ShowInviteeNoShowRequest::class, $method->getParameters()['request']->getType());
+        $this->assertEquals('\\'.ShowInviteeNoShowRequest::class, $method->getParameters()['request']->getType());
         $this->assertStringContainsString('$response = $this->api->get("/invitee_no_shows/{$request->validated("uuid")}/", $request);', $method->getBody());
         $this->assertStringContainsString('return response()->json([', $method->getBody());
         $this->assertStringContainsString('"invitee_no_show" => new \Typedin\LaravelCalendly\Models\InviteeNoShow(...$response->json("resource")),', $method->getBody());
@@ -132,7 +131,7 @@ class ControllerGeneratorTest extends TestCase
         $controller = ControllerGenerator::controller($provider);
         $method = $controller->getMethod('create');
 
-        $this->assertEquals('\\' . StoreSchedulingLinkRequest::class, $method->getParameters()['request']->getType());
+        $this->assertEquals('\\'.StoreSchedulingLinkRequest::class, $method->getParameters()['request']->getType());
         $this->assertStringContainsString('$response = $this->api->post("/scheduling_links/", $request);', $method->getBody());
 
         $this->assertStringContainsString('return response()->json([', $method->getBody());
@@ -154,7 +153,7 @@ class ControllerGeneratorTest extends TestCase
         $controller = ControllerGenerator::controller($provider);
         $method = $controller->getMethod('create');
 
-        $this->assertEquals('\\' . StoreDataComplianceInviteeRequest::class, $method->getParameters()['request']->getType());
+        $this->assertEquals('\\'.StoreDataComplianceInviteeRequest::class, $method->getParameters()['request']->getType());
         $this->assertStringContainsString('$response = $this->api->post("/data_compliance/deletion/invitees/", $request);', $method->getBody());
 
         $this->assertStringContainsString('return \Illuminate\Support\Facades\Response::json([], 202);', $method->getBody());
@@ -174,7 +173,7 @@ class ControllerGeneratorTest extends TestCase
         $controller = ControllerGenerator::controller($provider);
         $method = $controller->getMethod('create');
 
-        $this->assertEquals('\\' . StoreOrganizationInvitationRequest::class, $method->getParameters()['request']->getType());
+        $this->assertEquals('\\'.StoreOrganizationInvitationRequest::class, $method->getParameters()['request']->getType());
         $this->assertStringContainsString('$response = $this->api->post("/organizations/{$request->validated("uuid")}/invitations/", $request);', $method->getBody());
 
         $this->assertStringContainsString('return response()->json([', $method->getBody());
@@ -196,7 +195,7 @@ class ControllerGeneratorTest extends TestCase
         $controller = ControllerGenerator::controller($provider);
         $method = $controller->getMethod('destroy');
 
-        $this->assertEquals('\\' . DestroyInviteeNoShowRequest::class, $method->getParameters()['request']->getType());
+        $this->assertEquals('\\'.DestroyInviteeNoShowRequest::class, $method->getParameters()['request']->getType());
         $this->assertStringContainsString('$response = $this->api->delete("/invitee_no_shows/{$request->validated("uuid")}/");', $method->getBody());
 
         $this->assertStringContainsString('return \Illuminate\Support\Facades\Response::json([], 204);', $method->getBody());
@@ -216,7 +215,7 @@ class ControllerGeneratorTest extends TestCase
         $controller = ControllerGenerator::controller($provider);
         $method = $controller->getMethod('destroy');
 
-        $this->assertEquals('\\' . DestroyOrganizationInvitationRequest::class, $method->getParameters()['request']->getType());
+        $this->assertEquals('\\'.DestroyOrganizationInvitationRequest::class, $method->getParameters()['request']->getType());
         $this->assertStringContainsString('$this->api->delete("/organizations/{$request->validated("org_uuid")}/invitations/{$request->validated("uuid")}/");', $method->getBody());
 
         $this->assertStringContainsString('return \Illuminate\Support\Facades\Response::json([], 204);', $method->getBody());
@@ -242,7 +241,7 @@ class ControllerGeneratorTest extends TestCase
         $this->assertCount(2, $rest_methods);
 
         tap($rest_methods->each(function ($method) {
-            $this->assertEquals('\\' . JsonResponse::class, $method->getReturnType());
+            $this->assertEquals('\\'.JsonResponse::class, $method->getReturnType());
         }));
     }
 

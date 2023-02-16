@@ -17,8 +17,6 @@ class FormRequestGeneratorTest extends TestCase
 
     protected function setUp(): void
     {
-        parent::setUp();
-
         $content = file_get_contents(__DIR__.'/../__fixtures__/api.json');
         $this->json = json_decode($content, true, 512, JSON_THROW_ON_ERROR);
     }
@@ -50,7 +48,7 @@ class FormRequestGeneratorTest extends TestCase
         $validator = FormRequestGenerator::formRequest($provider);
 
         $this->assertEquals('IndexScheduledEventsRequest', $validator->getName());
-        $this->assertEquals('\\' . FormRequest::class, $validator->getExtends());
+        $this->assertEquals('\\'.FormRequest::class, $validator->getExtends());
 
         $this->assertStringContainsString(sprintf("'%s' => '%s',", $property, $expected_rules), $validator->getMethod('rules')->getBody());
     }
@@ -81,7 +79,7 @@ class FormRequestGeneratorTest extends TestCase
         $provider = new IndexFormRequestProvider(path: '/event_types', name:'EventTypes', value: $this->path('/event_types'));
         $validator = FormRequestGenerator::formRequest($provider);
 
-        $this->assertEquals('\\' . FormRequest::class, $validator->getExtends());
+        $this->assertEquals('\\'.FormRequest::class, $validator->getExtends());
         $this->assertEquals('IndexEventTypesRequest', $validator->getName());
 
         $this->assertStringContainsString(sprintf("'%s' => '%s',", $property, $expected_rules), $validator->getMethod('rules')->getBody());
@@ -115,7 +113,7 @@ class FormRequestGeneratorTest extends TestCase
 
         $validator = FormRequestGenerator::formRequest($provider);
 
-        $this->assertEquals('\\' . FormRequest::class, $validator->getExtends());
+        $this->assertEquals('\\'.FormRequest::class, $validator->getExtends());
         $this->assertEquals('ShowScheduledEventRequest', $validator->getName());
         $rules = $validator->getMethod('rules');
 
@@ -148,7 +146,7 @@ class FormRequestGeneratorTest extends TestCase
 
         $validator = FormRequestGenerator::formRequest($provider);
 
-        $this->assertEquals('\\' . FormRequest::class, $validator->getExtends());
+        $this->assertEquals('\\'.FormRequest::class, $validator->getExtends());
         $this->assertEquals('ShowUserRequest', $validator->getName());
         $rules = $validator->getMethod('rules');
 
@@ -174,7 +172,7 @@ class FormRequestGeneratorTest extends TestCase
 
         $validator = FormRequestGenerator::formRequest($provider);
 
-        $this->assertEquals('\\' . FormRequest::class, $validator->getExtends());
+        $this->assertEquals('\\'.FormRequest::class, $validator->getExtends());
 
         $this->assertEquals('StoreOrganizationInviationRequest', $validator->getName());
         $rules = $validator->getMethod('rules');
@@ -197,7 +195,7 @@ class FormRequestGeneratorTest extends TestCase
         );
         $validator = FormRequestGenerator::formRequest($provider);
 
-        $this->assertEquals('\\' . FormRequest::class, $validator->getExtends());
+        $this->assertEquals('\\'.FormRequest::class, $validator->getExtends());
 
         $this->assertEquals('DestroyOrganizationMembershipRequest', $validator->getName());
         $rules = $validator->getMethod('rules');
