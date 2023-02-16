@@ -19,29 +19,14 @@ use Typedin\LaravelCalendly\Supports\RouteGenerator;
 
 class GeneratedFileManager
 {
-    /**
-     * @var Collection
-     */
     public readonly Collection $models;
 
-    /**
-     * @var Collection
-     */
     public readonly Collection $errorResponses;
 
-    /**
-     * @var Collection
-     */
     public readonly Collection $controllers;
 
-    /**
-     * @var Collection
-     */
     public readonly Collection $routes;
 
-    /**
-     * @var Collection
-     */
     public readonly Collection $formRequests;
 
     public function __construct(private readonly EndpointMapper $mapper, private readonly string $path)
@@ -55,9 +40,7 @@ class GeneratedFileManager
 
     public function createModels(): GeneratedFileManager
     {
-        $this->mapper->modelProviders()->map(function (ModelGeneratorProvider $provider) {
-            return ModelGenerator::model($provider);
-        })->unique()->filter()->each(fn ($model) => $this->models->push([
+        $this->mapper->modelProviders()->map(fn(ModelGeneratorProvider $provider) => ModelGenerator::model($provider))->unique()->filter()->each(fn ($model) => $this->models->push([
             'model' => $model,
             'namespace' => $this->createNamespace($model, "Typedin\LaravelCalendly\Models"),
         ]));
@@ -170,7 +153,7 @@ class GeneratedFileManager
         array_map(function ($param) use (&$types) {
             $types[] = $param->getType(true);
         }, $class->getProperties());
-        if (count($types)) {
+        if ($types !== []) {
             foreach (array_filter($types) as $type) {
                 foreach ($type->getTypes() as $subtype) {
                     if (! $subtype->isClass()) {
