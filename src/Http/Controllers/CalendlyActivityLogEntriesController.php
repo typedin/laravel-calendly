@@ -21,7 +21,6 @@ class CalendlyActivityLogEntriesController extends Controller
 
     public function index(IndexActivityLogEntriesRequest $request): JsonResponse
     {
-
         $response = $this->api->get("/activity_log_entries/", $request);
         if (! $response->ok()) {
             return ErrorResponseFactory::getJson($response);
