@@ -9,7 +9,7 @@ class DestroyWebhookSubscriptionRequest extends FormRequest
     public function rules(): array
     {
         return [
-        'webhook_uuid' => 'required|string',
+            'webhook_uuid' => 'required|string',
         ];
     }
 }

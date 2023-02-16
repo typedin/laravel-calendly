@@ -9,8 +9,8 @@ class StoreOrganizationInvitationRequest extends FormRequest
     public function rules(): array
     {
         return [
-        'uuid' => 'required|string',
-        'email' => 'required|email',
+            'uuid' => 'required|string',
+            'email' => 'required|email',
         ];
     }
 }

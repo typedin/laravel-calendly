@@ -33,6 +33,7 @@ class Event
      * The event type associated with this event
      */
     public string $event_type;
+
     public $location;
 
     public object $invitees_counter;
@@ -56,7 +57,9 @@ class Event
      * Additional people added to an event by an invitee
      */
     public array $event_guests;
+
     public $cancellation;
+
     public $calendar_event;
 
     public function __construct(

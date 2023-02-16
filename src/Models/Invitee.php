@@ -58,6 +58,7 @@ class Invitee
      * The moment when the event was last updated (e.g. "2020-01-02T03:04:05.678123Z")
      */
     public string $updated_at;
+
     public $tracking;
 
     /**
@@ -94,6 +95,7 @@ class Invitee
      * Reference to a routing form submission that redirected the invitee to a booking page.
      */
     public ?string $routing_form_submission;
+
     public $cancellation;
 
     /**
