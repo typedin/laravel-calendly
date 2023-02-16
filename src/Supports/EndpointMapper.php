@@ -2,11 +2,11 @@
 
 namespace Typedin\LaravelCalendly\Supports;
 
-use Throwable;
 use Exception;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Symfony\Component\Yaml\Yaml;
+use Throwable;
 use Typedin\LaravelCalendly\Supports\Configuration\ControllerGeneratorProvider;
 use Typedin\LaravelCalendly\Supports\Configuration\DestroyFormRequestProvider;
 use Typedin\LaravelCalendly\Supports\Configuration\ErrorResponseGeneratorProvider;
@@ -50,9 +50,10 @@ class EndpointMapper
     public function modelProviders(): Collection
     {
         return $this->schemas()
-                    ->filter(fn($value, $key) => $key !== 'ErrorResponse')
+                    ->filter(fn ($value, $key) => $key !== 'ErrorResponse')
                    ->map(function ($schema, $name) {
                        $th = null;
+
                        try {
                            return new ModelGeneratorProvider(name: $name, schema: $schema);
                        } catch (Throwable $th) {
@@ -92,7 +93,7 @@ class EndpointMapper
     public function controllerGeneratorProviders(): Collection
     {
         return $this->paths()->keys()
-                   ->map(fn($key) => new ControllerGeneratorProvider($this, $key));
+                   ->map(fn ($key) => new ControllerGeneratorProvider($this, $key));
     }
 
     public function controllerNames(): Collection
@@ -106,7 +107,7 @@ class EndpointMapper
 
   public function errorCodes(): Collection
   {
-      return  collect($this->paths()->first()['get']['responses'])->filter(fn($value, $key) => $key !== 200 && isset($value['$ref']))->map(function ($value) {
+      return  collect($this->paths()->first()['get']['responses'])->filter(fn ($value, $key) => $key !== 200 && isset($value['$ref']))->map(function ($value) {
           $local = explode('/', (string) $value['$ref']);
 
           return end($local);
@@ -118,7 +119,7 @@ class EndpointMapper
         $base_error = ['ERROR_RESPONSE' => $this->schemas()->get('ErrorResponse')];
         $merged = collect($this->components()->get('responses'))->merge(collect($base_error));
 
-        return $merged->map(fn($value, $key) => new ErrorResponseGeneratorProvider(name: $key, schema: $value, error_code: $this->errorCodes()->get($key) ?? 500));
+        return $merged->map(fn ($value, $key) => new ErrorResponseGeneratorProvider(name: $key, schema: $value, error_code: $this->errorCodes()->get($key) ?? 500));
     }
 
     public function mapControllerNamesToEndpoints(): Collection

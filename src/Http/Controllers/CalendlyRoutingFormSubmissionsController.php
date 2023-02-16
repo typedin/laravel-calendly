@@ -2,12 +2,12 @@
 
 namespace Typedin\LaravelCalendly\Http\Controllers;
 
-use Typedin\LaravelCalendly\Services\ErrorResponseFactory;
-use Typedin\LaravelCalendly\Models\RoutingFormSubmission;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Routing\Controller;
 use Typedin\LaravelCalendly\Contracts\CalendlyApiInterface;
 use Typedin\LaravelCalendly\Http\Requests\ShowRoutingFormSubmissionRequest;
+use Typedin\LaravelCalendly\Models\RoutingFormSubmission;
+use Typedin\LaravelCalendly\Services\ErrorResponseFactory;
 
 class CalendlyRoutingFormSubmissionsController extends Controller
 {
@@ -21,7 +21,10 @@ class CalendlyRoutingFormSubmissionsController extends Controller
     public function show(ShowRoutingFormSubmissionRequest $request): JsonResponse
     {
         $response = $this->api->get("/routing_form_submissions/{$request->validated("uuid")}/", $request);
-        if(!$response->ok()) {return ErrorResponseFactory::getJson($response);}
+        if (! $response->ok()) {
+            return ErrorResponseFactory::getJson($response);
+        }
+
         return response()->json([
         "routing_form_submission" => new RoutingFormSubmission(...$response->json("resource")),
         ]);

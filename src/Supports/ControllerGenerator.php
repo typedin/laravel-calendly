@@ -2,12 +2,12 @@
 
 namespace Typedin\LaravelCalendly\Supports;
 
-use Illuminate\Routing\Controller;
-use Typedin\LaravelCalendly\Contracts\CalendlyApiInterface;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Routing\Controller;
 use Illuminate\Support\Str;
 use Nette\PhpGenerator\ClassType;
 use Throwable;
+use Typedin\LaravelCalendly\Contracts\CalendlyApiInterface;
 use Typedin\LaravelCalendly\Supports\Configuration\ControllerGeneratorProvider;
 
 class ControllerGenerator
