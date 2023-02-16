@@ -3,6 +3,7 @@
 namespace Typedin\LaravelCalendly\Supports;
 
 use Exception;
+
 class HttpMethod
 {
     public static function getRestfulControllerMethod(array $endpoints, string $path, string $method): string

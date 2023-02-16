@@ -22,6 +22,7 @@ class CalendlyWebhookSubscriptionsController extends Controller
     public function show(ShowWebhookSubscriptionRequest $request): JsonResponse
     {
         $response = $this->api->get("/webhook_subscriptions/{$request->validated('webhook_uuid')}/", $request);
+
         if (! $response->ok()) {
             return ErrorResponseFactory::getJson($response);
         }
@@ -34,6 +35,7 @@ class CalendlyWebhookSubscriptionsController extends Controller
     public function destroy(DestroyWebhookSubscriptionRequest $request): JsonResponse
     {
         $response = $this->api->delete("/webhook_subscriptions/{$request->validated('webhook_uuid')}/");
+
         if (! $response->ok()) {
             return ErrorResponseFactory::getJson($response);
         }

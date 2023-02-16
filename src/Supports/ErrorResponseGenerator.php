@@ -2,10 +2,10 @@
 
 namespace Typedin\LaravelCalendly\Supports;
 
-use Typedin\LaravelCalendly\Http\Errors\ErrorResponse;
 use Illuminate\Http\JsonResponse;
 use Nette\PhpGenerator\ClassType;
 use Nette\PhpGenerator\PhpNamespace;
+use Typedin\LaravelCalendly\Http\Errors\ErrorResponse;
 use Typedin\LaravelCalendly\Supports\Configuration\BaseErrorResponseGeneratorProvider;
 
 class ErrorResponseGenerator

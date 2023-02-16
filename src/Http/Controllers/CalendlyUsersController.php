@@ -21,6 +21,7 @@ class CalendlyUsersController extends Controller
     public function show(ShowUserRequest $request): JsonResponse
     {
         $response = $this->api->get('/users/me/', $request);
+
         if (! $response->ok()) {
             return ErrorResponseFactory::getJson($response);
         }

@@ -29,6 +29,7 @@ class CalendlyOrganizationMembershipsController extends Controller
         ->map(fn ($args) => new OrganizationMembership(...$args));
         $pagination = new Pagination(...$response->collect('pagination')->all());
 
+
         return response()->json([
             'organization_memberships' => $all,
             'pagination' => $pagination,

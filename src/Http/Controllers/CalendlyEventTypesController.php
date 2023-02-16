@@ -21,6 +21,7 @@ class CalendlyEventTypesController extends Controller
     public function show(ShowEventTypeRequest $request): JsonResponse
     {
         $response = $this->api->get("/event_types/{$request->validated('uuid')}/", $request);
+
         if (! $response->ok()) {
             return ErrorResponseFactory::getJson($response);
         }

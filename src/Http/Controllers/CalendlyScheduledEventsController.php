@@ -21,6 +21,7 @@ class CalendlyScheduledEventsController extends Controller
     public function show(ShowScheduledEventRequest $request): JsonResponse
     {
         $response = $this->api->get("/scheduled_events/{$request->validated('uuid')}/", $request);
+
         if (! $response->ok()) {
             return ErrorResponseFactory::getJson($response);
         }

@@ -29,6 +29,7 @@ class CalendlyUserBusyTimesController extends Controller
         ->map(fn ($args) => new UserBusyTime(...$args));
         $pagination = new Pagination(...$response->collect('pagination')->all());
 
+
         return response()->json([
             'user_busy_times' => $all,
             'pagination' => $pagination,

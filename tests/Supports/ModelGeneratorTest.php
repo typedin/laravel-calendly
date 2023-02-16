@@ -14,7 +14,6 @@ class ModelGeneratorTest extends TestCase
 
     protected function setUp(): void
     {
-
         $this->json = Yaml::parse(file_get_contents(__DIR__.'/../../doc/openapi.yaml'));
     }
 

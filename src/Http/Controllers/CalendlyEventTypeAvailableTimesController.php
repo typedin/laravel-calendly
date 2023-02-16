@@ -29,6 +29,7 @@ class CalendlyEventTypeAvailableTimesController extends Controller
         ->map(fn ($args) => new EventTypeAvailableTime(...$args));
         $pagination = new Pagination(...$response->collect('pagination')->all());
 
+
         return response()->json([
             'event_type_available_times' => $all,
             'pagination' => $pagination,

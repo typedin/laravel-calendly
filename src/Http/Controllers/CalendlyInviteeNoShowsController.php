@@ -21,6 +21,7 @@ class CalendlyInviteeNoShowsController extends Controller
     public function create(StoreInviteeNoShowRequest $request): JsonResponse
     {
         $response = $this->api->post('/invitee_no_shows/', $request);
+
         if (! $response->ok()) {
             return ErrorResponseFactory::getJson($response);
         }

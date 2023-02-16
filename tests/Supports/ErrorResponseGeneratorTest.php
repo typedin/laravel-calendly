@@ -3,10 +3,10 @@
 namespace Typedin\LaravelCalendly\Tests\Supports;
 
 use Illuminate\Http\JsonResponse;
-use Typedin\LaravelCalendly\Http\Errors\ErrorResponse;
 use Illuminate\Support\Collection;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Yaml\Yaml;
+use Typedin\LaravelCalendly\Http\Errors\ErrorResponse;
 use Typedin\LaravelCalendly\Supports\Configuration\BaseErrorResponseGeneratorProvider;
 use Typedin\LaravelCalendly\Supports\Configuration\ErrorResponseGeneratorProvider;
 use Typedin\LaravelCalendly\Supports\ErrorResponseGenerator;

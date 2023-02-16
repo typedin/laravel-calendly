@@ -21,6 +21,7 @@ class CalendlyRoutingFormSubmissionsController extends Controller
     public function show(ShowRoutingFormSubmissionRequest $request): JsonResponse
     {
         $response = $this->api->get("/routing_form_submissions/{$request->validated('uuid')}/", $request);
+
         if (! $response->ok()) {
             return ErrorResponseFactory::getJson($response);
         }
