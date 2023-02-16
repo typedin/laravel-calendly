@@ -2,6 +2,8 @@
 
 namespace Typedin\LaravelCalendly\Tests\Supports;
 
+use Illuminate\Http\JsonResponse;
+use Typedin\LaravelCalendly\Http\Errors\ErrorResponse;
 use Illuminate\Support\Collection;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Yaml\Yaml;
@@ -20,17 +22,11 @@ class ErrorResponseGeneratorTest extends TestCase
         $this->json = Yaml::parse(file_get_contents(__DIR__.'/../../doc/openapi.yaml'));
     }
 
-    /**
-     * @return Collection
-     */
     private function schemas(): Collection
     {
         return collect($this->json['components']['schemas']);
     }
 
-    /**
-     * @return Collection
-     */
     private function responses(): Collection
     {
         return collect($this->json['components']['responses']);
@@ -61,7 +57,7 @@ class ErrorResponseGeneratorTest extends TestCase
             fn ($comment) => $this->assertStringContainsString($comment, $error_response->getProperty($parameterName)->getComment())
         );
 
-        $this->assertEquals('\Illuminate\Http\JsonResponse', $error_response->getMethod('toJson')->getReturnType());
+        $this->assertEquals('\\' . JsonResponse::class, $error_response->getMethod('toJson')->getReturnType());
         $this->assertStringContainsString('return response()->json(["message" => $this->message, "title" => $this->title, "details" => $this->details], $this->error_code);', $error_response->getMethod('toJson')->getBody());
     }
 
@@ -85,7 +81,7 @@ class ErrorResponseGeneratorTest extends TestCase
 
         $this->assertEquals('InvalidArgumentError', $error_response->getName());
         $this->assertEquals('Typedin\LaravelCalendly\Http\Errors', $error_response->getNamespace()->getName());
-        $this->assertEquals('\Typedin\LaravelCalendly\Http\Errors\ErrorResponse', $error_response->getExtends());
+        $this->assertEquals('\\' . ErrorResponse::class, $error_response->getExtends());
         $this->assertCount(0, $error_response->getMethods());
     }
 
@@ -104,7 +100,7 @@ class ErrorResponseGeneratorTest extends TestCase
 
         $this->assertEquals('AlreadyExistsError', $error_response->getName());
         $this->assertEquals('Typedin\LaravelCalendly\Http\Errors', $error_response->getNamespace()->getName());
-        $this->assertEquals('\Typedin\LaravelCalendly\Http\Errors\ErrorResponse', $error_response->getExtends());
+        $this->assertEquals('\\' . ErrorResponse::class, $error_response->getExtends());
         $this->assertCount(0, $error_response->getMethods());
     }
 }
