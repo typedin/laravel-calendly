@@ -73,6 +73,6 @@ class BaseApiClientTest extends TestCase
 
         Http::assertSent(fn (Request $request) => $request->header('Authorization')[0] == 'Bearer fake-api-key'
         &&
-        $request->url() == 'fake/api/endpoint/users/me');
+        $request->url() == 'https://fake/api/endpoint/users/me');
     }
 }

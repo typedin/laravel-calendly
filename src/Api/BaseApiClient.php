@@ -29,7 +29,7 @@ class BaseApiClient implements CalendlyApiInterface
         if (! config('laravel-calendly.api.endpoint')) {
             throw ApiClientException::ApiEndpointNotFound();
         }
-        $this->endpoint = config('laravel-calendly.api.endpoint');
+        $this->endpoint = 'https://'.config('laravel-calendly.api.endpoint');
     }
 
     /**
