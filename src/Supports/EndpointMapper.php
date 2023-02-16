@@ -133,7 +133,7 @@ class EndpointMapper
     public static function fullname(string $input): string
     {
         $local = collect(array_values(array_filter(explode('/', $input))))
-               ->filter(fn ($part) => ! Str::contains($part, ['deletion', 'uuid']))
+               ->filter(fn ($part) => ! Str::contains($part, ['uuid']))
                ->filter(fn ($part) => $part !== 'me')
                ->values()
                ->map(fn ($part): string => ucfirst(Str::camel($part)));

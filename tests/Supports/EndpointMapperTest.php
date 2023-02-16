@@ -13,31 +13,6 @@ class EndpointMapperTest extends TestCase
     }
 
     /**
-     * @dataProvider endpointProvider
-     *
-     * @test
-     */
-    public function it_creates_cruddy_controller_names_for_endpoints(string $result, string $input): void
-    {
-        $this->assertEquals($result, EndpointMapper::fullname($input));
-    }
-
-    /**
-     * @return array<int,array<int,string>>
-     */
-    public function endpointProvider(): array
-    {
-        $content = collect(json_decode(file_get_contents(__DIR__.'/../__fixtures__/Endpoints.json'), null, 512, JSON_THROW_ON_ERROR));
-
-        return $content
-            ->values()
-            ->flatMap(fn ($value) => collect($value->endpoints)->map(
-                fn ($endpoint) => [$value->name, $endpoint]
-            ))
-            ->all();
-    }
-
-    /**
      * @test
      */
     public function it_creates_entity_names(): void
@@ -72,17 +47,135 @@ class EndpointMapperTest extends TestCase
     }
 
     /**
+     * @dataProvider allPaths
+     *
      * @test
      */
-    public function it_maps_controller_names_to_endpoints(): void
+    public function it_maps_controller_names_to_endpoints($controller_name, $paths): void
     {
         $output = (new EndpointMapper($this->yaml()))->mapControllerNamesToEndpoints();
 
-        $this->assertArrayHasKey('/scheduled_events', $output->get('ScheduledEvents'));
-        $this->assertArrayHasKey('get', $output->get('ScheduledEvents')['/scheduled_events']);
+        collect($paths)->each(function ($value) use ($output, $controller_name) {
+            $this->assertArrayHasKey($value, $output->get($controller_name));
+        });
+    }
 
-        $this->assertArrayHasKey('/routing_form_submissions', $output->get('RoutingFormSubmissions'));
-        $this->assertArrayHasKey('/routing_form_submissions/{uuid}', $output->get('RoutingFormSubmissions'));
+    public function allPaths()
+    {
+        return [
+
+            [
+                'ActivityLogEntries', [
+                    '/activity_log_entries',
+                ],
+            ],
+
+            [
+                'DataComplianceDeletionInvitees', [
+                    '/data_compliance/deletion/invitees',
+                ],
+            ],
+
+            [
+                'EventTypeAvailableTimes', [
+                    '/event_type_available_times',
+                ],
+            ],
+
+            [
+                'EventTypes', [
+                    '/event_types',
+                    '/event_types/{uuid}',
+                ],
+            ],
+
+            [
+                'InviteeNoShows', [
+                    '/invitee_no_shows',
+                    '/invitee_no_shows/{uuid}',
+                ],
+            ],
+
+            [
+                'OrganizationMemberships', [
+                    '/organization_memberships',
+                    '/organization_memberships/{uuid}',
+                ],
+            ],
+
+            [
+                'OrganizationInvitations', [
+                    '/organizations/{org_uuid}/invitations/{uuid}',
+                    '/organizations/{uuid}/invitations',
+                ],
+            ],
+
+            [
+                'RoutingFormSubmissions', [
+                    '/routing_form_submissions',
+                    '/routing_form_submissions/{uuid}',
+                ],
+            ],
+            [
+                'RoutingForms', [
+                    '/routing_forms',
+                    '/routing_forms/{uuid}',
+                ],
+            ],
+
+            [
+                'ScheduledEvents', [
+                    '/scheduled_events',
+                    '/scheduled_events/{uuid}',
+                ],
+            ],
+
+            [
+                'ScheduledEventCancellations', [
+                    '/scheduled_events/{uuid}/cancellation',
+                ],
+            ],
+
+            [
+                'ScheduledEventInvitees', [
+                    '/scheduled_events/{uuid}/invitees',
+                    '/scheduled_events/{event_uuid}/invitees/{invitee_uuid}',
+                ],
+            ],
+
+            [
+                'SchedulingLinks', [
+                    '/scheduling_links',
+                ],
+            ],
+
+            [
+                'UserAvailabilitySchedules', [
+                    '/user_availability_schedules',
+                    '/user_availability_schedules/{uuid}',
+                ],
+            ],
+
+            [
+                'UserBusyTimes', [
+                    '/user_busy_times',
+                ],
+            ],
+
+            [
+                'Users', [
+                    '/users/me',
+                    '/users/{uuid}',
+                ],
+            ],
+
+            [
+                'WebhookSubscriptions', [
+                    '/webhook_subscriptions',
+                    '/webhook_subscriptions/{webhook_uuid}',
+                ],
+            ],
+        ];
     }
 
     /**
