@@ -5,7 +5,7 @@ namespace Typedin\LaravelCalendly\Supports;
 use Exception;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
-use Typedin\LaravelCalendly\Supports\Configuration\ControllerGeneratorProvider;
+use Typedin\LaravelCalendly\Supports\Configuration\RouteGeneratorProvider;
 
 class RouteGenerator
 {
@@ -18,13 +18,16 @@ class RouteGenerator
         $generator = new RouteGenerator($mapper, $path);
 
         return $generator->controllerProviderForCurrentPath()->flatMap(
-            fn (ControllerGeneratorProvider $provider) => $generator->buildRoutes($provider)
+            fn (RouteGeneratorProvider $provider) => $generator->buildRoutes($provider)
         );
     }
 
     private function controllerProviderForCurrentPath(): Collection
     {
-        $local_controller_provider_for_path = $this->mapper->controllerGeneratorProviders()->filter(fn (ControllerGeneratorProvider $provider) => $provider->path === $this->path);
+        $local_controller_provider_for_path = $this->mapper->routeGeneratorProviders()
+                ->filter(function (RouteGeneratorProvider $provider) {
+                    return $provider->path == $this->path;
+                });
 
         if ($local_controller_provider_for_path->count() === 0) {
             throw new Exception("The path ( $this->path ) was not found.");
@@ -33,14 +36,14 @@ class RouteGenerator
         return $local_controller_provider_for_path;
     }
 
-    private function buildRoutes(ControllerGeneratorProvider $provider): Collection
+    private function buildRoutes(RouteGeneratorProvider $provider): Collection
     {
         return collect(array_keys($provider->mapper->paths()->get($this->path)))
             ->filter(fn ($method) => $method != 'parameters')
             ->map(fn ($method) => $this->generateFunction($method, $provider));
     }
 
-    private function generateFunction(string $method, ControllerGeneratorProvider $provider): string
+    private function generateFunction(string $method, RouteGeneratorProvider $provider): string
     {
         $restfull_method = HttpMethod::getRestfulControllerMethod($provider->mapper->paths()->all(), $this->path, $method);
 

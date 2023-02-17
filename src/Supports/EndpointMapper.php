@@ -12,6 +12,7 @@ use Typedin\LaravelCalendly\Supports\Configuration\DestroyFormRequestProvider;
 use Typedin\LaravelCalendly\Supports\Configuration\ErrorResponseGeneratorProvider;
 use Typedin\LaravelCalendly\Supports\Configuration\IndexFormRequestProvider;
 use Typedin\LaravelCalendly\Supports\Configuration\ModelGeneratorProvider;
+use Typedin\LaravelCalendly\Supports\Configuration\RouteGeneratorProvider;
 use Typedin\LaravelCalendly\Supports\Configuration\ShowFormRequestProvider;
 use Typedin\LaravelCalendly\Supports\Configuration\StoreFormRequestProvider;
 
@@ -22,9 +23,10 @@ class EndpointMapper
      */
     private $parsed;
 
-    public function __construct(string $yaml)
+    public function __construct(private  string $yaml)
     {
         $this->parsed = Yaml::parse($yaml);
+        $this->yaml = $yaml;
     }
 
     public function schemas(): Collection
@@ -51,15 +53,15 @@ class EndpointMapper
     {
         return $this->schemas()
                     ->filter(fn ($value, $key) => $key !== 'ErrorResponse')
-                   ->map(function ($schema, $name) {
-                       $th = null;
+                    ->map(function ($schema, $name) {
+                        $th = null;
 
-                       try {
-                           return new ModelGeneratorProvider(name: $name, schema: $schema);
-                       } catch (Throwable $th) {
-                           throw new Exception('Error Processing Data to build a ModelGeneratorProvider', $th->getCode(), $th);
-                       }
-                   });
+                        try {
+                            return new ModelGeneratorProvider(name: $name, schema: $schema);
+                        } catch (Throwable $th) {
+                            throw new Exception('Error Processing Data to build a ModelGeneratorProvider', $th->getCode(), $th);
+                        }
+                    });
     }
 
     public function formRequestProviders(): Collection
@@ -92,8 +94,13 @@ class EndpointMapper
 
     public function controllerGeneratorProviders(): Collection
     {
-        return $this->paths()->keys()
-                   ->map(fn ($key) => new ControllerGeneratorProvider($this, $key));
+        return $this->paths()
+                    ->keys()
+                    ->map(fn ($key) => new ControllerGeneratorProvider(
+                        mapper: $this,
+                        controller_name: $this->fullname($key),
+                        paths: $this->paths()->filter(fn ($path, $applesauce) => $this->fullname($applesauce) == $key)
+                    ));
     }
 
     public function controllerNames(): Collection
@@ -103,6 +110,17 @@ class EndpointMapper
                    ->filter(fn ($key) => (bool) $key)
                    ->unique()
                    ->values();
+    }
+
+    public function routeGeneratorProviders(): Collection
+    {
+        return $this->paths()->map(function ($value, $path) {
+            return new RouteGeneratorProvider(
+                path: $path,
+                mapper: $this,
+                controller_name: $this->fullname($path),
+            );
+        });
     }
 
   public function errorCodes(): Collection
@@ -130,7 +148,7 @@ class EndpointMapper
                    ]);
     }
 
-    public static function fullname(string $input): string
+    private function fullname(string $input): string
     {
         $local = collect(array_values(array_filter(explode('/', $input))))
                ->filter(fn ($part) => ! Str::contains($part, ['uuid']))
