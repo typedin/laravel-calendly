@@ -16,15 +16,11 @@ class WebExConference
 
     /**
      * WebEx conference meeting url
-     *
-     * @var string
      */
     public ?string $join_url;
 
     /**
      * The conference metadata supplied by GoToMeeting
-     *
-     * @var object
      */
     public ?object $data;
 

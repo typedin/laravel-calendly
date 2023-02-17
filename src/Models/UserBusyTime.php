@@ -21,19 +21,14 @@ class UserBusyTime
 
     /**
      * The start time of the calendly event, as calculated by any "before" buffer set by the user
-     *
-     * @var string
      */
     public ?string $buffered_start_time;
 
     /**
      * The end time of the calendly event, as calculated by any "after" buffer set by the user
-     *
-     * @var string
      */
     public ?string $buffered_end_time;
 
-    /** @var object */
     public ?object $event;
 
     public function __construct(

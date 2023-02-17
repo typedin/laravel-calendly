@@ -11,29 +11,21 @@ class Pagination
 
     /**
      * URI to return the next page of an ordered list ("null" indicates no additional results are available)
-     *
-     * @var string
      */
     public ?string $next_page;
 
     /**
      * URI to return the previous page of an ordered list ("null" indicates no additional results are available)
-     *
-     * @var string
      */
     public ?string $previous_page;
 
     /**
      * Token to return the next page of an ordered list ("null" indicates no additional results are available)
-     *
-     * @var string
      */
     public ?string $next_page_token;
 
     /**
      * Token to return the previous page of an ordered list ("null" indicates no additional results are available)
-     *
-     * @var string
      */
     public ?string $previous_page_token;
 

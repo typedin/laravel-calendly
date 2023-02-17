@@ -11,8 +11,6 @@ class OutboundCall
 
     /**
      * The phone number the event host (publisher) will use to call the invitee
-     *
-     * @var string
      */
     public ?string $location;
 

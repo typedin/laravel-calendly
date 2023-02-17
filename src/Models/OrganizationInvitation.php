@@ -36,15 +36,11 @@ class OrganizationInvitation
 
     /**
      * The moment the invitation was last sent (e.g. "2020-01-02T03:04:05.678123Z")
-     *
-     * @var string
      */
     public ?string $last_sent_at;
 
     /**
      * When the invitation is accepted, a reference to the user who accepted the invitation
-     *
-     * @var string
      */
     public ?string $user;
 

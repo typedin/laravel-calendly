@@ -26,8 +26,6 @@ class WebhookSubscription
 
     /**
      * The date and time the webhook subscription is retried
-     *
-     * @var string
      */
     public ?string $retry_started_at;
 
@@ -53,15 +51,11 @@ class WebhookSubscription
 
     /**
      * The URI of the user that's associated with the webhook subscription
-     *
-     * @var string
      */
     public ?string $user;
 
     /**
      * The URI of the user who created the webhook subscription
-     *
-     * @var string
      */
     public ?string $creator;
 
