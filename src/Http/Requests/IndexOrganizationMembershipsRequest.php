@@ -2,9 +2,7 @@
 
 namespace Typedin\LaravelCalendly\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
-
-class IndexOrganizationMembershipsRequest extends FormRequest
+class IndexOrganizationMembershipsRequest extends \Illuminate\Foundation\Http\FormRequest
 {
     public function rules(): array
     {

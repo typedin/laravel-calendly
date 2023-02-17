@@ -89,6 +89,9 @@ class ControllerGenerator
     private function addShowMethod(string $path): void
     {
         // show method for /users/me would add twice the same method
+        if ($path == '/users/me') {
+            return;
+        }
         $this->controller
             ->addMethod('show')
             ->setReturnType('\\'.JsonResponse::class)

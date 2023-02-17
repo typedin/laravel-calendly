@@ -6,19 +6,16 @@ class InviteeQuestionAndAnswer
 {
     /**
      * A question on the invitee's booking form
-     * @var string $question
      */
     public string $question;
 
     /**
      * The invitee's answer to the question
-     * @var string $answer
      */
     public string $answer;
 
     /**
      * The position of the question in relation to others on the booking form
-     * @var float $position
      */
     public float $position;
 

@@ -6,13 +6,13 @@ class OutboundCall
 {
     /**
      * Indicates that the event host (publisher) will call the invitee
-     * @var string $type
      */
     public string $type;
 
     /**
      * The phone number the event host (publisher) will use to call the invitee
-     * @var string $location
+     *
+     * @var string
      */
     public ?string $location;
 
