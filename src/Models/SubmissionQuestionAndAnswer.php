@@ -6,8 +6,6 @@ class SubmissionQuestionAndAnswer
 {
     /**
      * Unique identifier for the routing form question.
-     *
-     * @var string
      */
     public ?string $question_uuid;
 
@@ -18,8 +16,6 @@ class SubmissionQuestionAndAnswer
 
     /**
      * Answer provided by the respondent when the form was submitted.
-     *
-     * @var string
      */
     public ?string $answer;
 

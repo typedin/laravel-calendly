@@ -3,12 +3,15 @@
 namespace Typedin\LaravelCalendly\Http\Controllers;
 
 use Illuminate\Http\JsonResponse;
+use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Response;
 use Typedin\LaravelCalendly\Contracts\CalendlyApiInterface;
 use Typedin\LaravelCalendly\Http\Requests\StoreDataComplianceDeletionInviteeRequest;
+use Typedin\LaravelCalendly\Services\ErrorResponseFactory;
 
-class CalendlyDataComplianceDeletionInviteesController extends \Illuminate\Routing\Controller
+class CalendlyDataComplianceDeletionInviteesController extends Controller
 {
-    private \Typedin\LaravelCalendly\Contracts\CalendlyApiInterface $api;
+    private readonly CalendlyApiInterface $api;
 
     public function __construct(CalendlyApiInterface $api)
     {
@@ -19,9 +22,9 @@ class CalendlyDataComplianceDeletionInviteesController extends \Illuminate\Routi
     {
         $response = $this->api->post('/data_compliance/deletion/invitees/', $request);
         if (! $response->ok()) {
-            return \Typedin\LaravelCalendly\Services\ErrorResponseFactory::getJson($response);
+            return ErrorResponseFactory::getJson($response);
         }
 
-        return \Illuminate\Support\Facades\Response::json([], 202);
+        return Response::json([], 202);
     }
 }

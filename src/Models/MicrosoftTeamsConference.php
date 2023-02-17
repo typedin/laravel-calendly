@@ -16,15 +16,11 @@ class MicrosoftTeamsConference
 
     /**
      * Microsoft Teams meeting url
-     *
-     * @var string
      */
     public ?string $join_url;
 
     /**
      * The conference metadata supplied by Microsoft Teams
-     *
-     * @var object
      */
     public ?object $data;
 

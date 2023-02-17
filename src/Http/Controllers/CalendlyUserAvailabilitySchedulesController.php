@@ -3,13 +3,17 @@
 namespace Typedin\LaravelCalendly\Http\Controllers;
 
 use Illuminate\Http\JsonResponse;
+use Illuminate\Routing\Controller;
 use Typedin\LaravelCalendly\Contracts\CalendlyApiInterface;
 use Typedin\LaravelCalendly\Http\Requests\IndexUserAvailabilitySchedulesRequest;
 use Typedin\LaravelCalendly\Http\Requests\ShowUserAvailabilityScheduleRequest;
+use Typedin\LaravelCalendly\Models\AvailabilitySchedule;
+use Typedin\LaravelCalendly\Models\Pagination;
+use Typedin\LaravelCalendly\Services\ErrorResponseFactory;
 
-class CalendlyUserAvailabilitySchedulesController extends \Illuminate\Routing\Controller
+class CalendlyUserAvailabilitySchedulesController extends Controller
 {
-    private \Typedin\LaravelCalendly\Contracts\CalendlyApiInterface $api;
+    private readonly CalendlyApiInterface $api;
 
     public function __construct(CalendlyApiInterface $api)
     {
@@ -20,11 +24,11 @@ class CalendlyUserAvailabilitySchedulesController extends \Illuminate\Routing\Co
     {
         $response = $this->api->get('/user_availability_schedules/', $request);
         if (! $response->ok()) {
-            return \Typedin\LaravelCalendly\Services\ErrorResponseFactory::getJson($response);
+            return ErrorResponseFactory::getJson($response);
         }
         $all = collect($response->collect('collection'))
-        ->map(fn ($args) => new \Typedin\LaravelCalendly\Models\AvailabilitySchedule(...$args));
-        $pagination = new \Typedin\LaravelCalendly\Models\Pagination(...$response->collect('pagination')->all());
+        ->map(fn ($args) => new AvailabilitySchedule(...$args));
+        $pagination = new Pagination(...$response->collect('pagination')->all());
 
         return response()->json([
             'availability_schedules' => $all,
@@ -36,11 +40,11 @@ class CalendlyUserAvailabilitySchedulesController extends \Illuminate\Routing\Co
     {
         $response = $this->api->get("/user_availability_schedules/{$request->validated('uuid')}/", $request);
         if (! $response->ok()) {
-            return \Typedin\LaravelCalendly\Services\ErrorResponseFactory::getJson($response);
+            return ErrorResponseFactory::getJson($response);
         }
 
         return response()->json([
-            'availability_schedule' => new \Typedin\LaravelCalendly\Models\AvailabilitySchedule(...$response->json('resource')),
+            'availability_schedule' => new AvailabilitySchedule(...$response->json('resource')),
         ]);
     }
 }

@@ -16,15 +16,11 @@ class ZoomConference
 
     /**
      * Zoom meeting url
-     *
-     * @var string
      */
     public ?string $join_url;
 
     /**
      * The conference metadata supplied by Zoom
-     *
-     * @var object
      */
     public ?object $data;
 

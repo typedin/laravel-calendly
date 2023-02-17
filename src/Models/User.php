@@ -36,8 +36,6 @@ class User
 
     /**
      * The URL of the user's avatar (image)
-     *
-     * @var string
      */
     public ?string $avatar_url;
 

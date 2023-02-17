@@ -25,15 +25,11 @@ class RoutingFormSubmission
 
     /**
      * The reference to the Invitee resource when routing form submission results in a scheduled meeting.
-     *
-     * @var string
      */
     public ?string $submitter;
 
     /**
      * Type of the respondent resource that submitted the form and scheduled a meeting.
-     *
-     * @var string
      */
     public ?string $submitter_type;
 

@@ -26,8 +26,6 @@ class Question
 
     /**
      * The respondent’s option(s) for "select" or "radios" types of questions.
-     *
-     * @var array
      */
     public ?array $answer_choices;
 

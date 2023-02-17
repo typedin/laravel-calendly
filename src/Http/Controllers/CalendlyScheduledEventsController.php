@@ -3,13 +3,17 @@
 namespace Typedin\LaravelCalendly\Http\Controllers;
 
 use Illuminate\Http\JsonResponse;
+use Illuminate\Routing\Controller;
 use Typedin\LaravelCalendly\Contracts\CalendlyApiInterface;
 use Typedin\LaravelCalendly\Http\Requests\IndexScheduledEventsRequest;
 use Typedin\LaravelCalendly\Http\Requests\ShowScheduledEventRequest;
+use Typedin\LaravelCalendly\Models\Event;
+use Typedin\LaravelCalendly\Models\Pagination;
+use Typedin\LaravelCalendly\Services\ErrorResponseFactory;
 
-class CalendlyScheduledEventsController extends \Illuminate\Routing\Controller
+class CalendlyScheduledEventsController extends Controller
 {
-    private \Typedin\LaravelCalendly\Contracts\CalendlyApiInterface $api;
+    private readonly CalendlyApiInterface $api;
 
     public function __construct(CalendlyApiInterface $api)
     {
@@ -20,11 +24,11 @@ class CalendlyScheduledEventsController extends \Illuminate\Routing\Controller
     {
         $response = $this->api->get('/scheduled_events/', $request);
         if (! $response->ok()) {
-            return \Typedin\LaravelCalendly\Services\ErrorResponseFactory::getJson($response);
+            return ErrorResponseFactory::getJson($response);
         }
         $all = collect($response->collect('collection'))
-        ->map(fn ($args) => new \Typedin\LaravelCalendly\Models\Event(...$args));
-        $pagination = new \Typedin\LaravelCalendly\Models\Pagination(...$response->collect('pagination')->all());
+        ->map(fn ($args) => new Event(...$args));
+        $pagination = new Pagination(...$response->collect('pagination')->all());
 
         return response()->json([
             'events' => $all,
@@ -36,11 +40,11 @@ class CalendlyScheduledEventsController extends \Illuminate\Routing\Controller
     {
         $response = $this->api->get("/scheduled_events/{$request->validated('uuid')}/", $request);
         if (! $response->ok()) {
-            return \Typedin\LaravelCalendly\Services\ErrorResponseFactory::getJson($response);
+            return ErrorResponseFactory::getJson($response);
         }
 
         return response()->json([
-            'event' => new \Typedin\LaravelCalendly\Models\Event(...$response->json('resource')),
+            'event' => new Event(...$response->json('resource')),
         ]);
     }
 }
