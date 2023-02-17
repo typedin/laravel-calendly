@@ -6,16 +6,19 @@ class WebhookPayload
 {
     /**
      * The event that caused the webhook to fire
+     * @var string $event
      */
     public string $event;
 
     /**
      * The moment when the event was created (e.g. "2020-01-02T03:04:05.678123Z")
+     * @var string $created_at
      */
     public string $created_at;
 
     /**
      * The user who created the webhook
+     * @var string $created_by
      */
     public string $created_by;
 

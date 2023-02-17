@@ -6,21 +6,25 @@ class GotoMeetingConference
 {
     /**
      * The event location is a GoToMeeting conference
+     * @var string $type
      */
     public string $type;
 
     /**
      * Indicates the current status of the GoToMeeting conference
+     * @var string $status
      */
     public string $status;
 
     /**
      * GoToMeeting conference meeting url
+     * @var string $join_url
      */
     public ?string $join_url;
 
     /**
      * The conference metadata supplied by GoToMeeting
+     * @var object $data
      */
     public ?object $data;
 

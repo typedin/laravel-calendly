@@ -3,6 +3,7 @@
 namespace Typedin\LaravelCalendly\Tests\Supports;
 
 use PHPUnit\Framework\TestCase;
+use Typedin\LaravelCalendly\Supports\Configuration\ControllerGeneratorProvider;
 use Typedin\LaravelCalendly\Supports\EndpointMapper;
 
 class EndpointMapperTest extends TestCase
@@ -40,126 +41,18 @@ class EndpointMapperTest extends TestCase
     /**
      * @test
      */
-    public function it_creates_form_request_provider(): void
+    public function it_creates_controller_providers(): void
     {
-        $output = (new EndpointMapper($this->yaml()))->formRequestProviders();
-        $this->assertCount(34, $output);
-    }
+        $output = (new EndpointMapper($this->yaml()))->controllerGeneratorProviders();
+        $this->assertCount(28, $output);
 
-    /**
-     * @dataProvider allPaths
-     *
-     * @test
-     */
-    public function it_maps_controller_names_to_endpoints($controller_name, $paths): void
-    {
-        $output = (new EndpointMapper($this->yaml()))->mapControllerNamesToEndpoints();
-
-        collect($paths)->each(function ($value) use ($output, $controller_name) {
-            $this->assertArrayHasKey($value, $output->get($controller_name));
+        $provider = $output->firstWhere(function (ControllerGeneratorProvider $contoller_provider) {
+            return $contoller_provider->controller_name == 'ScheduledEventInvitees';
         });
-    }
 
-    public function allPaths()
-    {
-        return [
-            [
-                'ActivityLogEntries', [
-                    '/activity_log_entries',
-                ],
-            ],
-            [
-                'DataComplianceDeletionInvitees', [
-                    '/data_compliance/deletion/invitees',
-                ],
-            ],
-            [
-                'EventTypeAvailableTimes', [
-                    '/event_type_available_times',
-                ],
-            ],
-            [
-                'EventTypes', [
-                    '/event_types',
-                    '/event_types/{uuid}',
-                ],
-            ],
-            [
-                'InviteeNoShows', [
-                    '/invitee_no_shows',
-                    '/invitee_no_shows/{uuid}',
-                ],
-            ],
-            [
-                'OrganizationMemberships', [
-                    '/organization_memberships',
-                    '/organization_memberships/{uuid}',
-                ],
-            ],
-            [
-                'OrganizationInvitations', [
-                    '/organizations/{org_uuid}/invitations/{uuid}',
-                    '/organizations/{uuid}/invitations',
-                ],
-            ],
-            [
-                'RoutingFormSubmissions', [
-                    '/routing_form_submissions',
-                    '/routing_form_submissions/{uuid}',
-                ],
-            ],
-            [
-                'RoutingForms', [
-                    '/routing_forms',
-                    '/routing_forms/{uuid}',
-                ],
-            ],
-            [
-                'ScheduledEvents', [
-                    '/scheduled_events',
-                    '/scheduled_events/{uuid}',
-                ],
-            ],
-            [
-                'ScheduledEventCancellations', [
-                    '/scheduled_events/{uuid}/cancellation',
-                ],
-            ],
-            [
-                'ScheduledEventInvitees', [
-                    '/scheduled_events/{uuid}/invitees',
-                    '/scheduled_events/{event_uuid}/invitees/{invitee_uuid}',
-                ],
-            ],
-            [
-                'SchedulingLinks', [
-                    '/scheduling_links',
-                ],
-            ],
-            [
-                'UserAvailabilitySchedules', [
-                    '/user_availability_schedules',
-                    '/user_availability_schedules/{uuid}',
-                ],
-            ],
-            [
-                'UserBusyTimes', [
-                    '/user_busy_times',
-                ],
-            ],
-            [
-                'Users', [
-                    '/users/me',
-                    '/users/{uuid}',
-                ],
-            ],
-            [
-                'WebhookSubscriptions', [
-                    '/webhook_subscriptions',
-                    '/webhook_subscriptions/{webhook_uuid}',
-                ],
-            ],
-        ];
+        $this->assertCount(2, $provider->paths);
+        $this->assertArrayHasKey('/scheduled_events/{uuid}/invitees', $provider->paths->all());
+        $this->assertArrayHasKey('/scheduled_events/{event_uuid}/invitees/{invitee_uuid}', $provider->paths->all());
     }
 
     /**
@@ -169,5 +62,14 @@ class EndpointMapperTest extends TestCase
     {
         $output = (new EndpointMapper($this->yaml()))->errorResponseProviders();
         $this->assertCount(7, $output);
+    }
+
+    /**
+     * @test
+     */
+    public function it_creates_form_request_provider(): void
+    {
+        $output = (new EndpointMapper($this->yaml()))->formRequestProviders();
+        $this->assertCount(34, $output);
     }
 }

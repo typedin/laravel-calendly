@@ -6,31 +6,37 @@ class SubmissionTracking
 {
     /**
      * The UTM parameter used to track a campaign.
+     * @var string $utm_campaign
      */
     public ?string $utm_campaign;
 
     /**
      * The UTM parameter that identifies the source (platform where the traffic originates).
+     * @var string $utm_source
      */
     public ?string $utm_source;
 
     /**
      * The UTM parameter that identifies the type of input (e.g. Cost Per Click (CPC), social media, affiliate or QR code).
+     * @var string $utm_medium
      */
     public ?string $utm_medium;
 
     /**
      * UTM content tracking parameter.
+     * @var string $utm_content
      */
     public ?string $utm_content;
 
     /**
      * The UTM parameter used to track keywords.
+     * @var string $utm_term
      */
     public ?string $utm_term;
 
     /**
      * The Salesforce record unique identifier.
+     * @var string $salesforce_uuid
      */
     public ?string $salesforce_uuid;
 

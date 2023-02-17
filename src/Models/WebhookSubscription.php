@@ -6,56 +6,67 @@ class WebhookSubscription
 {
     /**
      * Canonical reference (unique identifier) for the webhook
+     * @var string $uri
      */
     public string $uri;
 
     /**
      * The callback URL to use when the event is triggered
+     * @var string $callback_url
      */
     public string $callback_url;
 
     /**
      * The moment when the webhook subscription was created (e.g. "2020-01-02T03:04:05.678123Z")
+     * @var string $created_at
      */
     public string $created_at;
 
     /**
      * The moment when the webhook subscription was last updated (e.g. "2020-01-02T03:04:05.678123Z")
+     * @var string $updated_at
      */
     public string $updated_at;
 
     /**
      * The date and time the webhook subscription is retried
+     * @var string $retry_started_at
      */
     public ?string $retry_started_at;
 
     /**
      * Indicates if the webhook subscription is "active" or "disabled"
+     * @var string $state
      */
     public string $state;
 
     /**
      * A list of events to which the webhook is subscribed
+     * @var array $events
      */
     public array $events;
 
     /**
      * The scope of the webhook subscription
+     * @var string $scope
      */
     public string $scope;
 
     /**
      * The URI of the organization that's associated with the webhook subscription
+     * @var string $organization
      */
     public string $organization;
 
     /**
      * The URI of the user that's associated with the webhook subscription
+     * @var string $user
      */
     public ?string $user;
 
     /**
      * The URI of the user who created the webhook subscription
+     * @var string $creator
      */
     public ?string $creator;
 

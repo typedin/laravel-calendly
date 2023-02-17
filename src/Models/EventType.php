@@ -6,105 +6,125 @@ class EventType
 {
     /**
      * Canonical reference (unique identifier) for the event type
+     * @var string $uri
      */
     public string $uri;
 
     /**
      * The event type name (in human-readable format)
+     * @var string $name
      */
     public ?string $name;
 
     /**
      * Indicates if the event is active or not.
+     * @var bool $active
      */
     public bool $active;
 
     /**
      * The portion of the event type's URL that identifies a specific web page (in a human-readable format)
+     * @var string $slug
      */
     public ?string $slug;
 
     /**
      * The URL of the user’s scheduling site where invitees book this event type
+     * @var string $scheduling_url
      */
     public string $scheduling_url;
 
     /**
      * The length of sessions booked with this event type
+     * @var float $duration
      */
     public float $duration;
 
     /**
      * Indicates if the event type is "solo" (belongs to an individual user) or "group"
+     * @var string $kind
      */
     public string $kind;
 
     /**
      * Indicates if the event type is "round robin" (alternates between hosts) or "collective" (invitees pick a time when all participants are available) or "null" (the event type doesn’t consider the availability of a group participants)
+     * @var string $pooling_type
      */
     public ?string $pooling_type;
 
     /**
      * Indicates if the event type is "AdhocEventType" (ad hoc event) or "StandardEventType" (standard event type)
+     * @var string $type
      */
     public string $type;
 
     /**
      * The hexadecimal color value of the event type's scheduling page
+     * @var string $color
      */
     public string $color;
 
     /**
      * The moment the event type was created (e.g. "2020-01-02T03:04:05.678123Z")
+     * @var string $created_at
      */
     public string $created_at;
 
     /**
      * The moment the event type was last updated (e.g. "2020-01-02T03:04:05.678123Z")
+     * @var string $updated_at
      */
     public string $updated_at;
 
     /**
      * Contents of a note that may be associated with the event type
+     * @var string $internal_note
      */
     public ?string $internal_note;
 
     /**
      * The event type's description (in non formatted text)
+     * @var string $description_plain
      */
     public ?string $description_plain;
 
     /**
      * The event type's description (formatted with HTML)
+     * @var string $description_html
      */
     public ?string $description_html;
-
     public $profile;
 
     /**
      * Indicates if the event type is hidden on the owner's main scheduling page
+     * @var bool $secret
      */
     public bool $secret;
 
     /**
      * Indicates if the event type is for a poll or an instant booking
+     * @var string $booking_method
      */
     public string $booking_method;
 
+    /** @var array $custom_questions */
     public array $custom_questions;
 
     /**
      * The moment the event type was deleted (e.g. "2020-01-02T03:04:05.678123Z"). Since event types can be deleted but their scheduled events remain it's useful to fetch a deleted event type when you still require event type data for a scheduled event.
+     * @var string $deleted_at
      */
     public ?string $deleted_at;
 
     /**
      * A formatted description of the kind of event type.
+     * @var string $kind_description
      */
     public string $kind_description;
 
     /**
      * Indicates if this event type is managed by an organization admin
+     * @var bool $admin_managed
      */
     public bool $admin_managed;
 

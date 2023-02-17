@@ -6,21 +6,25 @@ class ZoomConference
 {
     /**
      * The event location is a Zoom conference
+     * @var string $type
      */
     public string $type;
 
     /**
      * Indicates the current status of the Zoom conference
+     * @var string $status
      */
     public string $status;
 
     /**
      * Zoom meeting url
+     * @var string $join_url
      */
     public ?string $join_url;
 
     /**
      * The conference metadata supplied by Zoom
+     * @var object $data
      */
     public ?object $data;
 

@@ -6,11 +6,13 @@ class InviteeSpecifiedLocation
 {
     /**
      * The event location selected by the invitee
+     * @var string $type
      */
     public string $type;
 
     /**
      * The event location description provided by the invitee
+     * @var string $location
      */
     public string $location;
 

@@ -26,7 +26,6 @@ class EndpointMapper
     public function __construct(private  string $yaml)
     {
         $this->parsed = Yaml::parse($yaml);
-        $this->yaml = $yaml;
     }
 
     public function schemas(): Collection
@@ -99,8 +98,15 @@ class EndpointMapper
                     ->map(fn ($key) => new ControllerGeneratorProvider(
                         mapper: $this,
                         controller_name: $this->fullname($key),
-                        paths: $this->paths()->filter(fn ($path, $applesauce) => $this->fullname($applesauce) == $key)
+                        paths: $this->applesauce($key)
                     ));
+    }
+
+    private function applesauce($key)
+    {
+        return $this->paths()->filter(function ($value, $path) use ($key) {
+            return $this->fullname($key) == $this->fullname($path);
+        });
     }
 
     public function controllerNames(): Collection
@@ -138,14 +144,6 @@ class EndpointMapper
         $merged = collect($this->components()->get('responses'))->merge(collect($base_error));
 
         return $merged->map(fn ($value, $key) => new ErrorResponseGeneratorProvider(name: $key, schema: $value, error_code: $this->errorCodes()->get($key) ?? 500));
-    }
-
-    public function mapControllerNamesToEndpoints(): Collection
-    {
-        return $this->controllerNames()
-                   ->flatMap(fn ($controller_name) => [
-                       $controller_name => $this->paths()->filter(fn ($_value, $key) => self::fullname($key) == $controller_name),
-                   ]);
     }
 
     private function fullname(string $input): string

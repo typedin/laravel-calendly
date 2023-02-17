@@ -6,21 +6,27 @@ class Entry
 {
     /**
      * The date and time of the entry (format: "2020-01-02T03:04:05.678Z").
+     * @var string $occurred_at
      */
     public string $occurred_at;
-
     public $actor;
 
+    /** @var object $details */
     public object $details;
 
+    /** @var string $fully_qualified_name */
     public string $fully_qualified_name;
 
+    /** @var string $uri */
     public string $uri;
 
+    /** @var string $namespace */
     public string $namespace;
 
+    /** @var string $action */
     public string $action;
 
+    /** @var string $organization */
     public string $organization;
 
     public function __construct(

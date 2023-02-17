@@ -68,6 +68,7 @@ class ControllerGeneratorTest extends TestCase
         $controller = ControllerGenerator::controller($provider);
 
         $method = $controller->getMethod('index');
+
         $this->assertEquals("\Typedin\LaravelCalendly\Http\Requests\IndexEventTypesRequest", $method->getParameters()['request']->getType());
         $this->assertStringContainsString('$response = $this->api->get("/event_types/", $request);', $method->getBody());
         $this->assertStringContainsString('$all = collect($response->collect("collection"))', $method->getBody());
@@ -264,14 +265,13 @@ class ControllerGeneratorTest extends TestCase
      */
     public function it_generates_all_methods_from_many_paths(): void
     {
-        $paths = $this->mapper->paths()->only(
-            '/organization_memberships/{uuid}',
-            '/organization_memberships',
-        );
         $provider = new ControllerGeneratorProvider(
             mapper: $this->mapper,
             controller_name: 'OrganizationMemberships',
-            paths:$paths
+            paths: $this->mapper->paths()->only(
+                '/organization_memberships/{uuid}',
+                '/organization_memberships',
+            )
         );
 
         $controller = ControllerGenerator::controller($provider);

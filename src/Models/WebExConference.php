@@ -6,21 +6,25 @@ class WebExConference
 {
     /**
      * The event location is a WebEx conference
+     * @var string $type
      */
     public string $type;
 
     /**
      * Indicates the current status of the WebEx conference
+     * @var string $status
      */
     public string $status;
 
     /**
      * WebEx conference meeting url
+     * @var string $join_url
      */
     public ?string $join_url;
 
     /**
      * The conference metadata supplied by GoToMeeting
+     * @var object $data
      */
     public ?object $data;
 
