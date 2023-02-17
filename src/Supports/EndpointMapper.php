@@ -109,15 +109,6 @@ class EndpointMapper
         });
     }
 
-    public function controllerNames(): Collection
-    {
-        return $this->paths()->keys()
-                   ->map(fn ($key) => self::fullname($key))
-                   ->filter(fn ($key) => (bool) $key)
-                   ->unique()
-                   ->values();
-    }
-
     public function routeGeneratorProviders(): Collection
     {
         return $this->paths()->map(function ($value, $path) {

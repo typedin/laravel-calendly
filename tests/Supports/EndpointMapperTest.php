@@ -24,23 +24,6 @@ class EndpointMapperTest extends TestCase
     /**
      * @test
      */
-    public function it_creates_controller_names(): void
-    {
-        $things = [
-            'ScheduledEvents',
-            'ScheduledEventInvitees',
-            'ScheduledEventCancellations',
-        ];
-
-        $this->assertCount(17, (new EndpointMapper($this->yaml()))->controllerNames());
-        $this->assertContains($things[0], (new EndpointMapper($this->yaml()))->controllerNames());
-        $this->assertContains($things[1], (new EndpointMapper($this->yaml()))->controllerNames());
-        $this->assertContains($things[2], (new EndpointMapper($this->yaml()))->controllerNames());
-    }
-
-    /**
-     * @test
-     */
     public function it_creates_controller_providers(): void
     {
         $output = (new EndpointMapper($this->yaml()))->controllerGeneratorProviders();
