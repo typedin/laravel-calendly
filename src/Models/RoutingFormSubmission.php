@@ -18,7 +18,9 @@ class RoutingFormSubmission
      * All Routing Form Submission questions with answers.
      */
     public array $questions_and_answers;
+
     public $tracking;
+
     public $result;
 
     /**

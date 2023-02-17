@@ -92,6 +92,7 @@ class ControllerGeneratorTest extends TestCase
             controller_name:'InviteeNoShows',
             mapper: $this->mapper,
             paths: collect($this->mapper->paths()->only(
+                '/invitee_no_shows',
                 '/invitee_no_shows/{uuid}',
             )),
         );
@@ -165,6 +166,7 @@ class ControllerGeneratorTest extends TestCase
             controller_name: 'OrganizationInvitations',
             mapper: $this->mapper,
             paths: collect($this->mapper->paths()->only(
+                '/organizations/{org_uuid}/invitations/{uuid}',
                 '/organizations/{uuid}/invitations',
             )),
         );
@@ -190,6 +192,7 @@ class ControllerGeneratorTest extends TestCase
             controller_name: 'InviteeNoShows',
             mapper: $this->mapper,
             paths: collect($this->mapper->paths()->only(
+                '/invitee_no_shows',
                 '/invitee_no_shows/{uuid}',
             )),
         );
@@ -214,8 +217,8 @@ class ControllerGeneratorTest extends TestCase
             controller_name: 'OrganizationInvitations',
             mapper: $this->mapper,
             paths: collect($this->mapper->paths()->only(
-                '/organizations/{uuid}/invitations',
                 '/organizations/{org_uuid}/invitations/{uuid}',
+                '/organizations/{uuid}/invitations',
             )),
         );
         $controller = ControllerGenerator::controller($provider);
@@ -243,13 +246,14 @@ class ControllerGeneratorTest extends TestCase
             )),
         );
         $controller = ControllerGenerator::controller($provider);
+
+        // count also constructor
+        $this->assertCount(5, collect($controller->getMethods()));
+
         $rest_methods = collect($controller->getMethods())
         ->filter(
             fn ($method) => in_array($method->getName(), ['index', 'show', 'create', 'store', 'edit', 'update', 'destroy'])
         );
-
-        $this->assertCount(4, $rest_methods);
-
         tap($rest_methods->each(function ($method) {
             $this->assertEquals('\\'.JsonResponse::class, $method->getReturnType());
         }));

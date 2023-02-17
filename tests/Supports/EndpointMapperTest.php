@@ -63,53 +63,45 @@ class EndpointMapperTest extends TestCase
     public function allPaths()
     {
         return [
-
             [
                 'ActivityLogEntries', [
                     '/activity_log_entries',
                 ],
             ],
-
             [
                 'DataComplianceDeletionInvitees', [
                     '/data_compliance/deletion/invitees',
                 ],
             ],
-
             [
                 'EventTypeAvailableTimes', [
                     '/event_type_available_times',
                 ],
             ],
-
             [
                 'EventTypes', [
                     '/event_types',
                     '/event_types/{uuid}',
                 ],
             ],
-
             [
                 'InviteeNoShows', [
                     '/invitee_no_shows',
                     '/invitee_no_shows/{uuid}',
                 ],
             ],
-
             [
                 'OrganizationMemberships', [
                     '/organization_memberships',
                     '/organization_memberships/{uuid}',
                 ],
             ],
-
             [
                 'OrganizationInvitations', [
                     '/organizations/{org_uuid}/invitations/{uuid}',
                     '/organizations/{uuid}/invitations',
                 ],
             ],
-
             [
                 'RoutingFormSubmissions', [
                     '/routing_form_submissions',
@@ -122,53 +114,45 @@ class EndpointMapperTest extends TestCase
                     '/routing_forms/{uuid}',
                 ],
             ],
-
             [
                 'ScheduledEvents', [
                     '/scheduled_events',
                     '/scheduled_events/{uuid}',
                 ],
             ],
-
             [
                 'ScheduledEventCancellations', [
                     '/scheduled_events/{uuid}/cancellation',
                 ],
             ],
-
             [
                 'ScheduledEventInvitees', [
                     '/scheduled_events/{uuid}/invitees',
                     '/scheduled_events/{event_uuid}/invitees/{invitee_uuid}',
                 ],
             ],
-
             [
                 'SchedulingLinks', [
                     '/scheduling_links',
                 ],
             ],
-
             [
                 'UserAvailabilitySchedules', [
                     '/user_availability_schedules',
                     '/user_availability_schedules/{uuid}',
                 ],
             ],
-
             [
                 'UserBusyTimes', [
                     '/user_busy_times',
                 ],
             ],
-
             [
                 'Users', [
                     '/users/me',
                     '/users/{uuid}',
                 ],
             ],
-
             [
                 'WebhookSubscriptions', [
                     '/webhook_subscriptions',

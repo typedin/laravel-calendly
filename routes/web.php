@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Typedin\LaravelCalendly\Http\Controllers\CalendlyActivityLogEntriesController;
-use Typedin\LaravelCalendly\Http\Controllers\CalendlyDataComplianceInviteesController;
+use Typedin\LaravelCalendly\Http\Controllers\CalendlyDataComplianceDeletionInviteesController;
 use Typedin\LaravelCalendly\Http\Controllers\CalendlyEventTypeAvailableTimesController;
 use Typedin\LaravelCalendly\Http\Controllers\CalendlyEventTypesController;
 use Typedin\LaravelCalendly\Http\Controllers\CalendlyInviteeNoShowsController;
@@ -20,7 +20,7 @@ use Typedin\LaravelCalendly\Http\Controllers\CalendlyUsersController;
 use Typedin\LaravelCalendly\Http\Controllers\CalendlyWebhookSubscriptionsController;
 
 Route::get('/activity_log_entries', [CalendlyActivityLogEntriesController::class, 'index']);
-Route::post('/data_compliance/deletion/invitee', [CalendlyDataComplianceInviteesController::class, 'create']);
+Route::post('/data_compliance/deletion/invitee', [CalendlyDataComplianceDeletionInviteesController::class, 'create']);
 Route::get('/event_type_available_times', [CalendlyEventTypeAvailableTimesController::class, 'index']);
 Route::get('/event_types', [CalendlyEventTypesController::class, 'index']);
 Route::get('/event_type', [CalendlyEventTypesController::class, 'show']);

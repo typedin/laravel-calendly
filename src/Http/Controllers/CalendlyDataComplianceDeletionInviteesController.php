@@ -4,6 +4,6 @@ namespace Typedin\LaravelCalendly\Http\Controllers;
 
 use Illuminate\Routing\Controller;
 
-class CalendlyActivityLogEntriesController extends Controller
+class CalendlyDataComplianceDeletionInviteesController extends Controller
 {
 }

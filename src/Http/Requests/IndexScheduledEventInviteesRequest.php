@@ -9,10 +9,10 @@ class IndexScheduledEventInviteesRequest extends FormRequest
     public function rules(): array
     {
         return [
-        'uuid' => 'required|string',
-        'status' => 'in:active,canceled',
-        'sort' => 'string',
-        'email' => 'email',
+            'uuid' => 'required|string',
+            'status' => 'in:active,canceled',
+            'sort' => 'string',
+            'email' => 'email',
         ];
     }
 }

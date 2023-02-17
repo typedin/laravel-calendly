@@ -9,10 +9,10 @@ class IndexEventTypesRequest extends FormRequest
     public function rules(): array
     {
         return [
-        'active' => 'boolean',
-        'organization' => 'url',
-        'user' => 'url',
-        'sort' => 'string',
+            'active' => 'boolean',
+            'organization' => 'url',
+            'user' => 'url',
+            'sort' => 'string',
         ];
     }
 }
