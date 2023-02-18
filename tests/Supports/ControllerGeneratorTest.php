@@ -26,7 +26,7 @@ class ControllerGeneratorTest extends TestCase
         $provider = new ControllerGeneratorProvider(
             controller_name:'Users',
             mapper: $this->mapper,
-            paths: collect($this->mapper->paths()->get('/users/{uuid}')),
+            paths: $this->mapper->paths()->only('/users/{uuid}'),
         );
         $controller = ControllerGenerator::controller($provider);
 
@@ -42,7 +42,7 @@ class ControllerGeneratorTest extends TestCase
         $provider = new ControllerGeneratorProvider(
             controller_name:'Users',
             mapper: $this->mapper,
-            paths: collect($this->mapper->paths()->get('/users/{uuid}')),
+            paths: $this->mapper->paths()->only('/users/{uuid}'),
         );
         $controller = ControllerGenerator::controller($provider);
 
@@ -59,10 +59,10 @@ class ControllerGeneratorTest extends TestCase
         $provider = new ControllerGeneratorProvider(
             controller_name:'EventTypes',
             mapper: $this->mapper,
-            paths: collect($this->mapper->paths()->only(
+            paths: $this->mapper->paths()->only(
                 '/event_types',
                 '/event_types/{uuid}',
-            )),
+            ),
         );
 
         $controller = ControllerGenerator::controller($provider);
@@ -92,10 +92,10 @@ class ControllerGeneratorTest extends TestCase
         $provider = new ControllerGeneratorProvider(
             controller_name:'InviteeNoShows',
             mapper: $this->mapper,
-            paths: collect($this->mapper->paths()->only(
+            paths: $this->mapper->paths()->only(
                 '/invitee_no_shows',
                 '/invitee_no_shows/{uuid}',
-            )),
+            ),
         );
         $controller = ControllerGenerator::controller($provider);
         $method = $controller->getMethod('show');
@@ -117,10 +117,10 @@ class ControllerGeneratorTest extends TestCase
         $provider = new ControllerGeneratorProvider(
             controller_name:'OrganizationInvitations',
             mapper: $this->mapper,
-            paths: collect($this->mapper->paths()->only(
+            paths: $this->mapper->paths()->only(
                 '/organizations/{uuid}/invitations',
                 '/organizations/{org_uuid}/invitations/{uuid}',
-            )),
+            ),
         );
         $controller = ControllerGenerator::controller($provider);
         $method = $controller->getMethod('create');
@@ -143,9 +143,9 @@ class ControllerGeneratorTest extends TestCase
         $provider = new ControllerGeneratorProvider(
             controller_name: 'DataComplianceDeletionInvitees',
             mapper: $this->mapper,
-            paths: collect($this->mapper->paths()->only(
+            paths: $this->mapper->paths()->only(
                 '/data_compliance/deletion/invitees',
-            )),
+            ),
         );
         $controller = ControllerGenerator::controller($provider);
         $method = $controller->getMethod('create');
@@ -166,10 +166,10 @@ class ControllerGeneratorTest extends TestCase
         $provider = new ControllerGeneratorProvider(
             controller_name: 'OrganizationInvitations',
             mapper: $this->mapper,
-            paths: collect($this->mapper->paths()->only(
+            paths: $this->mapper->paths()->only(
                 '/organizations/{org_uuid}/invitations/{uuid}',
                 '/organizations/{uuid}/invitations',
-            )),
+            ),
         );
         $controller = ControllerGenerator::controller($provider);
         $method = $controller->getMethod('create');
@@ -192,10 +192,10 @@ class ControllerGeneratorTest extends TestCase
         $provider = new ControllerGeneratorProvider(
             controller_name: 'InviteeNoShows',
             mapper: $this->mapper,
-            paths: collect($this->mapper->paths()->only(
+            paths: $this->mapper->paths()->only(
                 '/invitee_no_shows',
                 '/invitee_no_shows/{uuid}',
-            )),
+            ),
         );
         $controller = ControllerGenerator::controller($provider);
         $method = $controller->getMethod('show');
@@ -217,10 +217,10 @@ class ControllerGeneratorTest extends TestCase
         $provider = new ControllerGeneratorProvider(
             controller_name: 'OrganizationInvitations',
             mapper: $this->mapper,
-            paths: collect($this->mapper->paths()->only(
+            paths: $this->mapper->paths()->only(
                 '/organizations/{org_uuid}/invitations/{uuid}',
                 '/organizations/{uuid}/invitations',
-            )),
+            ),
         );
         $controller = ControllerGenerator::controller($provider);
         $method = $controller->getMethod('destroy');
@@ -241,10 +241,10 @@ class ControllerGeneratorTest extends TestCase
         $provider = new ControllerGeneratorProvider(
             mapper: $this->mapper,
             controller_name: 'OrganizationInvitations',
-            paths: collect($this->mapper->paths()->only(
+            paths: $this->mapper->paths()->only(
                 '/organizations/{org_uuid}/invitations/{uuid}',
                 '/organizations/{uuid}/invitations'
-            )),
+            ),
         );
         $controller = ControllerGenerator::controller($provider);
 
