@@ -4,29 +4,27 @@ namespace Typedin\LaravelCalendly\Tests\Supports;
 
 use Illuminate\Foundation\Http\FormRequest;
 use PHPUnit\Framework\TestCase;
-use TValue;
 use Typedin\LaravelCalendly\Supports\Configuration\DestroyFormRequestProvider;
 use Typedin\LaravelCalendly\Supports\Configuration\IndexFormRequestProvider;
 use Typedin\LaravelCalendly\Supports\Configuration\ShowFormRequestProvider;
 use Typedin\LaravelCalendly\Supports\Configuration\StoreFormRequestProvider;
+use Typedin\LaravelCalendly\Supports\EndpointMapper;
 use Typedin\LaravelCalendly\Supports\FormRequestGenerator;
 
 class FormRequestGeneratorTest extends TestCase
 {
-    private array $json;
+    private EndpointMapper $mapper;
+
+    /* private array $json; */
 
     protected function setUp(): void
     {
-        $content = file_get_contents(__DIR__.'/../__fixtures__/api.json');
-        $this->json = json_decode($content, true, 512, JSON_THROW_ON_ERROR);
+        $this->mapper = new EndpointMapper(file_get_contents(__DIR__.'/../../doc/openapi.yaml'));
     }
 
-    /**
-     * @return array<TKey,TValue>
-     */
     private function path(string $filter): array
     {
-        return collect($this->json['paths'][$filter])->all();
+        return $this->mapper->paths()->get($filter);
     }
 
     /**
