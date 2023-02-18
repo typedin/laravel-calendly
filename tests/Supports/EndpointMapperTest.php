@@ -27,7 +27,7 @@ class EndpointMapperTest extends TestCase
     public function it_creates_controller_providers(): void
     {
         $output = (new EndpointMapper($this->yaml()))->controllerGeneratorProviders();
-        $this->assertCount(28, $output);
+        $this->assertCount(17, $output);
 
         $provider = $output->firstWhere(function (ControllerGeneratorProvider $contoller_provider) {
             return $contoller_provider->controller_name == 'ScheduledEventInvitees';

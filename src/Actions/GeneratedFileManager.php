@@ -40,10 +40,12 @@ class GeneratedFileManager
 
     public function createModels(): GeneratedFileManager
     {
-        $this->mapper->modelProviders()->map(fn (ModelGeneratorProvider $provider) => ModelGenerator::model($provider))->unique()->filter()->each(fn ($model) => $this->models->push([
-            'model' => $model,
-            'namespace' => $this->createNamespace($model, "Typedin\LaravelCalendly\Models"),
-        ]));
+        $this->mapper->modelProviders()
+            ->map(fn (ModelGeneratorProvider $provider) => ModelGenerator::model($provider))
+            ->each(fn ($model) => $this->models->push([
+                'model' => $model,
+                'namespace' => $this->createNamespace($model, "Typedin\LaravelCalendly\Models"),
+            ]));
 
         return $this;
     }
@@ -52,6 +54,7 @@ class GeneratedFileManager
     {
         $this->mapper->formRequestProviders()->each(function (FormRequestProvider $provider) {
             $request = FormRequestGenerator::formRequest($provider);
+
             $this->formRequests->push([
                 'form_request' => $request,
                 'namespace' => $this->createNamespace($request, "Typedin\LaravelCalendly\Http\Requests"),

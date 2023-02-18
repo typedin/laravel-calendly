@@ -46,8 +46,8 @@ class GeneratedFileManagerTest extends TestCase
     public function it_creates_all_models(): void
     {
         $models = $this->file_manager->createModels()->models;
-
-        // error is not considered to be a model
+        // there are 45 entries in schemas
+        // errorResponse is not a model
         $this->assertCount(44, $models);
     }
 
@@ -55,8 +55,7 @@ class GeneratedFileManagerTest extends TestCase
     public function it_creates_all_controllers(): void
     {
         $controllers = $this->file_manager->createControllers()->controllers;
-
-        $this->assertCount(28, $controllers);
+        $this->assertCount(17, $controllers);
     }
 
     /** @test */

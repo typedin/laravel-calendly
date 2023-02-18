@@ -51,7 +51,7 @@ class EndpointMapper
     public function modelProviders(): Collection
     {
         return $this->schemas()
-                    ->filter(fn ($value, $key) => $key !== 'ErrorResponse')
+                    ->reject(fn ($value, $key) => $key == 'ErrorResponse')
                     ->map(function ($schema, $name) {
                         $th = null;
 
@@ -99,7 +99,8 @@ class EndpointMapper
                         mapper: $this,
                         controller_name: $this->fullname($key),
                         paths: $this->applesauce($key)
-                    ));
+                    ))
+                    ->unique();
     }
 
     private function applesauce($key)
