@@ -24,10 +24,10 @@ class CalendlyRoutingFormsController extends Controller
     {
         $response = $this->api->get('/routing_forms/', $request);
         if (! $response->ok()) {
-            return ErrorResponseFactory::getJson($response);
+        return ErrorResponseFactory::getJson($response);
         }
         $all = collect($response->collect('collection'))
-        ->map(fn ($args) => new RoutingForm(...$args));
+            ->map(fn ($args) => new RoutingForm(...$args));
         $pagination = new Pagination(...$response->collect('pagination')->all());
 
         return response()->json([
@@ -40,7 +40,7 @@ class CalendlyRoutingFormsController extends Controller
     {
         $response = $this->api->get("/routing_forms/{$request->validated('uuid')}/", $request);
         if (! $response->ok()) {
-            return ErrorResponseFactory::getJson($response);
+        return ErrorResponseFactory::getJson($response);
         }
 
         return response()->json([

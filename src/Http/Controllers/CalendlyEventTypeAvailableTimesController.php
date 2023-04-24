@@ -23,10 +23,10 @@ class CalendlyEventTypeAvailableTimesController extends Controller
     {
         $response = $this->api->get('/event_type_available_times/', $request);
         if (! $response->ok()) {
-            return ErrorResponseFactory::getJson($response);
+        return ErrorResponseFactory::getJson($response);
         }
         $all = collect($response->collect('collection'))
-        ->map(fn ($args) => new EventTypeAvailableTime(...$args));
+            ->map(fn ($args) => new EventTypeAvailableTime(...$args));
         $pagination = new Pagination(...$response->collect('pagination')->all());
 
         return response()->json([

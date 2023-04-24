@@ -4,6 +4,7 @@ namespace Typedin\LaravelCalendly\Http\Controllers;
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Response;
 use Typedin\LaravelCalendly\Contracts\CalendlyApiInterface;
 use Typedin\LaravelCalendly\Http\Requests\DestroyOrganizationMembershipRequest;
 use Typedin\LaravelCalendly\Http\Requests\IndexOrganizationMembershipsRequest;
@@ -25,7 +26,7 @@ class CalendlyOrganizationMembershipsController extends Controller
     {
         $response = $this->api->get("/organization_memberships/{$request->validated('uuid')}/", $request);
         if (! $response->ok()) {
-            return ErrorResponseFactory::getJson($response);
+        return ErrorResponseFactory::getJson($response);
         }
 
         return response()->json([
@@ -37,20 +38,20 @@ class CalendlyOrganizationMembershipsController extends Controller
     {
         $response = $this->api->delete("/organization_memberships/{$request->validated('uuid')}/");
         if (! $response->ok()) {
-            return ErrorResponseFactory::getJson($response);
+        return ErrorResponseFactory::getJson($response);
         }
 
-        return \Illuminate\Support\Facades\Response::json([], 204);
+        return Response::json([], 204);
     }
 
     public function index(IndexOrganizationMembershipsRequest $request): JsonResponse
     {
         $response = $this->api->get('/organization_memberships/', $request);
         if (! $response->ok()) {
-            return ErrorResponseFactory::getJson($response);
+        return ErrorResponseFactory::getJson($response);
         }
         $all = collect($response->collect('collection'))
-        ->map(fn ($args) => new OrganizationMembership(...$args));
+            ->map(fn ($args) => new OrganizationMembership(...$args));
         $pagination = new Pagination(...$response->collect('pagination')->all());
 
         return response()->json([
