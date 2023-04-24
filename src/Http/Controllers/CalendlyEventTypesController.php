@@ -24,10 +24,10 @@ class CalendlyEventTypesController extends Controller
     {
         $response = $this->api->get('/event_types/', $request);
         if (! $response->ok()) {
-            return ErrorResponseFactory::getJson($response);
+        return ErrorResponseFactory::getJson($response);
         }
         $all = collect($response->collect('collection'))
-        ->map(fn ($args) => new EventType(...$args));
+            ->map(fn ($args) => new EventType(...$args));
         $pagination = new Pagination(...$response->collect('pagination')->all());
 
         return response()->json([
@@ -40,7 +40,7 @@ class CalendlyEventTypesController extends Controller
     {
         $response = $this->api->get("/event_types/{$request->validated('uuid')}/", $request);
         if (! $response->ok()) {
-            return ErrorResponseFactory::getJson($response);
+        return ErrorResponseFactory::getJson($response);
         }
 
         return response()->json([

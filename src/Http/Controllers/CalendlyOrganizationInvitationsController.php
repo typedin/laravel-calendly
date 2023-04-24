@@ -4,6 +4,7 @@ namespace Typedin\LaravelCalendly\Http\Controllers;
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Response;
 use Typedin\LaravelCalendly\Contracts\CalendlyApiInterface;
 use Typedin\LaravelCalendly\Http\Requests\DestroyOrganizationInvitationRequest;
 use Typedin\LaravelCalendly\Http\Requests\IndexOrganizationInvitationsRequest;
@@ -26,10 +27,10 @@ class CalendlyOrganizationInvitationsController extends Controller
     {
         $response = $this->api->get("/organizations/{$request->validated('uuid')}/invitations/", $request);
         if (! $response->ok()) {
-            return ErrorResponseFactory::getJson($response);
+        return ErrorResponseFactory::getJson($response);
         }
         $all = collect($response->collect('collection'))
-        ->map(fn ($args) => new OrganizationInvitation(...$args));
+            ->map(fn ($args) => new OrganizationInvitation(...$args));
         $pagination = new Pagination(...$response->collect('pagination')->all());
 
         return response()->json([
@@ -42,7 +43,7 @@ class CalendlyOrganizationInvitationsController extends Controller
     {
         $response = $this->api->post("/organizations/{$request->validated('uuid')}/invitations/", $request);
         if (! $response->ok()) {
-            return ErrorResponseFactory::getJson($response);
+        return ErrorResponseFactory::getJson($response);
         }
 
         return response()->json([
@@ -54,7 +55,7 @@ class CalendlyOrganizationInvitationsController extends Controller
     {
         $response = $this->api->get("/organizations/{$request->validated('org_uuid')}/invitations/{$request->validated('uuid')}/", $request);
         if (! $response->ok()) {
-            return ErrorResponseFactory::getJson($response);
+        return ErrorResponseFactory::getJson($response);
         }
 
         return response()->json([
@@ -66,9 +67,9 @@ class CalendlyOrganizationInvitationsController extends Controller
     {
         $response = $this->api->delete("/organizations/{$request->validated('org_uuid')}/invitations/{$request->validated('uuid')}/");
         if (! $response->ok()) {
-            return ErrorResponseFactory::getJson($response);
+        return ErrorResponseFactory::getJson($response);
         }
 
-        return \Illuminate\Support\Facades\Response::json([], 204);
+        return Response::json([], 204);
     }
 }

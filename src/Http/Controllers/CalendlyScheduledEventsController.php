@@ -24,10 +24,10 @@ class CalendlyScheduledEventsController extends Controller
     {
         $response = $this->api->get('/scheduled_events/', $request);
         if (! $response->ok()) {
-            return ErrorResponseFactory::getJson($response);
+        return ErrorResponseFactory::getJson($response);
         }
         $all = collect($response->collect('collection'))
-        ->map(fn ($args) => new Event(...$args));
+            ->map(fn ($args) => new Event(...$args));
         $pagination = new Pagination(...$response->collect('pagination')->all());
 
         return response()->json([
@@ -40,7 +40,7 @@ class CalendlyScheduledEventsController extends Controller
     {
         $response = $this->api->get("/scheduled_events/{$request->validated('uuid')}/", $request);
         if (! $response->ok()) {
-            return ErrorResponseFactory::getJson($response);
+        return ErrorResponseFactory::getJson($response);
         }
 
         return response()->json([

@@ -4,6 +4,7 @@ namespace Typedin\LaravelCalendly\Http\Controllers;
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Response;
 use Typedin\LaravelCalendly\Contracts\CalendlyApiInterface;
 use Typedin\LaravelCalendly\Http\Requests\DestroyInviteeNoShowRequest;
 use Typedin\LaravelCalendly\Http\Requests\ShowInviteeNoShowRequest;
@@ -24,7 +25,7 @@ class CalendlyInviteeNoShowsController extends Controller
     {
         $response = $this->api->get("/invitee_no_shows/{$request->validated('uuid')}/", $request);
         if (! $response->ok()) {
-            return ErrorResponseFactory::getJson($response);
+        return ErrorResponseFactory::getJson($response);
         }
 
         return response()->json([
@@ -36,17 +37,17 @@ class CalendlyInviteeNoShowsController extends Controller
     {
         $response = $this->api->delete("/invitee_no_shows/{$request->validated('uuid')}/");
         if (! $response->ok()) {
-            return ErrorResponseFactory::getJson($response);
+        return ErrorResponseFactory::getJson($response);
         }
 
-        return \Illuminate\Support\Facades\Response::json([], 204);
+        return Response::json([], 204);
     }
 
     public function create(StoreInviteeNoShowRequest $request): JsonResponse
     {
         $response = $this->api->post('/invitee_no_shows/', $request);
         if (! $response->ok()) {
-            return ErrorResponseFactory::getJson($response);
+        return ErrorResponseFactory::getJson($response);
         }
 
         return response()->json([
