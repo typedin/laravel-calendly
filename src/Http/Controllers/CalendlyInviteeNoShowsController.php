@@ -25,7 +25,7 @@ class CalendlyInviteeNoShowsController extends Controller
     {
         $response = $this->api->get("/invitee_no_shows/{$request->validated('uuid')}/", $request);
         if (! $response->ok()) {
-        return ErrorResponseFactory::getJson($response);
+            return ErrorResponseFactory::getJson($response);
         }
 
         return response()->json([
@@ -37,7 +37,7 @@ class CalendlyInviteeNoShowsController extends Controller
     {
         $response = $this->api->delete("/invitee_no_shows/{$request->validated('uuid')}/");
         if (! $response->ok()) {
-        return ErrorResponseFactory::getJson($response);
+            return ErrorResponseFactory::getJson($response);
         }
 
         return Response::json([], 204);
@@ -47,7 +47,7 @@ class CalendlyInviteeNoShowsController extends Controller
     {
         $response = $this->api->post('/invitee_no_shows/', $request);
         if (! $response->ok()) {
-        return ErrorResponseFactory::getJson($response);
+            return ErrorResponseFactory::getJson($response);
         }
 
         return response()->json([

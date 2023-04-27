@@ -27,7 +27,7 @@ class CalendlyOrganizationInvitationsController extends Controller
     {
         $response = $this->api->get("/organizations/{$request->validated('uuid')}/invitations/", $request);
         if (! $response->ok()) {
-        return ErrorResponseFactory::getJson($response);
+            return ErrorResponseFactory::getJson($response);
         }
         $all = collect($response->collect('collection'))
             ->map(fn ($args) => new OrganizationInvitation(...$args));
@@ -43,7 +43,7 @@ class CalendlyOrganizationInvitationsController extends Controller
     {
         $response = $this->api->post("/organizations/{$request->validated('uuid')}/invitations/", $request);
         if (! $response->ok()) {
-        return ErrorResponseFactory::getJson($response);
+            return ErrorResponseFactory::getJson($response);
         }
 
         return response()->json([
@@ -55,7 +55,7 @@ class CalendlyOrganizationInvitationsController extends Controller
     {
         $response = $this->api->get("/organizations/{$request->validated('org_uuid')}/invitations/{$request->validated('uuid')}/", $request);
         if (! $response->ok()) {
-        return ErrorResponseFactory::getJson($response);
+            return ErrorResponseFactory::getJson($response);
         }
 
         return response()->json([
@@ -67,7 +67,7 @@ class CalendlyOrganizationInvitationsController extends Controller
     {
         $response = $this->api->delete("/organizations/{$request->validated('org_uuid')}/invitations/{$request->validated('uuid')}/");
         if (! $response->ok()) {
-        return ErrorResponseFactory::getJson($response);
+            return ErrorResponseFactory::getJson($response);
         }
 
         return Response::json([], 204);

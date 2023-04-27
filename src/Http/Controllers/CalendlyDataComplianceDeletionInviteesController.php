@@ -22,7 +22,7 @@ class CalendlyDataComplianceDeletionInviteesController extends Controller
     {
         $response = $this->api->post('/data_compliance/deletion/invitees/', $request);
         if (! $response->ok()) {
-        return ErrorResponseFactory::getJson($response);
+            return ErrorResponseFactory::getJson($response);
         }
 
         return Response::json([], 202);

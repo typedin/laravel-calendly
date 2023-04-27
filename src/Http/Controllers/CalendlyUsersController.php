@@ -22,7 +22,7 @@ class CalendlyUsersController extends Controller
     {
         $response = $this->api->get("/users/{$request->validated('uuid')}/", $request);
         if (! $response->ok()) {
-        return ErrorResponseFactory::getJson($response);
+            return ErrorResponseFactory::getJson($response);
         }
 
         return response()->json([

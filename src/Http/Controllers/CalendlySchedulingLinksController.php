@@ -22,7 +22,7 @@ class CalendlySchedulingLinksController extends Controller
     {
         $response = $this->api->post('/scheduling_links/', $request);
         if (! $response->ok()) {
-        return ErrorResponseFactory::getJson($response);
+            return ErrorResponseFactory::getJson($response);
         }
 
         return response()->json([

@@ -26,7 +26,7 @@ class CalendlyOrganizationMembershipsController extends Controller
     {
         $response = $this->api->get("/organization_memberships/{$request->validated('uuid')}/", $request);
         if (! $response->ok()) {
-        return ErrorResponseFactory::getJson($response);
+            return ErrorResponseFactory::getJson($response);
         }
 
         return response()->json([
@@ -38,7 +38,7 @@ class CalendlyOrganizationMembershipsController extends Controller
     {
         $response = $this->api->delete("/organization_memberships/{$request->validated('uuid')}/");
         if (! $response->ok()) {
-        return ErrorResponseFactory::getJson($response);
+            return ErrorResponseFactory::getJson($response);
         }
 
         return Response::json([], 204);
@@ -48,7 +48,7 @@ class CalendlyOrganizationMembershipsController extends Controller
     {
         $response = $this->api->get('/organization_memberships/', $request);
         if (! $response->ok()) {
-        return ErrorResponseFactory::getJson($response);
+            return ErrorResponseFactory::getJson($response);
         }
         $all = collect($response->collect('collection'))
             ->map(fn ($args) => new OrganizationMembership(...$args));

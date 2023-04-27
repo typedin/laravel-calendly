@@ -24,7 +24,7 @@ class CalendlyScheduledEventInviteesController extends Controller
     {
         $response = $this->api->get("/scheduled_events/{$request->validated('uuid')}/invitees/", $request);
         if (! $response->ok()) {
-        return ErrorResponseFactory::getJson($response);
+            return ErrorResponseFactory::getJson($response);
         }
         $all = collect($response->collect('collection'))
             ->map(fn ($args) => new Invitee(...$args));
@@ -40,7 +40,7 @@ class CalendlyScheduledEventInviteesController extends Controller
     {
         $response = $this->api->get("/scheduled_events/{$request->validated('event_uuid')}/invitees/{$request->validated('invitee_uuid')}/", $request);
         if (! $response->ok()) {
-        return ErrorResponseFactory::getJson($response);
+            return ErrorResponseFactory::getJson($response);
         }
 
         return response()->json([
