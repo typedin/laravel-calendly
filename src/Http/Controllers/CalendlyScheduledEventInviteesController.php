@@ -20,8 +20,9 @@ class CalendlyScheduledEventInviteesController extends Controller
         $this->api = $api;
     }
 
-    public function index(IndexScheduledEventInviteesRequest $request): JsonResponse
-    {
+    public function index(
+        IndexScheduledEventInviteesRequest $request,
+    ): JsonResponse {
         $response = $this->api->get("/scheduled_events/{$request->validated('uuid')}/invitees/", $request);
         if (! $response->ok()) {
             return ErrorResponseFactory::getJson($response);
@@ -36,8 +37,9 @@ class CalendlyScheduledEventInviteesController extends Controller
         ]);
     }
 
-    public function show(ShowScheduledEventInviteeRequest $request): JsonResponse
-    {
+    public function show(
+        ShowScheduledEventInviteeRequest $request,
+    ): JsonResponse {
         $response = $this->api->get("/scheduled_events/{$request->validated('event_uuid')}/invitees/{$request->validated('invitee_uuid')}/", $request);
         if (! $response->ok()) {
             return ErrorResponseFactory::getJson($response);

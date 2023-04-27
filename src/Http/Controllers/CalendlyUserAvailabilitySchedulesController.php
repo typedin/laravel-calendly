@@ -20,8 +20,9 @@ class CalendlyUserAvailabilitySchedulesController extends Controller
         $this->api = $api;
     }
 
-    public function index(IndexUserAvailabilitySchedulesRequest $request): JsonResponse
-    {
+    public function index(
+        IndexUserAvailabilitySchedulesRequest $request,
+    ): JsonResponse {
         $response = $this->api->get('/user_availability_schedules/', $request);
         if (! $response->ok()) {
             return ErrorResponseFactory::getJson($response);
@@ -36,8 +37,9 @@ class CalendlyUserAvailabilitySchedulesController extends Controller
         ]);
     }
 
-    public function show(ShowUserAvailabilityScheduleRequest $request): JsonResponse
-    {
+    public function show(
+        ShowUserAvailabilityScheduleRequest $request,
+    ): JsonResponse {
         $response = $this->api->get("/user_availability_schedules/{$request->validated('uuid')}/", $request);
         if (! $response->ok()) {
             return ErrorResponseFactory::getJson($response);

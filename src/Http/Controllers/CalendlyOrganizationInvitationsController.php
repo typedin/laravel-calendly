@@ -23,8 +23,9 @@ class CalendlyOrganizationInvitationsController extends Controller
         $this->api = $api;
     }
 
-    public function index(IndexOrganizationInvitationsRequest $request): JsonResponse
-    {
+    public function index(
+        IndexOrganizationInvitationsRequest $request,
+    ): JsonResponse {
         $response = $this->api->get("/organizations/{$request->validated('uuid')}/invitations/", $request);
         if (! $response->ok()) {
             return ErrorResponseFactory::getJson($response);
@@ -39,8 +40,9 @@ class CalendlyOrganizationInvitationsController extends Controller
         ]);
     }
 
-    public function create(StoreOrganizationInvitationRequest $request): JsonResponse
-    {
+    public function create(
+        StoreOrganizationInvitationRequest $request,
+    ): JsonResponse {
         $response = $this->api->post("/organizations/{$request->validated('uuid')}/invitations/", $request);
         if (! $response->ok()) {
             return ErrorResponseFactory::getJson($response);
@@ -51,8 +53,9 @@ class CalendlyOrganizationInvitationsController extends Controller
         ]);
     }
 
-    public function show(ShowOrganizationInvitationRequest $request): JsonResponse
-    {
+    public function show(
+        ShowOrganizationInvitationRequest $request,
+    ): JsonResponse {
         $response = $this->api->get("/organizations/{$request->validated('org_uuid')}/invitations/{$request->validated('uuid')}/", $request);
         if (! $response->ok()) {
             return ErrorResponseFactory::getJson($response);
@@ -63,8 +66,9 @@ class CalendlyOrganizationInvitationsController extends Controller
         ]);
     }
 
-    public function destroy(DestroyOrganizationInvitationRequest $request): JsonResponse
-    {
+    public function destroy(
+        DestroyOrganizationInvitationRequest $request,
+    ): JsonResponse {
         $response = $this->api->delete("/organizations/{$request->validated('org_uuid')}/invitations/{$request->validated('uuid')}/");
         if (! $response->ok()) {
             return ErrorResponseFactory::getJson($response);

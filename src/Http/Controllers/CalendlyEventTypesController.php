@@ -20,8 +20,9 @@ class CalendlyEventTypesController extends Controller
         $this->api = $api;
     }
 
-    public function index(IndexEventTypesRequest $request): JsonResponse
-    {
+    public function index(
+        IndexEventTypesRequest $request,
+    ): JsonResponse {
         $response = $this->api->get('/event_types/', $request);
         if (! $response->ok()) {
             return ErrorResponseFactory::getJson($response);
@@ -36,8 +37,9 @@ class CalendlyEventTypesController extends Controller
         ]);
     }
 
-    public function show(ShowEventTypeRequest $request): JsonResponse
-    {
+    public function show(
+        ShowEventTypeRequest $request,
+    ): JsonResponse {
         $response = $this->api->get("/event_types/{$request->validated('uuid')}/", $request);
         if (! $response->ok()) {
             return ErrorResponseFactory::getJson($response);

@@ -18,8 +18,9 @@ class CalendlyDataComplianceDeletionInviteesController extends Controller
         $this->api = $api;
     }
 
-    public function create(StoreDataComplianceDeletionInviteeRequest $request): JsonResponse
-    {
+    public function create(
+        StoreDataComplianceDeletionInviteeRequest $request,
+    ): JsonResponse {
         $response = $this->api->post('/data_compliance/deletion/invitees/', $request);
         if (! $response->ok()) {
             return ErrorResponseFactory::getJson($response);

@@ -20,8 +20,9 @@ class CalendlyRoutingFormsController extends Controller
         $this->api = $api;
     }
 
-    public function index(IndexRoutingFormsRequest $request): JsonResponse
-    {
+    public function index(
+        IndexRoutingFormsRequest $request,
+    ): JsonResponse {
         $response = $this->api->get('/routing_forms/', $request);
         if (! $response->ok()) {
             return ErrorResponseFactory::getJson($response);
@@ -36,8 +37,9 @@ class CalendlyRoutingFormsController extends Controller
         ]);
     }
 
-    public function show(ShowRoutingFormRequest $request): JsonResponse
-    {
+    public function show(
+        ShowRoutingFormRequest $request,
+    ): JsonResponse {
         $response = $this->api->get("/routing_forms/{$request->validated('uuid')}/", $request);
         if (! $response->ok()) {
             return ErrorResponseFactory::getJson($response);

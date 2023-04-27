@@ -22,8 +22,9 @@ class CalendlyOrganizationMembershipsController extends Controller
         $this->api = $api;
     }
 
-    public function show(ShowOrganizationMembershipRequest $request): JsonResponse
-    {
+    public function show(
+        ShowOrganizationMembershipRequest $request,
+    ): JsonResponse {
         $response = $this->api->get("/organization_memberships/{$request->validated('uuid')}/", $request);
         if (! $response->ok()) {
             return ErrorResponseFactory::getJson($response);
@@ -34,8 +35,9 @@ class CalendlyOrganizationMembershipsController extends Controller
         ]);
     }
 
-    public function destroy(DestroyOrganizationMembershipRequest $request): JsonResponse
-    {
+    public function destroy(
+        DestroyOrganizationMembershipRequest $request,
+    ): JsonResponse {
         $response = $this->api->delete("/organization_memberships/{$request->validated('uuid')}/");
         if (! $response->ok()) {
             return ErrorResponseFactory::getJson($response);
@@ -44,8 +46,9 @@ class CalendlyOrganizationMembershipsController extends Controller
         return Response::json([], 204);
     }
 
-    public function index(IndexOrganizationMembershipsRequest $request): JsonResponse
-    {
+    public function index(
+        IndexOrganizationMembershipsRequest $request,
+    ): JsonResponse {
         $response = $this->api->get('/organization_memberships/', $request);
         if (! $response->ok()) {
             return ErrorResponseFactory::getJson($response);
