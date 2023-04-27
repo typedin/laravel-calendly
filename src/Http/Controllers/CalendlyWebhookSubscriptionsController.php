@@ -23,11 +23,12 @@ class CalendlyWebhookSubscriptionsController extends Controller
         $this->api = $api;
     }
 
-    public function index(IndexWebhookSubscriptionsRequest $request): JsonResponse
-    {
+    public function index(
+        IndexWebhookSubscriptionsRequest $request,
+    ): JsonResponse {
         $response = $this->api->get('/webhook_subscriptions/', $request);
         if (! $response->ok()) {
-        return ErrorResponseFactory::getJson($response);
+            return ErrorResponseFactory::getJson($response);
         }
         $all = collect($response->collect('collection'))
             ->map(fn ($args) => new WebhookSubscription(...$args));
@@ -39,11 +40,12 @@ class CalendlyWebhookSubscriptionsController extends Controller
         ]);
     }
 
-    public function create(StoreWebhookSubscriptionRequest $request): JsonResponse
-    {
+    public function create(
+        StoreWebhookSubscriptionRequest $request,
+    ): JsonResponse {
         $response = $this->api->post('/webhook_subscriptions/', $request);
         if (! $response->ok()) {
-        return ErrorResponseFactory::getJson($response);
+            return ErrorResponseFactory::getJson($response);
         }
 
         return response()->json([
@@ -51,11 +53,12 @@ class CalendlyWebhookSubscriptionsController extends Controller
         ]);
     }
 
-    public function show(ShowWebhookSubscriptionRequest $request): JsonResponse
-    {
+    public function show(
+        ShowWebhookSubscriptionRequest $request,
+    ): JsonResponse {
         $response = $this->api->get("/webhook_subscriptions/{$request->validated('webhook_uuid')}/", $request);
         if (! $response->ok()) {
-        return ErrorResponseFactory::getJson($response);
+            return ErrorResponseFactory::getJson($response);
         }
 
         return response()->json([
@@ -63,11 +66,12 @@ class CalendlyWebhookSubscriptionsController extends Controller
         ]);
     }
 
-    public function destroy(DestroyWebhookSubscriptionRequest $request): JsonResponse
-    {
+    public function destroy(
+        DestroyWebhookSubscriptionRequest $request,
+    ): JsonResponse {
         $response = $this->api->delete("/webhook_subscriptions/{$request->validated('webhook_uuid')}/");
         if (! $response->ok()) {
-        return ErrorResponseFactory::getJson($response);
+            return ErrorResponseFactory::getJson($response);
         }
 
         return Response::json([], 204);

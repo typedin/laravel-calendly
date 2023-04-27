@@ -20,11 +20,12 @@ class CalendlyRoutingFormSubmissionsController extends Controller
         $this->api = $api;
     }
 
-    public function index(IndexRoutingFormSubmissionsRequest $request): JsonResponse
-    {
+    public function index(
+        IndexRoutingFormSubmissionsRequest $request,
+    ): JsonResponse {
         $response = $this->api->get('/routing_form_submissions/', $request);
         if (! $response->ok()) {
-        return ErrorResponseFactory::getJson($response);
+            return ErrorResponseFactory::getJson($response);
         }
         $all = collect($response->collect('collection'))
             ->map(fn ($args) => new RoutingFormSubmission(...$args));
@@ -36,11 +37,12 @@ class CalendlyRoutingFormSubmissionsController extends Controller
         ]);
     }
 
-    public function show(ShowRoutingFormSubmissionRequest $request): JsonResponse
-    {
+    public function show(
+        ShowRoutingFormSubmissionRequest $request,
+    ): JsonResponse {
         $response = $this->api->get("/routing_form_submissions/{$request->validated('uuid')}/", $request);
         if (! $response->ok()) {
-        return ErrorResponseFactory::getJson($response);
+            return ErrorResponseFactory::getJson($response);
         }
 
         return response()->json([

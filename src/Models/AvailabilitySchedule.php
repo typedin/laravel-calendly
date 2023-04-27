@@ -34,8 +34,14 @@ class AvailabilitySchedule
      */
     public array $rules;
 
-    public function __construct(string $uri, bool $default, string $name, string $user, string $timezone, array $rules)
-    {
+    public function __construct(
+        string $uri,
+        bool $default,
+        string $name,
+        string $user,
+        string $timezone,
+        array $rules,
+    ) {
         $this->uri = $uri;
         $this->default = $default;
         $this->name = $name;

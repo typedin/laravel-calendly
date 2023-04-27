@@ -18,11 +18,12 @@ class CalendlySchedulingLinksController extends Controller
         $this->api = $api;
     }
 
-    public function create(StoreSchedulingLinkRequest $request): JsonResponse
-    {
+    public function create(
+        StoreSchedulingLinkRequest $request,
+    ): JsonResponse {
         $response = $this->api->post('/scheduling_links/', $request);
         if (! $response->ok()) {
-        return ErrorResponseFactory::getJson($response);
+            return ErrorResponseFactory::getJson($response);
         }
 
         return response()->json([
