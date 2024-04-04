@@ -121,14 +121,14 @@ class EndpointMapper
         });
     }
 
-  public function errorCodes(): Collection
-  {
-      return  collect($this->paths()->first()['get']['responses'])->filter(fn ($value, $key) => $key !== 200 && isset($value['$ref']))->map(function ($value) {
-          $local = explode('/', (string) $value['$ref']);
+    public function errorCodes(): Collection
+    {
+        return  collect($this->paths()->first()['get']['responses'])->filter(fn ($value, $key) => $key !== 200 && isset($value['$ref']))->map(function ($value) {
+            $local = explode('/', (string) $value['$ref']);
 
-          return end($local);
-      })->flip();
-  }
+            return end($local);
+        })->flip();
+    }
 
     public function errorResponseProviders(): Collection
     {

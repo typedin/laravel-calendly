@@ -38,12 +38,12 @@ class GenerateFiles extends Command
         try {
             (new GeneratedFileManager(new EndpointMapper(file_get_contents($input->getOption('source'))), $input->getOption('destination')))->writeAllFiles();
         } catch(Throwable $e) {
-            ( new SymfonyStyle($input, $output) )->error($e->getMessage());
+            (new SymfonyStyle($input, $output))->error($e->getMessage());
 
             return Command::FAILURE;
         }
 
-        ( new SymfonyStyle($input, $output) )->success('All files have been written.');
+        (new SymfonyStyle($input, $output))->success('All files have been written.');
 
         return Command::SUCCESS;
     }
